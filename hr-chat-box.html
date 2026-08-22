@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HR Chat box</title>
+  <style>
+    :root {
+      --pink: #e91e8c;
+      --pink-dark: #c2186e;
+      --pink-soft: #fce4f0;
+      --pink-wash: #fff5fa;
+      --ink: #2a1f24;
+      --muted: #6b5560;
+      --line: #f0d4e3;
+      --white: #ffffff;
+      --danger: #9a3412;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 80% 50% at 10% 0%, #ffd6ea 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, #f8c8de 0%, transparent 50%),
+        linear-gradient(160deg, #fff8fb 0%, #ffeef6 45%, #fff5fa 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .app {
+      width: min(560px, 100%);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 18px 50px rgba(233, 30, 140, 0.12);
+      display: flex;
+      flex-direction: column;
+      min-height: 640px;
+      max-height: min(860px, 92vh);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--pink) 0%, #f062a8 100%);
+      color: var(--white);
+      padding: 18px 20px 16px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    header p {
+      margin: 6px 0 0;
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--pink-wash);
+    }
+
+    .bubble {
+      max-width: 88%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      line-height: 1.45;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+    }
+
+    .bubble.bot {
+      align-self: flex-start;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-bottom-left-radius: 6px;
+    }
+
+    .bubble.user {
+      align-self: flex-end;
+      background: var(--pink);
+      color: var(--white);
+      border-bottom-right-radius: 6px;
+    }
+
+    .source {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--pink-soft);
+      color: var(--pink-dark);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .composer {
+      padding: 14px 16px 16px;
+      border-top: 1px solid var(--line);
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+    }
+
+    #question {
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font: inherit;
+      resize: none;
+      min-height: 48px;
+      max-height: 120px;
+      outline: none;
+    }
+
+    #question:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.15);
+    }
+
+    button {
+      font: inherit;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      padding: 12px 16px;
+      font-weight: 600;
+    }
+
+    #askBtn {
+      background: var(--pink);
+      color: var(--white);
+      min-width: 72px;
+    }
+
+    #askBtn:hover { background: var(--pink-dark); }
+
+    #contactHr {
+      background: #f3f3f3;
+      color: #9a9a9a;
+      cursor: not-allowed;
+      border: 1px dashed #cfcfcf;
+      align-self: flex-start;
+    }
+
+    .hint {
+      margin: 0;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main class="app" aria-label="HR Chat box">
+    <header>
+      <h1>HR Chat box</h1>
+      <p>Ask about policies, benefits, or workplace guidelines.</p>
+    </header>
+
+    <div id="messages" role="log" aria-live="polite"></div>
+
+    <div class="composer">
+      <button id="contactHr" type="button" disabled title="Coming next">
+        Contact HR (coming next)
+      </button>
+      <div class="row">
+        <textarea id="question" rows="2" placeholder="Type your question…" aria-label="Your question"></textarea>
+        <button id="askBtn" type="button">Ask</button>
+      </div>
+      <p class="hint">Sample knowledge only. No login. Personal leave balances are not available in this build.</p>
+    </div>
+  </main>
+
+  <script>
+    const knowledge = [
+      {
+        id: 1,
+        topic: "Typhoon / Signal 8",
+        triggers: ["signal 8", "signal no. 8", "typhoon", "report to the office", "report to office", "wfh today", "work from home today"],
+        answer: "Office staff should work remotely when Signal No. 8 is active.",
+        source: "Disaster Protocol"
+      },
+      {
+        id: 2,
+        topic: "Annual leave basics",
+        triggers: ["annual leave", "how many days", "vacation days", "leave days"],
+        answer: "Full-time staff receive 15 days of annual leave per year.",
+        source: "Leave Policy"
+      },
+      {
+        id: 3,
+        topic: "Sick leave",
+        triggers: ["sick leave", "medical certificate", "medical leave"],
+        answer: "Staff may take sick leave with a medical certificate when required.",
+        source: "Leave Policy"
+      },
+      {
+        id: 4,
+        topic: "Health insurance",
+        triggers: ["health insurance", "medical plan", "medical coverage"],
+        answer: "Enrolled staff are covered by the company health plan; details are in the benefits guide.",
+        source: "Benefits Guide"
+      },
+      {
+        id: 5,
+        topic: "Remote work",
+        triggers: ["remote work", "work from home policy", "wfh policy"],
+        answer: "Remote work follows the published remote-work guidelines and manager approval rules.",
+        source: "Remote Work Guidelines"
+      },
+      {
+        id: 6,
+        topic: "Expense claim",
+        triggers: ["expense", "reimbursement", "claim expense"],
+        answer: "Submit expense claims through the standard reimbursement process with receipts.",
+        source: "Benefits Guide"
+      },
+      {
+        id: 7,
+        topic: "Code of conduct",
+        triggers: ["code of conduct", "workplace rules", "employee handbook"],
+        answer: "Staff must follow the code of conduct in the employee handbook.",
+        source: "Employee Handbook"
+      }
+    ];
+
+    const messagesEl = document.getElementById("messages");
+    const questionEl = document.getElementById("question");
+    const askBtn = document.getElementById("askBtn");
+
+    function addBubble(text, role, source) {
+      const bubble = document.createElement("div");
+      bubble.className = "bubble " + role;
+      bubble.textContent = text;
+      if (source) {
+        const tag = document.createElement("div");
+        tag.className = "source";
+        tag.textContent = "Source: " + source;
+        bubble.appendChild(document.createElement("br"));
+        bubble.appendChild(tag);
+      }
+      messagesEl.appendChild(bubble);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function findAnswer(raw) {
+      const q = raw.toLowerCase().trim();
+      let best = null;
+      let bestScore = 0;
+      for (const item of knowledge) {
+        let score = 0;
+        for (const trigger of item.triggers) {
+          if (q.includes(trigger)) score += trigger.length;
+        }
+        if (score > bestScore) {
+          bestScore = score;
+          best = item;
+        }
+      }
+      return best;
+    }
+
+    function ask() {
+      const text = questionEl.value.trim();
+      if (!text) return;
+
+      addBubble(text, "user");
+      questionEl.value = "";
+
+      const match = findAnswer(text);
+      if (match) {
+        addBubble(match.answer, "bot", match.source);
+      } else {
+        addBubble("I don't know based on the sample knowledge in this build.", "bot");
+      }
+    }
+
+    addBubble(
+      "Hi! I can answer sample questions about policies, benefits, and workplace guidelines.",
+      "bot"
+    );
+
+    askBtn.addEventListener("click", ask);
+    questionEl.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        ask();
+      }
+    });
+  </script>
+</body>
+</html>
