@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loukroi | Employee engagement survey</title>
+  <style>
+    :root{--ink:#102a43;--muted:#627d98;--line:#d9e2ec;--paper:#f6f8fb;--navy:#123a63;--blue:#247ba0;--teal:#20a39e;--gold:#f6ae2d;--coral:#ef6f6c}
+    *{box-sizing:border-box} body{margin:0;background:#e9eff5;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    .deck{width:min(1440px,100vw);margin:auto;overflow:hidden}.slide{position:relative;min-height:100vh;padding:70px 9.2% 62px;background:white;display:none;flex-direction:column;justify-content:center}.slide.active{display:flex}
+    .eyebrow{letter-spacing:.13em;text-transform:uppercase;font-size:12px;font-weight:800;color:var(--blue);margin:0 0 18px}.title{font-size:clamp(42px,5vw,78px);line-height:1.01;letter-spacing:-.055em;margin:0;max-width:900px}.subtitle{max-width:710px;font-size:20px;line-height:1.5;color:var(--muted);margin:25px 0 0}.footer{position:absolute;bottom:26px;left:9.2%;right:9.2%;display:flex;justify-content:space-between;color:#829ab1;font-size:12px}.page{font-weight:800;color:var(--ink)}
+    .cover{color:white;background:linear-gradient(120deg,#102a43 0%,#123a63 55%,#247ba0 130%)}.cover:after{content:"";position:absolute;right:-11vw;bottom:-17vw;width:58vw;height:58vw;border:1px solid rgba(255,255,255,.18);border-radius:50%;box-shadow:0 0 0 60px rgba(255,255,255,.05),0 0 0 140px rgba(255,255,255,.04)}.cover .eyebrow,.cover .subtitle{color:#bfd6e8}.cover .footer{color:#bfd6e8}.cover .page{color:white}.cover-content{position:relative;z-index:1}.badge{display:inline-flex;margin-top:38px;border:1px solid rgba(255,255,255,.28);padding:10px 14px;border-radius:999px;font-weight:700;font-size:14px}
+    h2{font-size:clamp(30px,3.2vw,50px);letter-spacing:-.04em;line-height:1.08;margin:0 0 12px;max-width:970px}h3{font-size:16px;margin:0 0 12px}.lead{font-size:18px;color:var(--muted);line-height:1.48;margin:0;max-width:760px}.grid{display:grid;gap:18px;margin-top:40px}.four{grid-template-columns:repeat(4,1fr)}.two{grid-template-columns:repeat(2,1fr)}.card{border:1px solid var(--line);border-radius:15px;padding:23px;background:#fff}.kpi-value{font-size:46px;font-weight:800;letter-spacing:-.06em;line-height:1}.kpi-label{margin-top:12px;font-size:14px;color:var(--muted);line-height:1.35}.accent{height:4px;width:37px;border-radius:10px;margin-bottom:21px;background:var(--teal)}.callout{margin-top:32px;padding:20px 24px;border-left:5px solid var(--gold);background:#fff9ec;font-size:18px;line-height:1.45}.callout strong{color:#8b5700}
+    .chart-card{margin-top:35px;background:var(--paper);padding:27px 29px;border-radius:17px}.bar-row{display:grid;grid-template-columns:190px 1fr 65px;gap:16px;align-items:center;margin:15px 0;font-size:14px}.track{height:14px;border-radius:9px;background:#dbe7ef;overflow:hidden}.bar{height:100%;border-radius:9px}.score{font-weight:800;text-align:right}.note{font-size:13px;line-height:1.42;color:var(--muted);margin:19px 0 0}.split{display:grid;grid-template-columns:1.18fr .82fr;gap:55px;align-items:center}.big-number{font-size:120px;line-height:.8;letter-spacing:-.08em;font-weight:850;color:var(--navy)}.big-label{font-size:22px;line-height:1.3;margin:18px 0}.small{font-size:14px;color:var(--muted);line-height:1.5}.risk{background:#fff3f1;border-color:#ffd8d3}.risk .accent{background:var(--coral)}.priorities{counter-reset:item}.priority{padding:22px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:68px 1fr;gap:20px}.priority:before{counter-increment:item;content:"0" counter(item);font-size:28px;font-weight:800;color:var(--blue)}.priority p{color:var(--muted);line-height:1.45;margin:7px 0 0}.priority h3{font-size:20px;margin:0}.action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:33px}.action{padding:24px;border-radius:14px;background:var(--paper);border-top:5px solid var(--teal)}.action:nth-child(2){border-color:var(--gold)}.action:nth-child(3){border-color:var(--blue)}.action span{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--muted)}.action h3{font-size:19px;margin:13px 0 10px}.action p{font-size:14px;color:var(--muted);line-height:1.45;margin:0}
+    .nav{position:fixed;bottom:22px;right:28px;z-index:20;display:flex;gap:8px}.nav button{border:0;background:var(--ink);color:white;width:42px;height:42px;border-radius:50%;font-size:23px;cursor:pointer}.nav button:disabled{opacity:.3;cursor:default}.nav button:hover:not(:disabled){background:var(--blue)}.progress{position:fixed;top:0;left:0;height:4px;background:var(--teal);z-index:30;transition:width .25s}
+    @media(max-width:750px){.slide{padding:58px 7% 65px;min-height:100svh}.four,.two,.action-grid,.split{grid-template-columns:1fr}.grid{margin-top:25px}.bar-row{grid-template-columns:130px 1fr 46px;gap:8px;font-size:12px}.big-number{font-size:95px}.footer{left:7%;right:7%}}
+    @media print{body{background:white}.slide{display:flex!important;page-break-after:always;min-height:100vh}.nav,.progress{display:none}}
+  </style>
+</head>
+<body>
+<main class="deck">
+  <section class="slide cover active">
+    <div class="cover-content">
+      <p class="eyebrow">Loukroi · Executive readout</p>
+      <h1 class="title">Engagement is high.<br>Team health is the constraint.</h1>
+      <p class="subtitle">Employee engagement survey | 200 responses | August 2026</p>
+      <div class="badge">21 items · 5-point scale</div>
+    </div><div class="footer"><span>Confidential leadership discussion</span><span class="page">01 / 07</span></div>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">Executive summary</p><h2>Employees are proud to work here—but feel under-resourced to deliver.</h2>
+    <p class="lead">Leadership and engagement scores are healthy. The only consistently weak area is the operating environment: resources, collaboration, efficiency, and clarity.</p>
+    <div class="grid four">
+      <div class="card"><div class="accent"></div><div class="kpi-value">4.24</div><div class="kpi-label">Engagement average<br>out of 5</div></div>
+      <div class="card"><div class="accent" style="background:var(--blue)"></div><div class="kpi-value">4.69</div><div class="kpi-label">Pride score<br>strongest item</div></div>
+      <div class="card risk"><div class="accent"></div><div class="kpi-value">1.89</div><div class="kpi-label">Resources score<br>weakest item</div></div>
+      <div class="card risk"><div class="accent"></div><div class="kpi-value">75%</div><div class="kpi-label">Rated resources<br>1 or 2 out of 5</div></div>
+    </div>
+    <div class="callout"><strong>The headline:</strong> employee sentiment is not the immediate issue. Delivery capacity is—and it risks eroding today's positive engagement if left unresolved.</div>
+    <div class="footer"><span>Loukroi engagement survey</span><span class="page">02 / 07</span></div>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">The scorecard</p><h2>One clear gap separates confidence in leaders from confidence in the work environment.</h2>
+    <div class="chart-card">
+      <h3>Average score by survey theme</h3>
+      <div class="bar-row"><span>Engagement</span><div class="track"><div class="bar" style="width:84.8%;background:var(--teal)"></div></div><span class="score">4.24</span></div>
+      <div class="bar-row"><span>Manager leadership</span><div class="track"><div class="bar" style="width:79.8%;background:var(--blue)"></div></div><span class="score">3.99</span></div>
+      <div class="bar-row"><span>Department head</span><div class="track"><div class="bar" style="width:78.4%;background:var(--blue)"></div></div><span class="score">3.92</span></div>
+      <div class="bar-row"><span>Team health</span><div class="track"><div class="bar" style="width:51.4%;background:var(--coral)"></div></div><span class="score">2.57</span></div>
+      <p class="note">Theme averages are unweighted means of their respective survey items. All scores use a five-point scale.</p>
+    </div>
+    <div class="grid two"><div class="card"><h3>Strength to protect</h3><p class="lead">Pride is exceptionally strong at 4.69, with retention at 3.99 and referral at 4.05.</p></div><div class="card"><h3>Systemic concern</h3><p class="lead">The 1.67-point gap between engagement and team health appears across every department.</p></div></div>
+    <div class="footer"><span>Loukroi engagement survey</span><span class="page">03 / 07</span></div>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">Root issue</p><h2>Resources is the urgent unlock; collaboration and efficiency follow behind.</h2>
+    <div class="chart-card">
+      <h3>Lowest-scoring survey items</h3>
+      <div class="bar-row"><span>Team resources</span><div class="track"><div class="bar" style="width:37.8%;background:var(--coral)"></div></div><span class="score">1.89</span></div>
+      <div class="bar-row"><span>Team collaboration</span><div class="track"><div class="bar" style="width:49.4%;background:var(--gold)"></div></div><span class="score">2.47</span></div>
+      <div class="bar-row"><span>Team efficiency</span><div class="track"><div class="bar" style="width:58.8%;background:var(--gold)"></div></div><span class="score">2.94</span></div>
+      <div class="bar-row"><span>Team goal clarity</span><div class="track"><div class="bar" style="width:59.6%;background:var(--gold)"></div></div><span class="score">2.98</span></div>
+      <div class="bar-row"><span>Dept. head accessibility</span><div class="track"><div class="bar" style="width:62.4%;background:var(--blue)"></div></div><span class="score">3.12</span></div>
+    </div>
+    <div class="split" style="margin-top:28px"><div><div class="big-number">75%</div><p class="big-label">of respondents rated team resources at 1 or 2.</p></div><div class="card risk"><h3>Interpretation</h3><p class="small">This is not a marginal score. The intensity and breadth of the resource signal make it the first issue to diagnose: capacity, tooling, budget, process friction, or competing priorities.</p></div></div>
+    <div class="footer"><span>Loukroi engagement survey</span><span class="page">04 / 07</span></div>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">Where to focus</p><h2>The gap is company-wide, with the sharpest team-health pressure in Marketing and Product.</h2>
+    <div class="chart-card">
+      <h3>Team health average by department</h3>
+      <div class="bar-row"><span>Operations <em style="font-style:normal;color:var(--muted)">(n=46)</em></span><div class="track"><div class="bar" style="width:52.8%;background:var(--teal)"></div></div><span class="score">2.64</span></div>
+      <div class="bar-row"><span>Sales <em style="font-style:normal;color:var(--muted)">(n=37)</em></span><div class="track"><div class="bar" style="width:52.2%;background:var(--teal)"></div></div><span class="score">2.61</span></div>
+      <div class="bar-row"><span>Engineering <em style="font-style:normal;color:var(--muted)">(n=36)</em></span><div class="track"><div class="bar" style="width:52%;background:var(--teal)"></div></div><span class="score">2.60</span></div>
+      <div class="bar-row"><span>Product <em style="font-style:normal;color:var(--muted)">(n=33)</em></span><div class="track"><div class="bar" style="width:50.4%;background:var(--gold)"></div></div><span class="score">2.52</span></div>
+      <div class="bar-row"><span>Marketing <em style="font-style:normal;color:var(--muted)">(n=48)</em></span><div class="track"><div class="bar" style="width:49.8%;background:var(--coral)"></div></div><span class="score">2.49</span></div>
+    </div>
+    <p class="note">The 0.15-point spread is small: no department is insulated. Department-level results should guide local diagnosis, not be used as a performance ranking.</p>
+    <div class="footer"><span>Loukroi engagement survey</span><span class="page">05 / 07</span></div>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">Leadership decision</p><h2>Use the next operating cycle to turn sentiment into sustainable performance.</h2>
+    <div class="priorities">
+      <div class="priority"><div><h3>Establish the resource baseline</h3><p>Ask each function to quantify capacity, tooling, budget, and approval constraints against committed work. Make trade-offs visible at the leadership table.</p></div></div>
+      <div class="priority"><div><h3>Reduce delivery friction</h3><p>Select the most repeated cross-team handoffs and remove one or two major bottlenecks. Pair this with clear ownership and decision rights.</p></div></div>
+      <div class="priority"><div><h3>Close the loop visibly</h3><p>Share the findings, the choices made, and accountable owners. Run a short pulse after implementation to test whether employees experience a practical change.</p></div></div>
+    </div>
+    <div class="footer"><span>Loukroi engagement survey</span><span class="page">06 / 07</span></div>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">90-day action frame</p><h2>Focus on evidence, targeted interventions, and proof that the work got easier.</h2>
+    <div class="action-grid">
+      <article class="action"><span>0–30 DAYS</span><h3>Diagnose</h3><p>Run structured listening sessions on resource constraints; map demand, capacity, and the critical work that is being delayed.</p></article>
+      <article class="action"><span>31–60 DAYS</span><h3>Act</h3><p>Fund, stop, simplify, or sequence work based on the baseline. Prioritize shared pain points over isolated fixes.</p></article>
+      <article class="action"><span>61–90 DAYS</span><h3>Validate</h3><p>Pulse the four team-health items and communicate the before-and-after decisions to every employee.</p></article>
+    </div>
+    <div class="callout"><strong>Success measure:</strong> lift team resources first, while holding pride and intent to stay at their current levels.</div>
+    <div class="footer"><span>Source: Loukroi employee engagement survey, n=200</span><span class="page">07 / 07</span></div>
+  </section>
+</main>
+<div class="progress" id="progress"></div><nav class="nav" aria-label="Slide navigation"><button id="prev" aria-label="Previous slide">‹</button><button id="next" aria-label="Next slide">›</button></nav>
+<script>
+  const slides=[...document.querySelectorAll('.slide')],progress=document.querySelector('#progress'),prev=document.querySelector('#prev'),next=document.querySelector('#next');let index=0;
+  function show(n){index=Math.max(0,Math.min(n,slides.length-1));slides.forEach((s,i)=>s.classList.toggle('active',i===index));progress.style.width=((index+1)/slides.length*100)+'%';prev.disabled=index===0;next.disabled=index===slides.length-1;history.replaceState(null,'','#'+(index+1))}
+  prev.onclick=()=>show(index-1);next.onclick=()=>show(index+1);document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(index+1)}if(e.key==='ArrowLeft')show(index-1)});show(Math.max(0,parseInt(location.hash.slice(1)||1)-1));
+</script>
+</body>
+</html>
