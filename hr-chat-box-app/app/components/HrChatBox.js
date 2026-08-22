@@ -5,7 +5,7 @@ import { CAP57_URL, findAnswer } from "../../lib/knowledge";
 import styles from "./HrChatBox.module.css";
 
 const welcome =
-  "Hi! Ask a Cap. 57 question and I will give the concrete rule (days, pay rate, eligibility). The source link is only for reference.";
+  "Hello, I’m your HR specialist. Ask me about company policy or Hong Kong Employment Ordinance (Cap. 57) entitlements, and I’ll give you a clear, practical answer.";
 
 export default function HrChatBox() {
   const [messages, setMessages] = useState([
@@ -36,9 +36,7 @@ export default function HrChatBox() {
       : {
           id: `bot-${Date.now()}`,
           role: "bot",
-          text: "I don't know that one from the sample knowledge yet. Try asking about rest days, annual leave, sickness allowance, maternity/paternity leave, statutory holidays, wages, notice, or severance.",
-          source: undefined,
-          sourceUrl: undefined,
+          text: "I don’t have enough detail on that yet to advise you properly. Please ask about rest days, annual leave, sickness allowance, maternity or paternity leave, statutory holidays, wages, notice, or severance — or contact HR directly for your individual case.",
         };
 
     setMessages((prev) => [
@@ -59,8 +57,9 @@ export default function HrChatBox() {
   return (
     <main className={styles.app} aria-label="HR Chat box">
       <header className={styles.header}>
+        <p className={styles.role}>HR Specialist</p>
         <h1>HR Chat box</h1>
-        <p>Ask about policies, benefits, workplace guidelines, or Cap. 57.</p>
+        <p>Practical answers on company policy and Cap. 57 entitlements.</p>
         <a
           className={styles.headerLink}
           href={CAP57_URL}
@@ -85,6 +84,9 @@ export default function HrChatBox() {
               message.role === "user" ? styles.user : styles.bot
             }`}
           >
+            {message.role === "bot" ? (
+              <div className={styles.speaker}>HR Specialist</div>
+            ) : null}
             {message.text}
             {message.source ? (
               message.sourceUrl ? (
@@ -94,10 +96,10 @@ export default function HrChatBox() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Source: {message.source}
+                  Reference: {message.source}
                 </a>
               ) : (
-                <div className={styles.source}>Source: {message.source}</div>
+                <div className={styles.source}>Reference: {message.source}</div>
               )
             ) : null}
           </div>
@@ -117,7 +119,7 @@ export default function HrChatBox() {
           <textarea
             className={styles.question}
             rows={2}
-            placeholder="Try: What is statutory annual leave under Cap. 57?"
+            placeholder="Ask your HR specialist…"
             aria-label="Your question"
             value={question}
             onChange={(event) => setQuestion(event.target.value)}
@@ -128,12 +130,12 @@ export default function HrChatBox() {
           </button>
         </div>
         <p className={styles.hint}>
-          Cap. 57 answers are short summaries linked to{" "}
+          Answers are given in an HR advisory tone for this workshop demo. Cap.
+          57 references link to{" "}
           <a href={CAP57_URL} target="_blank" rel="noopener noreferrer">
             elegislation.gov.hk
           </a>
-          . Not legal advice. No login. Personal leave balances are not available
-          in this build.
+          . Not a substitute for formal legal advice on complex cases.
         </p>
       </div>
     </main>

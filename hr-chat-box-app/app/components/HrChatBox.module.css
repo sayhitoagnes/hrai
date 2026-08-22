@@ -24,6 +24,15 @@
   letter-spacing: 0.01em;
 }
 
+.role {
+  margin: 0 0 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.92;
+}
+
 .header p {
   margin: 6px 0 0;
   font-size: 0.9rem;
@@ -61,6 +70,15 @@
   line-height: 1.45;
   font-size: 0.95rem;
   white-space: pre-wrap;
+}
+
+.speaker {
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--pink-dark);
 }
 
 .bot {
