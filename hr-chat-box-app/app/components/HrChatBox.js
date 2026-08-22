@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { findAnswer } from "../../lib/knowledge";
+import { CAP57_URL, findAnswer } from "../../lib/knowledge";
 import styles from "./HrChatBox.module.css";
 
 const welcome =
-  "Hi! I can answer sample questions about policies, benefits, and workplace guidelines.";
+  "Hi! I can answer sample company-policy questions and common Hong Kong Employment Ordinance (Cap. 57) questions. Cap. 57 answers include a link to the official text.";
 
 export default function HrChatBox() {
   const [messages, setMessages] = useState([
@@ -31,11 +31,14 @@ export default function HrChatBox() {
           role: "bot",
           text: match.answer,
           source: match.source,
+          sourceUrl: match.sourceUrl,
         }
       : {
           id: `bot-${Date.now()}`,
           role: "bot",
-          text: "I don't know based on the sample knowledge in this build.",
+          text: "I don't know based on the sample knowledge in this build. For Hong Kong employment law, you can also open the Employment Ordinance (Cap. 57).",
+          source: "Employment Ordinance Cap. 57",
+          sourceUrl: CAP57_URL,
         };
 
     setMessages((prev) => [
@@ -57,7 +60,15 @@ export default function HrChatBox() {
     <main className={styles.app} aria-label="HR Chat box">
       <header className={styles.header}>
         <h1>HR Chat box</h1>
-        <p>Ask about policies, benefits, or workplace guidelines.</p>
+        <p>Ask about policies, benefits, workplace guidelines, or Cap. 57.</p>
+        <a
+          className={styles.headerLink}
+          href={CAP57_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open Employment Ordinance (Cap. 57)
+        </a>
       </header>
 
       <div
@@ -76,7 +87,18 @@ export default function HrChatBox() {
           >
             {message.text}
             {message.source ? (
-              <div className={styles.source}>Source: {message.source}</div>
+              message.sourceUrl ? (
+                <a
+                  className={styles.source}
+                  href={message.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Source: {message.source}
+                </a>
+              ) : (
+                <div className={styles.source}>Source: {message.source}</div>
+              )
             ) : null}
           </div>
         ))}
@@ -95,7 +117,7 @@ export default function HrChatBox() {
           <textarea
             className={styles.question}
             rows={2}
-            placeholder="Type your question…"
+            placeholder="Try: What is statutory annual leave under Cap. 57?"
             aria-label="Your question"
             value={question}
             onChange={(event) => setQuestion(event.target.value)}
@@ -106,8 +128,12 @@ export default function HrChatBox() {
           </button>
         </div>
         <p className={styles.hint}>
-          Sample knowledge only. No login. Personal leave balances are not
-          available in this build.
+          Cap. 57 answers are short summaries linked to{" "}
+          <a href={CAP57_URL} target="_blank" rel="noopener noreferrer">
+            elegislation.gov.hk
+          </a>
+          . Not legal advice. No login. Personal leave balances are not available
+          in this build.
         </p>
       </div>
     </main>

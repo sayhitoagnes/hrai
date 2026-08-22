@@ -30,6 +30,20 @@
   opacity: 0.95;
 }
 
+.headerLink {
+  display: inline-block;
+  margin-top: 10px;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.headerLink:hover {
+  opacity: 0.9;
+}
+
 .messages {
   flex: 1;
   overflow-y: auto;
@@ -72,6 +86,11 @@
   color: var(--pink-dark);
   font-size: 0.75rem;
   font-weight: 600;
+  text-decoration: none;
+}
+
+a.source:hover {
+  text-decoration: underline;
 }
 
 .composer {

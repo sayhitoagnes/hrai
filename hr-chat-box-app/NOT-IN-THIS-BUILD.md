@@ -5,6 +5,11 @@ These were deliberate scope decisions for the workshop slice, not forgotten gaps
 ## Confirmed build slice
 Employee opens chatbot → asks a policy question → gets the correct answer from sample knowledge → sees a source label. Unknown questions show “I don’t know” plus a disabled Contact HR button.
 
+## Cap. 57 note
+The chat includes short Employment Ordinance (Cap. 57) summaries and links to  
+https://www.elegislation.gov.hk/hk/cap57  
+It does **not** scrape or search the live ordinance page (that site requires a browser check-in). Answers are summaries only, not legal advice.
+
 ## Deliberately not included
 - Login and permissions
 - Saving to a database / Supabase
@@ -14,6 +19,7 @@ Employee opens chatbot → asks a policy question → gets the correct answer fr
 - IT admin dashboard, analytics, and integrations
 - Email, export, and Vercel deployment
 - Contact HR handoff flow (button is visible but disabled)
+- Live full-text Cap. 57 search / RAG over elegislation.gov.hk
 
 ## How to run locally
 From `hr-chat-box-app`:
@@ -24,3 +30,5 @@ npm run dev
 ```
 
 Then open `http://localhost:3000`.
+
+Or open `hr-chat-box.html` in a browser.
