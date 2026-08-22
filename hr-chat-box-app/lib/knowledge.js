@@ -79,7 +79,7 @@ export const knowledge = [
       "hk employment law",
     ],
     answer:
-      "The Employment Ordinance (Cap. 57) is Hong Kong’s main employment statute. It sets minimum rules on wages, rest days, holidays, leave, and termination for employees. This chat gives short summaries only — always check the official text for the exact wording.",
+      "Cap. 57 is Hong Kong’s main employment law. For continuous-contract employees it sets concrete minimums such as: at least 1 rest day every 7 days; paid annual leave of 7–14 days after each 12 months of service; sickness allowance for absences of 4+ consecutive days (usually 4/5 of average daily wages); 14 weeks’ maternity leave; 5 days’ paternity leave; statutory holidays; and wage payment within 7 days after the wage period ends.",
     source: "Employment Ordinance Cap. 57",
     sourceUrl: CAP57_URL,
   },
@@ -94,7 +94,7 @@ export const knowledge = [
       "continuous employment",
     ],
     answer:
-      "Under Cap. 57, an employee usually counts as being under a continuous contract if they have worked for the same employer for 4 or more consecutive weeks and at least 18 hours in each of those weeks. Continuous-contract employees get extra statutory benefits such as rest days, paid annual leave, and sickness allowance.",
+      "You are usually under a continuous contract if you worked for the same employer for 4 consecutive weeks or more, and at least 18 hours in each of those weeks. That status unlocks rest days, paid annual leave, sickness allowance, holiday pay (after 3 months), and other Cap. 57 benefits.",
     source: "Employment Ordinance Cap. 57",
     sourceUrl: CAP57_URL,
   },
@@ -110,7 +110,7 @@ export const knowledge = [
       "weekly rest",
     ],
     answer:
-      "Under Cap. 57, an employee employed under a continuous contract is entitled to at least 1 rest day in every period of 7 days. A rest day is a continuous period of not less than 24 hours during which the employee is entitled to abstain from working.",
+      "If you are under a continuous contract, you must get at least 1 rest day in every 7-day period. A rest day is a continuous 24-hour period when you are entitled not to work. Your employer should appoint rest days; if they are not fixed in advance, they should be notified before the start of each week.",
     source: "Employment Ordinance Cap. 57",
     sourceUrl: CAP57_URL,
   },
@@ -126,9 +126,11 @@ export const knowledge = [
       "statutory leave",
       "how many annual leave under law",
       "legal annual leave",
+      "annual leave entitlement under",
+      "how many days of annual leave",
     ],
     answer:
-      "Under Cap. 57, after 12 months under a continuous contract, an employee is entitled to paid annual leave starting at 7 days, rising with length of service up to a maximum of 14 days (from the 9th year onward). Company policy can be more generous than this legal minimum.",
+      "After every 12 months under a continuous contract, paid annual leave is: Year 1–2 = 7 days; Year 3 = 8; Year 4 = 9; Year 5 = 10; Year 6 = 11; Year 7 = 12; Year 8 = 13; Year 9+ = 14 days. Leave timing is set by the employer after consulting you, with written notice at least 14 days in advance unless you agree to shorter notice. Pay is your average daily wage over the previous 12 months (or shorter period if employed for less than 12 months). If your contract ends after 3 months but before 12 months in a leave year (except summary dismissal), you get pro-rata annual leave pay.",
     source: "Employment Ordinance Cap. 57",
     sourceUrl: CAP57_URL,
   },
@@ -145,7 +147,7 @@ export const knowledge = [
       "cap 57 sick",
     ],
     answer:
-      "Under Cap. 57, continuous-contract employees can accumulate paid sickness days (2 per month in the first 12 months, then 4 per month, up to 120 days). Sickness allowance is generally payable for sick leave of at least 4 consecutive days supported by a medical certificate, usually at 4/5 of average daily wages.",
+      "Under a continuous contract you accumulate paid sickness days at 2 days per month for the first 12 months, then 4 days per month, up to a maximum of 120 days. Sickness allowance is payable when you take at least 4 consecutive sickness days supported by a medical certificate. The daily rate is usually 4/5 of your average daily wages.",
     source: "Employment Ordinance Cap. 57",
     sourceUrl: CAP57_URL,
   },
@@ -160,7 +162,7 @@ export const knowledge = [
       "maternity pay",
     ],
     answer:
-      "Under Cap. 57, an eligible female employee under a continuous contract is entitled to 14 weeks of maternity leave. Maternity leave pay is generally 4/5 of average daily wages, with a statutory cap applying to part of the leave period. Check Cap. 57 for eligibility details.",
+      "An eligible female employee under a continuous contract gets 14 continuous weeks of maternity leave. If the baby arrives later than the expected date, extra days equal to that delay are added. Up to 4 more weeks may be granted for illness or disability due to pregnancy or confinement. Maternity leave pay is generally 4/5 of average daily wages; pay for the 11th to 14th weeks is capped at HK$80,000. To get paid maternity leave, you normally need at least 40 weeks’ continuous employment immediately before the leave starts, plus the required pregnancy notice.",
     source: "Employment Ordinance Cap. 57",
     sourceUrl: CAP57_URL,
   },
@@ -170,7 +172,7 @@ export const knowledge = [
     category: "cap57",
     triggers: ["paternity leave", "father leave", "paternity pay"],
     answer:
-      "Under Cap. 57, an eligible male employee under a continuous contract may take paternity leave in connection with the birth of his child. Check Cap. 57 for the current number of days, notice rules, and pay conditions.",
+      "An eligible male employee under a continuous contract gets 5 days of paternity leave for each confinement of his spouse/partner. You may take the 5 days together or separately, from 4 weeks before the expected delivery date to 14 weeks after the actual birth. To get paternity leave pay (4/5 of average daily wages), you normally need at least 40 weeks’ continuous employment immediately before the leave day, plus the required documents. Give notice at least 3 months before the expected delivery (or at least 5 days before the leave date if that advance notice was not given).",
     source: "Employment Ordinance Cap. 57",
     sourceUrl: CAP57_URL,
   },
@@ -185,7 +187,7 @@ export const knowledge = [
       "holiday entitlement under law",
     ],
     answer:
-      "Cap. 57 provides for statutory holidays. Employees covered by the Ordinance are entitled to statutory holidays, and continuous-contract employees may also be entitled to holiday pay subject to the Ordinance’s conditions. Company holiday calendars should not fall below the legal minimum.",
+      "Every employee covered by Cap. 57 is entitled to statutory holidays (not just continuous-contract staff). Current holidays include: 1 January, Lunar New Year Days 1–3, Ching Ming, Labour Day, Buddha’s Birthday, Tuen Ng, HKSAR Establishment Day, the day after Mid-Autumn, National Day, Chung Yeung, Winter Solstice or Christmas (employer’s choice), and the first weekday after Christmas; Easter Monday is added from 2026. If you must work on a statutory holiday, your employer must give an alternative holiday within 60 days before or after (with at least 48 hours’ prior notice). Holiday pay applies if you have been under a continuous contract for at least 3 months before that holiday. Employers cannot buy out a statutory holiday with cash instead of giving the day off.",
     source: "Employment Ordinance Cap. 57",
     sourceUrl: CAP57_URL,
   },
@@ -202,7 +204,7 @@ export const knowledge = [
       "wage payment",
     ],
     answer:
-      "Under Cap. 57, wages must generally be paid as soon as practicable after the end of the wage period, and in any case not later than 7 days after that period ends. Deductions from wages are tightly restricted by the Ordinance.",
+      "Wages must be paid as soon as practicable after the end of the wage period, and in any case not later than 7 days after that period ends. On termination, most termination payments (except severance payment) must also be paid within 7 days. Wage deductions are tightly limited (for example for damage/loss, absence, or other legally allowed items) and cannot simply be made at will.",
     source: "Employment Ordinance Cap. 57",
     sourceUrl: CAP57_URL,
   },
@@ -219,7 +221,7 @@ export const knowledge = [
       "termination of employment",
     ],
     answer:
-      "Cap. 57 sets rules on termination by notice or payment in lieu of notice. The required notice depends on the contract and whether the employee is still in probation. Summary dismissal and constructive dismissal have separate legal tests — read Cap. 57 and seek advice for a real case.",
+      "Either side may end the contract by giving notice or payment in lieu of notice. During the first month of probation, no notice is required. After the first month of probation, notice is as agreed in the contract but not less than 7 days. After probation (or if there is no probation): if the contract sets a notice period, follow it but not less than 7 days; if the contract sets no notice period, notice must be at least 1 month. Payment in lieu equals the wages you would have earned during that notice period (using average wages).",
     source: "Employment Ordinance Cap. 57",
     sourceUrl: CAP57_URL,
   },
@@ -235,7 +237,7 @@ export const knowledge = [
       "severance",
     ],
     answer:
-      "Under Cap. 57, eligible employees may be entitled to a severance payment (for example on redundancy) or a long service payment after longer service, subject to qualifying conditions. Amounts and offsets are set by the Ordinance — use the official Cap. 57 text for calculations.",
+      "Severance payment: available if you have at least 24 months under a continuous contract and are dismissed by redundancy, laid off, or your fixed-term contract is not renewed due to redundancy. Long service payment: available after at least 5 years under a continuous contract in the qualifying termination situations. For a monthly-paid employee, the usual rate is 2/3 × last month’s wages × years of service. Last month’s wages used in the formula are capped at HK$22,500, so the yearly unit is capped at HK$15,000, and the total payment is capped at HK$390,000. Severance must be paid within 2 months after the employer receives your written claim.",
     source: "Employment Ordinance Cap. 57",
     sourceUrl: CAP57_URL,
   },

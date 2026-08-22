@@ -5,7 +5,7 @@ import { CAP57_URL, findAnswer } from "../../lib/knowledge";
 import styles from "./HrChatBox.module.css";
 
 const welcome =
-  "Hi! I can answer sample company-policy questions and common Hong Kong Employment Ordinance (Cap. 57) questions. Cap. 57 answers include a link to the official text.";
+  "Hi! Ask a Cap. 57 question and I will give the concrete rule (days, pay rate, eligibility). The source link is only for reference.";
 
 export default function HrChatBox() {
   const [messages, setMessages] = useState([
@@ -36,9 +36,9 @@ export default function HrChatBox() {
       : {
           id: `bot-${Date.now()}`,
           role: "bot",
-          text: "I don't know based on the sample knowledge in this build. For Hong Kong employment law, you can also open the Employment Ordinance (Cap. 57).",
-          source: "Employment Ordinance Cap. 57",
-          sourceUrl: CAP57_URL,
+          text: "I don't know that one from the sample knowledge yet. Try asking about rest days, annual leave, sickness allowance, maternity/paternity leave, statutory holidays, wages, notice, or severance.",
+          source: undefined,
+          sourceUrl: undefined,
         };
 
     setMessages((prev) => [
