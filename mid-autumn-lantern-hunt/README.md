@@ -14,10 +14,10 @@ An internal Mid-Autumn activity for **Hong Kong Arts Centre** staff (~70 people,
 ## What staff do (about 5 minutes)
 
 1. Open the link from the HR email (phone or computer).
-2. Enter their name and tap the lantern (it is on a short-term contract).
-3. Play five bilingual scenes: a moon riddle, catch the jade rabbit dodging a meeting, a Chang’e riddle, chop Wu Gang’s never-ending tree, invent an unlicensed mooncake.
-4. Receive a personalised HKAC blessing (it names your mooncake) and a lucky ticket such as `HKAC-MAF-CHA4821`.
-5. Click **Email my lucky ticket** — their mail app opens with the ticket already filled in. They press Send.
+2. Enter their name and tap the lantern to clock in.
+3. Play five live scenes: punch leftover suns against a timer, reply in Chang’e’s group chat, whack-a-mole the overtime rabbit (skip the decoy mooncakes), beat Wu Gang’s regenerating tree, spin a fortune wheel for a moon title.
+4. Receive a personalised HKAC blessing (it names their title) and a lucky ticket such as `HKAC-MAF-CHA4821`.
+5. Click **Email my lucky ticket**.
 
 Everyone who finishes (or replies to the email) has an **equal chance** in the draw.
 
@@ -30,15 +30,15 @@ Everyone who finishes (or replies to the email) has an **equal chance** in the d
 5. After the deadline, search the inbox for `[HKAC Mid-Autumn]`.
 6. **Lucky draw:** paste names (one per line) and draw one winner. Copy the announcement email.
 
-If a shared link is not possible, staff reply with their name and two invented mooncake fillings; HR still uses the same draw screen.
+If a shared link is not possible, staff reply with their name and a homemade moon title; HR still uses the same draw screen.
 
 ## Why this format
 
 | Need | How it is met |
 | --- | --- |
 | Remote staff, no gathering | Browser game + email; no venue, no login |
-| Fun for age ~35, mixed teams | Talking lantern, rabbit chase, Wu Gang joke, mooncake lab — not a quiz paper |
-| HKAC blessing | Closing card names their mooncake, still in the Centre’s voice |
+| Fun for age ~35, mixed teams | Timed arcade, group chat, whack-a-mole, boss fight, fortune wheel — not a quiz |
+| HKAC blessing | Closing card names their moon title |
 | Operate by email | One invitation out; lucky tickets back; one announcement |
 | Pick a prize winner | Random draw among people who actually took part |
 

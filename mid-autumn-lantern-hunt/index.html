@@ -280,6 +280,64 @@
       font-weight: 700;
       margin-bottom: 8px;
     }
+    .timer {
+      height: 8px; border-radius: 99px; background: rgba(255,255,255,.12); overflow: hidden; margin: 0 0 10px;
+    }
+    .timer > i {
+      display: block; height: 100%; width: 100%; background: linear-gradient(90deg, #e0b34a, #c4452d);
+      transform-origin: left center;
+    }
+    .playfield.arcade { height: 270px; }
+    .sun {
+      position: absolute; font-size: 42px; border: 0; background: transparent; padding: 0; line-height: 1;
+      filter: drop-shadow(0 0 10px rgba(255,180,60,.8));
+      animation: popin .18s ease;
+    }
+    @keyframes popin { from { transform: scale(.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .combo {
+      position: absolute; font-weight: 800; color: #fff3c4; pointer-events: none;
+      animation: floatup .7s ease forwards; font-size: 18px; text-shadow: 0 2px 8px #000;
+    }
+    @keyframes floatup { to { transform: translateY(-36px); opacity: 0; } }
+    .holes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; height: 250px; }
+    .hole {
+      background: radial-gradient(circle at 50% 70%, #4a3018, #140c18);
+      border-radius: 50%; position: relative; overflow: hidden; border: 0; color: inherit;
+    }
+    .hole .pop {
+      position: absolute; left: 50%; bottom: 10%; transform: translateX(-50%) translateY(120%);
+      font-size: 48px; transition: transform .16s ease; line-height: 1;
+    }
+    .hole .pop.up { transform: translateX(-50%) translateY(0); }
+    .hp { height: 14px; border-radius: 99px; background: #3a2030; overflow: hidden; margin: 8px 0 12px; }
+    .hp > i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, #7d2a2a, #e0b34a); transition: width .15s; }
+    .chat {
+      background: #efe6d6; border-radius: 16px; padding: 12px; max-height: 320px; overflow: auto;
+    }
+    .bubble {
+      background: #fff; color: var(--ink); border-radius: 16px 16px 16px 4px;
+      padding: 10px 12px; margin: 0 40px 10px 0; font-size: 14px; line-height: 1.4;
+    }
+    .bubble.me {
+      background: #d8f5c8; border-radius: 16px 16px 4px 16px; margin: 0 0 10px 40px;
+    }
+    .bubble b { display: block; font-size: 11px; color: #8a7048; margin-bottom: 3px; }
+    .wheel-wrap { position: relative; width: min(260px, 80vw); margin: 8px auto 12px; }
+    .wheel {
+      width: 100%; aspect-ratio: 1; border-radius: 50%;
+      border: 8px solid #c4922a;
+      background: conic-gradient(#c4452d 0 60deg, #e0b34a 60deg 120deg, #2f7d4a 120deg 180deg, #247ba0 180deg 240deg, #7a3ea8 240deg 300deg, #d47a2c 300deg 360deg);
+      box-shadow: inset 0 0 0 12px rgba(0,0,0,.12), 0 10px 30px rgba(0,0,0,.35);
+    }
+    .wheel.spin { animation: spin 4s cubic-bezier(.12,.7,.16,1) forwards; }
+    @keyframes spin { from { transform: rotate(0); } to { transform: rotate(var(--spin, 1260deg)); } }
+    .needle {
+      position: absolute; left: 50%; top: -8px; transform: translateX(-50%);
+      width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent;
+      border-top: 18px solid #fff8ea; z-index: 2;
+    }
+    body.shake { animation: shake .28s ease; }
+    @keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
     .grid-2 { display: grid; gap: 12px; }
     @media (min-width: 680px) {
       .grid-2 { grid-template-columns: 1fr 1fr; }
@@ -313,10 +371,10 @@
     <section id="screen-welcome" class="screen on">
       <p class="kicker" data-i18n="kicker">Mid-Autumn 2026 · Staff celebration</p>
       <h1 id="mainTitle">Moonlit Lantern Hunt<span>月宮加班夜</span></h1>
-      <p class="lead" data-i18n="welcomeLead">A five-minute Mid-Autumn mishap for every colleague, wherever you are. Light a slightly overworked lantern, chase the jade rabbit, interrupt Wu Gang’s endless sprint, invent an unlicensed mooncake, and still get HKAC’s blessing — plus a lucky ticket for the prize draw.</p>
+      <p class="lead" data-i18n="welcomeLead">Hou Yi left extra suns in the sky. Chang’e is typing in the group chat. The jade rabbit is playing whack-a-mole with overtime. Five live scenes, about five minutes — then HKAC’s blessing and a lucky ticket for the prize draw.</p>
       <div class="meta">
         <span class="chip" data-i18n="chip1">About 5 minutes</span>
-        <span class="chip" data-i18n="chip2">Riddles + mini-games</span>
+        <span class="chip" data-i18n="chip2">Arcade night, not a quiz</span>
         <span class="chip" data-i18n="chip3">Everyone who finishes can win</span>
       </div>
       <div class="card">
@@ -346,7 +404,7 @@
         </svg>
         <p class="hint" id="lanternHint" data-i18n="lanternHint">Tap the lantern. It has trust issues.</p>
         <div class="row" style="justify-content:center">
-          <button class="btn" id="beginRiddles" type="button" disabled onclick="beginHunt()" data-i18n="beginRiddles">Enter the moon palace</button>
+          <button class="btn" id="beginRiddles" type="button" disabled onclick="beginHunt()" data-i18n="beginRiddles">Clock in on the moon</button>
         </div>
       </div>
     </section>
@@ -365,7 +423,7 @@
     </section>
 
     <section id="screen-blessing" class="screen">
-      <p class="kicker" data-i18n="blessKicker">Your unofficial mooncake & blessing</p>
+      <p class="kicker" data-i18n="blessKicker">Your moon title & blessing</p>
       <div class="blessing-card">
         <span class="score-pill" id="scorePill"></span>
         <h2 class="serif" id="helloName" style="margin:14px 0 0;font-size:28px"></h2>
@@ -377,7 +435,7 @@
         </div>
       </div>
       <div class="card" style="margin-top:16px">
-        <p style="margin:0 0 12px;color:#3e3558" data-i18n="emailHelp">Send this ticket to HR in one click. Finishing the mishap is enough to enter the prize draw — the riddles are only one scene, not an exam.</p>
+        <p style="margin:0 0 12px;color:#3e3558" data-i18n="emailHelp">Send this ticket to HR in one click. Finishing the night shift is enough to enter the prize draw — nobody is graded.</p>
         <div class="row">
           <button class="btn" type="button" onclick="emailTicket()" data-i18n="emailBtn">Email my lucky ticket</button>
           <button class="btn ghost" type="button" onclick="copyTicket()" data-i18n="copyBtn">Copy ticket</button>
@@ -402,7 +460,7 @@
           <li data-i18n="how2">Open Setup, enter the HR mailbox that will collect tickets, the prize, and the deadline.</li>
           <li data-i18n="how3">Copy the invitation email and send it to all staff (~70 people). They play on a phone or computer, then click “Email my lucky ticket”.</li>
           <li data-i18n="how4">After the deadline, search your inbox for the subject line <em>[HKAC Mid-Autumn]</em>. Paste those names into Lucky draw and pick one winner.</li>
-          <li data-i18n="how5">If you cannot share a link, staff can still reply with their name plus an invented mooncake filling. Everyone who replies enters the draw.</li>
+          <li data-i18n="how5">If you cannot share a link, staff can still reply with their name and a homemade moon title. Everyone who replies enters the draw.</li>
         </ol>
         <p class="tiny" style="margin:16px 0 0;color:#5c5470">Fair play: every completed hunt (or email reply) has an equal chance. Score is only for the blessing card.</p>
       </div>
@@ -461,157 +519,159 @@
   </div>
 
   <script>
-    const RIDDLES = [
+    const STATIONS = ["suns", "chat", "mole", "wugang", "wheel"];
+
+    const CHAT = [
       {
-        zh: "無油無焰夜夜明，初三如眉十五盈。不是燈籠不是星，高懸碧空誰與爭？",
-        en: "No oil, no flame, yet I light the night. A brow on the third day, a full plate on the fifteenth. Not a lantern, not a star. What am I?",
-        options: [
-          { zh: "永遠亮著的雪櫃燈", en: "The office fridge light that never sleeps", ok: false },
-          { zh: "未讀電郵數字", en: "Your unread-email count", ok: false },
-          { zh: "月亮", en: "The moon", ok: true },
-          { zh: "花燈", en: "A festival lantern", ok: false }
-        ],
-        roastOk: { zh: "燈仔鬆一口氣：還好你沒把人生過成收件箱。", en: "Ah Lamp exhales: thank you for not confusing the sky with your inbox." },
-        roastNo: { zh: "差一點。答案是月亮——不是那個會彈 notification 的圓。", en: "Close. It is the moon — the round thing that does not ping you." }
+        who: { zh: "嫦娥", en: "Chang’e" },
+        text: { zh: "月餅又焦了。后羿說「很快回來」。已三百年。你現在能不能上來？", en: "The mooncakes are on fire. Hou Yi said he’d be right back. That was 300 years ago. Can you come up?" },
+        opts: [
+          { zh: "我幫你叫外賣。茶餐廳送到月球嗎？", en: "I’ll order takeaway. Does cha chaan teng deliver to the moon?", vibe: "chaos" },
+          { zh: "先關火。我開個 group：「中秋事故」。", en: "Turn the heat off. Starting a group chat: Mid-Autumn Incident.", vibe: "hr" },
+          { zh: "你坐一下。我先去把多餘的太陽打掉。", en: "Sit. I’ll go punch the extra suns first.", vibe: "kind" }
+        ]
       },
       {
-        zh: "后羿射日妻偷藥，一粒仙丹天上落。十五夜裡人最念，她是哪位？",
-        en: "Hou Yi shot the suns; his wife swallowed the elixir meant to be shared and rose. On the fifteenth night, whose name do people still call when they look up?",
-        options: [
-          { zh: "退了 WhatsApp 群、搬去西貢的那位同事", en: "The colleague who left the WhatsApp group and moved to Sai Kung", ok: false },
-          { zh: "女媧", en: "Nüwa", ok: false },
-          { zh: "西王母", en: "The Queen Mother of the West", ok: false },
-          { zh: "嫦娥", en: "Chang’e", ok: true }
-        ],
-        roastOk: { zh: "嫦娥已讀不回后羿。經典。", en: "Chang’e left Hou Yi on read. A classic." },
-        roastNo: { zh: "不是離職去西貢的那位。是嫦娥。月宮沒有 hybrid 日子。", en: "Not the Sai Kung resignation. Chang’e. The moon palace is fully on-site." }
+        who: { zh: "玉兔", en: "Jade rabbit" },
+        text: { zh: "我不是在搗藥。我在躲 all-hands。仙丹其實是拿鐵。不要告訴嫦娥。", en: "I am not pounding medicine. I am dodging the all-hands. The elixir is a latte. Do not tell Chang’e." },
+        opts: [
+          { zh: "秘密換我一杯。少冰去甜。", en: "Your secret for a latte. Less ice, no sugar.", vibe: "chaos" },
+          { zh: "我把你加進「可選出席」。", en: "I’ll mark you optional attendee.", vibe: "hr" },
+          { zh: "懂。我也會把鏡頭關掉。", en: "Understood. I also join with the camera off.", vibe: "kind" }
+        ]
+      },
+      {
+        who: { zh: "吳剛", en: "Wu Gang" },
+        text: { zh: "這棵桂樹每砍一次就長回來。我已經申請 leave 四千年。批核中。", en: "This tree grows back every time I chop it. I filed for leave 4,000 years ago. Status: pending." },
+        opts: [
+          { zh: "我幫你砍。當成壓力球。", en: "I’ll chop it for you. Think of it as a stress ball.", vibe: "chaos" },
+          { zh: "我以人事名義先批。樹自己寫 incident report。", en: "Approved on HR’s behalf. The tree can file the incident report.", vibe: "hr" },
+          { zh: "你先休息。樹又不會辭職。", en: "Rest. The tree is not going to resign.", vibe: "kind" }
+        ]
       }
     ];
 
-    const FILLINGS = [
-      { id: "lotus", zh: "蓮蓉", en: "Classic lotus paste" },
-      { id: "yolk", zh: "鹹蛋黃", en: "Salted egg yolk" },
-      { id: "milktea", zh: "絲襪奶茶", en: "Silk-stocking milk tea" },
-      { id: "bolo", zh: "菠蘿包碎", en: "Pineapple bun crumbs" },
-      { id: "siumai", zh: "冷掉的燒賣", en: "A leftover siu mai" },
-      { id: "biscuit", zh: "會議餅乾", en: "Meeting biscuits" },
-      { id: "osmanthus", zh: "桂花", en: "Osmanthus" },
-      { id: "chilli", zh: "辣椒油（壯膽用）", en: "Chilli oil, for courage" }
+    const TITLES = [
+      { zh: "年度月亮實習生", en: "Moon Intern of the Year" },
+      { zh: "玉兔工會代表", en: "Jade Rabbit Shop Steward" },
+      { zh: "吳剛假期特使", en: "Wu Gang’s Leave Ambassador" },
+      { zh: "嫦娥最後上線", en: "Chang’e, last seen just now" },
+      { zh: "無牌月餅局長", en: "Director of Unlicensed Mooncakes" },
+      { zh: "收件箱比月亮更暗", en: "Inbox Dimmer than the Moon" }
     ];
-
-    const CAKE_NAMES = {
-      "lotus+yolk": { zh: "祖傳體面", en: "The Respectable Ancestor" },
-      "biscuit+milktea": { zh: "六點半混合模式", en: "The 6:30 Hybrid" },
-      "bolo+siumai": { zh: "茶餐廳滿月", en: "Cha Chaan Teng Full Moon" },
-      "chilli+yolk": { zh: "人事請勿追問", en: "HR Please Do Not Ask" },
-      "bolo+milktea": { zh: "港式下午茶意外", en: "Accidental Afternoon Tea" },
-      "lotus+osmanthus": { zh: "詩意但會遲到", en: "Poetic, Will Be Late" },
-      "biscuit+chilli": { zh: "週五 All-Hands", en: "Friday All-Hands" },
-      "osmanthus+yolk": { zh: "廣寒宮外送", en: "Moon Palace Delivery" },
-      "lotus+milktea": { zh: "傳統遇上奶茶", en: "Tradition Meets Milk Tea" },
-      "bolo+lotus": { zh: "兩岸菠蘿", en: "A Pineapple Incident" },
-      "siumai+yolk": { zh: "點心中秋", en: "Dim Sum Mid-Autumn" },
-      "biscuit+lotus": { zh: "會議室團圓", en: "Boardroom Reunion" }
-    };
-
-    const STATIONS = ["riddle0", "rabbit", "riddle1", "wugang", "cake"];
 
     const I18N = {
       en: {
         kicker: "Mid-Autumn 2026 · Staff celebration",
-        welcomeLead: "A five-minute Mid-Autumn mishap for every colleague, wherever you are. Light a slightly overworked lantern, chase the jade rabbit, interrupt Wu Gang’s endless sprint, invent an unlicensed mooncake, and still get HKAC’s blessing — plus a lucky ticket for the prize draw.",
-        chip1: "About 5 minutes", chip2: "Riddles + mini-games", chip3: "Everyone who finishes can win",
+        welcomeLead: "Hou Yi left extra suns in the sky. Chang’e is typing in the group chat. The jade rabbit is playing whack-a-mole with overtime. Five live scenes, about five minutes — then HKAC’s blessing and a lucky ticket for the prize draw.",
+        chip1: "About 5 minutes", chip2: "Arcade night, not a quiz", chip3: "Everyone who finishes can win",
         nameLabel: "Your name (as HR will see it)", startBtn: "Light my lantern",
-        privacy: "Your answers stay on this device. Only the lucky ticket you choose to email is sent to HR.",
-        lanternKicker: "Scene 0 · Contract lantern", lanternTitle: "Light the lantern",
-        lanternLead: "This lantern is on a short-term contract. Tap it. If it glows, Finance has not yet asked who approved the oil.",
-        lanternHint: "Tap the lantern. It has trust issues.", beginRiddles: "Enter the moon palace",
+        privacy: "Your play stays on this device. Only the lucky ticket you choose to email is sent to HR.",
+        lanternKicker: "Prologue · Contract lantern", lanternTitle: "Light the lantern",
+        lanternLead: "Night shift on the moon starts when this lantern agrees to work. Tap it. Finance has not yet asked who approved the oil.",
+        lanternHint: "Tap the lantern. It has trust issues.", beginRiddles: "Clock in on the moon",
         nextBtn: "Next scene", lastBtn: "Collect my blessing",
-        blessKicker: "Your unofficial mooncake & blessing",
+        blessKicker: "Your moon title & blessing",
         fromHkac: "With warm wishes from Hong Kong Arts Centre · 香港藝術中心 敬賀",
         ticketLabel: "Your lucky ticket",
-        emailHelp: "Send this ticket to HR in one click. Finishing the mishap is enough to enter the prize draw — the riddles are only one scene, not an exam.",
+        emailHelp: "Send this ticket to HR in one click. Finishing the night shift is enough to enter the prize draw — nobody is graded.",
         emailBtn: "Email my lucky ticket", copyBtn: "Copy ticket",
         how1: "Save this file to a shared drive (OneDrive, SharePoint, Google Drive, or the staff intranet) and copy the sharing link. Anyone with the link can play — no login.",
         how2: "Open Setup, enter the HR mailbox that will collect tickets, the prize, and the deadline.",
         how3: "Copy the invitation email and send it to all staff (~70 people). They play on a phone or computer, then click “Email my lucky ticket”.",
         how4: "After the deadline, search your inbox for the subject line [HKAC Mid-Autumn]. Paste those names into Lucky draw and pick one winner.",
-        how5: "If you cannot share a link, staff can still reply with their name plus an invented mooncake filling. Everyone who replies enters the draw.",
+        how5: "If you cannot share a link, staff can still reply with their name and a homemade moon title. Everyone who replies enters the draw.",
         drawIdle: "The lantern will choose one colleague.",
         hrLink: "HR organiser desk", staffLink: "Staff game",
         footer: "Hong Kong Arts Centre · 2 Harbour Road, Wan Chai · Internal staff activity, not a public programme.",
         needName: "Please enter your name so HR can recognise your ticket.",
         litHint: "It is glowing. Try not to look too proud.",
-        ok: "The lantern agrees.",
-        no: "A gentle miss — the answer is ",
-        score: "Scenes survived",
         mailReady: "This opens your email app with the ticket already filled in. Just press Send.",
         mailMissing: "HR has not set a mailbox yet. Copy your ticket and paste it into a reply to the invitation email.",
         copied: "Copied.",
         needTwo: "Add at least one name from the email replies.",
         chosen: "The lantern chooses",
-        speechR0: "<strong>Ah Lamp · 燈仔</strong> — I am a lantern intern. One riddle, then we go find the rabbit. It has been ‘in a meeting’ since the Tang dynasty.",
-        speechRabbit: "<strong>Ah Lamp</strong> — That is the jade rabbit. It is dodging the 3pm all-hands. Tap it five times. HR says this counts as team-building.",
-        speechR1: "<strong>Ah Lamp</strong> — Rabbit caught. It was holding a latte, not elixir. One more riddle while Chang’e pretends she has Wi‑Fi.",
-        speechWu: "<strong>Ah Lamp</strong> — Wu Gang’s osmanthus tree is the original never-ending sprint. Chop it. It will grow back. This is the joke. Also the job.",
-        speechCake: "<strong>Ah Lamp</strong> — Unlicensed mooncake lab. Pick two fillings. Health & Safety has already gone home.",
-        rabbitHud: "Rabbit meetings escaped",
-        rabbitHint: "Tap the rabbit. It will panic professionally.",
-        rabbitDone: "You caught it. It still declined the meeting.",
-        wuHud: "Backlog items created",
-        wuChop: "Chop the tree (again)",
-        wuDone: "HR has approved Wu Gang’s leave. The tree filed one last ticket and went to sleep.",
-        cakeHint: "Pick two fillings. Tradition is optional.",
-        cakeNeed: "Two fillings. We are not a buffet.",
-        cakeNamed: "Your official unofficial mooncake"
+        speechSuns: "<strong>Ah Lamp · 燈仔</strong> — Breaking: Hou Yi left spare suns in the sky. The mooncakes are sweating. Tap every sun before the timer dies. He is ‘getting coffee’.",
+        speechChat: "<strong>Ah Lamp</strong> — Group chat just exploded. There is no wrong reply. There is only your management style.",
+        speechMole: "<strong>Ah Lamp</strong> — Whack-a-rabbit. Tap 🐇, skip 🥮. The pastry is a decoy from the pantry.",
+        speechWu: "<strong>Ah Lamp</strong> — Boss fight. The tree regenerates. Chop faster than it heals, then approve Wu Gang’s leave.",
+        speechWheel: "<strong>Ah Lamp</strong> — Fortune wheel. This is how the moon palace does performance review. Spin it.",
+        sunsTitle: "Punch Hou Yi’s leftover suns",
+        sunsHint: "Tap ☀️ — 12 seconds. Eight is a perfect shift.",
+        sunsHud: "Suns retired",
+        sunsDone: "Sky is quieter. Hou Yi texted ‘on my way’.",
+        chatTitle: "Moon palace group chat",
+        chatHint: "Reply like a colleague, not a textbook.",
+        moleTitle: "Rabbit vs overtime",
+        moleHint: "Hit the rabbit, not the mooncake.",
+        moleHud: "Rabbits clocked out",
+        moleDone: "The rabbit still declined the meeting. Respect.",
+        moleMiss: "That was a snack. The rabbit laughed.",
+        wuTitle: "Wu Gang’s regenerating sprint",
+        wuHint: "The green bar heals. Panic professionally.",
+        wuChop: "CHOP",
+        wuLeave: "Approve 4,000 years of leave",
+        wuDone: "Leave approved. The tree is writing an incident report.",
+        wheelTitle: "Moon performance review",
+        wheelHint: "Tap spin. The wheel will decide your title.",
+        wheelSpin: "Spin the wheel",
+        wheelDone: "HR on the moon has filed your title."
       },
       zh: {
         kicker: "2026 中秋 · 同事同樂",
-        welcomeLead: "無論你在何處，約五分鐘。點亮一盞有點過勞的花燈、追玉兔、打斷吳剛的無盡 sprint、發明一隻無牌月餅，再收下香港藝術中心的祝福與抽獎幸運券。",
-        chip1: "約五分鐘", chip2: "燈謎 + 小遊戲", chip3: "完成即可參加抽獎",
+        welcomeLead: "后羿把多餘的太陽留在天上。嫦娥正在群組打字。玉兔在用加班打地鼠。五場即時小遊戲，約五分鐘，然後是香港藝術中心的祝福與抽獎幸運券。",
+        chip1: "約五分鐘", chip2: "夜班街機，不是測驗", chip3: "完成即可參加抽獎",
         nameLabel: "你的姓名（人事部將以此核對）", startBtn: "點亮我的花燈",
-        privacy: "你的答案只留在此裝置。只有你選擇寄出的幸運券會交給人事部。",
-        lanternKicker: "第 0 場 · 合約花燈", lanternTitle: "點亮花燈",
-        lanternLead: "這盞燈是短期合約。輕觸它。若它亮了，代表財務部還沒來問油費誰批的。",
-        lanternHint: "輕觸花燈。它有信任問題。", beginRiddles: "進入月宮",
+        privacy: "過程只留在此裝置。只有你選擇寄出的幸運券會交給人事部。",
+        lanternKicker: "序幕 · 合約花燈", lanternTitle: "點亮花燈",
+        lanternLead: "月宮夜班從這盞燈肯上班開始。輕觸它。財務部還沒來問油費誰批的。",
+        lanternHint: "輕觸花燈。它有信任問題。", beginRiddles: "到月宮打卡",
         nextBtn: "下一場", lastBtn: "收取祝福",
-        blessKicker: "你的無牌月餅與祝福",
+        blessKicker: "你的月宮頭銜與祝福",
         fromHkac: "香港藝術中心 敬賀 · With warm wishes from Hong Kong Arts Centre",
         ticketLabel: "你的幸運券",
-        emailHelp: "一鍵把幸運券電郵給人事部。完成這場鬧劇即可抽獎——燈謎只是其中一場，不是考試。",
+        emailHelp: "一鍵把幸運券電郵給人事部。完成夜班即可抽獎——沒有人會打分。",
         emailBtn: "電郵我的幸運券", copyBtn: "複製券號",
         how1: "把本檔放到共用雲端（OneDrive、SharePoint、Google Drive 或內聯網），複製分享連結。同事開啟即可玩，不必登入。",
         how2: "到「設定」填寫收取幸運券的人事郵箱、獎品及截止日期。",
         how3: "複製邀請電郵，一次發給約 70 位同事。他們用手機或電腦完成後，按「電郵我的幸運券」。",
         how4: "截止後，在收件箱搜尋主旨 [HKAC Mid-Autumn]，把姓名貼到「抽獎」，抽出一位得獎者。",
-        how5: "若未能分享連結，同事可回覆姓名加上自己發明的月餅餡。凡回覆者同樣可參加抽獎。",
+        how5: "若未能分享連結，同事可回覆姓名加上自製月宮頭銜。凡回覆者同樣可參加抽獎。",
         drawIdle: "花燈會為大家選出一位同事。",
         hrLink: "人事統籌台", staffLink: "同事遊戲",
         footer: "香港藝術中心 · 灣仔港灣道 2 號 · 內部員工活動，並非公開節目。",
         needName: "請先填寫姓名，人事部才能認出你的幸運券。",
         litHint: "燈已點亮。請克制得意的表情。",
-        ok: "花燈點頭。",
-        no: "差一點——答案是",
-        score: "存活場次",
         mailReady: "會開啟你的電郵程式，內容已填好，按下傳送即可。",
         mailMissing: "人事部尚未設定收件郵箱。請複製券號，回覆邀請電郵即可。",
         copied: "已複製。",
         needTwo: "請先從電郵回覆貼上至少一個姓名。",
         chosen: "花燈選中了",
-        speechR0: "<strong>燈仔 Ah Lamp</strong> —— 我是花燈實習生。先一題燈謎，再去抓兔子。牠從唐朝就「在開會」。",
-        speechRabbit: "<strong>燈仔</strong> —— 那是玉兔。牠在躲三點的 all-hands。點牠五次。人事說這叫團建。",
-        speechR1: "<strong>燈仔</strong> —— 抓到了。牠拿的是拿鐵，不是仙丹。嫦娥假裝月宮有 Wi‑Fi，我們再猜一題。",
-        speechWu: "<strong>燈仔</strong> —— 吳剛那棵桂樹，就是最早的 never-ending sprint。砍吧。它會再長。這就是笑話。也是工作。",
-        speechCake: "<strong>燈仔</strong> —— 無牌月餅工場。選兩種餡。職業安全的同事已經下班。",
-        rabbitHud: "兔子已逃過的會議",
-        rabbitHint: "點那隻兔。牠會很專業地驚慌。",
-        rabbitDone: "抓到了。牠還是拒絕了會議邀請。",
-        wuHud: "新增 backlog",
-        wuChop: "再砍一斧（反正會再長）",
-        wuDone: "人事已批吳剛放假。桂樹交了最後一張 ticket，睡了。",
-        cakeHint: "選兩種餡。傳統可以缺席。",
-        cakeNeed: "兩種就好。我們不是自助餐。",
-        cakeNamed: "你的官方非官方月餅"
+        speechSuns: "<strong>燈仔 Ah Lamp</strong> —— 突發：后羿把多餘太陽留在天上。月餅在流汗。計時結束前點掉太陽。他去「買咖啡」。",
+        speechChat: "<strong>燈仔</strong> —— 群組爆炸了。沒有標準答案，只有你的管理風格。",
+        speechMole: "<strong>燈仔</strong> —— 打地鼠。點 🐇，不要點 🥮。那塊餅是茶水間派來的內應。",
+        speechWu: "<strong>燈仔</strong> —— Boss 戰。桂樹會回血。砍得比它長得快，再批吳剛放假。",
+        speechWheel: "<strong>燈仔</strong> —— 轉盤。月宮的績效評核就是這樣。轉吧。",
+        sunsTitle: "打掉后羿忘收的太陽",
+        sunsHint: "點 ☀️ —— 12 秒。八個就是完美更。",
+        sunsHud: "已下班的太陽",
+        sunsDone: "天空安靜了。后羿回覆：在路上。",
+        chatTitle: "月宮群組",
+        chatHint: "像同事那樣回，不要像考卷。",
+        moleTitle: "玉兔對加班",
+        moleHint: "打兔子，放過月餅。",
+        moleHud: "已打卡下班的兔",
+        moleDone: "兔子還是拒絕了會議。尊敬。",
+        moleMiss: "那是零食。兔子笑了。",
+        wuTitle: "吳剛的回血 sprint",
+        wuHint: "綠條會自己長回來。請專業地慌。",
+        wuChop: "砍！",
+        wuLeave: "批准四千年年假",
+        wuDone: "假期已批。桂樹在寫 incident report。",
+        wheelTitle: "月宮績效評核",
+        wheelHint: "按下旋轉。轉盤會決定你的頭銜。",
+        wheelSpin: "旋轉轉盤",
+        wheelDone: "月宮人事已把你的頭銜存檔。"
       }
     };
 
@@ -619,17 +679,35 @@
       lang: "en",
       name: "",
       station: 0,
-      score: 0,
       ticket: "",
       locked: false,
       lit: false,
+      gen: 0,
+      timers: [],
+      suns: 0,
       rabbit: 0,
       chops: 0,
-      fillings: [],
-      cake: { zh: "", en: "" }
+      vibe: "kind",
+      title: { zh: "", en: "" }
     };
 
     function t(key) { return I18N[state.lang][key]; }
+
+    function clearTimers() {
+      (state.timers || []).forEach(id => clearInterval(id));
+      state.timers = [];
+      state.gen += 1;
+    }
+
+    function later(fn, ms) {
+      const gen = state.gen;
+      const id = setInterval(() => {
+        if (state.gen !== gen) { clearInterval(id); return; }
+        fn();
+      }, ms);
+      state.timers.push(id);
+      return id;
+    }
 
     function setLang(lang) {
       state.lang = lang;
@@ -653,7 +731,6 @@
           }
         }
       });
-      if (document.getElementById("screen-station").classList.contains("on")) runStation();
       if (document.getElementById("screen-blessing").classList.contains("on")) renderBlessing();
       refreshInvite();
       const note = document.getElementById("mailNote");
@@ -666,8 +743,8 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function showHr() { show("screen-hr"); }
-    function showWelcome() { show("screen-welcome"); }
+    function showHr() { clearTimers(); show("screen-hr"); }
+    function showWelcome() { clearTimers(); show("screen-welcome"); }
 
     function startHunt() {
       const name = document.getElementById("staffName").value.trim();
@@ -676,14 +753,15 @@
         alert(t("needName"));
         return;
       }
+      clearTimers();
       state.name = name;
       state.station = 0;
-      state.score = 0;
       state.lit = false;
+      state.suns = 0;
       state.rabbit = 0;
       state.chops = 0;
-      state.fillings = [];
-      state.cake = { zh: "", en: "" };
+      state.vibe = "kind";
+      state.title = { zh: "", en: "" };
       document.getElementById("beginRiddles").disabled = true;
       document.getElementById("lanternBody").setAttribute("fill", "#6a2a22");
       document.getElementById("flame").setAttribute("opacity", "0");
@@ -699,12 +777,18 @@
         const g = ctx.createGain();
         o.type = "sine";
         o.frequency.value = freq;
-        g.gain.value = 0.06;
+        g.gain.value = 0.07;
         o.connect(g); g.connect(ctx.destination);
         o.start();
-        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.1);
-        o.stop(ctx.currentTime + 1.1);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+        o.stop(ctx.currentTime + 0.35);
       } catch (e) { /* audio optional */ }
+    }
+
+    function shake() {
+      document.body.classList.remove("shake");
+      void document.body.offsetWidth;
+      document.body.classList.add("shake");
     }
 
     function lightLantern() {
@@ -740,6 +824,7 @@
     }
 
     function resetStationChrome() {
+      clearTimers();
       paintProgress();
       document.getElementById("qZh").textContent = "";
       document.getElementById("qEn").textContent = "";
@@ -751,196 +836,298 @@
       state.locked = false;
     }
 
-    function runStation() {
-      resetStationChrome();
-      const kind = STATIONS[state.station];
-      if (kind === "riddle0") renderRiddle(0, "speechR0");
-      else if (kind === "riddle1") renderRiddle(1, "speechR1");
-      else if (kind === "rabbit") renderRabbit();
-      else if (kind === "wugang") renderWugang();
-      else if (kind === "cake") renderCake();
-    }
-
-    function renderRiddle(idx, speechKey) {
-      document.getElementById("speech").innerHTML = t(speechKey);
-      const r = RIDDLES[idx];
-      document.getElementById("qZh").textContent = r.zh;
-      document.getElementById("qEn").textContent = r.en;
-      const box = document.createElement("div");
-      box.className = "opts";
-      r.options.forEach((opt, i) => {
-        const b = document.createElement("button");
-        b.type = "button";
-        b.className = "opt";
-        b.textContent = state.lang === "zh" ? opt.zh + "  ·  " + opt.en : opt.en + "  ·  " + opt.zh;
-        b.onclick = () => choose(idx, i, box);
-        box.appendChild(b);
-      });
-      document.getElementById("stBody").appendChild(box);
-    }
-
-    function choose(ridx, idx, box) {
-      if (state.locked) return;
+    function allowNext(msg) {
       state.locked = true;
-      const r = RIDDLES[ridx];
-      const buttons = [...box.children];
-      const correctIdx = r.options.findIndex(o => o.ok);
-      buttons.forEach((b, i) => {
-        b.disabled = true;
-        if (i === correctIdx) b.classList.add("correct");
-        if (i === idx && !r.options[i].ok) b.classList.add("wrong");
-      });
-      if (r.options[idx].ok) {
-        state.score += 1;
-        document.getElementById("feedback").textContent = r.roastOk[state.lang];
-        document.getElementById("feedback").style.color = "#2f7d4a";
-        chime(659.25);
-      } else {
-        document.getElementById("feedback").textContent = r.roastNo[state.lang];
-        document.getElementById("feedback").style.color = "#a33b2c";
-      }
+      document.getElementById("feedback").textContent = msg;
+      document.getElementById("feedback").style.color = "#2f7d4a";
       document.getElementById("nextBtn").style.display = "inline-flex";
     }
 
-    function renderRabbit() {
-      document.getElementById("speech").innerHTML = t("speechRabbit");
-      document.getElementById("qZh").textContent = state.lang === "zh" ? "抓那隻拒絕開會的玉兔" : "Catch the rabbit that declined the meeting";
-      document.getElementById("qEn").textContent = t("rabbitHint");
+    function runStation() {
+      resetStationChrome();
+      const kind = STATIONS[state.station];
+      if (kind === "suns") renderSuns();
+      else if (kind === "chat") renderChat();
+      else if (kind === "mole") renderMole();
+      else if (kind === "wugang") renderWugang();
+      else if (kind === "wheel") renderWheel();
+    }
+
+    function renderSuns() {
+      document.getElementById("speech").innerHTML = t("speechSuns");
+      document.getElementById("qZh").textContent = t("sunsTitle");
+      document.getElementById("qEn").textContent = t("sunsHint");
+      state.suns = 0;
+      const hud = document.createElement("div");
+      hud.className = "hud";
+      hud.innerHTML = "<span>" + t("sunsHud") + "</span><span id='sunCount'>0</span>";
+      const timer = document.createElement("div");
+      timer.className = "timer";
+      const bar = document.createElement("i");
+      timer.appendChild(bar);
+      const field = document.createElement("div");
+      field.className = "playfield arcade";
+      document.getElementById("stBody").appendChild(hud);
+      document.getElementById("stBody").appendChild(timer);
+      document.getElementById("stBody").appendChild(field);
+      const started = Date.now();
+      const duration = 12000;
+      bar.style.transition = "transform " + duration + "ms linear";
+      requestAnimationFrame(() => { bar.style.transform = "scaleX(0)"; });
+      const spawn = () => {
+        if (state.locked) return;
+        const sun = document.createElement("button");
+        sun.type = "button";
+        sun.className = "sun";
+        sun.textContent = "☀️";
+        sun.style.left = (8 + Math.random() * 78) + "%";
+        sun.style.top = (8 + Math.random() * 70) + "%";
+        sun.onclick = (e) => {
+          if (state.locked) return;
+          state.suns += 1;
+          document.getElementById("sunCount").textContent = String(state.suns);
+          const pop = document.createElement("span");
+          pop.className = "combo";
+          pop.textContent = "+" + state.suns;
+          pop.style.left = e.currentTarget.style.left;
+          pop.style.top = e.currentTarget.style.top;
+          field.appendChild(pop);
+          sun.remove();
+          chime(640 + state.suns * 30);
+          if (state.suns >= 8) endSuns();
+        };
+        field.appendChild(sun);
+        setTimeout(() => sun.remove(), 1100);
+      };
+      spawn();
+      later(spawn, 520);
+      const endSuns = () => {
+        if (state.locked) return;
+        clearTimers();
+        allowNext(t("sunsDone") + " (" + state.suns + ")");
+        chime(784);
+      };
+      const gen = state.gen;
+      setTimeout(() => { if (state.gen === gen) endSuns(); }, duration);
+    }
+
+    function renderChat() {
+      document.getElementById("speech").innerHTML = t("speechChat");
+      document.getElementById("qZh").textContent = t("chatTitle");
+      document.getElementById("qEn").textContent = t("chatHint");
+      let step = 0;
+      const log = document.createElement("div");
+      log.className = "chat";
+      const opts = document.createElement("div");
+      opts.className = "opts";
+      document.getElementById("stBody").appendChild(log);
+      document.getElementById("stBody").appendChild(opts);
+      const showStep = () => {
+        const c = CHAT[step];
+        const b = document.createElement("div");
+        b.className = "bubble";
+        b.innerHTML = "<b>" + c.who[state.lang] + "</b>" + c.text[state.lang];
+        log.appendChild(b);
+        log.scrollTop = log.scrollHeight;
+        opts.innerHTML = "";
+        c.opts.forEach(opt => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "opt";
+          btn.textContent = opt[state.lang];
+          btn.onclick = () => {
+            state.vibe = opt.vibe;
+            const me = document.createElement("div");
+            me.className = "bubble me";
+            me.textContent = opt[state.lang];
+            log.appendChild(me);
+            opts.innerHTML = "";
+            chime(520);
+            step += 1;
+            if (step < CHAT.length) setTimeout(showStep, 280);
+            else allowNext(state.lang === "zh" ? "群組已靜音。你可以去下一場。" : "Group chat muted. You may proceed.");
+          };
+          opts.appendChild(btn);
+        });
+      };
+      showStep();
+    }
+
+    function renderMole() {
+      document.getElementById("speech").innerHTML = t("speechMole");
+      document.getElementById("qZh").textContent = t("moleTitle");
+      document.getElementById("qEn").textContent = t("moleHint");
       state.rabbit = 0;
       const hud = document.createElement("div");
       hud.className = "hud";
-      hud.innerHTML = "<span>" + t("rabbitHud") + "</span><span id='rabbitCount'>0 / 5</span>";
-      const field = document.createElement("div");
-      field.className = "playfield";
-      const bunny = document.createElement("button");
-      bunny.type = "button";
-      bunny.className = "rabbit";
-      bunny.setAttribute("aria-label", "Jade rabbit");
-      bunny.textContent = "🐇";
-      const hop = () => {
-        bunny.style.left = (6 + Math.random() * 72) + "%";
-        bunny.style.top = (8 + Math.random() * 58) + "%";
-      };
-      hop();
-      bunny.onclick = () => {
-        if (state.locked) return;
-        state.rabbit += 1;
-        document.getElementById("rabbitCount").textContent = state.rabbit + " / 5";
-        chime(700 + state.rabbit * 40);
-        if (state.rabbit >= 5) {
-          state.locked = true;
-          bunny.disabled = true;
-          document.getElementById("feedback").textContent = t("rabbitDone");
-          document.getElementById("feedback").style.color = "#2f7d4a";
-          document.getElementById("nextBtn").style.display = "inline-flex";
-        } else {
-          hop();
-        }
-      };
-      field.appendChild(bunny);
+      hud.innerHTML = "<span>" + t("moleHud") + "</span><span id='moleCount'>0</span>";
+      const timer = document.createElement("div");
+      timer.className = "timer";
+      const bar = document.createElement("i");
+      timer.appendChild(bar);
+      const holes = document.createElement("div");
+      holes.className = "holes";
+      const pops = [];
+      for (let i = 0; i < 4; i++) {
+        const hole = document.createElement("button");
+        hole.type = "button";
+        hole.className = "hole";
+        const pop = document.createElement("span");
+        pop.className = "pop";
+        hole.appendChild(pop);
+        hole.onclick = () => {
+          if (state.locked || !pop.classList.contains("up")) return;
+          if (pop.dataset.k === "cake") {
+            document.getElementById("feedback").textContent = t("moleMiss");
+            document.getElementById("feedback").style.color = "#a33b2c";
+            shake();
+            pop.classList.remove("up");
+            return;
+          }
+          state.rabbit += 1;
+          document.getElementById("moleCount").textContent = String(state.rabbit);
+          pop.classList.remove("up");
+          chime(700);
+          if (state.rabbit >= 6) endMole();
+        };
+        holes.appendChild(hole);
+        pops.push(pop);
+      }
       document.getElementById("stBody").appendChild(hud);
-      document.getElementById("stBody").appendChild(field);
+      document.getElementById("stBody").appendChild(timer);
+      document.getElementById("stBody").appendChild(holes);
+      const duration = 14000;
+      bar.style.transition = "transform " + duration + "ms linear";
+      requestAnimationFrame(() => { bar.style.transform = "scaleX(0)"; });
+      later(() => {
+        pops.forEach(p => p.classList.remove("up"));
+        const pop = pops[Math.floor(Math.random() * pops.length)];
+        const cake = Math.random() < 0.28;
+        pop.dataset.k = cake ? "cake" : "rabbit";
+        pop.textContent = cake ? "🥮" : "🐇";
+        pop.classList.add("up");
+        setTimeout(() => pop.classList.remove("up"), 720);
+      }, 700);
+      const endMole = () => {
+        if (state.locked) return;
+        clearTimers();
+        pops.forEach(p => p.classList.remove("up"));
+        allowNext(t("moleDone") + " (" + state.rabbit + ")");
+      };
+      const gen = state.gen;
+      setTimeout(() => { if (state.gen === gen) endMole(); }, duration);
     }
 
     function renderWugang() {
       document.getElementById("speech").innerHTML = t("speechWu");
-      document.getElementById("qZh").textContent = state.lang === "zh" ? "吳剛的無盡 sprint" : "Wu Gang’s never-ending sprint";
-      document.getElementById("qEn").textContent = state.lang === "zh"
-        ? "斧落枝生。這不是 bug，是設定。"
-        : "The tree grows back. This is not a bug. It is the setting.";
+      document.getElementById("qZh").textContent = t("wuTitle");
+      document.getElementById("qEn").textContent = t("wuHint");
+      let hp = 100;
       state.chops = 0;
-      const hud = document.createElement("div");
-      hud.className = "hud";
-      hud.innerHTML = "<span>" + t("wuHud") + "</span><span id='chopCount'>0</span>";
+      const hpWrap = document.createElement("div");
+      hpWrap.className = "hp";
+      const hpBar = document.createElement("i");
+      hpWrap.appendChild(hpBar);
       const wrap = document.createElement("div");
       wrap.className = "tree-wrap";
       const tree = document.createElement("div");
       tree.className = "tree";
       tree.textContent = "🌳";
-      const chop = document.createElement("button");
-      chop.type = "button";
-      chop.className = "btn";
-      chop.textContent = t("wuChop");
-      chop.onclick = () => {
-        if (state.locked) return;
-        state.chops += 1;
-        tree.classList.remove("hit");
-        void tree.offsetWidth;
-        tree.classList.add("hit");
-        document.getElementById("chopCount").textContent = String(state.chops);
-        chime(220);
-        if (state.chops >= 5) {
-          state.locked = true;
-          chop.disabled = true;
-          tree.textContent = "🌲";
-          document.getElementById("feedback").textContent = t("wuDone");
-          document.getElementById("feedback").style.color = "#2f7d4a";
-          document.getElementById("nextBtn").style.display = "inline-flex";
-          chime(523.25);
-        }
-      };
       wrap.appendChild(tree);
       const row = document.createElement("div");
       row.className = "row";
       row.style.justifyContent = "center";
-      row.style.marginTop = "8px";
+      const chop = document.createElement("button");
+      chop.type = "button";
+      chop.className = "btn";
+      chop.textContent = t("wuChop");
+      const leave = document.createElement("button");
+      leave.type = "button";
+      leave.className = "btn ink";
+      leave.textContent = t("wuLeave");
+      leave.style.display = "none";
+      const paint = () => { hpBar.style.width = Math.max(0, hp) + "%"; };
+      paint();
+      chop.onclick = () => {
+        if (state.locked) return;
+        state.chops += 1;
+        hp = Math.max(0, hp - 22);
+        tree.classList.remove("hit");
+        void tree.offsetWidth;
+        tree.classList.add("hit");
+        paint();
+        chime(240);
+        shake();
+        if (hp <= 0) {
+          chop.disabled = true;
+          leave.style.display = "inline-flex";
+          leave.disabled = true;
+          clearTimers();
+          allowNext(t("wuDone"));
+        }
+      };
+      leave.onclick = () => {
+        if (state.locked && document.getElementById("nextBtn").style.display === "inline-flex") return;
+        allowNext(t("wuDone"));
+        leave.disabled = true;
+        chime(784);
+      };
       row.appendChild(chop);
-      document.getElementById("stBody").appendChild(hud);
+      row.appendChild(leave);
+      document.getElementById("stBody").appendChild(hpWrap);
       document.getElementById("stBody").appendChild(wrap);
       document.getElementById("stBody").appendChild(row);
+      later(() => {
+        if (hp > 0 && !state.locked) {
+          hp = Math.min(100, hp + 7);
+          paint();
+        }
+      }, 420);
+      const gen = state.gen;
+      setTimeout(() => {
+        if (state.gen !== gen || state.locked) return;
+        chop.disabled = true;
+        leave.style.display = "inline-flex";
+        leave.disabled = true;
+        allowNext(t("wuDone"));
+      }, 16000);
     }
 
-    function cakeNameFor(ids) {
-      const key = ids.slice().sort().join("+");
-      if (CAKE_NAMES[key]) return CAKE_NAMES[key];
-      const a = FILLINGS.find(f => f.id === ids[0]);
-      const b = FILLINGS.find(f => f.id === ids[1]);
-      return {
-        zh: (a && a.zh) + " × " + (b && b.zh),
-        en: "Unlicensed Mooncake: " + (a && a.en) + " × " + (b && b.en)
+    function renderWheel() {
+      document.getElementById("speech").innerHTML = t("speechWheel");
+      document.getElementById("qZh").textContent = t("wheelTitle");
+      document.getElementById("qEn").textContent = t("wheelHint");
+      const wrap = document.createElement("div");
+      wrap.className = "wheel-wrap";
+      const needle = document.createElement("div");
+      needle.className = "needle";
+      const wheel = document.createElement("div");
+      wheel.className = "wheel";
+      wrap.appendChild(needle);
+      wrap.appendChild(wheel);
+      const spinBtn = document.createElement("button");
+      spinBtn.type = "button";
+      spinBtn.className = "btn wide";
+      spinBtn.textContent = t("wheelSpin");
+      document.getElementById("stBody").appendChild(wrap);
+      document.getElementById("stBody").appendChild(spinBtn);
+      spinBtn.onclick = () => {
+        if (state.locked) return;
+        state.locked = true;
+        spinBtn.disabled = true;
+        const idx = Math.floor(Math.random() * TITLES.length);
+        const extra = 5 * 360 + (idx * 60) + 20;
+        wheel.style.setProperty("--spin", extra + "deg");
+        wheel.classList.remove("spin");
+        void wheel.offsetWidth;
+        wheel.classList.add("spin");
+        chime(400);
+        setTimeout(() => {
+          state.title = TITLES[idx];
+          allowNext(t("wheelDone") + " · " + state.title[state.lang]);
+          chime(880);
+        }, 4100);
       };
-    }
-
-    function renderCake() {
-      document.getElementById("speech").innerHTML = t("speechCake");
-      document.getElementById("qZh").textContent = state.lang === "zh" ? "無牌月餅工場" : "Unlicensed mooncake lab";
-      document.getElementById("qEn").textContent = t("cakeHint");
-      state.fillings = [];
-      const grid = document.createElement("div");
-      grid.className = "fillings";
-      const result = document.createElement("p");
-      result.className = "cake-result";
-      FILLINGS.forEach(f => {
-        const b = document.createElement("button");
-        b.type = "button";
-        b.className = "filling";
-        b.dataset.id = f.id;
-        b.textContent = state.lang === "zh" ? f.zh : f.en;
-        b.onclick = () => {
-          const i = state.fillings.indexOf(f.id);
-          if (i >= 0) state.fillings.splice(i, 1);
-          else if (state.fillings.length < 2) state.fillings.push(f.id);
-          [...grid.children].forEach(el => {
-            el.classList.toggle("on", state.fillings.includes(el.dataset.id));
-          });
-          if (state.fillings.length === 2) {
-            state.cake = cakeNameFor(state.fillings);
-            result.textContent = "🥮  " + (state.lang === "zh" ? state.cake.zh : state.cake.en);
-            document.getElementById("feedback").textContent = t("cakeNamed");
-            document.getElementById("feedback").style.color = "#2f7d4a";
-            document.getElementById("nextBtn").style.display = "inline-flex";
-            chime(783.99);
-          } else {
-            result.textContent = "";
-            document.getElementById("feedback").textContent = t("cakeNeed");
-            document.getElementById("feedback").style.color = "#5c5470";
-            document.getElementById("nextBtn").style.display = "none";
-          }
-        };
-        grid.appendChild(b);
-      });
-      document.getElementById("stBody").appendChild(grid);
-      document.getElementById("stBody").appendChild(result);
     }
 
     function advanceStation() {
@@ -951,7 +1138,6 @@
         finishHunt();
       }
     }
-
     function finishHunt() {
       const seed = state.name.replace(/\s+/g, "").slice(0, 3).toUpperCase() || "HK";
       const n = Math.floor(1000 + (Math.abs(hash(state.name + Date.now())) % 9000));
@@ -968,14 +1154,14 @@
     }
 
     function renderBlessing() {
-      const cake = state.lang === "zh" ? (state.cake.zh || "無牌月餅") : (state.cake.en || "an unlicensed mooncake");
+      const title = state.title[state.lang] || (state.lang === "zh" ? "月亮實習生" : "Moon intern");
       document.getElementById("helloName").textContent =
         (state.lang === "zh" ? "親愛的 " : "Dear ") + state.name;
       document.getElementById("blessingText").textContent = state.lang === "zh"
-        ? `你抓了仍在開會的玉兔，幫吳剛砍了 ${state.chops} 斧永遠長回來的桂樹，並發明了「${cake}」。香港藝術中心祝你中秋比行事曆更圓，inbox 比月亮更暗。`
-        : `You tapped a jade rabbit that was still in a meeting, chopped Wu Gang’s tree ${state.chops} times (it grew back), and invented “${cake}”. Hong Kong Arts Centre wishes you a rounder month than your calendar, and an inbox dimmer than the moon.`;
+        ? `你的月宮頭銜是「${title}」。今晚打掉 ${state.suns} 個太陽、讓 ${state.rabbit} 隻加班兔下班，並替吳剛砍了 ${state.chops} 斧。香港藝術中心祝你中秋比行事曆更圓，inbox 比月亮更暗。`
+        : `Your moon title is “${title}”. Tonight you retired ${state.suns} leftover suns, clocked out ${state.rabbit} overtime rabbits, and landed ${state.chops} chops on Wu Gang’s tree. Hong Kong Arts Centre wishes you a rounder month than your calendar, and an inbox dimmer than the moon.`;
       document.getElementById("ticketCode").textContent = state.ticket;
-      document.getElementById("scorePill").textContent = cake;
+      document.getElementById("scorePill").textContent = title;
       document.getElementById("mailNote").textContent = setup().email ? t("mailReady") : t("mailMissing");
     }
 
@@ -1004,12 +1190,12 @@
     function emailTicket() {
       const cfg = setup();
       const subject = "[HKAC Mid-Autumn] Lucky ticket " + state.ticket + " — " + state.name;
-      const cake = state.cake.en || state.cake.zh || "unlicensed mooncake";
+      const title = state.title.en || state.title.zh || "Moon intern";
       const body =
-        "Hello HR,\n\nI completed the HKAC Moonlit Lantern Hunt (moon palace overtime edition).\n\n" +
+        "Hello HR,\n\nI finished the HKAC moon palace night shift.\n\n" +
         "Name: " + state.name + "\n" +
         "Lucky ticket: " + state.ticket + "\n" +
-        "Unofficial mooncake: " + cake + "\n\n" +
+        "Moon title: " + title + "\n\n" +
         "Please include me in the Mid-Autumn lucky draw.\n\n" +
         "中秋快樂 · Happy Mid-Autumn Festival\n";
       if (!cfg.email) {
@@ -1023,8 +1209,8 @@
     }
 
     async function copyTicket() {
-      const cake = state.cake.en || state.cake.zh || "";
-      const text = state.name + " · " + state.ticket + (cake ? " · " + cake : "");
+      const title = state.title.en || state.title.zh || "";
+      const text = state.name + " · " + state.ticket + (title ? " · " + title : "");
       try { await navigator.clipboard.writeText(text); } catch (e) {
         const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
       }
@@ -1049,22 +1235,24 @@ Dear colleagues,
 
 This Mid-Autumn we cannot gather in one room — so the moon palace has opened a five-minute overtime shift.
 
-You are invited to Moonlit Lantern Hunt / 月宮加班夜: light a contract lantern, chase a jade rabbit that declined the all-hands, interrupt Wu Gang’s never-ending sprint, invent an unlicensed mooncake, and collect HKAC’s blessing plus a lucky ticket.
+You are invited to Moonlit Lantern Hunt / 月宮加班夜 — a five-minute arcade night, not a quiz.
+
+Punch leftover suns, reply in Chang’e’s group chat, whack the overtime rabbit (not the mooncake), beat Wu Gang’s regenerating tree, and spin your moon title. Then email HR your lucky ticket.
 
 How to join
 1. Open this link on your phone or computer: ${playLink}
 2. Type your name and play (~5 minutes, English and 中文).
-3. Click “Email my lucky ticket” (or reply to this email with your ticket code and mooncake name).
+3. Click “Email my lucky ticket” (or reply with your ticket code and moon title).
 
 Prize: ${cfg.prize || "a Mid-Autumn mooncake gift set"}
 Deadline: ${cfg.deadline || "[add date and time]"}
-Draw: one winner, chosen at random from everyone who sends a ticket. Finishing is enough — it is not an exam.
+Draw: one winner, chosen at random from everyone who sends a ticket. Finishing is enough.
 
-If the link will not open, reply with your name and two mooncake fillings of your choice (lotus, milk tea, meeting biscuits… we will not judge). You will still enter the draw.
+If the link will not open, reply with your name and a homemade moon title. You will still enter the draw.
 
 各位同事：
 
-中秋雖未能同桌，月宮仍請你加五分鐘班：點燈、追兔、幫吳剛砍那棵永遠長回來的樹、發明一隻無牌月餅。完成後把幸運券電郵人事部即可抽獎。獎品：${cfg.prize || "中秋月餅禮盒"}。截止：${cfg.deadline || "［請填日期時間］"}。凡完成者機會均等。
+這不是測驗。五分鐘街機夜班：打太陽、回嫦娥群組、打加班玉兔、幫吳剛砍會回血的樹、轉出你的月宮頭銜。完成後把幸運券電郵人事部即可抽獎。獎品：${cfg.prize || "中秋月餅禮盒"}。截止：${cfg.deadline || "［請填日期時間］"}。
 
 香港藝術中心祝大家中秋快樂、人月兩團圓。
 
