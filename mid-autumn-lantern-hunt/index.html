@@ -275,7 +275,7 @@
         <p class="tiny" id="loveNote" style="margin:12px 0 0"></p>
       </div>
       <div class="card" style="margin-top:16px">
-        <p style="margin:0 0 12px;color:#3e3558" data-i18n="emailHelp">Separately, email your lucky ticket to HR. Completing the viewing is enough to enter the draw.</p>
+        <p style="margin:0 0 12px;color:#3e3558" data-i18n="emailHelp">Separately, email your lucky ticket to HR. Reaching 150 points is enough to enter the draw.</p>
         <div class="row">
           <button class="btn" type="button" onclick="emailTicket()" data-i18n="emailBtn">Email my ticket to HR</button>
           <button class="btn ghost" type="button" onclick="copyTicket()" data-i18n="copyBtn">Copy ticket</button>
@@ -1044,7 +1044,7 @@
         const dear = who ? who + "：" : "";
         return (
           (dear ? dear + "\n\n" : "") +
-          "今晚在公司走了一場短的中秋賞月。燈下寫了一句，寄給你。\n\n" +
+          "今晚在公司坐了一回月餅枱。燈下寫了一句，寄給你。\n\n" +
           "「" + line + "」\n\n" +
           "未能同桌，仍共這一輪月。\n但願人長久，千里共嬋娟。\n\n" +
           state.name
@@ -1053,7 +1053,7 @@
       const dear = who ? "Dear " + who + "," : "Dear you,";
       return (
         dear + "\n\n" +
-        "I walked a short Mid-Autumn viewing at work tonight. This line is for you:\n\n" +
+        "I sat a short Mooncake Table at work tonight. This line is for you:\n\n" +
         "“" + line + "”\n\n" +
         "We are not at one table, and still under one moon.\n" +
         "但願人長久，千里共嬋娟。\n\n" +
