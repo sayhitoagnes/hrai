@@ -27,21 +27,22 @@ This is **not** a children’s tap-game. Hong Kong offices, and the H5 templates
 
 In-person lantern-making, fruit boxes, and scavenger hunts exist. They need a room or a kit. They do not fit **70 people who will not meet**, run **only by email**.
 
-**Designed for staff ~30 at an arts centre:** gallery / salon (ink, bone, gold hairline), literary 燈謎, one inscription, HKAC blessing. Not punch-the-sun, not whack-a-mole, not intern comics, not fortune-wheel job titles.
+**Designed for staff ~30 at an arts centre:** gallery / salon (ink, bone, gold hairline), the stranger facts of the night (mooncake cipher, jade-rabbit elixir, Tai Hang fire dragon), one inscription, a greeting you may email to someone you love, HKAC blessing. Not punch-the-sun, not whack-a-mole, not intern comics.
 
 ---
 
 ## What staff do (about 6 minutes)
 
 1. Enter name → **Enter the viewing room**.
-2. Light **one** lantern (calm, no office jokes).
+2. Light **one** lantern.
 3. Four lanterns:
-   - **I · Verse** — 張九齡《望月懷遠》：海上生明月，**天涯共此時**
-   - **II · Idiom** — 中秋菊開 → **花好月圓**
-   - **III · Cryptic** — 舉杯邀明月 → **賞光** (a real 燈謎, not a children’s riddle)
-   - **IV · Inscription** — write ≤ 40 characters. Optional prompts: 但願人長久 / 千里共嬋娟 / 燈火未闌人未散
+   - **I · The slip in the cake** — folk telling: mooncakes hid the **date of an uprising**
+   - **II · The rabbit’s night work** — the jade rabbit **pounds the elixir**, it does not bake
+   - **III · A Hong Kong night** — Tai Hang, Causeway Bay: **fire-dragon dance** for more than a century
+   - **IV · Inscription** — write ≤ 40 characters for someone you would rather be with. Prompts: 但願人長久 / 千里共嬋娟 / 燈火未闌人未散
 4. Closing card: **HKAC blessing**, their inscription, ticket `HKAC-MAF-…`
-5. **Email lucky ticket** (or Copy). Completing is enough. The three closed lanterns are a salon, not an exam.
+5. **Email a Mid-Autumn greeting** to someone they love (opens their own mail app; HR never sees that address).
+6. Separately, **email the lucky ticket to HR**. Completing is enough. The three closed lanterns are a salon, not an exam.
 
 ---
 
