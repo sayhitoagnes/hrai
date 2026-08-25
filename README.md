@@ -2,9 +2,9 @@
 
 ## Mid-Autumn staff activity
 
-Hong Kong Arts Centre internal celebration: **The Viewing Room / 賞月室**.
+Hong Kong Arts Centre internal celebration: **The Mooncake Table / 月餅枱**.
 
-Adult Mid-Autumn rooms (mooncake cipher, jade-rabbit elixir, Tai Hang fire dragon), one inscription, a greeting you may email to someone you love, and an HR lucky ticket — not a carnival tap-game.
+Cathay-style slice game (mooncakes and star fruit rise; avoid lucky tickets; reach 150), one inscription, a greeting you may email to someone you love, and an HR lucky ticket.
 
 Open this play link (GitHub’s file page is code, not the game):  
 https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html
