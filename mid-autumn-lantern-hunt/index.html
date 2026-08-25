@@ -127,6 +127,11 @@
     .btn.ghost {
       background: transparent; color: var(--cream); border: 1px solid rgba(255,255,255,.28); box-shadow: none;
     }
+    .card .btn.ghost {
+      color: var(--ink);
+      border: 1px solid #b7a88c;
+      background: #fffdf7;
+    }
     .btn.ink { background: var(--ink); color: var(--cream); box-shadow: none; }
     .btn.wide { width: 100%; }
     .row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
@@ -288,7 +293,7 @@
         <h2 class="serif" id="helloName" style="margin:14px 0 0;font-size:28px"></h2>
         <p class="poem" id="blessingText"></p>
         <p style="margin:16px 0 0;font-size:14px;color:#5c5470" data-i18n="fromHkac">With warm wishes from Hong Kong Arts Centre · 香港藝術中心 敬賀</p>
-        <div class="ticket">
+        <div class="ticket" id="ticketBox" role="button" tabindex="0" onclick="copyTicket()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();copyTicket();}">
           <span data-i18n="ticketLabel">Your lucky ticket</span>
           <code id="ticketCode"></code>
         </div>
@@ -674,8 +679,9 @@
         chime(659.25);
       } else {
         const ans = r.options[correctIdx];
+        const ansText = state.lang === "zh" ? ans.zh : ans.en;
         document.getElementById("feedback").textContent =
-          t("no") + (state.lang === "zh" ? ans.zh : ans.en) + "。";
+          t("no") + ansText + (state.lang === "zh" ? "。" : ".");
         document.getElementById("feedback").style.color = "#a33b2c";
       }
       document.getElementById("nextBtn").style.display = "inline-flex";
