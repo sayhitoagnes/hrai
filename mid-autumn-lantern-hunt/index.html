@@ -289,7 +289,8 @@
     }
     .playfield.arcade { height: 270px; }
     .sun {
-      position: absolute; font-size: 42px; border: 0; background: transparent; padding: 0; line-height: 1;
+      position: absolute; font-size: 54px; border: 0; background: transparent; padding: 6px; line-height: 1;
+      min-width: 56px; min-height: 56px;
       filter: drop-shadow(0 0 10px rgba(255,180,60,.8));
       animation: popin .18s ease;
     }
@@ -597,7 +598,7 @@
         speechWu: "<strong>Ah Lamp</strong> — Boss fight. The tree regenerates. Chop faster than it heals, then approve Wu Gang’s leave.",
         speechWheel: "<strong>Ah Lamp</strong> — Fortune wheel. This is how the moon palace does performance review. Spin it.",
         sunsTitle: "Punch Hou Yi’s leftover suns",
-        sunsHint: "Tap ☀️ — 12 seconds. Eight is a perfect shift.",
+        sunsHint: "Tap ☀️ — 16 seconds. Eight is a perfect shift.",
         sunsHud: "Suns retired",
         sunsDone: "Sky is quieter. Hou Yi texted ‘on my way’.",
         chatTitle: "Moon palace group chat",
@@ -653,7 +654,7 @@
         speechWu: "<strong>燈仔</strong> —— Boss 戰。桂樹會回血。砍得比它長得快，再批吳剛放假。",
         speechWheel: "<strong>燈仔</strong> —— 轉盤。月宮的績效評核就是這樣。轉吧。",
         sunsTitle: "打掉后羿忘收的太陽",
-        sunsHint: "點 ☀️ —— 12 秒。八個就是完美更。",
+        sunsHint: "點 ☀️ —— 16 秒。八個就是完美更。",
         sunsHud: "已下班的太陽",
         sunsDone: "天空安靜了。后羿回覆：在路上。",
         chatTitle: "月宮群組",
@@ -871,7 +872,7 @@
       document.getElementById("stBody").appendChild(timer);
       document.getElementById("stBody").appendChild(field);
       const started = Date.now();
-      const duration = 12000;
+      const duration = 16000;
       bar.style.transition = "transform " + duration + "ms linear";
       requestAnimationFrame(() => { bar.style.transform = "scaleX(0)"; });
       const spawn = () => {
@@ -897,10 +898,10 @@
           if (state.suns >= 8) endSuns();
         };
         field.appendChild(sun);
-        setTimeout(() => sun.remove(), 1100);
+        setTimeout(() => sun.remove(), 1500);
       };
       spawn();
-      later(spawn, 520);
+      later(spawn, 640);
       const endSuns = () => {
         if (state.locked) return;
         clearTimers();
@@ -996,7 +997,7 @@
       document.getElementById("stBody").appendChild(hud);
       document.getElementById("stBody").appendChild(timer);
       document.getElementById("stBody").appendChild(holes);
-      const duration = 14000;
+      const duration = 16000;
       bar.style.transition = "transform " + duration + "ms linear";
       requestAnimationFrame(() => { bar.style.transform = "scaleX(0)"; });
       later(() => {
@@ -1006,7 +1007,7 @@
         pop.dataset.k = cake ? "cake" : "rabbit";
         pop.textContent = cake ? "🥮" : "🐇";
         pop.classList.add("up");
-        setTimeout(() => pop.classList.remove("up"), 720);
+        setTimeout(() => pop.classList.remove("up"), 980);
       }, 700);
       const endMole = () => {
         if (state.locked) return;
