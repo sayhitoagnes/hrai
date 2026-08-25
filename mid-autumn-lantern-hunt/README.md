@@ -1,8 +1,15 @@
 # Moonlit Lantern Hunt · 藝心燈謎
 
-An internal Mid-Autumn activity for **Hong Kong Arts Centre** staff (~70 people, working apart). No one needs to meet in person. HR runs it by **email**. One winner is drawn for a prize.
+**Play in your browser (do not open the GitHub code view):**  
+https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html
 
-Open [`index.html`](index.html) in a browser to play, or add `#hr` to the address for the organiser desk.
+GitHub’s file page only shows source. The link above is the actual game. HR organiser desk: after the game loads, use the footer link, or add `#hr` to the end of that address.
+
+If you already have this folder on your computer, you can also double-click `index.html`. No install is needed.
+
+---
+
+An internal Mid-Autumn activity for **Hong Kong Arts Centre** staff (~70 people, working apart). No one needs to meet in person. HR runs it by **email**. One winner is drawn for a prize.
 
 ## What staff do (about 4 minutes)
 
