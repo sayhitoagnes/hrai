@@ -237,10 +237,10 @@
     <section id="screen-welcome" class="screen on">
       <p class="kicker" data-i18n="kicker">Mid-Autumn 2026 · Staff celebration</p>
       <h1 id="mainTitle">Moonlit Lantern Hunt<span>藝心燈謎 · 中秋祝福</span></h1>
-      <p class="lead" data-i18n="welcomeLead">A four-minute lantern riddle for every colleague, wherever you are. Light a lantern, answer six easy riddles, receive Hong Kong Arts Centre’s Mid-Autumn blessing, and email your lucky ticket to HR for the prize draw.</p>
+      <p class="lead" data-i18n="welcomeLead">A four-minute lantern riddle for every colleague, wherever you are. Light a lantern, try six Mid-Autumn riddles, receive Hong Kong Arts Centre’s blessing, and email your lucky ticket to HR for the prize draw.</p>
       <div class="meta">
         <span class="chip" data-i18n="chip1">About 4 minutes</span>
-        <span class="chip" data-i18n="chip2">6 easy riddles</span>
+        <span class="chip" data-i18n="chip2">6 lantern riddles</span>
         <span class="chip" data-i18n="chip3">Everyone who finishes can win</span>
       </div>
       <div class="card">
@@ -386,63 +386,63 @@
   <script>
     const RIDDLES = [
       {
-        zh: "圓如玉盤亮如燈，十五夜裡詩人吟。高掛天上非線牽，我是何物？",
-        en: "Round as a plate, bright as a lamp. Poets toast me on the fifteenth night. I hang in the sky, not from a string. What am I?",
+        zh: "無油無焰夜夜明，初三如眉十五盈。不是燈籠不是星，高懸碧空誰與爭？",
+        en: "No oil, no flame, yet I light the night. A brow on the third day, a full plate on the fifteenth. Not a lantern, not a star. What am I?",
         options: [
-          { zh: "花燈", en: "A lantern", ok: false },
+          { zh: "路燈", en: "A streetlamp", ok: false },
+          { zh: "螢火蟲", en: "A firefly", ok: false },
           { zh: "月亮", en: "The moon", ok: true },
-          { zh: "月餅", en: "A mooncake", ok: false },
-          { zh: "星星", en: "A star", ok: false }
+          { zh: "花燈", en: "A festival lantern", ok: false }
         ]
       },
       {
-        zh: "皮薄餡豐寄相思，中秋桌上必有之。切開分享情更密，我是何物？",
-        en: "I am a pastry of reunion. Families slice and share me under the full moon. What am I?",
+        zh: "圓臉金字不能讀，蓮蓉鹹黃藏內腹。中秋切開仍盼圓，不是湯圓不是粥。",
+        en: "My face is stamped with characters nobody needs to read. Lotus paste or a salted yolk hides inside. Cut me, and the table still hopes to stay round. I am not a tangyuan. What am I?",
         options: [
-          { zh: "蛋撻", en: "An egg tart", ok: false },
-          { zh: "年糕", en: "A New Year cake", ok: false },
-          { zh: "月餅", en: "A mooncake", ok: true },
-          { zh: "菠蘿包", en: "A pineapple bun", ok: false }
+          { zh: "湯圓", en: "A tangyuan", ok: false },
+          { zh: "粽子", en: "A rice dumpling", ok: false },
+          { zh: "蛋黃酥", en: "A yolk pastry", ok: false },
+          { zh: "月餅", en: "A mooncake", ok: true }
         ]
       },
       {
-        zh: "紙做衣裳火作心，小孩提我夜遊巡。中秋街上最繽紛，我是何物？",
-        en: "Paper or silk, a small light inside. Children carry me through the night streets. What am I?",
+        zh: "紙燈高掛廊簷下，謎面一出眾人猜。中秋此戲傳千年，所玩何事？",
+        en: "A paper light hangs from the eaves; a verse is posted and a crowd leans in to guess. This Mid-Autumn game is older than any office party. What is being played?",
         options: [
-          { zh: "花燈", en: "A lantern", ok: true },
-          { zh: "風箏", en: "A kite", ok: false },
-          { zh: "雨傘", en: "An umbrella", ok: false },
-          { zh: "鼓", en: "A drum", ok: false }
+          { zh: "猜燈謎", en: "Lantern riddles", ok: true },
+          { zh: "舞火龍", en: "A fire-dragon dance", ok: false },
+          { zh: "對春聯", en: "Matching New Year couplets", ok: false },
+          { zh: "行酒令", en: "A drinking-game verse", ok: false }
         ]
       },
       {
-        zh: "香港藝術中心座落港灣道 2 號。請問我們在哪一區臨海創作？",
-        en: "Hong Kong Arts Centre stands at 2 Harbour Road. In which district do we make art by the water?",
+        zh: "不吃月餅不上桌，終年搗藥廣寒窩。中秋抬頭或見我，卻非嫦娥是什麼？",
+        en: "I never sit at the reunion table. Year-round I pound medicine in the cold palace. On Mid-Autumn night you may spy me on the moon — I am not Chang’e. Who am I?",
         options: [
-          { zh: "中環", en: "Central", ok: false },
-          { zh: "尖沙咀", en: "Tsim Sha Tsui", ok: false },
-          { zh: "灣仔", en: "Wan Chai", ok: true },
-          { zh: "沙田", en: "Sha Tin", ok: false }
+          { zh: "后羿", en: "Hou Yi", ok: false },
+          { zh: "玉兔", en: "The jade rabbit", ok: true },
+          { zh: "吳剛", en: "Wu Gang", ok: false },
+          { zh: "牛郎", en: "The Cowherd", ok: false }
         ]
       },
       {
-        zh: "展覽、放映、表演、學習，四藝同堂是我家。我們是？",
-        en: "Exhibition, screening, performance, and learning under one roof. Who are we?",
+        zh: "后羿射日妻偷藥，一粒仙丹天上落。十五夜裡人最念，她是哪位？",
+        en: "Hou Yi shot the suns; his wife swallowed the elixir meant to be shared and rose. On the fifteenth night, whose name do people still call when they look up?",
         options: [
-          { zh: "一間戲院", en: "A cinema only", ok: false },
-          { zh: "一間餐廳", en: "A restaurant", ok: false },
-          { zh: "香港藝術中心", en: "Hong Kong Arts Centre", ok: true },
-          { zh: "一間書店", en: "A bookshop only", ok: false }
+          { zh: "織女", en: "Zhinü, the Weaver Girl", ok: false },
+          { zh: "女媧", en: "Nüwa", ok: false },
+          { zh: "西王母", en: "The Queen Mother of the West", ok: false },
+          { zh: "嫦娥", en: "Chang’e", ok: true }
         ]
       },
       {
-        zh: "廣寒宮裡住一人，玉兔搗藥伴終身。中秋人人望明月，她是哪位？",
-        en: "She lives in the moon palace, with a jade rabbit pounding medicine. In the legend, who is she?",
+        zh: "月中伐桂無盡時，斧落枝生永如斯。中秋傳說那位樵夫，究竟是誰？",
+        en: "He chops an osmanthus tree on the moon; each wound closes as fast as the axe falls. In the Mid-Autumn legend, who is this woodcutter?",
         options: [
-          { zh: "媽祖", en: "Mazu", ok: false },
-          { zh: "嫦娥", en: "Chang’e", ok: true },
-          { zh: "觀音", en: "Guan Yin", ok: false },
-          { zh: "玉皇大帝", en: "The Jade Emperor", ok: false }
+          { zh: "后羿", en: "Hou Yi", ok: false },
+          { zh: "魯班", en: "Lu Ban", ok: false },
+          { zh: "吳剛", en: "Wu Gang", ok: true },
+          { zh: "愚公", en: "the Foolish Old Man", ok: false }
         ]
       }
     ];
@@ -463,8 +463,8 @@
     const I18N = {
       en: {
         kicker: "Mid-Autumn 2026 · Staff celebration",
-        welcomeLead: "A four-minute lantern riddle for every colleague, wherever you are. Light a lantern, answer six easy riddles, receive Hong Kong Arts Centre’s Mid-Autumn blessing, and email your lucky ticket to HR for the prize draw.",
-        chip1: "About 4 minutes", chip2: "6 easy riddles", chip3: "Everyone who finishes can win",
+        welcomeLead: "A four-minute lantern riddle for every colleague, wherever you are. Light a lantern, try six Mid-Autumn riddles, receive Hong Kong Arts Centre’s blessing, and email your lucky ticket to HR for the prize draw.",
+        chip1: "About 4 minutes", chip2: "6 lantern riddles", chip3: "Everyone who finishes can win",
         nameLabel: "Your name (as HR will see it)", startBtn: "Light my lantern",
         privacy: "Your answers stay on this device. Only the lucky ticket you choose to email is sent to HR.",
         lanternKicker: "Step 1 of 3", lanternTitle: "Light the lantern",
@@ -497,8 +497,8 @@
       },
       zh: {
         kicker: "2026 中秋 · 同事同樂",
-        welcomeLead: "無論你在何處，四分鐘即可完成。點亮花燈、答六題淺易燈謎、收下香港藝術中心的中秋祝福，再把幸運券電郵給人事部參加抽獎。",
-        chip1: "約四分鐘", chip2: "六題淺易燈謎", chip3: "完成即可參加抽獎",
+        welcomeLead: "無論你在何處，四分鐘即可完成。點亮花燈、試六題中秋燈謎、收下香港藝術中心的祝福，再把幸運券電郵給人事部參加抽獎。",
+        chip1: "約四分鐘", chip2: "六題中秋燈謎", chip3: "完成即可參加抽獎",
         nameLabel: "你的姓名（人事部將以此核對）", startBtn: "點亮我的花燈",
         privacy: "你的答案只留在此裝置。只有你選擇寄出的幸運券會交給人事部。",
         lanternKicker: "第 1 步，共 3 步", lanternTitle: "點亮花燈",
@@ -794,7 +794,7 @@ You are invited to Moonlit Lantern Hunt / 藝心燈謎, a four-minute online rid
 
 How to join
 1. Open this link on your phone or computer: ${playLink}
-2. Type your name, tap the lantern, and answer 6 easy riddles (English and 中文 on every screen).
+2. Type your name, tap the lantern, and try 6 Mid-Autumn riddles (English and 中文 on every screen).
 3. Receive HKAC’s Mid-Autumn blessing and a lucky ticket.
 4. Click “Email my lucky ticket” (or reply to this email with your ticket code).
 
@@ -804,12 +804,12 @@ Draw: one winner, chosen at random from everyone who sends a ticket. The riddles
 
 If the link will not open, reply to this email with your name and answers to the six riddles below. You will still enter the draw.
 
-1. Round as a plate, bright as a lamp, toasted by poets on the fifteenth night. What am I?
-2. The pastry families slice and share under the full moon. What am I?
-3. Paper or silk, a small light inside, carried through the night streets. What am I?
-4. HKAC stands at 2 Harbour Road. Which district?
-5. Exhibition, screening, performance, and learning under one roof. Who are we?
-6. She lives in the moon palace with a jade rabbit. Who is she?
+1. No oil, no flame, yet I light the night. A brow on the third, a plate on the fifteenth. Not a lantern, not a star. What am I?
+2. Stamped characters, lotus or salted yolk inside; cut me and the table still hopes to stay round. I am not a tangyuan. What am I?
+3. A paper light on the eaves, a verse posted, a crowd guessing. What Mid-Autumn game is this?
+4. I pound medicine on the moon and never join the supper. I am not Chang’e. Who am I?
+5. Hou Yi shot the suns; his wife swallowed the elixir and rose. Whose name do we call on the fifteenth night?
+6. He chops an osmanthus tree on the moon; the wound closes as fast as the axe. Who is the woodcutter?
 
 各位同事：
 

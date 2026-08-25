@@ -14,7 +14,7 @@ An internal Mid-Autumn activity for **Hong Kong Arts Centre** staff (~70 people,
 ## What staff do (about 4 minutes)
 
 1. Open the link from the HR email (phone or computer).
-2. Enter their name, tap the lantern, and answer **6 easy bilingual riddles** (moon, mooncake, lantern, Wan Chai, HKAC, Chang’e).
+2. Enter their name, tap the lantern, and try **6 bilingual Mid-Autumn riddles** (moon, mooncake, lantern riddles, jade rabbit, Chang’e, Wu Gang).
 3. Receive HKAC’s Mid-Autumn blessing and a lucky ticket such as `HKAC-MAF-CHA4821`.
 4. Click **Email my lucky ticket** — their mail app opens with the ticket already filled in. They press Send.
 
