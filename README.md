@@ -4,7 +4,7 @@
 
 Hong Kong Arts Centre internal celebration: **The Mooncake Puzzle / 月餅謎局**.
 
-Cathay-style matching puzzle (swap neighbouring cakes, three in a line, reach 400), one inscription, a greeting you may email to someone you love, and an HR lucky ticket.
+Cathay-style matching puzzle (swap neighbouring cakes, three in a line, reach 200), one inscription, a greeting you may email to someone you love, and an HR lucky ticket.
 
 Open this play link (GitHub’s file page is code, not the game):  
 https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html

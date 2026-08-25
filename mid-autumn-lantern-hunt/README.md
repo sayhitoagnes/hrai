@@ -2,7 +2,7 @@
 
 Async Mid-Autumn activity for about **70 remote staff** of **Hong Kong Arts Centre**. Average age ~**30**. Gender mixed. People do not meet in person.
 
-The activity is Cathay’s **mooncake matching puzzle** (not the later swipe-to-slice Chop game), dressed for HKAC (ink, bone, gold). Reach **400 points**, write one line, email a greeting if you wish, then send a lucky ticket to HR.
+The activity is Cathay’s **mooncake matching puzzle** (not the later swipe-to-slice Chop game), dressed for HKAC (ink, bone, gold). Reach **200 points**, write one line, email a greeting if you wish, then send a lucky ticket to HR.
 
 **Play (staff):** [Open the puzzle](https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html)
 
@@ -19,8 +19,8 @@ Cathay’s 2024 Mid-Autumn CRM game (Flarie jewel / matching): line up pieces, h
 - Five cakes: lotus, red bean, yolk, snow skin, tea
 - Tap two **neighbours** to swap
 - Three in a row or column clear; cascades score more
-- **20 moves**, target **400**
-- You may try another board. Reaching 400 enters the draw equally — not a ranking
+- **25 moves**, target **200**
+- You may try another board. Reaching 200 enters the draw equally — not a ranking
 
 Then: **題燈**, a greeting you may email to someone you love, and the HR ticket.
 
@@ -30,7 +30,7 @@ Then: **題燈**, a greeting you may email to someone you love, and the HR ticke
 
 1. Name → **Open the puzzle**.
 2. Light **one** lantern.
-3. Match three until **400**.
+3. Match three until **200**.
 4. Write ≤ 40 characters (prompts: 但願人長久 / 千里共嬋娟 / 燈火未闌人未散).
 5. Closing card: **HKAC blessing**, inscription, ticket `HKAC-MAF-…`
 6. **Email a greeting** to someone they love (own mail app; HR never sees that address).

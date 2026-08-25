@@ -143,14 +143,17 @@
     .play-stage {
       position: relative; background: radial-gradient(circle at 50% 120%, #243044 0%, #0c1018 55%);
       border: 1px solid rgba(176,137,58,.35); overflow: hidden;
+      min-height: 420px;
     }
     .board {
       display: grid; grid-template-columns: repeat(6, 1fr); gap: 7px;
-      padding: 14px; max-width: 460px; margin: 0 auto;
+      padding: 14px; width: 100%; max-width: 460px; margin: 0 auto;
+      min-height: 392px;
     }
     .tile {
-      aspect-ratio: 1; border: 0; border-radius: 50%; padding: 0;
-      background: transparent; position: relative;
+      aspect-ratio: 1; border: 0; border-radius: 18%; padding: 4px;
+      background: transparent; position: relative; min-width: 0; min-height: 44px;
+      touch-action: manipulation;
     }
     .tile:disabled { cursor: default; }
     .tile.on { box-shadow: 0 0 0 3px #d4c08a; }
@@ -175,8 +178,9 @@
     .cake.k4 { background: radial-gradient(circle at 35% 30%, #c8d4a8, #6a7a48 62%, #3e4a28); }
     .cake.k4:after { background: #9aaa68; }
     .play-overlay {
-      position: absolute; inset: 0; background: rgba(12,16,24,.88);
+      position: absolute; inset: 0; min-height: 420px; background: rgba(12,16,24,.92);
       display: flex; align-items: center; justify-content: center; padding: 22px;
+      z-index: 3;
     }
     .play-overlay.hide { display: none; }
     .play-overlay .inner { max-width: 28rem; text-align: left; color: #fbf7ef; }
@@ -208,10 +212,10 @@
     <section id="screen-welcome" class="screen on">
       <p class="kicker" data-i18n="kicker">Mid-Autumn 2026 · Staff puzzle</p>
       <h1 id="mainTitle">The Mooncake Puzzle<span>月餅謎局</span></h1>
-      <p class="lead" data-i18n="welcomeLead">Cathay’s Mid-Autumn puzzle, dressed for Hong Kong Arts Centre: five kinds of cake on a board. Tap two neighbours to swap. Line up three of a kind. Reach 400 points to enter the draw — you may try another board. Then write one line and, if you wish, email it as a greeting to someone you love.</p>
+      <p class="lead" data-i18n="welcomeLead">Cathay’s Mid-Autumn puzzle, dressed for Hong Kong Arts Centre: five kinds of cake on a board. Tap two neighbours to swap. Line up three of a kind. Reach 200 points to enter the draw — you may try another board. Then write one line and, if you wish, email it as a greeting to someone you love.</p>
       <div class="meta">
         <span class="chip" data-i18n="chip1">About 6 minutes</span>
-        <span class="chip" data-i18n="chip2">Match three · 400</span>
+        <span class="chip" data-i18n="chip2">Match three · 200</span>
         <span class="chip" data-i18n="chip3">A greeting · one draw</span>
       </div>
       <div class="card">
@@ -246,10 +250,10 @@
     <section id="screen-play" class="screen">
       <p class="kicker" data-i18n="playKicker">The board</p>
       <h1 data-i18n="playTitle">Match three cakes<span>三連成餅</span></h1>
-      <p class="lead" data-i18n="playLead">Tap two neighbouring cakes to swap. Three in a line clear. Reach 400. The draw is not a ranking — everyone who reaches the score has an equal chance.</p>
+      <p class="lead" data-i18n="playLead">Tap two neighbouring cakes to swap. Three in a line clear. Reach 200. The draw is not a ranking — everyone who reaches the score has an equal chance.</p>
       <div class="hud">
-        <span>Score <b id="hudScore">0</b> / 400</span>
-        <span>Moves <b id="hudMoves">20</b></span>
+        <span>Score <b id="hudScore">0</b> / 200</span>
+        <span>Moves <b id="hudMoves">25</b></span>
       </div>
       <div class="play-stage">
         <div class="board" id="puzzleBoard" role="grid" aria-label="Mooncake puzzle"></div>
@@ -303,7 +307,7 @@
         <p class="tiny" id="loveNote" style="margin:12px 0 0"></p>
       </div>
       <div class="card" style="margin-top:16px">
-        <p style="margin:0 0 12px;color:#3e3558" data-i18n="emailHelp">Separately, email your lucky ticket to HR. Reaching 400 points is enough to enter the draw.</p>
+        <p style="margin:0 0 12px;color:#3e3558" data-i18n="emailHelp">Separately, email your lucky ticket to HR. Reaching 200 points is enough to enter the draw.</p>
         <div class="row">
           <button class="btn" type="button" onclick="emailTicket()" data-i18n="emailBtn">Email my ticket to HR</button>
           <button class="btn ghost" type="button" onclick="copyTicket()" data-i18n="copyBtn">Copy ticket</button>
@@ -329,7 +333,7 @@
           <li data-i18n="how4">After the deadline, search the inbox for [HKAC Mid-Autumn]. Paste names into the draw.</li>
           <li data-i18n="how5">If a link cannot be shared, staff may reply with a lantern inscription of their own. Every reply still enters the draw.</li>
         </ol>
-        <p class="tiny" style="margin:16px 0 0">Fair play: everyone who reaches 400 points has an equal chance. The score is for the evening, not a ranking.</p>
+        <p class="tiny" style="margin:16px 0 0">Fair play: everyone who reaches 200 points has an equal chance. The score is for the evening, not a ranking.</p>
       </div>
       <div id="hr-setup" class="card" hidden>
         <div class="grid-2">
@@ -376,8 +380,8 @@
   </div>
 
   <script>
-    const TARGET = 400;
-    const MOVES = 20;
+    const TARGET = 200;
+    const MOVES = 25;
     const COLS = 6;
     const ROWS = 6;
     const KINDS = 5;
@@ -390,27 +394,27 @@
     const I18N = {
       en: {
         kicker: "Mid-Autumn 2026 · Staff puzzle",
-        welcomeLead: "Cathay’s Mid-Autumn puzzle, dressed for Hong Kong Arts Centre: five kinds of cake on a board. Tap two neighbours to swap. Line up three of a kind. Reach 400 points to enter the draw — you may try another board. Then write one line and, if you wish, email it as a greeting to someone you love.",
-        chip1: "About 6 minutes", chip2: "Match three · 400", chip3: "A greeting · one draw",
+        welcomeLead: "Cathay’s Mid-Autumn puzzle, dressed for Hong Kong Arts Centre: five kinds of cake on a board. Tap two neighbours to swap. Line up three of a kind. Reach 200 points to enter the draw — you may try another board. Then write one line and, if you wish, email it as a greeting to someone you love.",
+        chip1: "About 6 minutes", chip2: "Match three · 200", chip3: "A greeting · one draw",
         nameLabel: "Name, as HR will see it", startBtn: "Open the puzzle",
         privacy: "Your score stays on this device. The lucky ticket goes to HR only if you send it. A greeting to someone you love opens your own mail app — HKAC never sees their address.",
         lanternKicker: "Prologue", lanternTitle: "Light one lantern",
         lanternLead: "A single lantern is enough. Then the board is laid.",
         lanternHint: "Touch the lantern", beginRiddles: "To the puzzle",
         playKicker: "The board", playTitle: "Match three cakes",
-        playLead: "Tap two neighbouring cakes to swap. Three in a line clear. Reach 400. The draw is not a ranking — everyone who reaches the score has an equal chance.",
+        playLead: "Tap two neighbouring cakes to swap. Three in a line clear. Reach 200. The draw is not a ranking — everyone who reaches the score has an equal chance.",
         playBriefTitle: "How the puzzle works",
-        playBrief: "Five cakes: lotus, red bean, yolk, snow skin, tea. Tap one, then a neighbour, to swap. Three in a row or column clear. Cascades score more. Twenty moves. Four hundred points.",
+        playBrief: "Five cakes: lotus, red bean, yolk, snow skin, tea. Tap one, then a neighbour, to swap. Three in a row or column clear. Cascades score more. Twenty-five moves. Two hundred points.",
         playStart: "Lay the board",
         playAgain: "Another board",
-        playFail: "The board is quiet. Try another — the draw waits for 400.",
+        playFail: "The board is quiet. Try another — the draw waits for 200.",
         playWin: "The pattern holds. Write one line, then send a greeting if you wish.",
         playContinue: "Write a lantern line",
         nextBtn: "Continue", lastBtn: "Receive the closing card",
         blessKicker: "Closing card",
         fromHkac: "Hong Kong Arts Centre · 香港藝術中心",
         ticketLabel: "Lucky ticket",
-        emailHelp: "Separately, email your lucky ticket to HR. Reaching 400 points is enough to enter the draw.",
+        emailHelp: "Separately, email your lucky ticket to HR. Reaching 200 points is enough to enter the draw.",
         emailBtn: "Email my ticket to HR", copyBtn: "Copy ticket",
         how1: "Place this file on a shared drive and copy the link. No login is required.",
         how2: "In Setup, enter the HR mailbox, prize, and deadline.",
@@ -446,27 +450,27 @@
       },
       zh: {
         kicker: "2026 中秋 · 同事月餅謎局",
-        welcomeLead: "國泰中秋的配對謎局，換成香港藝術中心的枱面。五種月餅。點相鄰兩顆對調。三顆連成一線即消去。滿 400 分即可抽獎，可換一盤再試。然後自題一句，也可電郵給你想念的人。",
-        chip1: "約六分鐘", chip2: "三連 · 400 分", chip3: "一封問候 · 一次抽獎",
+        welcomeLead: "國泰中秋的配對謎局，換成香港藝術中心的枱面。五種月餅。點相鄰兩顆對調。三顆連成一線即消去。滿 200 分即可抽獎，可換一盤再試。然後自題一句，也可電郵給你想念的人。",
+        chip1: "約六分鐘", chip2: "三連 · 200 分", chip3: "一封問候 · 一次抽獎",
         nameLabel: "姓名（人事部將以此核對）", startBtn: "打開謎局",
         privacy: "分數只留在此裝置。券號只在你選擇寄出時交給人事部。問候信經你自己的電郵程式寄出，藝術中心不會看到對方地址。",
         lanternKicker: "序", lanternTitle: "點一盞燈",
         lanternLead: "一盞即夠。然後擺盤。",
         lanternHint: "輕觸花燈", beginRiddles: "到謎局",
         playKicker: "棋盤", playTitle: "三連成餅",
-        playLead: "點相鄰兩顆對調。三顆成線即消。滿 400 分。抽獎不論高低分，達標者機會均等。",
+        playLead: "點相鄰兩顆對調。三顆成線即消。滿 200 分。抽獎不論高低分，達標者機會均等。",
         playBriefTitle: "謎局規則",
-        playBrief: "蓮蓉、豆沙、蛋黃、冰皮、茶香。先點一顆，再點鄰居，即可對調。橫或直三連消去。連消加分。二十步。四百分。",
+        playBrief: "蓮蓉、豆沙、蛋黃、冰皮、茶香。先點一顆，再點鄰居，即可對調。橫或直三連消去。連消加分。二十五步。兩百分。",
         playStart: "擺盤",
         playAgain: "另擺一盤",
-        playFail: "這盤靜了。再來一盤——抽獎等的是 400 分。",
+        playFail: "這盤靜了。再來一盤——抽獎等的是 200 分。",
         playWin: "格局已成。寫一句燈語，若願意，再寄問候。",
         playContinue: "題一句燈",
         nextBtn: "繼續", lastBtn: "收取結語卡",
         blessKicker: "結語卡",
         fromHkac: "香港藝術中心 · Hong Kong Arts Centre",
         ticketLabel: "幸運券",
-        emailHelp: "另外，把券號電郵人事部。滿 400 分即可抽獎。",
+        emailHelp: "另外，把券號電郵人事部。滿 200 分即可抽獎。",
         emailBtn: "電郵券號給人事部", copyBtn: "複製券號",
         how1: "把本檔放到共用雲端並複製連結。不必登入。",
         how2: "在設定填寫人事郵箱、獎品與截止時間。",
@@ -604,6 +608,11 @@
     function beginHunt() {
       if (!state.lit) return;
       show("screen-play");
+      game.board = freshBoard();
+      game.score = 0;
+      game.moves = MOVES;
+      game.running = false;
+      paintBoard();
       showPlayOverlay("brief");
       paintHud();
     }
@@ -747,7 +756,6 @@
     }
 
     function startPuzzle() {
-      stopPuzzle();
       game.running = true;
       game.score = 0;
       game.moves = MOVES;
@@ -787,9 +795,16 @@
 
     function trySwap(a, b) {
       if (!wouldMatch(game.board, a, b)) {
+        const t = game.board[a]; game.board[a] = game.board[b]; game.board[b] = t;
         game.sel = -1;
         paintBoard();
         chime(196);
+        game.busy = true;
+        setTimeout(() => {
+          const u = game.board[a]; game.board[a] = game.board[b]; game.board[b] = u;
+          game.busy = false;
+          paintBoard();
+        }, 220);
         return;
       }
       const t = game.board[a]; game.board[a] = game.board[b]; game.board[b] = t;
@@ -1040,7 +1055,7 @@
 
 Dear colleagues,
 
-Hong Kong Arts Centre invites you to The Mooncake Puzzle / 月餅謎局 — Cathay’s matching puzzle in our own register: five cakes on a board, swap neighbours, three in a line clear. Reach 400 points (you may try another board). Then write one line. You may email that line as a greeting to someone you love. Reaching the score enters the prize draw.
+Hong Kong Arts Centre invites you to The Mooncake Puzzle / 月餅謎局 — Cathay’s matching puzzle in our own register: five cakes on a board, swap neighbours, three in a line clear. Reach 200 points (you may try another board). Then write one line. You may email that line as a greeting to someone you love. Reaching the score enters the prize draw.
 
 1. Open: ${playLink}
 2. Enter your name, light the lantern, play the puzzle.
@@ -1056,7 +1071,7 @@ If the link will not open, reply with your name and one lantern line of your own
 
 各位同事：
 
-香港藝術中心誠邀參加「月餅謎局」：五種月餅對調，三連即消，滿 400 分（可換盤再試），再自題一句。結尾可把這句電郵給你想念的人。完成後把券號電郵人事部即可抽獎。獎品：${cfg.prize || "中秋月餅禮盒"}。截止：${cfg.deadline || "［請填日期時間］"}。
+香港藝術中心誠邀參加「月餅謎局」：五種月餅對調，三連即消，滿 200 分（可換盤再試），再自題一句。結尾可把這句電郵給你想念的人。完成後把券號電郵人事部即可抽獎。獎品：${cfg.prize || "中秋月餅禮盒"}。截止：${cfg.deadline || "［請填日期時間］"}。
 
 Hong Kong Arts Centre
 2 Harbour Road, Wan Chai
