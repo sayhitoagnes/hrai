@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Mooncake Puzzle · 月餅謎局 | Hong Kong Arts Centre</title>
-  <meta name="description" content="A staff Mid-Autumn mooncake pair puzzle for Hong Kong Arts Centre: find eight pairs, write one line, email a greeting, and send a lucky ticket to HR.">
+  <title>Mooncake Puzzle · 燈謎 | Hong Kong Arts Centre</title>
+  <meta name="description" content="A staff Mid-Autumn evening for Hong Kong Arts Centre: match eight mooncake pairs, try three lantern riddles, and inscribe one line.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -57,7 +57,7 @@
       box-shadow: 0 24px 50px rgba(0,0,0,.28);
     }
     label.field { display: block; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; color: #5c5348; }
-    input[type="text"], input[type="email"], textarea {
+    input[type="text"], textarea {
       width: 100%; border: 1px solid var(--line); border-radius: 0; padding: 12px 14px;
       font-size: 16px; background: var(--cream); color: var(--ink);
     }
@@ -126,12 +126,6 @@
     .draw-stage { min-height: 120px; display: grid; place-items: center; text-align: center; }
     .winner-name { font-family: "Cormorant Garamond", "Noto Serif TC", serif; font-size: clamp(32px, 7vw, 52px); margin: 8px 0; }
     .grid-2 { display: grid; gap: 12px; }
-    .letter {
-      margin: 12px 0 0; padding: 16px 18px; background: var(--cream);
-      border: 1px solid var(--line); font-family: "Cormorant Garamond", "Noto Serif TC", serif;
-      font-size: 16px; line-height: 1.65; white-space: pre-wrap; text-align: left; color: var(--ink);
-    }
-    #loveErr { color: #8a3b32; min-height: 1.2em; margin: 8px 0 0; }
     .hud {
       display: flex; justify-content: space-between; gap: 10px; align-items: baseline;
       padding: 10px 14px; font-size: 13px; letter-spacing: .06em; font-weight: 700;
@@ -160,7 +154,7 @@
     .tile.matched { opacity: .55; }
     .tile.on { box-shadow: 0 0 0 3px #d4c08a; }
     .cake {
-      width: 88%; height: 88%; margin: 6%; border-radius: 50%;
+      display: block; width: 88%; height: 88%; margin: 6%; border-radius: 50%;
       box-shadow: inset 0 3px 0 rgba(255,255,255,.22), 0 6px 10px rgba(0,0,0,.25);
       position: relative;
     }
@@ -206,20 +200,20 @@
     </header>
 
     <section id="screen-welcome" class="screen on">
-      <p class="kicker" data-i18n="kicker">Mid-Autumn 2026 · Staff puzzle</p>
-      <h1 id="mainTitle">The Mooncake Puzzle<span>月餅謎局</span></h1>
-      <p class="lead" data-i18n="welcomeLead">A mooncake pair puzzle for Hong Kong Arts Centre staff. Sixteen cakes, eight pairs. Turn two at a time. When every pair is found, write one line and, if you wish, email it as a greeting to someone you love. Completing the board enters the prize draw.</p>
+      <p class="kicker" data-i18n="kicker">Mid-Autumn 2026 · Staff evening</p>
+      <h1 id="mainTitle">The Mooncake Puzzle<span>月餅謎局 · 燈謎</span></h1>
+      <p class="lead" data-i18n="welcomeLead">A mooncake pair puzzle and three lantern riddles for Hong Kong Arts Centre staff. Match eight pairs, then verse, idiom, and a cryptic 燈謎. Write one line. Completing enters the prize draw.</p>
       <div class="meta">
-        <span class="chip" data-i18n="chip1">About 5 minutes</span>
-        <span class="chip" data-i18n="chip2">Eight pairs</span>
-        <span class="chip" data-i18n="chip3">A greeting · one draw</span>
+        <span class="chip" data-i18n="chip1">About 8 minutes</span>
+        <span class="chip" data-i18n="chip2">Eight pairs · three 燈謎</span>
+        <span class="chip" data-i18n="chip3">One line · one draw</span>
       </div>
       <div class="card">
         <label class="field" for="staffName" data-i18n="nameLabel">Name, as HR will see it</label>
         <input id="staffName" type="text" maxlength="60" autocomplete="name" placeholder="e.g. Chan Mei Ling" oninput="document.getElementById('nameErr').textContent=''">
         <p class="tiny" id="nameErr" style="color:#8a3b32;margin:8px 0 0;min-height:1.2em"></p>
-        <div class="row"><button class="btn gold wide" type="button" onclick="startHunt()" data-i18n="startBtn">Open the puzzle</button></div>
-        <p class="tiny" style="margin:14px 0 0" data-i18n="privacy">Your answers stay on this device. The lucky ticket goes to HR only if you send it. A greeting to someone you love opens your own mail app — HKAC never sees their address.</p>
+        <div class="row"><button class="btn gold wide" type="button" onclick="startHunt()" data-i18n="startBtn">Open the evening</button></div>
+        <p class="tiny" style="margin:14px 0 0" data-i18n="privacy">Your answers stay on this device. Copy the lucky ticket if HR asks for it — nothing is emailed from this page.</p>
       </div>
     </section>
 
@@ -257,7 +251,7 @@
       <p class="tiny" id="playHint" style="margin:12px 0 0;color:#cfc3ae"></p>
       <div class="row">
         <button class="btn ghost" type="button" onclick="dealBoard()" data-i18n="playReset">Clear the table</button>
-        <button class="btn gold wide" id="playWinBtn" type="button" style="display:none" onclick="goToInscribe()" data-i18n="playContinue">Write a lantern line</button>
+        <button class="btn gold wide" id="playWinBtn" type="button" style="display:none" onclick="goToRiddles()" data-i18n="playContinue">To the lantern riddles</button>
       </div>
     </section>
 
@@ -289,26 +283,9 @@
         </div>
       </div>
       <div class="card" style="margin-top:16px">
-        <p class="label" style="color:#8a6a2a" data-i18n="loveKicker">A greeting for someone you love</p>
-        <p style="margin:0 0 14px;color:#3e3558" data-i18n="loveHelp">Send the line you wrote, as a Mid-Autumn note, to one person who is not in the room tonight. Partner, family, or a friend. This opens your mail app. HR does not receive it.</p>
-        <label class="field" for="loveName" data-i18n="loveNameLabel">How you address them</label>
-        <input id="loveName" type="text" maxlength="40" autocomplete="off" placeholder="e.g. Mei" oninput="paintGreeting()">
-        <label class="field" for="loveEmail" style="margin-top:12px" data-i18n="loveEmailLabel">Their email</label>
-        <input id="loveEmail" type="email" maxlength="80" autocomplete="email" placeholder="name@example.com" oninput="document.getElementById('loveErr').textContent=''">
-        <p class="tiny" id="loveErr"></p>
-        <p class="tiny" style="margin:10px 0 0" data-i18n="lovePreviewLabel">Preview</p>
-        <div class="letter" id="greetingPreview"></div>
+        <p style="margin:0 0 12px;color:#3e3558" data-i18n="ticketHelp">Tap the ticket to copy it. Completing the pairs and the lantern riddles is enough for the draw.</p>
         <div class="row">
-          <button class="btn gold" type="button" onclick="emailGreeting()" data-i18n="loveSend">Email this greeting</button>
-          <button class="btn ghost" type="button" onclick="copyGreeting()" data-i18n="loveCopy">Copy greeting</button>
-        </div>
-        <p class="tiny" id="loveNote" style="margin:12px 0 0"></p>
-      </div>
-      <div class="card" style="margin-top:16px">
-        <p style="margin:0 0 12px;color:#3e3558" data-i18n="emailHelp">Separately, email your lucky ticket to HR. Completing the eight pairs is enough to enter the draw.</p>
-        <div class="row">
-          <button class="btn" type="button" onclick="emailTicket()" data-i18n="emailBtn">Email my ticket to HR</button>
-          <button class="btn ghost" type="button" onclick="copyTicket()" data-i18n="copyBtn">Copy ticket</button>
+          <button class="btn gold" type="button" onclick="copyTicket()" data-i18n="copyBtn">Copy ticket</button>
         </div>
         <p class="tiny" id="mailNote" style="margin:12px 0 0"></p>
       </div>
@@ -316,44 +293,42 @@
 
     <section id="screen-hr" class="screen">
       <p class="kicker">HR organiser · 人事統籌</p>
-      <h1>Run the puzzle<span>以電郵完成的中秋月餅謎局</span></h1>
+      <h1>Run the evening<span>中秋月餅謎局 · 燈謎</span></h1>
       <div class="hr-nav">
         <button type="button" class="on" data-tab="howto" onclick="hrTab('howto')">How to run</button>
         <button type="button" data-tab="setup" onclick="hrTab('setup')">Setup</button>
-        <button type="button" data-tab="email" onclick="hrTab('email')">Invitation email</button>
+        <button type="button" data-tab="email" onclick="hrTab('email')">Invitation</button>
         <button type="button" data-tab="draw" onclick="hrTab('draw')">Lucky draw</button>
       </div>
       <div id="hr-howto" class="card">
         <ol class="steps">
           <li data-i18n="how1">Place this file on a shared drive and copy the link. No login is required.</li>
-          <li data-i18n="how2">In Setup, enter the HR mailbox, prize, and deadline.</li>
-          <li data-i18n="how3">Copy the invitation and send it once to all staff (~70).</li>
-          <li data-i18n="how4">After the deadline, search the inbox for [HKAC Mid-Autumn]. Paste names into the draw.</li>
-          <li data-i18n="how5">If a link cannot be shared, staff may reply with a lantern inscription of their own. Every reply still enters the draw.</li>
+          <li data-i18n="how2">In Setup, enter the prize and deadline.</li>
+          <li data-i18n="how3">Copy the invitation and share it once with all staff (~70).</li>
+          <li data-i18n="how4">After the deadline, paste the names of people who finished into the draw.</li>
+          <li data-i18n="how5">If a link cannot be shared, staff may send you a lantern inscription of their own. Every completer still enters the draw.</li>
         </ol>
-        <p class="tiny" style="margin:16px 0 0">Fair play: everyone who finishes the eight pairs has an equal chance. The turns are for the evening, not a ranking.</p>
+        <p class="tiny" style="margin:16px 0 0">Fair play: everyone who finishes the pairs and the lantern riddles has an equal chance. Turns and riddle scores are not a ranking.</p>
       </div>
       <div id="hr-setup" class="card" hidden>
         <div class="grid-2">
           <div>
-            <label class="field" for="hrEmail">HR mailbox</label>
-            <input id="hrEmail" type="email" placeholder="hr@hkac.org.hk" oninput="saveSetup()">
-          </div>
-          <div>
             <label class="field" for="prizeName">Prize</label>
             <input id="prizeName" type="text" maxlength="80" placeholder="Mid-Autumn mooncake gift set" oninput="saveSetup()">
           </div>
+          <div>
+            <label class="field" for="deadline">Deadline</label>
+            <input id="deadline" type="text" maxlength="80" placeholder="Friday 12:00 noon" oninput="saveSetup()">
+          </div>
         </div>
-        <label class="field" for="deadline" style="margin-top:12px">Deadline</label>
-        <input id="deadline" type="text" maxlength="80" placeholder="Friday 12:00 noon" oninput="saveSetup()">
       </div>
       <div id="hr-email" class="card" hidden>
-        <p style="margin:0 0 10px;color:#3e3558">Copy into Outlook or Gmail, then paste the play link.</p>
+        <p style="margin:0 0 10px;color:#3e3558">Copy into Teams, WhatsApp, or a notice, then paste the play link.</p>
         <textarea id="inviteText" readonly></textarea>
         <div class="row"><button class="btn" type="button" onclick="copyInvite()">Copy invitation</button></div>
       </div>
       <div id="hr-draw" class="card" hidden>
-        <label class="field" for="drawList">Names from email replies, one per line</label>
+        <label class="field" for="drawList">Names of people who finished, one per line</label>
         <textarea id="drawList" placeholder="Chan Mei Ling&#10;Alex Wong"></textarea>
         <div class="row">
           <button class="btn gold" type="button" onclick="drawWinner()">Draw the winner</button>
@@ -379,6 +354,55 @@
 
   <script>
     const PAIRS = 8;
+    const ROOMS = [
+      {
+        kind: "choice",
+        label: { zh: "第一盞 · 詩", en: "Lantern I · Verse" },
+        zh: "「海上生明月，________。」",
+        en: "“From the sea the bright moon rises, ________.”",
+        hint: { zh: "張九齡《望月懷遠》。選出下句。", en: "Zhang Jiuling, Looking at the Moon, Thinking of Far Away. Complete the couplet." },
+        options: [
+          { zh: "天涯共此時", en: "we share this hour across the world’s edge", ok: true },
+          { zh: "把酒問青天", en: "I raise wine and ask the blue sky", ok: false },
+          { zh: "低頭思故鄉", en: "I bow my head and think of home", ok: false },
+          { zh: "江清月近人", en: "the clear river brings the moon close", ok: false }
+        ],
+        noteOk: { zh: "同看一輪月，雖各在一方。", en: "The same moon, even when the desks are not." },
+        noteNo: { zh: "下句是「天涯共此時」。蘇軾的「把酒問青天」是另一首中秋名篇。", en: "The line is “we share this hour across the world’s edge.” Su Shi’s question to the sky belongs to another Mid-Autumn poem." }
+      },
+      {
+        kind: "choice",
+        label: { zh: "第二盞 · 成語", en: "Lantern II · Idiom" },
+        zh: "謎面：中秋菊開。打一成語。",
+        en: "Riddle: chrysanthemums open at Mid-Autumn. Guess a four-character idiom.",
+        hint: { zh: "香港公司中秋最常見的線上形式，仍是燈謎。此題取傳統謎格。", en: "Lantern riddles remain the format Hong Kong offices actually use. This one follows the classical 謎格." },
+        options: [
+          { zh: "花好月圓", en: "flowers fair, moon full", ok: true },
+          { zh: "春華秋實", en: "spring blossom, autumn fruit", ok: false },
+          { zh: "水月鏡花", en: "moon in water, flowers in a mirror", ok: false },
+          { zh: "明日黃花", en: "yesterday’s chrysanthemum", ok: false }
+        ],
+        noteOk: { zh: "花好月圓：中秋最端正的四字。", en: "The most exact four characters for this night." },
+        noteNo: { zh: "謎底是「花好月圓」。菊開為花好，中秋為月圓。", en: "The answer is 花好月圓: chrysanthemums for the flowers, Mid-Autumn for the full moon." }
+      },
+      {
+        kind: "choice",
+        label: { zh: "第三盞 · 燈謎", en: "Lantern III · Cryptic" },
+        zh: "謎面：舉杯邀明月。打一禮貌用語。",
+        en: "Riddle: “I raise my cup and invite the bright moon.” Guess a phrase of courtesy.",
+        hint: { zh: "李白。謎底是兩個字的客套話。", en: "Li Bai. The answer is a two-character courtesy." },
+        options: [
+          { zh: "賞光", en: "to honour us with your presence (賞光)", ok: true },
+          { zh: "乾杯", en: "cheers / 乾杯", ok: false },
+          { zh: "久違", en: "it has been too long (久違)", ok: false },
+          { zh: "見諒", en: "please forgive me (見諒)", ok: false }
+        ],
+        noteOk: { zh: "邀明月，即請月來賞光。", en: "To invite the moon is to ask it to 賞光 — to honour the gathering with its light." },
+        noteNo: { zh: "謎底是「賞光」：請明月來賞此光。乾杯是飲酒，不是此謎。", en: "The answer is 賞光. Cheers is the toast, not the riddle." }
+      },
+      { kind: "inscribe" }
+    ];
+
     const PROMPTS = [
       { zh: "但願人長久", en: "May we last, as the moon does" },
       { zh: "千里共嬋娟", en: "Share the fair moon across the miles" },
@@ -387,110 +411,86 @@
 
     const I18N = {
       en: {
-        kicker: "Mid-Autumn 2026 · Staff puzzle",
-        welcomeLead: "A mooncake pair puzzle for Hong Kong Arts Centre staff. Sixteen cakes, eight pairs. Turn two at a time. When every pair is found, write one line and, if you wish, email it as a greeting to someone you love. Completing the board enters the prize draw.",
-        chip1: "About 5 minutes", chip2: "Eight pairs", chip3: "A greeting · one draw",
-        nameLabel: "Name, as HR will see it", startBtn: "Open the puzzle",
-        privacy: "Your answers stay on this device. The lucky ticket goes to HR only if you send it. A greeting to someone you love opens your own mail app — HKAC never sees their address.",
+        kicker: "Mid-Autumn 2026 · Staff evening",
+        welcomeLead: "A mooncake pair puzzle and three lantern riddles for Hong Kong Arts Centre staff. Match eight pairs, then verse, idiom, and a cryptic 燈謎. Write one line. Completing enters the prize draw.",
+        chip1: "About 8 minutes", chip2: "Eight pairs · three 燈謎", chip3: "One line · one draw",
+        nameLabel: "Name, as HR will see it", startBtn: "Open the evening",
+        privacy: "Your answers stay on this device. Copy the lucky ticket if HR asks for it — nothing is emailed from this page.",
         lanternKicker: "Prologue", lanternTitle: "Light one lantern",
         lanternLead: "A single lantern is enough. Then the board is laid.",
         lanternHint: "Touch the lantern", beginRiddles: "To the puzzle",
         playKicker: "The board", playTitle: "Find the eight pairs",
-        playLead: "Tap one cake, then another. A pair stays open. Eight pairs finish the board.",
+        playLead: "Tap one cake, then another. A pair stays open. Eight pairs open the lantern riddles.",
         playReset: "Clear the table",
         playMiss: "Those two will not sit. Try again.",
-        playDone: "The table is quiet. Inscribe the lantern.",
-        playContinue: "Write a lantern line",
+        playDone: "The table is quiet. Three lantern riddles wait.",
+        playContinue: "To the lantern riddles",
         nextBtn: "Continue", lastBtn: "Receive the closing card",
         blessKicker: "Closing card",
         fromHkac: "Hong Kong Arts Centre · 香港藝術中心",
         ticketLabel: "Lucky ticket",
-        emailHelp: "Separately, email your lucky ticket to HR. Completing the eight pairs is enough to enter the draw.",
-        emailBtn: "Email my ticket to HR", copyBtn: "Copy ticket",
+        ticketHelp: "Tap the ticket to copy it. Completing the pairs and the lantern riddles is enough for the draw.",
+        copyBtn: "Copy ticket",
         how1: "Place this file on a shared drive and copy the link. No login is required.",
-        how2: "In Setup, enter the HR mailbox, prize, and deadline.",
-        how3: "Copy the invitation and send it once to all staff (~70).",
-        how4: "After the deadline, search the inbox for [HKAC Mid-Autumn]. Paste names into the draw.",
-        how5: "If a link cannot be shared, staff may reply with a lantern inscription of their own. Every reply still enters the draw.",
+        how2: "In Setup, enter the prize and deadline.",
+        how3: "Copy the invitation and share it once with all staff (~70).",
+        how4: "After the deadline, paste the names of people who finished into the draw.",
+        how5: "If a link cannot be shared, staff may send you a lantern inscription of their own. Every completer still enters the draw.",
         drawIdle: "One name will be chosen.",
-        hrLink: "HR organiser desk", staffLink: "Staff puzzle",
+        hrLink: "HR organiser desk", staffLink: "Staff evening",
         footer: "Hong Kong Arts Centre · 2 Harbour Road, Wan Chai · Internal staff activity.",
         needName: "Please enter your name so HR can recognise the ticket.",
         litHint: "It is lit. You may go in.",
-        mailReady: "This opens your mail app with the ticket already filled in.",
-        mailMissing: "HR has not set a mailbox yet. Copy the ticket and reply to the invitation.",
         copied: "Copied.",
-        needTwo: "Add at least one name from the replies.",
+        needTwo: "Add at least one name.",
         chosen: "The lantern chooses",
-        insLabel: "題燈 · Inscription",
+        insLabel: "第四盞 · 題燈",
         insZh: "題燈",
-        insEn: "Write one line for someone you would rather be with tonight. It will appear on your card, and in the greeting you may email them.",
+        insEn: "Write one line for colleagues who are not in the same room tonight. It will appear on your closing card.",
         insHint: "At most 40 characters. A prompt below may be used, or your own line.",
         insNeed: "A line is required — even a short one.",
-        insCount: "characters",
-        loveKicker: "A greeting for someone you love",
-        loveHelp: "Send the line you wrote, as a Mid-Autumn note, to one person who is not in the room tonight. Partner, family, or a friend. This opens your mail app. HR does not receive it.",
-        loveNameLabel: "How you address them",
-        loveEmailLabel: "Their email",
-        lovePreviewLabel: "Preview",
-        loveSend: "Email this greeting",
-        loveCopy: "Copy greeting",
-        loveNeed: "Enter an email address so the greeting has somewhere to go.",
-        loveSent: "Your mail app should open with the greeting filled in.",
-        loveCopied: "Greeting copied."
+        insCount: "characters"
       },
       zh: {
         kicker: "2026 中秋 · 同事月餅謎局",
-        welcomeLead: "香港藝術中心同事的中秋月餅配對。十六枚、八對。每次翻兩格。八對齊後題一句燈，也可把這句電郵給你想念的人。完成即可抽獎。",
-        chip1: "約五分鐘", chip2: "八對月餅", chip3: "一封問候 · 一次抽獎",
-        nameLabel: "姓名（人事部將以此核對）", startBtn: "打開謎局",
-        privacy: "作答只留在此裝置。券號只在你選擇寄出時交給人事部。問候信經你自己的電郵程式寄出，藝術中心不會看到對方地址。",
+        welcomeLead: "香港藝術中心同事的中秋：先配對八對月餅，再答三題燈謎——詩、成語、謎語——然後自題一句。完成即可抽獎。",
+        chip1: "約八分鐘", chip2: "八對 · 三題燈謎", chip3: "一句燈語 · 一次抽獎",
+        nameLabel: "姓名（人事部將以此核對）", startBtn: "打開今晚",
+        privacy: "作答只留在此裝置。人事部若需要券號，請自行複製。本頁不會寄出任何電郵。",
         lanternKicker: "序", lanternTitle: "點一盞燈",
         lanternLead: "一盞即夠。然後擺盤。",
         lanternHint: "輕觸花燈", beginRiddles: "到謎局",
         playKicker: "棋盤", playTitle: "八對月餅",
-        playLead: "先點一枚，再點另一枚。成對即留。八對齊即過。",
+        playLead: "先點一枚，再點另一枚。成對即留。八對齊後進入燈謎。",
         playReset: "重開",
         playMiss: "這兩枚不成對。再試。",
-        playDone: "月餅收齊。去題燈。",
-        playContinue: "題一句燈",
+        playDone: "月餅收齊。三題燈謎在後。",
+        playContinue: "去燈謎",
         nextBtn: "繼續", lastBtn: "收取結語卡",
         blessKicker: "結語卡",
         fromHkac: "香港藝術中心 · Hong Kong Arts Centre",
         ticketLabel: "幸運券",
-        emailHelp: "另外，把券號電郵人事部。八對齊即可抽獎。",
-        emailBtn: "電郵券號給人事部", copyBtn: "複製券號",
+        ticketHelp: "輕觸券號即可複製。完成配對與燈謎即可抽獎。",
+        copyBtn: "複製券號",
         how1: "把本檔放到共用雲端並複製連結。不必登入。",
-        how2: "在設定填寫人事郵箱、獎品與截止時間。",
-        how3: "複製邀請，一次發給約 70 位同事。",
-        how4: "截止後搜尋 [HKAC Mid-Autumn]，把姓名貼進抽獎。",
-        how5: "若未能分享連結，同事可回覆一句自題燈語。凡回覆者同樣可抽獎。",
+        how2: "在設定填寫獎品與截止時間。",
+        how3: "複製邀請，一次分享給約 70 位同事。",
+        how4: "截止後，把已完成同事的姓名貼進抽獎。",
+        how5: "若未能分享連結，同事可把自題燈語交給你。凡完成者同樣可抽獎。",
         drawIdle: "將抽出一個姓名。",
-        hrLink: "人事統籌台", staffLink: "同事謎局",
+        hrLink: "人事統籌台", staffLink: "同事今晚",
         footer: "香港藝術中心 · 灣仔港灣道 2 號 · 內部員工活動。",
         needName: "請先填寫姓名，人事部才能核對券號。",
         litHint: "燈已亮。可以進去。",
-        mailReady: "會開啟電郵程式，內容已填好。",
-        mailMissing: "人事部尚未設定郵箱。請複製券號，回覆邀請即可。",
         copied: "已複製。",
         needTwo: "請先貼上至少一個姓名。",
         chosen: "花燈選中了",
-        insLabel: "題燈",
+        insLabel: "第四盞 · 題燈",
         insZh: "題燈",
-        insEn: "為今晚你更想在一起的人寫一句。它會出現在結語卡上，也可寫進你寄出的問候。",
+        insEn: "為今晚未能同室的同事寫一句。它會出現在結語卡上。",
         insHint: "不多於 40 字。可用下列成句，也可自撰。",
         insNeed: "請寫一句，短亦可。",
-        insCount: "字",
-        loveKicker: "給你想念的人",
-        loveHelp: "把你剛寫的那一句，當成中秋問候，寄給今晚不在同一房間的人。伴侶、家人或朋友皆可。會開啟你的電郵程式。人事部不會收到這封信。",
-        loveNameLabel: "你怎樣稱呼對方",
-        loveEmailLabel: "對方電郵",
-        lovePreviewLabel: "預覽",
-        loveSend: "電郵這封問候",
-        loveCopy: "複製問候",
-        loveNeed: "請填寫對方電郵，問候才有去處。",
-        loveSent: "應會開啟電郵程式，內容已填好。",
-        loveCopied: "問候已複製。"
+        insCount: "字"
       }
     };
 
@@ -511,13 +511,9 @@
       document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
       const mainTitle = document.getElementById("mainTitle");
       if (mainTitle) {
-        mainTitle.innerHTML = lang === "zh" ? "月餅謎局<span>The Mooncake Puzzle</span>" : "The Mooncake Puzzle<span>月餅謎局</span>";
+        mainTitle.innerHTML = lang === "zh" ? "月餅謎局 · 燈謎<span>The Mooncake Puzzle</span>" : "The Mooncake Puzzle<span>月餅謎局 · 燈謎</span>";
       }
       document.getElementById("staffName").placeholder = lang === "zh" ? "例如：陳美玲" : "e.g. Chan Mei Ling";
-      const loveName = document.getElementById("loveName");
-      const loveEmail = document.getElementById("loveEmail");
-      if (loveName) loveName.placeholder = lang === "zh" ? "例如：美玲" : "e.g. Mei";
-      if (loveEmail) loveEmail.placeholder = "name@example.com";
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
         if (I18N.en[key] === undefined) return;
@@ -527,12 +523,11 @@
           el.innerHTML = lang === "zh" ? "八對月餅<span>Find the eight pairs</span>" : "Find the eight pairs<span>八對月餅</span>";
         } else el.textContent = I18N[lang][key];
       });
-      if (document.getElementById("screen-station").classList.contains("on")) renderInscribe();
+      if (document.getElementById("screen-station").classList.contains("on")) renderRoom();
       if (document.getElementById("screen-play").classList.contains("on")) paintBoard();
       paintHud();
       if (document.getElementById("screen-blessing").classList.contains("on")) renderBlessing();
       refreshInvite();
-      if (state.ticket) document.getElementById("mailNote").textContent = setup().email ? t("mailReady") : t("mailMissing");
     }
 
     function show(id) {
@@ -554,14 +549,6 @@
       }
       err.textContent = "";
       state.name = name; state.i = 0; state.correct = 0; state.score = 0; state.turns = 0; state.lit = false; state.inscription = "";
-      const loveName = document.getElementById("loveName");
-      const loveEmail = document.getElementById("loveEmail");
-      if (loveName) loveName.value = "";
-      if (loveEmail) loveEmail.value = "";
-      const loveErr = document.getElementById("loveErr");
-      const loveNote = document.getElementById("loveNote");
-      if (loveErr) loveErr.textContent = "";
-      if (loveNote) loveNote.textContent = "";
       document.getElementById("beginRiddles").disabled = true;
       document.getElementById("lanternBody").setAttribute("fill", "#3a241c");
       document.getElementById("flame").setAttribute("opacity", "0");
@@ -649,13 +636,66 @@
       game.open = [];
     }
 
-    function goToInscribe() {
+    function goToRiddles() {
       if (game.pairs < PAIRS) return;
       stopPuzzle();
       state.score = game.pairs;
       state.turns = game.turns;
-      renderInscribe();
+      state.i = 0;
+      renderRoom();
       show("screen-station");
+    }
+
+    function renderRoom() {
+      const roman = ["I", "II", "III", "IV"];
+      document.getElementById("stKicker").textContent =
+        (state.lang === "zh" ? "第 " + (state.i + 1) + " 盞，共四盞" : "Lantern " + roman[state.i] + " of IV");
+      const prog = document.getElementById("progress");
+      prog.innerHTML = "";
+      for (let n = 0; n < 4; n++) {
+        const b = document.createElement("b");
+        if (n < state.i) b.className = "done";
+        else if (n === state.i) b.className = "on";
+        prog.appendChild(b);
+      }
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("nextBtn").style.display = "none";
+      document.getElementById("nextBtn").textContent = state.i === 3 ? t("lastBtn") : t("nextBtn");
+      document.getElementById("stBody").innerHTML = "";
+      state.locked = false;
+      const room = ROOMS[state.i];
+      if (room.kind === "inscribe") return renderInscribe();
+      document.getElementById("roomLabel").textContent = room.label[state.lang];
+      document.getElementById("qZh").textContent = room.zh;
+      document.getElementById("qEn").textContent = room.en;
+      document.getElementById("qHint").textContent = room.hint[state.lang];
+      const box = document.createElement("div");
+      box.className = "opts";
+      room.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button"; btn.className = "opt";
+        btn.textContent = state.lang === "zh" ? opt.zh + "  ·  " + opt.en : opt.en + "  ·  " + opt.zh;
+        btn.onclick = () => choose(idx, box);
+        box.appendChild(btn);
+      });
+      document.getElementById("stBody").appendChild(box);
+    }
+
+    function choose(idx, box) {
+      if (state.locked) return;
+      state.locked = true;
+      const room = ROOMS[state.i];
+      const correctIdx = room.options.findIndex(o => o.ok);
+      [...box.children].forEach((b, i) => {
+        b.disabled = true;
+        if (i === correctIdx) b.classList.add("correct");
+        if (i === idx && !room.options[i].ok) b.classList.add("wrong");
+      });
+      const ok = room.options[idx].ok;
+      if (ok) { state.correct += 1; chime(659.25); }
+      document.getElementById("feedback").textContent = ok ? room.noteOk[state.lang] : room.noteNo[state.lang];
+      document.getElementById("feedback").style.color = ok ? "#2f6b45" : "#6a3b32";
+      document.getElementById("nextBtn").style.display = "inline-flex";
     }
 
     function paintBoard() {
@@ -786,7 +826,8 @@
     }
 
     function advanceStation() {
-      finishHunt();
+      if (state.i < ROOMS.length - 1) { state.i += 1; renderRoom(); }
+      else finishHunt();
     }
 
     function finishHunt() {
@@ -802,104 +843,33 @@
     function renderBlessing() {
       document.getElementById("helloName").textContent = (state.lang === "zh" ? "" : "Dear ") + state.name;
       document.getElementById("scorePill").textContent =
-        (state.lang === "zh" ? "成對 " : "Pairs found ") + (state.score || 0) +
+        (state.lang === "zh" ? "成對 " : "Pairs ") + (state.score || 0) +
+        " · " + (state.lang === "zh" ? "燈謎 " : "riddles ") + (state.correct || 0) + "/3" +
         " · " + (state.lang === "zh" ? "翻次 " : "turns ") + (state.turns || 0);
       document.getElementById("blessingText").textContent = state.lang === "zh"
         ? "香港藝術中心祝你中秋安好。未能同桌，仍共這一輪月。"
         : "Hong Kong Arts Centre wishes you a settled Mid-Autumn. We are not at one table, and still under one moon.";
       document.getElementById("shownInscription").textContent = state.inscription;
       document.getElementById("ticketCode").textContent = state.ticket;
-      document.getElementById("mailNote").textContent = setup().email ? t("mailReady") : t("mailMissing");
-      paintGreeting();
+      const note = document.getElementById("mailNote");
+      if (note && !note.textContent) note.textContent = "";
     }
 
     function setup() {
       return {
-        email: (document.getElementById("hrEmail").value || localStorage.getItem("hkac_hr_email") || "").trim(),
         prize: (document.getElementById("prizeName").value || localStorage.getItem("hkac_prize") || "a Mid-Autumn mooncake gift set").trim(),
         deadline: (document.getElementById("deadline").value || localStorage.getItem("hkac_deadline") || "[deadline]").trim()
       };
     }
     function saveSetup() {
-      localStorage.setItem("hkac_hr_email", document.getElementById("hrEmail").value.trim());
       localStorage.setItem("hkac_prize", document.getElementById("prizeName").value.trim());
       localStorage.setItem("hkac_deadline", document.getElementById("deadline").value.trim());
       refreshInvite();
     }
     function loadSetup() {
-      document.getElementById("hrEmail").value = localStorage.getItem("hkac_hr_email") || "";
       document.getElementById("prizeName").value = localStorage.getItem("hkac_prize") || "Mid-Autumn mooncake gift set";
       document.getElementById("deadline").value = localStorage.getItem("hkac_deadline") || "";
       refreshInvite();
-    }
-
-    function emailTicket() {
-      const cfg = setup();
-      const subject = "[HKAC Mid-Autumn] Lucky ticket " + state.ticket + " — " + state.name;
-      const body =
-        "Hello HR,\n\nI completed The Mooncake Puzzle / 月餅謎局.\n\n" +
-        "Name: " + state.name + "\nLucky ticket: " + state.ticket + "\n" +
-        "Pairs: " + state.score + "\nTurns: " + state.turns + "\nInscription: " + state.inscription + "\n\nPlease include me in the Mid-Autumn lucky draw.\n";
-      if (!cfg.email) { copyTicket(); alert(t("mailMissing")); return; }
-      location.href = "mailto:" + encodeURIComponent(cfg.email) + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-    }
-
-    function buildGreeting() {
-      const who = (document.getElementById("loveName").value || "").trim();
-      const line = state.inscription || "";
-      if (state.lang === "zh") {
-        const dear = who ? who + "：" : "";
-        return (
-          (dear ? dear + "\n\n" : "") +
-          "今晚在公司玩了一局中秋月餅謎。燈下寫了一句，寄給你。\n\n" +
-          "「" + line + "」\n\n" +
-          "未能同桌，仍共這一輪月。\n但願人長久，千里共嬋娟。\n\n" +
-          state.name
-        );
-      }
-      const dear = who ? "Dear " + who + "," : "Dear you,";
-      return (
-        dear + "\n\n" +
-        "I played a short Mooncake Puzzle at work tonight. This line is for you:\n\n" +
-        "“" + line + "”\n\n" +
-        "We are not at one table, and still under one moon.\n" +
-        "但願人長久，千里共嬋娟。\n\n" +
-        state.name
-      );
-    }
-
-    function greetingSubject() {
-      const who = (document.getElementById("loveName").value || "").trim();
-      if (state.lang === "zh") return who ? "中秋安好 · 給" + who : "中秋安好 · 一句給你";
-      return who ? "Mid-Autumn · a line for " + who : "Mid-Autumn · a line for you";
-    }
-
-    function paintGreeting() {
-      const el = document.getElementById("greetingPreview");
-      if (el) el.textContent = buildGreeting();
-    }
-
-    function emailGreeting() {
-      const to = (document.getElementById("loveEmail").value || "").trim();
-      const err = document.getElementById("loveErr");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
-        err.textContent = t("loveNeed");
-        document.getElementById("loveEmail").focus();
-        return;
-      }
-      err.textContent = "";
-      document.getElementById("loveNote").textContent = t("loveSent");
-      location.href = "mailto:" + encodeURIComponent(to) +
-        "?subject=" + encodeURIComponent(greetingSubject()) +
-        "&body=" + encodeURIComponent(buildGreeting());
-    }
-
-    async function copyGreeting() {
-      const text = buildGreeting();
-      try { await navigator.clipboard.writeText(text); } catch (e) {
-        const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
-      }
-      document.getElementById("loveNote").textContent = t("loveCopied");
     }
 
     async function copyTicket() {
@@ -920,27 +890,25 @@
       const cfg = setup();
       const playLink = "[PASTE THE SHARED LINK TO index.html HERE]";
       document.getElementById("inviteText").value =
-`Subject: [HKAC Mid-Autumn] 月餅謎局 — eight pairs, write one line
+`Hong Kong Arts Centre · Mid-Autumn 2026
 
 Dear colleagues,
 
-Hong Kong Arts Centre invites you to The Mooncake Puzzle / 月餅謎局. Sixteen mooncakes, eight pairs. Turn two tiles at a time. When every pair is found, write one line. You may email that line as a greeting to someone you love. Completing the board enters the prize draw.
+You are invited to The Mooncake Puzzle / 月餅謎局 · 燈謎: match eight pairs of cakes, then three lantern riddles (verse, idiom, cryptic), then write one line. Completing enters the prize draw. Nothing is emailed from the page — copy your ticket if asked.
 
 1. Open: ${playLink}
-2. Enter your name, light the lantern, play the puzzle.
-3. Optionally email a greeting to someone you love.
-4. Click “Email my ticket to HR”, or reply with your ticket code.
+2. Enter your name, light the lantern, play the puzzle, then the 燈謎.
+3. Keep your lucky ticket if HR asks for it.
 
 Prize: ${cfg.prize || "a Mid-Autumn mooncake gift set"}
 Deadline: ${cfg.deadline || "[add date and time]"}
-Draw: one winner, at random, among everyone who sends a ticket.
-HR will search the inbox for [HKAC Mid-Autumn].
+Draw: one winner, at random, among everyone who finishes.
 
-If the link will not open, reply with your name and one lantern line of your own. You still enter the draw.
+If the link will not open, send HR your name and one lantern line of your own. You still enter the draw.
 
 各位同事：
 
-香港藝術中心誠邀參加「月餅謎局」：十六枚月餅、八對。每次翻兩格，八對齊後自題一句。結尾可把這句電郵給你想念的人。完成後把券號電郵人事部即可抽獎。獎品：${cfg.prize || "中秋月餅禮盒"}。截止：${cfg.deadline || "［請填日期時間］"}。
+香港藝術中心誠邀參加「月餅謎局 · 燈謎」：先配對八對月餅，再答三題燈謎（詩、成語、謎語），然後自題一句。完成即可抽獎。本頁不會寄電郵。獎品：${cfg.prize || "中秋月餅禮盒"}。截止：${cfg.deadline || "［請填日期時間］"}。
 
 Hong Kong Arts Centre
 2 Harbour Road, Wan Chai

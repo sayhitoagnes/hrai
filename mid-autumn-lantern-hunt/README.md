@@ -1,10 +1,10 @@
-# HKAC · 月餅謎局 / The Mooncake Puzzle
+# HKAC · 月餅謎局 · 燈謎 / The Mooncake Puzzle
 
 Async Mid-Autumn activity for about **70 remote staff** of **Hong Kong Arts Centre**. Average age ~**30**. Gender mixed. People do not meet in person.
 
-The activity is a **mooncake pair puzzle**: sixteen cakes, eight pairs. Turn two tiles. A match stays. When the table is complete, write one line, email a greeting if you wish, then send a lucky ticket to HR.
+The evening is a **mooncake pair puzzle** plus three **燈謎** (verse, idiom, cryptic), then one inscribed line. Completing is enough for an equal prize draw. Nothing is emailed from the page.
 
-**Play (staff):** [Open the puzzle](https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html)
+**Play (staff):** [Open the evening](https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html)
 
 GitHub’s file page shows source code. Always use the htmlpreview link, or open `index.html` locally.
 
@@ -14,36 +14,31 @@ GitHub’s file page shows source code. Always use the htmlpreview link, or open
 
 ## How this plays
 
-- Sixteen cakes, eight kinds, two of each
-- Tap one tile, then another
-- A pair stays open; a miss turns back
-- **Eight pairs** finish the board — enough for an equal prize draw (turns are not a ranking)
+1. Sixteen cakes, eight pairs — tap two tiles
+2. Three lantern riddles: 詩 / 成語 / 燈謎
+3. **題燈** — one line of your own
+4. Closing card with HKAC blessing and ticket `HKAC-MAF-…` (copy if asked)
 
-Then: **題燈**, a greeting you may email to someone you love, and the HR ticket.
+Turns and riddle scores are not a ranking.
 
 ---
 
-## What staff do (about 5 minutes)
+## What staff do (about 8 minutes)
 
-1. Name → **Open the puzzle**.
+1. Name → **Open the evening**.
 2. Light **one** lantern.
 3. Find the **eight pairs**.
-4. Write ≤ 40 characters (prompts: 但願人長久 / 千里共嬋娟 / 燈火未闌人未散).
-5. Closing card: **HKAC blessing**, inscription, ticket `HKAC-MAF-…`
-6. **Email a greeting** to someone they love (own mail app; HR never sees that address).
-7. Separately, **email the lucky ticket to HR**.
+4. Answer three 燈謎 (a miss still continues).
+5. Write ≤ 40 characters (prompts: 但願人長久 / 千里共嬋娟 / 燈火未闌人未散).
+6. Closing card: blessing, inscription, ticket. **Copy ticket** if HR asks. No email from this page.
 
 ---
 
 ## What you (HR) do
 
-Open **HR desk**. Fill mailbox, prize, deadline. **Copy invitation**.
+Open **HR desk**. Fill prize and deadline. **Copy invitation** into Teams, WhatsApp, or a notice.
 
-Inbox search: `[HKAC Mid-Autumn]`
-
-**Invitation subject:** `[HKAC Mid-Autumn] 月餅謎局 — eight pairs, write one line`
-
-After the deadline: paste names → **Draw the winner**. Completers only, equal chance.
+After the deadline: paste names of people who finished → **Draw the winner**. Equal chance.
 
 ---
 
