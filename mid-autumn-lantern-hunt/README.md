@@ -1,48 +1,80 @@
-# Moonlit Lantern Hunt · 藝心燈謎
+# HKAC · 賞月室 / The Viewing Room
 
-**Play in your browser (do not open the GitHub code view):**  
-https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html
+Async Mid-Autumn activity for about **70 remote staff** of **Hong Kong Arts Centre**. Average age ~**30**. Gender mixed. People do not meet in person.
 
-GitHub’s file page only shows source. The link above is the actual game. HR organiser desk: after the game loads, use the footer link, or add `#hr` to the end of that address.
+The activity is a **viewing-room lantern sequence** (賞月室), not a carnival game. It is modelled on how Hong Kong companies actually run online Mid-Autumn: a short 猜燈謎, then a lucky draw among people who finish.
 
-If you already have this folder on your computer, you can also double-click `index.html`. No install is needed.
+**Play (staff):** [Open the viewing room](https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html)
+
+GitHub’s file page shows source code. Always use the htmlpreview link, or open `index.html` locally.
+
+**HR desk:** footer → *HR desk · lucky draw*, or add `#hr` to the same URL.
 
 ---
 
-An internal Mid-Autumn activity for **Hong Kong Arts Centre** staff (~70 people, working apart). No one needs to meet in person. HR runs it by **email**. One winner is drawn for a prize.
+## What Hong Kong companies actually play (research)
 
-## What staff do (about 5 minutes)
+This is **not** a children’s tap-game. Hong Kong offices, and the H5 templates they reuse, still treat Mid-Autumn as **猜燈謎** plus a **lucky draw**. No app. A link, a few adult riddles, a ticket.
 
-1. Open the link from the HR email (phone or computer).
-2. Enter their name and tap the lantern to clock in.
-3. Play five live scenes: punch leftover suns against a timer, reply in Chang’e’s group chat, whack-a-mole the overtime rabbit (skip the decoy mooncakes), beat Wu Gang’s regenerating tree, spin a fortune wheel for a moon title.
-4. Receive a personalised HKAC blessing (it names their title) and a lucky ticket such as `HKAC-MAF-CHA4821`.
-5. Click **Email my lucky ticket**.
+| Who | What they actually ran | What we took |
+| --- | --- | --- |
+| ASK IT Limited (HK SME, 2024) | Office **燈謎** whose answers were **colleagues’ Chinese names** — adult, in-group, not folklore-for-kids. [Source](https://askit.com.hk/lantern-riddle-party/) | Tone: wit for grown colleagues, not a carnival |
+| Midland Realty (staff, 2020) | 「中秋競猜燈謎慶團圓」— staff race the riddles; fastest with ≥3 correct get seasonal gifts. [Source](https://www.midland.com.hk/news/group-news/20201002.html) | Short closed-set 燈謎, prize after playing |
+| Midland IC&I (public, 2023) | Visual **Hong Kong street-name** 燈謎 + raffle among correct answers | Local adult cryptic play (we kept the *register*, not the street quiz) |
+| Poly Joy Club (2023) | **Write your own 燈謎** for a mooncake draw | The create layer: **題燈** (one inscription of your own) |
+| Corporate H5 (eqxiu / 凡科 etc.) | 4–8 燈謎 on a phone page; finish (or all-correct) → lucky draw | Async link + email ticket, no Zoom, no kit |
+| Cathay Pacific (consumer CRM) | Mooncake **puzzle + raffle**, sent by email | Completing is the ticket — not a ranked exam |
 
-Everyone who finishes (or replies to the email) has an **equal chance** in the draw.
+In-person lantern-making, fruit boxes, and scavenger hunts exist. They need a room or a kit. They do not fit **70 people who will not meet**, run **only by email**.
 
-## What HR does
+**Designed for staff ~30 at an arts centre:** gallery / salon (ink, bone, gold hairline), literary 燈謎, one inscription, HKAC blessing. Not punch-the-sun, not whack-a-mole, not intern comics, not fortune-wheel job titles.
 
-1. Put `index.html` on a shared drive (OneDrive / SharePoint / Google Drive / intranet) and copy the sharing link.
-2. Open the file → footer **HR organiser desk** (or `index.html#hr`).
-3. **Setup:** HR mailbox, prize, deadline. This is saved in that browser only.
-4. **Invitation email:** Copy and send to all staff. Paste the sharing link where it says `[PASTE THE SHARED LINK…]`.
-5. After the deadline, search the inbox for `[HKAC Mid-Autumn]`.
-6. **Lucky draw:** paste names (one per line) and draw one winner. Copy the announcement email.
+---
 
-If a shared link is not possible, staff reply with their name and a homemade moon title; HR still uses the same draw screen.
+## What staff do (about 6 minutes)
 
-## Why this format
+1. Enter name → **Enter the viewing room**.
+2. Light **one** lantern (calm, no office jokes).
+3. Four lanterns:
+   - **I · Verse** — 張九齡《望月懷遠》：海上生明月，**天涯共此時**
+   - **II · Idiom** — 中秋菊開 → **花好月圓**
+   - **III · Cryptic** — 舉杯邀明月 → **賞光** (a real 燈謎, not a children’s riddle)
+   - **IV · Inscription** — write ≤ 40 characters. Optional prompts: 但願人長久 / 千里共嬋娟 / 燈火未闌人未散
+4. Closing card: **HKAC blessing**, their inscription, ticket `HKAC-MAF-…`
+5. **Email lucky ticket** (or Copy). Completing is enough. The three closed lanterns are a salon, not an exam.
 
-| Need | How it is met |
-| --- | --- |
-| Remote staff, no gathering | Browser game + email; no venue, no login |
-| Fun for age ~35, mixed teams | Timed arcade, group chat, whack-a-mole, boss fight, fortune wheel — not a quiz |
-| HKAC blessing | Closing card names their moon title |
-| Operate by email | One invitation out; lucky tickets back; one announcement |
-| Pick a prize winner | Random draw among people who actually took part |
+---
 
-## Files
+## What you (HR) do
 
-- `index.html` — staff game, blessing card, mailto ticket, HR setup, invitation copy, lucky draw.
-- This README — run sheet for the organiser.
+### 1. Before you send
+
+Open **HR desk**. Fill mailbox, prize, deadline (saved in this browser). **Copy invitation**.
+
+Inbox search: `[HKAC Mid-Autumn]`
+
+### 2. Invitation (edit dates)
+
+**Subject:** `[HKAC Mid-Autumn] 賞月室 — light a lantern, write one line`
+
+Paste from **Copy invitation**.
+
+### 3. After the deadline
+
+Paste names from emails → **Draw one winner**. Completers only, equal chance.
+
+**Announcement subject:** `[HKAC Mid-Autumn] 花好月圓 — this year’s lantern`
+
+---
+
+## Offline / demo
+
+```bash
+cd mid-autumn-lantern-hunt
+python3 -m http.server 8765
+```
+
+Staff: `http://127.0.0.1:8765/`  
+HR: `http://127.0.0.1:8765/#hr`
+
+Setup is stored in **this browser only**.
