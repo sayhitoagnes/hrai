@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Mooncake Table · 月餅枱 | Hong Kong Arts Centre</title>
-  <meta name="description" content="A staff Mid-Autumn mooncake table for Hong Kong Arts Centre: slice cakes and star fruit, write one line, email a greeting, and send a lucky ticket to HR.">
+  <title>Mooncake Puzzle · 月餅謎局 | Hong Kong Arts Centre</title>
+  <meta name="description" content="A staff Mid-Autumn mooncake puzzle for Hong Kong Arts Centre: match three cakes, write one line, email a greeting, and send a lucky ticket to HR.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -144,7 +144,36 @@
       position: relative; background: radial-gradient(circle at 50% 120%, #243044 0%, #0c1018 55%);
       border: 1px solid rgba(176,137,58,.35); overflow: hidden;
     }
-    #chopCanvas { display: block; width: 100%; height: 420px; touch-action: none; cursor: crosshair; }
+    .board {
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 7px;
+      padding: 14px; max-width: 460px; margin: 0 auto;
+    }
+    .tile {
+      aspect-ratio: 1; border: 0; border-radius: 50%; padding: 0;
+      background: transparent; position: relative;
+    }
+    .tile:disabled { cursor: default; }
+    .tile.on { box-shadow: 0 0 0 3px #d4c08a; }
+    .tile.pop .cake { transform: scale(.15); opacity: 0; }
+    .cake {
+      width: 88%; height: 88%; margin: 6%; border-radius: 50%;
+      transition: transform .18s ease, opacity .18s ease;
+      box-shadow: inset 0 3px 0 rgba(255,255,255,.22), 0 6px 10px rgba(0,0,0,.25);
+      position: relative;
+    }
+    .cake:after {
+      content: ""; position: absolute; inset: 22%; border-radius: 50%;
+    }
+    .cake.k0 { background: radial-gradient(circle at 35% 30%, #e8c97a, #b0893a 62%, #7a5a28); }
+    .cake.k0:after { background: #d4c08a; }
+    .cake.k1 { background: radial-gradient(circle at 35% 30%, #c4a07a, #6b3f2a 62%, #3a2218); }
+    .cake.k1:after { background: #8a5a3a; }
+    .cake.k2 { background: radial-gradient(circle at 35% 30%, #f0d48a, #c9a24a 58%, #8a6a28); }
+    .cake.k2:after { background: #f3c14a; }
+    .cake.k3 { background: radial-gradient(circle at 35% 30%, #fbf7ef, #e4d8c0 62%, #b8a888); }
+    .cake.k3:after { background: #f4efe4; }
+    .cake.k4 { background: radial-gradient(circle at 35% 30%, #c8d4a8, #6a7a48 62%, #3e4a28); }
+    .cake.k4:after { background: #9aaa68; }
     .play-overlay {
       position: absolute; inset: 0; background: rgba(12,16,24,.88);
       display: flex; align-items: center; justify-content: center; padding: 22px;
@@ -177,19 +206,19 @@
     </header>
 
     <section id="screen-welcome" class="screen on">
-      <p class="kicker" data-i18n="kicker">Mid-Autumn 2026 · Staff table</p>
-      <h1 id="mainTitle">The Mooncake Table<span>月餅枱</span></h1>
-      <p class="lead" data-i18n="welcomeLead">A Cathay-style mooncake table, dressed for Hong Kong Arts Centre. Cakes and star fruit rise up the screen. Swipe to slice them. Do not slice the lucky tickets. Reach 150 points to enter the draw — you may play again. Then write one line and, if you wish, email it as a greeting to someone you love.</p>
+      <p class="kicker" data-i18n="kicker">Mid-Autumn 2026 · Staff puzzle</p>
+      <h1 id="mainTitle">The Mooncake Puzzle<span>月餅謎局</span></h1>
+      <p class="lead" data-i18n="welcomeLead">Cathay’s Mid-Autumn puzzle, dressed for Hong Kong Arts Centre: five kinds of cake on a board. Tap two neighbours to swap. Line up three of a kind. Reach 400 points to enter the draw — you may try another board. Then write one line and, if you wish, email it as a greeting to someone you love.</p>
       <div class="meta">
         <span class="chip" data-i18n="chip1">About 6 minutes</span>
-        <span class="chip" data-i18n="chip2">Swipe · 150 points</span>
+        <span class="chip" data-i18n="chip2">Match three · 400</span>
         <span class="chip" data-i18n="chip3">A greeting · one draw</span>
       </div>
       <div class="card">
         <label class="field" for="staffName" data-i18n="nameLabel">Name, as HR will see it</label>
         <input id="staffName" type="text" maxlength="60" autocomplete="name" placeholder="e.g. Chan Mei Ling" oninput="document.getElementById('nameErr').textContent=''">
         <p class="tiny" id="nameErr" style="color:#8a3b32;margin:8px 0 0;min-height:1.2em"></p>
-        <div class="row"><button class="btn gold wide" type="button" onclick="startHunt()" data-i18n="startBtn">Take a seat at the table</button></div>
+        <div class="row"><button class="btn gold wide" type="button" onclick="startHunt()" data-i18n="startBtn">Open the puzzle</button></div>
         <p class="tiny" style="margin:14px 0 0" data-i18n="privacy">Your answers stay on this device. The lucky ticket goes to HR only if you send it. A greeting to someone you love opens your own mail app — HKAC never sees their address.</p>
       </div>
     </section>
@@ -197,7 +226,7 @@
     <section id="screen-lantern" class="screen">
       <p class="kicker" data-i18n="lanternKicker">Prologue</p>
       <h1 data-i18n="lanternTitle">Light one lantern<span>點一盞燈</span></h1>
-      <p class="lead" data-i18n="lanternLead">A single lantern is enough. Then the cakes rise.</p>
+      <p class="lead" data-i18n="lanternLead">A single lantern is enough. Then the board is laid.</p>
       <div class="lantern-stage">
         <svg class="lantern-svg" id="lanternSvg" viewBox="0 0 200 260" role="button" tabindex="0" aria-label="Light the lantern" onclick="lightLantern()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();lightLantern();}">
           <line x1="100" y1="10" x2="100" y2="32" stroke="#b0893a" stroke-width="2"/>
@@ -209,22 +238,21 @@
         </svg>
         <p class="lead" id="lanternHint" data-i18n="lanternHint" style="text-align:center">Touch the lantern</p>
         <div class="row" style="justify-content:center">
-          <button class="btn gold" id="beginRiddles" type="button" disabled onclick="beginHunt()" data-i18n="beginRiddles">To the mooncake table</button>
+          <button class="btn gold" id="beginRiddles" type="button" disabled onclick="beginHunt()" data-i18n="beginRiddles">To the puzzle</button>
         </div>
       </div>
     </section>
 
     <section id="screen-play" class="screen">
-      <p class="kicker" data-i18n="playKicker">The table</p>
-      <h1 data-i18n="playTitle">Slice the rising cakes<span>切月餅</span></h1>
-      <p class="lead" data-i18n="playLead">Hold and drag on a computer. Swipe on a phone. Reach 150. The draw is not a ranking — everyone who reaches the score has an equal chance.</p>
+      <p class="kicker" data-i18n="playKicker">The board</p>
+      <h1 data-i18n="playTitle">Match three cakes<span>三連成餅</span></h1>
+      <p class="lead" data-i18n="playLead">Tap two neighbouring cakes to swap. Three in a line clear. Reach 400. The draw is not a ranking — everyone who reaches the score has an equal chance.</p>
       <div class="hud">
-        <span>Score <b id="hudScore">0</b> / 150</span>
-        <span>Lives <b id="hudLives">●●●</b></span>
-        <span>Time <b id="hudTime">0:45</b></span>
+        <span>Score <b id="hudScore">0</b> / 400</span>
+        <span>Moves <b id="hudMoves">20</b></span>
       </div>
       <div class="play-stage">
-        <canvas id="chopCanvas" width="680" height="420" aria-label="Mooncake table"></canvas>
+        <div class="board" id="puzzleBoard" role="grid" aria-label="Mooncake puzzle"></div>
         <div class="play-overlay" id="playOverlay">
           <div class="inner" id="playOverlayInner"></div>
         </div>
@@ -275,7 +303,7 @@
         <p class="tiny" id="loveNote" style="margin:12px 0 0"></p>
       </div>
       <div class="card" style="margin-top:16px">
-        <p style="margin:0 0 12px;color:#3e3558" data-i18n="emailHelp">Separately, email your lucky ticket to HR. Reaching 150 points is enough to enter the draw.</p>
+        <p style="margin:0 0 12px;color:#3e3558" data-i18n="emailHelp">Separately, email your lucky ticket to HR. Reaching 400 points is enough to enter the draw.</p>
         <div class="row">
           <button class="btn" type="button" onclick="emailTicket()" data-i18n="emailBtn">Email my ticket to HR</button>
           <button class="btn ghost" type="button" onclick="copyTicket()" data-i18n="copyBtn">Copy ticket</button>
@@ -286,7 +314,7 @@
 
     <section id="screen-hr" class="screen">
       <p class="kicker">HR organiser · 人事統籌</p>
-      <h1>Run the table<span>以電郵完成的中秋月餅枱</span></h1>
+      <h1>Run the puzzle<span>以電郵完成的中秋月餅謎局</span></h1>
       <div class="hr-nav">
         <button type="button" class="on" data-tab="howto" onclick="hrTab('howto')">How to run</button>
         <button type="button" data-tab="setup" onclick="hrTab('setup')">Setup</button>
@@ -301,7 +329,7 @@
           <li data-i18n="how4">After the deadline, search the inbox for [HKAC Mid-Autumn]. Paste names into the draw.</li>
           <li data-i18n="how5">If a link cannot be shared, staff may reply with a lantern inscription of their own. Every reply still enters the draw.</li>
         </ol>
-        <p class="tiny" style="margin:16px 0 0">Fair play: everyone who reaches 150 points has an equal chance. The score is for the evening, not a ranking.</p>
+        <p class="tiny" style="margin:16px 0 0">Fair play: everyone who reaches 400 points has an equal chance. The score is for the evening, not a ranking.</p>
       </div>
       <div id="hr-setup" class="card" hidden>
         <div class="grid-2">
@@ -348,8 +376,11 @@
   </div>
 
   <script>
-    const TARGET = 150;
-    const ROUND_MS = 45000;
+    const TARGET = 400;
+    const MOVES = 20;
+    const COLS = 6;
+    const ROWS = 6;
+    const KINDS = 5;
     const PROMPTS = [
       { zh: "但願人長久", en: "May we last, as the moon does" },
       { zh: "千里共嬋娟", en: "Share the fair moon across the miles" },
@@ -358,28 +389,28 @@
 
     const I18N = {
       en: {
-        kicker: "Mid-Autumn 2026 · Staff table",
-        welcomeLead: "A Cathay-style mooncake table, dressed for Hong Kong Arts Centre. Cakes and star fruit rise up the screen. Swipe to slice them. Do not slice the lucky tickets. Reach 150 points to enter the draw — you may play again. Then write one line and, if you wish, email it as a greeting to someone you love.",
-        chip1: "About 6 minutes", chip2: "Swipe · 150 points", chip3: "A greeting · one draw",
-        nameLabel: "Name, as HR will see it", startBtn: "Take a seat at the table",
+        kicker: "Mid-Autumn 2026 · Staff puzzle",
+        welcomeLead: "Cathay’s Mid-Autumn puzzle, dressed for Hong Kong Arts Centre: five kinds of cake on a board. Tap two neighbours to swap. Line up three of a kind. Reach 400 points to enter the draw — you may try another board. Then write one line and, if you wish, email it as a greeting to someone you love.",
+        chip1: "About 6 minutes", chip2: "Match three · 400", chip3: "A greeting · one draw",
+        nameLabel: "Name, as HR will see it", startBtn: "Open the puzzle",
         privacy: "Your score stays on this device. The lucky ticket goes to HR only if you send it. A greeting to someone you love opens your own mail app — HKAC never sees their address.",
         lanternKicker: "Prologue", lanternTitle: "Light one lantern",
-        lanternLead: "A single lantern is enough. Then the cakes rise.",
-        lanternHint: "Touch the lantern", beginRiddles: "To the mooncake table",
-        playKicker: "The table", playTitle: "Slice the rising cakes",
-        playLead: "Hold and drag on a computer. Swipe on a phone. Reach 150. The draw is not a ranking — everyone who reaches the score has an equal chance.",
-        playBriefTitle: "How the table works",
-        playBrief: "Mooncakes and star fruit are for slicing. Lucky tickets are not — they cost a life. Star anise hurries the clock. Hold the mouse and drag, or swipe.",
-        playStart: "Begin slicing",
-        playAgain: "Slice again",
-        playFail: "The cakes rose past. Try another round — the draw waits for 150.",
-        playWin: "The table is yours. Write one line, then send a greeting if you wish.",
+        lanternLead: "A single lantern is enough. Then the board is laid.",
+        lanternHint: "Touch the lantern", beginRiddles: "To the puzzle",
+        playKicker: "The board", playTitle: "Match three cakes",
+        playLead: "Tap two neighbouring cakes to swap. Three in a line clear. Reach 400. The draw is not a ranking — everyone who reaches the score has an equal chance.",
+        playBriefTitle: "How the puzzle works",
+        playBrief: "Five cakes: lotus, red bean, yolk, snow skin, tea. Tap one, then a neighbour, to swap. Three in a row or column clear. Cascades score more. Twenty moves. Four hundred points.",
+        playStart: "Lay the board",
+        playAgain: "Another board",
+        playFail: "The board is quiet. Try another — the draw waits for 400.",
+        playWin: "The pattern holds. Write one line, then send a greeting if you wish.",
         playContinue: "Write a lantern line",
         nextBtn: "Continue", lastBtn: "Receive the closing card",
         blessKicker: "Closing card",
         fromHkac: "Hong Kong Arts Centre · 香港藝術中心",
         ticketLabel: "Lucky ticket",
-        emailHelp: "Separately, email your lucky ticket to HR. Reaching 150 points is enough to enter the draw.",
+        emailHelp: "Separately, email your lucky ticket to HR. Reaching 400 points is enough to enter the draw.",
         emailBtn: "Email my ticket to HR", copyBtn: "Copy ticket",
         how1: "Place this file on a shared drive and copy the link. No login is required.",
         how2: "In Setup, enter the HR mailbox, prize, and deadline.",
@@ -387,7 +418,7 @@
         how4: "After the deadline, search the inbox for [HKAC Mid-Autumn]. Paste names into the draw.",
         how5: "If a link cannot be shared, staff may reply with a lantern inscription of their own. Every reply still enters the draw.",
         drawIdle: "One name will be chosen.",
-        hrLink: "HR organiser desk", staffLink: "Staff table",
+        hrLink: "HR organiser desk", staffLink: "Staff puzzle",
         footer: "Hong Kong Arts Centre · 2 Harbour Road, Wan Chai · Internal staff activity.",
         needName: "Please enter your name so HR can recognise the ticket.",
         litHint: "It is lit. You may go in.",
@@ -414,28 +445,28 @@
         loveCopied: "Greeting copied."
       },
       zh: {
-        kicker: "2026 中秋 · 同事月餅枱",
-        welcomeLead: "國泰式的切月餅，換成香港藝術中心的枱面。月餅與楊桃自下而上。劃過即切。不要切到幸運券。滿 150 分即可抽獎，可重玩。然後自題一句，也可電郵給你想念的人。",
-        chip1: "約六分鐘", chip2: "劃過 · 150 分", chip3: "一封問候 · 一次抽獎",
-        nameLabel: "姓名（人事部將以此核對）", startBtn: "入座月餅枱",
+        kicker: "2026 中秋 · 同事月餅謎局",
+        welcomeLead: "國泰中秋的配對謎局，換成香港藝術中心的枱面。五種月餅。點相鄰兩顆對調。三顆連成一線即消去。滿 400 分即可抽獎，可換一盤再試。然後自題一句，也可電郵給你想念的人。",
+        chip1: "約六分鐘", chip2: "三連 · 400 分", chip3: "一封問候 · 一次抽獎",
+        nameLabel: "姓名（人事部將以此核對）", startBtn: "打開謎局",
         privacy: "分數只留在此裝置。券號只在你選擇寄出時交給人事部。問候信經你自己的電郵程式寄出，藝術中心不會看到對方地址。",
         lanternKicker: "序", lanternTitle: "點一盞燈",
-        lanternLead: "一盞即夠。然後餅會升起。",
-        lanternHint: "輕觸花燈", beginRiddles: "到月餅枱",
-        playKicker: "枱面", playTitle: "切上升的月餅",
-        playLead: "電腦請按住拖曳，手機請劃過。滿 150 分。抽獎不論高低分，達標者機會均等。",
-        playBriefTitle: "枱上規則",
-        playBrief: "月餅與楊桃可切。幸運券不可切——會扣一命。八角會催趕時間。按住拖曳，或用手指劃。",
-        playStart: "開始切餅",
-        playAgain: "再切一輪",
-        playFail: "餅已升過。再來一輪——抽獎等的是 150 分。",
-        playWin: "這一枱是你的。寫一句燈語，若願意，再寄問候。",
+        lanternLead: "一盞即夠。然後擺盤。",
+        lanternHint: "輕觸花燈", beginRiddles: "到謎局",
+        playKicker: "棋盤", playTitle: "三連成餅",
+        playLead: "點相鄰兩顆對調。三顆成線即消。滿 400 分。抽獎不論高低分，達標者機會均等。",
+        playBriefTitle: "謎局規則",
+        playBrief: "蓮蓉、豆沙、蛋黃、冰皮、茶香。先點一顆，再點鄰居，即可對調。橫或直三連消去。連消加分。二十步。四百分。",
+        playStart: "擺盤",
+        playAgain: "另擺一盤",
+        playFail: "這盤靜了。再來一盤——抽獎等的是 400 分。",
+        playWin: "格局已成。寫一句燈語，若願意，再寄問候。",
         playContinue: "題一句燈",
         nextBtn: "繼續", lastBtn: "收取結語卡",
         blessKicker: "結語卡",
         fromHkac: "香港藝術中心 · Hong Kong Arts Centre",
         ticketLabel: "幸運券",
-        emailHelp: "另外，把券號電郵人事部。滿 150 分即可抽獎。",
+        emailHelp: "另外，把券號電郵人事部。滿 400 分即可抽獎。",
         emailBtn: "電郵券號給人事部", copyBtn: "複製券號",
         how1: "把本檔放到共用雲端並複製連結。不必登入。",
         how2: "在設定填寫人事郵箱、獎品與截止時間。",
@@ -443,7 +474,7 @@
         how4: "截止後搜尋 [HKAC Mid-Autumn]，把姓名貼進抽獎。",
         how5: "若未能分享連結，同事可回覆一句自題燈語。凡回覆者同樣可抽獎。",
         drawIdle: "將抽出一個姓名。",
-        hrLink: "人事統籌台", staffLink: "同事月餅枱",
+        hrLink: "人事統籌台", staffLink: "同事謎局",
         footer: "香港藝術中心 · 灣仔港灣道 2 號 · 內部員工活動。",
         needName: "請先填寫姓名，人事部才能核對券號。",
         litHint: "燈已亮。可以進去。",
@@ -476,9 +507,8 @@
     };
 
     const game = {
-      overlay: "brief", running: false, score: 0, lives: 3, remain: ROUND_MS,
-      items: [], trail: [], sparks: [], slicing: false, last: null, raf: 0,
-      spawn: 0, lastTs: 0, haste: 1, w: 680, h: 420, dpr: 1
+      overlay: "brief", running: false, score: 0, moves: MOVES,
+      board: [], sel: -1, busy: false
     };
 
     function t(key) { return I18N[state.lang][key]; }
@@ -490,7 +520,7 @@
       document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
       const mainTitle = document.getElementById("mainTitle");
       if (mainTitle) {
-        mainTitle.innerHTML = lang === "zh" ? "月餅枱<span>The Mooncake Table</span>" : "The Mooncake Table<span>月餅枱</span>";
+        mainTitle.innerHTML = lang === "zh" ? "月餅謎局<span>The Mooncake Puzzle</span>" : "The Mooncake Puzzle<span>月餅謎局</span>";
       }
       document.getElementById("staffName").placeholder = lang === "zh" ? "例如：陳美玲" : "e.g. Chan Mei Ling";
       const loveName = document.getElementById("loveName");
@@ -503,7 +533,7 @@
         if (key === "lanternTitle") {
           el.innerHTML = lang === "zh" ? "點一盞燈<span>Light one lantern</span>" : "Light one lantern<span>點一盞燈</span>";
         } else if (key === "playTitle") {
-          el.innerHTML = lang === "zh" ? "切上升的月餅<span>Slice the rising cakes</span>" : "Slice the rising cakes<span>切月餅</span>";
+          el.innerHTML = lang === "zh" ? "三連成餅<span>Match three cakes</span>" : "Match three cakes<span>三連成餅</span>";
         } else el.textContent = I18N[lang][key];
       });
       if (document.getElementById("screen-station").classList.contains("on")) renderInscribe();
@@ -515,7 +545,7 @@
     }
 
     function show(id) {
-      if (id !== "screen-play") stopChop();
+      if (id !== "screen-play") stopPuzzle();
       document.querySelectorAll(".screen").forEach(s => s.classList.remove("on"));
       document.getElementById(id).classList.add("on");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -574,16 +604,13 @@
     function beginHunt() {
       if (!state.lit) return;
       show("screen-play");
-      sizeCanvas();
-      bindChop();
       showPlayOverlay("brief");
       paintHud();
     }
 
     function paintHud() {
       const scoreEl = document.getElementById("hudScore");
-      const livesEl = document.getElementById("hudLives");
-      const timeEl = document.getElementById("hudTime");
+      const movesEl = document.getElementById("hudMoves");
       if (!scoreEl) return;
       const parent = scoreEl.parentElement;
       if (parent && parent.childNodes[0]) {
@@ -591,13 +618,11 @@
       }
       scoreEl.textContent = game.score;
       if (scoreEl.nextSibling) scoreEl.nextSibling.textContent = " / " + TARGET;
-      livesEl.textContent = "●".repeat(Math.max(0, game.lives)) + "○".repeat(Math.max(0, 3 - game.lives));
-      const sec = Math.max(0, Math.ceil(game.remain / 1000));
-      timeEl.textContent = "0:" + String(sec).padStart(2, "0");
-      const livesWrap = livesEl.parentElement;
-      if (livesWrap && livesWrap.childNodes[0]) livesWrap.childNodes[0].textContent = (state.lang === "zh" ? "命 " : "Lives ");
-      const timeWrap = timeEl.parentElement;
-      if (timeWrap && timeWrap.childNodes[0]) timeWrap.childNodes[0].textContent = (state.lang === "zh" ? "時間 " : "Time ");
+      if (movesEl) {
+        movesEl.textContent = game.moves;
+        const wrap = movesEl.parentElement;
+        if (wrap && wrap.childNodes[0]) wrap.childNodes[0].textContent = (state.lang === "zh" ? "步數 " : "Moves ");
+      }
     }
 
     function showPlayOverlay(kind) {
@@ -611,16 +636,15 @@
           "<h2>" + t("playBriefTitle") + "</h2>" +
           "<p class='lead' style='color:#cfc3ae'>" + t("playBrief") + "</p>" +
           "<div class='legend'>" +
-          "<div><i>●</i>  " + (state.lang === "zh" ? "月餅 +25 · 楊桃 +15 · 雙黃 +40" : "Mooncake +25 · star fruit +15 · double yolk +40") + "</div>" +
-          "<div><i>■</i>  " + (state.lang === "zh" ? "幸運券：扣一命" : "Lucky ticket: lose a life") + "</div>" +
-          "<div><i>✶</i>  " + (state.lang === "zh" ? "八角：時間加快" : "Star anise: the clock hurries") + "</div>" +
+          "<div><i>●</i>  " + (state.lang === "zh" ? "蓮蓉 · 豆沙 · 蛋黃 · 冰皮 · 茶香" : "Lotus · red bean · yolk · snow skin · tea") + "</div>" +
+          "<div><i>●</i>  " + (state.lang === "zh" ? "三連 +30／顆，連消加分" : "Three-in-a-line +30 each, cascades extra") + "</div>" +
           "</div>" +
-          "<button class='btn gold' type='button' onclick='startChop()'>" + t("playStart") + "</button>";
+          "<button class='btn gold' type='button' onclick='startPuzzle()'>" + t("playStart") + "</button>";
       } else if (kind === "fail") {
         inner.innerHTML =
           "<h2>" + game.score + "</h2>" +
           "<p class='lead' style='color:#cfc3ae'>" + t("playFail") + "</p>" +
-          "<div class='row'><button class='btn gold' type='button' onclick='startChop()'>" + t("playAgain") + "</button></div>";
+          "<div class='row'><button class='btn gold' type='button' onclick='startPuzzle()'>" + t("playAgain") + "</button></div>";
       } else if (kind === "win") {
         inner.innerHTML =
           "<h2>" + game.score + "</h2>" +
@@ -633,296 +657,195 @@
       document.getElementById("playOverlay").classList.add("hide");
     }
 
-    function sizeCanvas() {
-      const c = document.getElementById("chopCanvas");
-      if (!c) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = c.clientWidth || 680;
-      const h = window.innerWidth < 680 ? 360 : 420;
-      c.style.height = h + "px";
-      c.width = Math.floor(w * dpr);
-      c.height = Math.floor(h * dpr);
-      game.dpr = dpr; game.w = w; game.h = h;
-    }
-
-    let chopBound = false;
-    function bindChop() {
-      const c = document.getElementById("chopCanvas");
-      if (!c || chopBound) return;
-      chopBound = true;
-      const pos = ev => {
-        const r = c.getBoundingClientRect();
-        const p = ev.touches ? ev.touches[0] : ev;
-        return { x: p.clientX - r.left, y: p.clientY - r.top };
-      };
-      const down = ev => {
-        if (!game.running) return;
-        ev.preventDefault();
-        game.slicing = true;
-        game.last = pos(ev);
-        game.trail = [game.last];
-      };
-      const move = ev => {
-        if (!game.slicing || !game.running) return;
-        ev.preventDefault();
-        const p = pos(ev);
-        if (game.last) sliceAlong(game.last, p);
-        game.last = p;
-        game.trail.push(p);
-        if (game.trail.length > 10) game.trail.shift();
-      };
-      const up = () => { game.slicing = false; game.last = null; };
-      c.addEventListener("mousedown", down);
-      window.addEventListener("mousemove", move);
-      window.addEventListener("mouseup", up);
-      c.addEventListener("touchstart", down, { passive: false });
-      c.addEventListener("touchmove", move, { passive: false });
-      window.addEventListener("touchend", up);
-      window.addEventListener("resize", () => { if (document.getElementById("screen-play").classList.contains("on")) sizeCanvas(); });
-    }
-
-    function startChop() {
-      stopChop();
-      game.running = true;
-      game.score = 0;
-      game.lives = 3;
-      game.remain = ROUND_MS;
-      game.items = [];
-      game.trail = [];
-      game.sparks = [];
-      game.spawn = 0;
-      game.lastTs = 0;
-      game.haste = 1;
-      game.slicing = false;
-      hidePlayOverlay();
-      sizeCanvas();
-      paintHud();
-      game.raf = requestAnimationFrame(tickChop);
-    }
-
-    function stopChop() {
+    function stopPuzzle() {
       game.running = false;
-      game.slicing = false;
-      if (game.raf) cancelAnimationFrame(game.raf);
-      game.raf = 0;
+      game.busy = false;
+      game.sel = -1;
     }
 
     function goToInscribe() {
-      stopChop();
+      stopPuzzle();
       state.score = game.score;
       renderInscribe();
       show("screen-station");
     }
 
-    function pickType() {
-      const r = Math.random();
-      if (r < 0.50) return "cake";
-      if (r < 0.70) return "star";
-      if (r < 0.80) return "yolk";
-      if (r < 0.93) return "ticket";
-      return "anise";
-    }
+    function idx(r, c) { return r * COLS + c; }
 
-    function spawnItem() {
-      const type = pickType();
-      const r = type === "ticket" ? 28 : type === "yolk" ? 26 : 32;
-      game.items.push({
-        type, r,
-        x: 40 + Math.random() * (game.w - 80),
-        y: game.h + r + 8,
-        vy: -(90 + Math.random() * 70),
-        vx: (Math.random() - 0.5) * 40,
-        rot: Math.random() * Math.PI,
-        vr: (Math.random() - 0.5) * 2,
-        dead: false
-      });
-    }
-
-    function distSeg(ax, ay, bx, by, px, py) {
-      const dx = bx - ax, dy = by - ay;
-      const len2 = dx * dx + dy * dy || 1;
-      let t = ((px - ax) * dx + (py - ay) * dy) / len2;
-      t = Math.max(0, Math.min(1, t));
-      const x = ax + t * dx, y = ay + t * dy;
-      const ddx = px - x, ddy = py - y;
-      return Math.sqrt(ddx * ddx + ddy * ddy);
-    }
-
-    function sliceAlong(a, b) {
-      const reach = Math.hypot(b.x - a.x, b.y - a.y);
-      if (reach < 4) return;
-      game.items.forEach(it => {
-        if (it.dead) return;
-        if (distSeg(a.x, a.y, b.x, b.y, it.x, it.y) < it.r + 6) hitItem(it);
-      });
-    }
-
-    function hitItem(it) {
-      it.dead = true;
-      if (it.type === "ticket") {
-        game.lives -= 1;
-        chime(196);
-        burst(it.x, it.y, "#8a3b32");
-      } else if (it.type === "anise") {
-        game.remain = Math.max(0, game.remain - 5000);
-        game.haste = 1.65;
-        chime(247);
-        burst(it.x, it.y, "#6b4a2a");
-      } else {
-        const pts = it.type === "yolk" ? 40 : it.type === "star" ? 15 : 25;
-        game.score += pts;
-        chime(it.type === "yolk" ? 784 : 659);
-        burst(it.x, it.y, "#d4c08a");
-      }
-      paintHud();
-      if (game.score >= TARGET && game.running) {
-        state.score = game.score;
-        stopChop();
-        chime(880);
-        showPlayOverlay("win");
-      } else if (game.lives <= 0 && game.running) {
-        stopChop();
-        showPlayOverlay("fail");
-      }
-    }
-
-    function burst(x, y, color) {
-      for (let i = 0; i < 10; i++) {
-        game.sparks.push({
-          x, y, color,
-          vx: (Math.random() - 0.5) * 180,
-          vy: (Math.random() - 0.5) * 180,
-          life: 1
-        });
-      }
-    }
-
-    function tickChop(ts) {
-      if (!game.running) return;
-      if (!game.lastTs) game.lastTs = ts;
-      const dt = Math.min(0.05, (ts - game.lastTs) / 1000);
-      game.lastTs = ts;
-      game.remain -= dt * 1000 * game.haste;
-      game.spawn += dt;
-      if (game.spawn > 0.48) { game.spawn = 0; spawnItem(); }
-      game.items.forEach(it => {
-        it.x += it.vx * dt;
-        it.y += it.vy * dt;
-        it.rot += it.vr * dt;
-      });
-      game.items = game.items.filter(it => !it.dead && it.y + it.r > -20);
-      game.sparks.forEach(s => { s.x += s.vx * dt; s.y += s.vy * dt; s.life -= dt * 2.2; });
-      game.sparks = game.sparks.filter(s => s.life > 0);
-      if (game.remain <= 0) {
-        if (game.score >= TARGET) {
-          state.score = game.score;
-          stopChop();
-          showPlayOverlay("win");
-        } else {
-          stopChop();
-          showPlayOverlay("fail");
+    function findMatches(board) {
+      const mark = new Set();
+      for (let r = 0; r < ROWS; r++) {
+        let run = 1;
+        for (let c = 1; c <= COLS; c++) {
+          const same = c < COLS && board[idx(r, c)] === board[idx(r, c - 1)];
+          if (same) run += 1;
+          else {
+            if (run >= 3) for (let k = 1; k <= run; k++) mark.add(idx(r, c - k));
+            run = 1;
+          }
         }
-        drawChop();
-        paintHud();
+      }
+      for (let c = 0; c < COLS; c++) {
+        let run = 1;
+        for (let r = 1; r <= ROWS; r++) {
+          const same = r < ROWS && board[idx(r, c)] === board[idx(r - 1, c)];
+          if (same) run += 1;
+          else {
+            if (run >= 3) for (let k = 1; k <= run; k++) mark.add(idx(r - k, c));
+            run = 1;
+          }
+        }
+      }
+      return mark;
+    }
+
+    function neighbours(a, b) {
+      const ra = Math.floor(a / COLS), ca = a % COLS;
+      const rb = Math.floor(b / COLS), cb = b % COLS;
+      return Math.abs(ra - rb) + Math.abs(ca - cb) === 1;
+    }
+
+    function wouldMatch(board, a, b) {
+      const next = board.slice();
+      const t = next[a]; next[a] = next[b]; next[b] = t;
+      return findMatches(next).size > 0;
+    }
+
+    function hasMove(board) {
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const a = idx(r, c);
+          if (c + 1 < COLS && wouldMatch(board, a, idx(r, c + 1))) return true;
+          if (r + 1 < ROWS && wouldMatch(board, a, idx(r + 1, c))) return true;
+        }
+      }
+      return false;
+    }
+
+    function randomKind(r, c, board) {
+      let k, guard = 0;
+      do {
+        k = Math.floor(Math.random() * KINDS);
+        guard += 1;
+      } while (guard < 12 && (
+        (c >= 2 && board[idx(r, c - 1)] === k && board[idx(r, c - 2)] === k) ||
+        (r >= 2 && board[idx(r - 1, c)] === k && board[idx(r - 2, c)] === k)
+      ));
+      return k;
+    }
+
+    function freshBoard() {
+      let board, n = 0;
+      do {
+        board = [];
+        for (let r = 0; r < ROWS; r++) {
+          for (let c = 0; c < COLS; c++) board.push(randomKind(r, c, board));
+        }
+        n += 1;
+      } while (n < 40 && (findMatches(board).size || !hasMove(board)));
+      return board;
+    }
+
+    function startPuzzle() {
+      stopPuzzle();
+      game.running = true;
+      game.score = 0;
+      game.moves = MOVES;
+      game.sel = -1;
+      game.busy = false;
+      game.board = freshBoard();
+      hidePlayOverlay();
+      paintBoard();
+      paintHud();
+    }
+
+    function paintBoard() {
+      const box = document.getElementById("puzzleBoard");
+      if (!box) return;
+      box.innerHTML = "";
+      game.board.forEach((k, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "tile" + (game.sel === i ? " on" : "");
+        btn.disabled = !game.running || game.busy;
+        const cake = document.createElement("span");
+        cake.className = "cake k" + k;
+        cake.setAttribute("aria-hidden", "true");
+        btn.appendChild(cake);
+        btn.onclick = () => tapTile(i);
+        box.appendChild(btn);
+      });
+    }
+
+    function tapTile(i) {
+      if (!game.running || game.busy) return;
+      if (game.sel < 0) { game.sel = i; paintBoard(); return; }
+      if (game.sel === i) { game.sel = -1; paintBoard(); return; }
+      if (!neighbours(game.sel, i)) { game.sel = i; paintBoard(); return; }
+      trySwap(game.sel, i);
+    }
+
+    function trySwap(a, b) {
+      if (!wouldMatch(game.board, a, b)) {
+        game.sel = -1;
+        paintBoard();
+        chime(196);
         return;
       }
-      drawChop();
+      const t = game.board[a]; game.board[a] = game.board[b]; game.board[b] = t;
+      game.sel = -1;
+      game.moves -= 1;
       paintHud();
-      game.raf = requestAnimationFrame(tickChop);
+      resolveMatches(1);
     }
 
-    function drawChop() {
-      const c = document.getElementById("chopCanvas");
-      if (!c) return;
-      const ctx = c.getContext("2d");
-      const dpr = game.dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, game.w, game.h);
-      game.items.forEach(it => drawItem(ctx, it));
-      game.sparks.forEach(s => {
-        ctx.globalAlpha = Math.max(0, s.life);
-        ctx.fillStyle = s.color;
-        ctx.beginPath(); ctx.arc(s.x, s.y, 3, 0, Math.PI * 2); ctx.fill();
-        ctx.globalAlpha = 1;
-      });
-      if (game.trail.length > 1) {
-        ctx.strokeStyle = "rgba(212,192,138,.85)";
-        ctx.lineWidth = 4;
-        ctx.lineCap = "round";
-        ctx.beginPath();
-        ctx.moveTo(game.trail[0].x, game.trail[0].y);
-        for (let i = 1; i < game.trail.length; i++) ctx.lineTo(game.trail[i].x, game.trail[i].y);
-        ctx.stroke();
+    function resolveMatches(combo) {
+      const mark = findMatches(game.board);
+      if (!mark.size) {
+        afterResolve();
+        return;
       }
+      game.busy = true;
+      game.score += mark.size * 30 * combo;
+      paintHud();
+      chime(520 + combo * 80);
+      const tiles = [...document.querySelectorAll("#puzzleBoard .tile")];
+      mark.forEach(i => { if (tiles[i]) tiles[i].classList.add("pop"); });
+      setTimeout(() => {
+        collapse(mark);
+        paintBoard();
+        setTimeout(() => resolveMatches(combo + 1), 160);
+      }, 200);
     }
 
-    function drawItem(ctx, it) {
-      ctx.save();
-      ctx.translate(it.x, it.y);
-      ctx.rotate(it.rot);
-      if (it.type === "cake" || it.type === "yolk") {
-        ctx.fillStyle = it.type === "yolk" ? "#c9a24a" : "#b0893a";
-        ctx.beginPath(); ctx.arc(0, 0, it.r, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = "#7a5a28";
-        ctx.beginPath(); ctx.arc(0, 0, it.r * 0.72, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = it.type === "yolk" ? "#e8c768" : "#d4c08a";
-        ctx.beginPath(); ctx.arc(0, 0, it.r * 0.28, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = "rgba(251,247,239,.35)";
-        ctx.lineWidth = 1.5;
-        for (let i = 0; i < 4; i++) {
-          ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.lineTo(Math.cos(i * Math.PI / 2) * it.r * 0.7, Math.sin(i * Math.PI / 2) * it.r * 0.7);
-          ctx.stroke();
+    function collapse(mark) {
+      for (let c = 0; c < COLS; c++) {
+        const keep = [];
+        for (let r = ROWS - 1; r >= 0; r--) {
+          const i = idx(r, c);
+          if (!mark.has(i)) keep.push(game.board[i]);
         }
-      } else if (it.type === "star") {
-        ctx.fillStyle = "#c5c35a";
-        starPath(ctx, 0, 0, 5, it.r, it.r * 0.42);
-        ctx.fill();
-        ctx.fillStyle = "#8a8a32";
-        ctx.beginPath(); ctx.arc(0, 0, 4, 0, Math.PI * 2); ctx.fill();
-      } else if (it.type === "ticket") {
-        ctx.fillStyle = "#fbf7ef";
-        roundRect(ctx, -it.r, -it.r * 0.55, it.r * 2, it.r * 1.1, 4);
-        ctx.fill();
-        ctx.setLineDash([4, 3]);
-        ctx.strokeStyle = "#b0893a";
-        ctx.lineWidth = 1.5;
-        roundRect(ctx, -it.r + 3, -it.r * 0.55 + 3, it.r * 2 - 6, it.r * 1.1 - 6, 3);
-        ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.fillStyle = "#1a1714";
-        ctx.font = "700 11px Source Sans 3, sans-serif";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(state.lang === "zh" ? "券" : "TICKET", 0, 0);
-      } else {
-        ctx.fillStyle = "#6b4a2a";
-        starPath(ctx, 0, 0, 8, it.r * 0.9, it.r * 0.35);
-        ctx.fill();
+        for (let r = ROWS - 1; r >= 0; r--) {
+          game.board[idx(r, c)] = keep.length ? keep.shift() : Math.floor(Math.random() * KINDS);
+        }
       }
-      ctx.restore();
     }
 
-    function starPath(ctx, x, y, n, outer, inner) {
-      ctx.beginPath();
-      for (let i = 0; i < n * 2; i++) {
-        const r = i % 2 === 0 ? outer : inner;
-        const a = -Math.PI / 2 + i * Math.PI / n;
-        const px = x + Math.cos(a) * r, py = y + Math.sin(a) * r;
-        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    function afterResolve() {
+      game.busy = false;
+      if (!hasMove(game.board)) game.board = freshBoard();
+      paintBoard();
+      paintHud();
+      if (!game.running) return;
+      if (game.score >= TARGET) {
+        state.score = game.score;
+        stopPuzzle();
+        chime(880);
+        showPlayOverlay("win");
+      } else if (game.moves <= 0) {
+        stopPuzzle();
+        showPlayOverlay("fail");
       }
-      ctx.closePath();
-    }
-
-    function roundRect(ctx, x, y, w, h, r) {
-      ctx.beginPath();
-      ctx.moveTo(x + r, y);
-      ctx.arcTo(x + w, y, x + w, y + h, r);
-      ctx.arcTo(x + w, y + h, x, y + h, r);
-      ctx.arcTo(x, y + h, x, y, r);
-      ctx.arcTo(x, y, x + w, y, r);
-      ctx.closePath();
     }
 
     function renderInscribe() {
@@ -996,7 +919,7 @@
     function renderBlessing() {
       document.getElementById("helloName").textContent = (state.lang === "zh" ? "" : "Dear ") + state.name;
       document.getElementById("scorePill").textContent =
-        (state.lang === "zh" ? "月餅枱  " : "Mooncake table  ") + state.score;
+        (state.lang === "zh" ? "月餅謎局  " : "Mooncake puzzle  ") + state.score;
       document.getElementById("blessingText").textContent = state.lang === "zh"
         ? "香港藝術中心祝你中秋安好。未能同桌，仍共這一輪月。"
         : "Hong Kong Arts Centre wishes you a settled Mid-Autumn. We are not at one table, and still under one moon.";
@@ -1030,7 +953,7 @@
       const cfg = setup();
       const subject = "[HKAC Mid-Autumn] Lucky ticket " + state.ticket + " — " + state.name;
       const body =
-        "Hello HR,\n\nI completed The Mooncake Table / 月餅枱.\n\n" +
+        "Hello HR,\n\nI completed The Mooncake Puzzle / 月餅謎局.\n\n" +
         "Name: " + state.name + "\nLucky ticket: " + state.ticket + "\n" +
         "Score: " + state.score + "\nInscription: " + state.inscription + "\n\nPlease include me in the Mid-Autumn lucky draw.\n";
       if (!cfg.email) { copyTicket(); alert(t("mailMissing")); return; }
@@ -1044,7 +967,7 @@
         const dear = who ? who + "：" : "";
         return (
           (dear ? dear + "\n\n" : "") +
-          "今晚在公司坐了一回月餅枱。燈下寫了一句，寄給你。\n\n" +
+          "今晚在公司玩了一局中秋月餅謎。燈下寫了一句，寄給你。\n\n" +
           "「" + line + "」\n\n" +
           "未能同桌，仍共這一輪月。\n但願人長久，千里共嬋娟。\n\n" +
           state.name
@@ -1053,7 +976,7 @@
       const dear = who ? "Dear " + who + "," : "Dear you,";
       return (
         dear + "\n\n" +
-        "I sat a short Mooncake Table at work tonight. This line is for you:\n\n" +
+        "I played a short Mooncake Puzzle at work tonight. This line is for you:\n\n" +
         "“" + line + "”\n\n" +
         "We are not at one table, and still under one moon.\n" +
         "但願人長久，千里共嬋娟。\n\n" +
@@ -1113,14 +1036,14 @@
       const cfg = setup();
       const playLink = "[PASTE THE SHARED LINK TO index.html HERE]";
       document.getElementById("inviteText").value =
-`Subject: [HKAC Mid-Autumn] 月餅枱 — slice, write one line
+`Subject: [HKAC Mid-Autumn] 月餅謎局 — match three, write one line
 
 Dear colleagues,
 
-Hong Kong Arts Centre invites you to The Mooncake Table / 月餅枱 — a Cathay-style slice game in our own register: mooncakes and star fruit rise, you swipe, lucky tickets cost a life. Reach 150 points (you may play again). Then write one line. You may email that line as a greeting to someone you love. Reaching the score enters the prize draw.
+Hong Kong Arts Centre invites you to The Mooncake Puzzle / 月餅謎局 — Cathay’s matching puzzle in our own register: five cakes on a board, swap neighbours, three in a line clear. Reach 400 points (you may try another board). Then write one line. You may email that line as a greeting to someone you love. Reaching the score enters the prize draw.
 
 1. Open: ${playLink}
-2. Enter your name, light the lantern, slice at the table.
+2. Enter your name, light the lantern, play the puzzle.
 3. Optionally email a greeting to someone you love.
 4. Click “Email my ticket to HR”, or reply with your ticket code.
 
@@ -1133,7 +1056,7 @@ If the link will not open, reply with your name and one lantern line of your own
 
 各位同事：
 
-香港藝術中心誠邀參加「月餅枱」：劃切上升的月餅與楊桃，避開幸運券，滿 150 分（可重玩），再自題一句。結尾可把這句電郵給你想念的人。完成後把券號電郵人事部即可抽獎。獎品：${cfg.prize || "中秋月餅禮盒"}。截止：${cfg.deadline || "［請填日期時間］"}。
+香港藝術中心誠邀參加「月餅謎局」：五種月餅對調，三連即消，滿 400 分（可換盤再試），再自題一句。結尾可把這句電郵給你想念的人。完成後把券號電郵人事部即可抽獎。獎品：${cfg.prize || "中秋月餅禮盒"}。截止：${cfg.deadline || "［請填日期時間］"}。
 
 Hong Kong Arts Centre
 2 Harbour Road, Wan Chai
@@ -1173,7 +1096,7 @@ Hong Kong Arts Centre
 
 Dear colleagues,
 
-This year’s Mooncake Table winner is: ${winner}
+This year’s Mooncake Puzzle winner is: ${winner}
 
 Prize: ${cfg.prize || "a Mid-Autumn mooncake gift set"}
 
