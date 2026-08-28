@@ -10,6 +10,13 @@ The chat includes short Employment Ordinance (Cap. 57) summaries and links to
 https://www.elegislation.gov.hk/hk/cap57  
 It does **not** scrape or search the live ordinance page (that site requires a browser check-in). Answers are summaries only, not legal advice.
 
+## Medical benefits note
+Plan 1 (manager grade and above) and Plan 2 (below manager) Blue Cross schedules are loaded into the chat from:
+- `public/benefits/medical-plan-1-manager.pdf`
+- `public/benefits/medical-plan-2-staff.pdf`
+
+(Also mirrored under `/benefits` for the standalone HTML file.)
+
 ## Deliberately not included
 - Login and permissions
 - Saving to a database / Supabase
