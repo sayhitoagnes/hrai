@@ -210,7 +210,7 @@
     <header>
       <p class="role">HR Specialist</p>
       <h1>HR Chat box</h1>
-      <p>Practical answers on company policy and Cap. 57 entitlements.</p>
+      <p>Practical answers on policy, Cap. 57, and medical benefits by grade. 57, and medical benefits by grade.</p>
       <a class="header-link" href="https://www.elegislation.gov.hk/hk/cap57" target="_blank" rel="noopener noreferrer">
         Open Employment Ordinance (Cap. 57)
       </a>
@@ -223,13 +223,15 @@
         Contact HR (coming next)
       </button>
       <div class="row">
-        <textarea id="question" rows="2" placeholder="Ask your HR specialist…" aria-label="Your question"></textarea>
+        <textarea id="question" rows="2" placeholder="Ask about Plan 1 / Plan 2 medical benefits…" aria-label="Your question"></textarea>
         <button id="askBtn" type="button">Ask</button>
       </div>
       <p class="hint">
-        Answers are given in an HR advisory tone for this workshop demo. Cap. 57 references link to
+        Answers are given in an HR advisory tone for this workshop demo.
+        Medical limits come from the Blue Cross Plan 1 / Plan 2 schedules in the <code>benefits/</code> folder.
+        Cap. 57 references link to
         <a href="https://www.elegislation.gov.hk/hk/cap57" target="_blank" rel="noopener noreferrer">elegislation.gov.hk</a>.
-        Not a substitute for formal legal advice on complex cases.
+        Not a substitute for formal legal or claims advice on complex cases.
       </p>
     </div>
   </main>
@@ -275,17 +277,6 @@
     ],
     "answer": "If you are unwell, please take sick leave and rest. Under our Leave Policy, a medical certificate is required when the policy asks for one. Notify your manager as soon as you can, and HR can help if you need support on documentation.",
     "source": "Leave Policy"
-  },
-  {
-    "id": 4,
-    "topic": "Health insurance",
-    "triggers": [
-      "health insurance",
-      "medical plan",
-      "medical coverage"
-    ],
-    "answer": "If you are enrolled, you are covered by the company health plan. The Benefits Guide sets out the medical options and claim steps. If you are unsure whether you are enrolled or what is covered, reply with your question and I can point you to the right section.",
-    "source": "Benefits Guide"
   },
   {
     "id": 5,
@@ -489,6 +480,169 @@
     "answer": "Severance payment generally applies if you have at least 24 months under a continuous contract and leave because of redundancy, layoff, or non-renewal of a fixed-term contract due to redundancy. Long service payment generally applies after at least 5 years under a continuous contract in the qualifying situations. For a monthly-paid employee, the usual formula is 2/3 × last month’s wages × years of service. Last month’s wages used in the formula are capped at HK$22,500 (so each year is capped at HK$15,000), and the total is capped at HK$390,000. Severance should be paid within 2 months after the employer receives your written claim. If this relates to your own case, please contact HR so we can review your service record properly.",
     "source": "Employment Ordinance Cap. 57",
     "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
+  },
+  {
+    "id": 201,
+    "topic": "Medical plan which applies",
+    "category": "medical",
+    "triggers": [
+      "which medical plan",
+      "what medical plan",
+      "my medical plan",
+      "medical plan for manager",
+      "medical plan for staff",
+      "plan 1 or plan 2",
+      "manager grade medical",
+      "below manager medical"
+    ],
+    "answer": "As your HR specialist: medical cover is split by grade. Plan 1 applies to manager grade and above. Plan 2 applies to staff below manager grade. Both are Blue Cross schedules. Please tell me your grade, or ask about a benefit type (GP, specialist, hospital, dental), and I’ll quote the exact limits.",
+    "source": "Medical Plan 1 & 2 Benefit Schedules"
+  },
+  {
+    "id": 202,
+    "topic": "Medical benefits overview",
+    "category": "medical",
+    "triggers": [
+      "medical benefit",
+      "medical benefits",
+      "health insurance",
+      "medical insurance",
+      "medical coverage",
+      "medical plan",
+      "company medical",
+      "outpatient benefit",
+      "hospital benefit"
+    ],
+    "answer": "Happy to help. Your medical outpatient plan depends on grade: Plan 1 is for manager grade and above; Plan 2 is for staff below manager grade. Key outpatient limits — Plan 1 vs Plan 2: GP HK$280 vs HK$240; Specialist HK$630 vs HK$530; X-ray/lab HK$800 vs HK$700 per disability; Physio HK$600 vs HK$500; Chinese medicine HK$260 vs HK$220; Vaccination/checkup HK$260 vs HK$220. Hospital, supplementary (80% after HK$500 deductible, max HK$150,000/disability), and dental (HK$900/year) schedules are aligned across both plans. Tell me your grade (manager+ or below manager), or ask about GP / specialist / hospital / dental, and I’ll give the exact figures.",
+    "source": "Medical Plan 1 & 2 Benefit Schedules"
+  },
+  {
+    "id": 203,
+    "topic": "Plan 1 overview",
+    "category": "medical",
+    "triggers": [
+      "plan 1",
+      "plan1",
+      "manager medical",
+      "manager and above medical",
+      "mgr and above"
+    ],
+    "answer": "Plan 1 is for manager grade and above (Blue Cross (Asia-Pacific) Insurance Limited). Plan 1 (Manager grade and above) outpatient limits (Blue Cross, OP 1, 100% reimbursement): GP HK$280/visit, max 30/year; Specialist HK$630/visit, max 15/year (no referral letter required); diagnostic X-ray/lab up to HK$800 per disability; physiotherapy/chiropractic HK$600/visit, max 15/year; Chinese medicine HK$260/visit, max 20/year; vaccination/routine checkup HK$260/visit, max 1/year. At Blue Cross network clinics, co-payment for the listed outpatient services is HK$0. Plan 1 (Manager grade and above) hospital & surgical cover (Blue Cross, HS 1): semi-private room, 100% reimbursement. Room & board HK$1,000/day up to 45 days; miscellaneous hospital charges up to HK$17,500; physician hospital visits HK$1,000/day up to 45 days; ICU HK$2,000/day up to 7 days. Surgeon fees up to Complex HK$25,500 / Major HK$17,000 / Intermediate HK$8,500 / Minor HK$4,250. Anaesthetist and operating theatre each follow the same tier caps (Complex HK$7,650 / Major HK$5,100 / Intermediate HK$2,550 / Minor HK$1,275). Public-hospital general ward cash allowance HK$500/day up to 31 days. Plan 1 (Manager grade and above) supplementary medical benefit (Blue Cross, MM 1): 80% reimbursement after a HK$500 deductible, overall maximum HK$150,000 per disability, entitled accommodation Semi-Private. This sits on top of the basic hospital & surgical schedule for eligible confinement/surgical expenses. Plan 1 (Manager grade and above) dental benefit (Blue Cross, DENT 1): overall maximum HK$900 in any one year at 100% Reasonable & Customary. Covered items include X-rays before dental service, abscess drainage, medication, fillings, simple extractions (exclude wisdom teeth & surgical cases), oral examination, scale & polish.",
+    "source": "Medical Plan 1 (Manager and above)",
+    "sourceUrl": "benefits/medical-plan-1-manager.pdf"
+  },
+  {
+    "id": 204,
+    "topic": "Plan 2 overview",
+    "category": "medical",
+    "triggers": [
+      "plan 2",
+      "plan2",
+      "below manager medical",
+      "staff medical plan",
+      "non-manager medical"
+    ],
+    "answer": "Plan 2 is for staff below manager grade (Blue Cross (Asia-Pacific) Insurance Limited). Plan 2 (Staff below manager grade) outpatient limits (Blue Cross, OP 2, 100% reimbursement): GP HK$240/visit, max 30/year; Specialist HK$530/visit, max 15/year (no referral letter required); diagnostic X-ray/lab up to HK$700 per disability; physiotherapy/chiropractic HK$500/visit, max 15/year; Chinese medicine HK$220/visit, max 20/year; vaccination/routine checkup HK$220/visit, max 1/year. At Blue Cross network clinics, co-payment for the listed outpatient services is HK$0. Plan 2 (Staff below manager grade) hospital & surgical cover (Blue Cross, HS 2): semi-private room, 100% reimbursement. Room & board HK$1,000/day up to 45 days; miscellaneous hospital charges up to HK$17,500; physician hospital visits HK$1,000/day up to 45 days; ICU HK$2,000/day up to 7 days. Surgeon fees up to Complex HK$25,500 / Major HK$17,000 / Intermediate HK$8,500 / Minor HK$4,250. Anaesthetist and operating theatre each follow the same tier caps (Complex HK$7,650 / Major HK$5,100 / Intermediate HK$2,550 / Minor HK$1,275). Public-hospital general ward cash allowance HK$500/day up to 31 days. Plan 2 (Staff below manager grade) supplementary medical benefit (Blue Cross, MM 2): 80% reimbursement after a HK$500 deductible, overall maximum HK$150,000 per disability, entitled accommodation Semi-Private. This sits on top of the basic hospital & surgical schedule for eligible confinement/surgical expenses. Plan 2 (Staff below manager grade) dental benefit (Blue Cross, DENT 2): overall maximum HK$900 in any one year at 100% Reasonable & Customary. Covered items include X-rays before dental service, abscess drainage, medication, fillings, simple extractions (exclude wisdom teeth & surgical cases), oral examination, scale & polish.",
+    "source": "Medical Plan 2 (Below manager)",
+    "sourceUrl": "benefits/medical-plan-2-staff.pdf"
+  },
+  {
+    "id": 205,
+    "topic": "GP consultation limits",
+    "category": "medical",
+    "triggers": [
+      "gp visit",
+      "gp consultation",
+      "gp limit",
+      "gp benefit",
+      "general practitioner",
+      "family doctor",
+      "clinic visit limit",
+      "outpatient gp"
+    ],
+    "answer": "GP outpatient limits: Plan 1 (manager+) HK$280 per visit, max 30 visits/year; Plan 2 (below manager) HK$240 per visit, max 30 visits/year. Both reimburse at 100%, one visit per day. At Blue Cross network clinics, co-payment for GP is HK$0.",
+    "source": "Medical Plan Outpatient Benefits"
+  },
+  {
+    "id": 206,
+    "topic": "Specialist consultation limits",
+    "category": "medical",
+    "triggers": [
+      "specialist",
+      "specialist visit",
+      "specialist consultation",
+      "see a specialist",
+      "referral letter"
+    ],
+    "answer": "Specialist outpatient limits: Plan 1 (manager+) HK$630 per visit, max 15/year; Plan 2 (below manager) HK$530 per visit, max 15/year. No referral letter is required under either plan schedule. Reimbursement is 100%, one visit per day. Network clinic co-payment for specialist is HK$0.",
+    "source": "Medical Plan Outpatient Benefits"
+  },
+  {
+    "id": 207,
+    "topic": "Hospital and surgical limits",
+    "category": "medical",
+    "triggers": [
+      "hospital",
+      "hospitalisation",
+      "hospitalization",
+      "surgical",
+      "surgery benefit",
+      "room and board",
+      "icu",
+      "surgeon fee"
+    ],
+    "answer": "Hospital & surgical schedules are the same for Plan 1 and Plan 2 (semi-private, 100% reimbursement): room & board HK$1,000/day up to 45 days; miscellaneous hospital charges up to HK$17,500; physician visits HK$1,000/day up to 45 days; ICU HK$2,000/day up to 7 days; surgeon fees up to Complex HK$25,500 / Major HK$17,000 / Intermediate HK$8,500 / Minor HK$4,250. Supplementary cover is also aligned: 80% after HK$500 deductible, overall max HK$150,000 per disability.",
+    "source": "Medical Plan Hospital & Surgical Benefits"
+  },
+  {
+    "id": 208,
+    "topic": "Dental benefits",
+    "category": "medical",
+    "triggers": [
+      "dental",
+      "dentist",
+      "scale and polish",
+      "teeth cleaning",
+      "filling",
+      "tooth extraction"
+    ],
+    "answer": "Dental cover is the same annual ceiling for both grades: overall maximum HK$900 per year at 100% Reasonable & Customary. Covered items include oral examination, scale & polish, fillings, simple extractions (excluding wisdom teeth and surgical cases), abscess drainage, medication, and required X-rays. Plan codes are DENT 1 (manager+) and DENT 2 (below manager).",
+    "source": "Medical Plan Dental Benefits"
+  },
+  {
+    "id": 209,
+    "topic": "Chinese medicine physio checkup",
+    "category": "medical",
+    "triggers": [
+      "chinese medicine",
+      "acupuncture",
+      "bonesetting",
+      "physiotherapy",
+      "chiropractic",
+      "vaccination",
+      "routine checkup",
+      "body check",
+      "x-ray",
+      "laboratory test"
+    ],
+    "answer": "Other outpatient limits — Plan 1 (manager+) vs Plan 2 (below manager): Chinese medicine HK$260 vs HK$220 per visit (max 20/year); Physiotherapy/chiropractic HK$600 vs HK$500 per visit (max 15/year); Diagnostic X-ray/lab HK$800 vs HK$700 per disability; Vaccination/routine checkup HK$260 vs HK$220 (1 visit/year). Chinese medicine, physio, GP and specialist visits share an overall combined maximum of 30 visits per year.",
+    "source": "Medical Plan Outpatient Benefits"
+  },
+  {
+    "id": 210,
+    "topic": "Network clinic and claims tip",
+    "category": "medical",
+    "triggers": [
+      "network clinic",
+      "blue cross",
+      "medical card",
+      "how to claim",
+      "claim medical",
+      "co-payment",
+      "copay"
+    ],
+    "answer": "For Blue Cross network clinics, co-payment on the listed outpatient services (GP, specialist, physio, Chinese medicine) is HK$0 under both plans. For network outpatient surgery such as gastroscopy/colonoscopy, use your electronic Medical Service Card at designated Blue Cross network clinics for full cover under the schedule. If you need the full benefit tables, open Plan 1 (manager+) or Plan 2 (below manager) from the benefits folder, or tell me your grade and the benefit you need.",
+    "source": "Medical Plan 1 & 2 Benefit Schedules"
   }
 ];
 
@@ -497,12 +651,23 @@
     const askBtn = document.getElementById("askBtn");
 
     function wantsCap57(q) {
-      return /(employment ordinance|cap\.?\s*57|chapter\s*57|statutory|hong kong law|hk law|labour law|labor law)/i.test(q);
+      return /(employment ordinance|cap\.\?\s*57|chapter\s*57|statutory|hong kong law|hk law|labour law|labor law)/i.test(q);
+    }
+
+    function wantsMedical(q) {
+      return /(medical|health insurance|outpatient|hospital|dental|specialist|gp visit|blue cross|plan\s*[12]|physio|chinese medicine|vaccination|checkup)/i.test(q);
+    }
+
+    function detectPlanKey(q) {
+      if (/below manager|non-manager|non manager|staff below|junior staff|officer grade|plan\s*2/.test(q)) return "plan2";
+      if (/plan\s*1|manager grade|manager and above|mgr and above|manager\+|for managers|as a manager|i am a manager|i'm a manager|\bmanager\b|\bmgr\b/.test(q)) return "plan1";
+      return null;
     }
 
     function findAnswer(raw) {
       const q = raw.toLowerCase().trim();
       const preferCap57 = wantsCap57(q);
+      const preferMedical = wantsMedical(q);
       let best = null;
       let bestScore = 0;
       for (const item of knowledge) {
@@ -511,12 +676,17 @@
           if (q.includes(trigger)) score += trigger.length;
         }
         if (preferCap57 && item.category === "cap57" && score > 0) score += 50;
+        if (preferMedical && item.category === "medical" && score > 0) score += 60;
         if (score > bestScore) {
           bestScore = score;
           best = item;
         }
       }
-      return best;
+      if (!best || best.category !== "medical") return best;
+      const key = detectPlanKey(q);
+      if (!key) return best;
+      const planItem = knowledge.find((k) => k.id === (key === "plan1" ? 203 : 204));
+      return planItem || best;
     }
 
     function addBubble(text, role, source, sourceUrl) {
@@ -562,7 +732,7 @@
         addBubble(match.answer, "bot", match.source, match.sourceUrl);
       } else {
         addBubble(
-          "I don’t have enough detail on that yet to advise you properly. Please ask about rest days, annual leave, sickness allowance, maternity or paternity leave, statutory holidays, wages, notice, or severance — or contact HR directly for your individual case.",
+          "I don’t have enough detail on that yet to advise you properly. Please ask about medical benefits (Plan 1 manager+ / Plan 2 below manager), rest days, annual leave, sickness allowance, maternity or paternity leave, statutory holidays, wages, notice, or severance — or contact HR directly for your individual case.",
           "bot",
           "Employment Ordinance Cap. 57",
           CAP57_URL
@@ -571,7 +741,7 @@
     }
 
     addBubble(
-      "Hello, I’m your HR specialist. Ask me about company policy or Hong Kong Employment Ordinance (Cap. 57) entitlements, and I’ll give you a clear, practical answer.",
+      "Hello, I’m your HR specialist. Ask me about company policy, Cap. 57 entitlements, or your medical benefits (Plan 1 for manager grade and above; Plan 2 for staff below manager).",
       "bot"
     );
 

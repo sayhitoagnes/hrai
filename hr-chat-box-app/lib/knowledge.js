@@ -1,6 +1,11 @@
+import {
+  buildMedicalKnowledge,
+  refineMedicalAnswer,
+} from "./medicalPlans.js";
+
 export const CAP57_URL = "https://www.elegislation.gov.hk/hk/cap57";
 
-export const knowledge = [
+const baseKnowledge = [
   {
     id: 1,
     topic: "Typhoon / Signal 8",
@@ -32,14 +37,6 @@ export const knowledge = [
     answer:
       "If you are unwell, please take sick leave and rest. Under our Leave Policy, a medical certificate is required when the policy asks for one. Notify your manager as soon as you can, and HR can help if you need support on documentation.",
     source: "Leave Policy",
-  },
-  {
-    id: 4,
-    topic: "Health insurance",
-    triggers: ["health insurance", "medical plan", "medical coverage"],
-    answer:
-      "If you are enrolled, you are covered by the company health plan. The Benefits Guide sets out the medical options and claim steps. If you are unsure whether you are enrolled or what is covered, reply with your question and I can point you to the right section.",
-    source: "Benefits Guide",
   },
   {
     id: 5,
@@ -244,8 +241,16 @@ export const knowledge = [
   },
 ];
 
+export const knowledge = [...baseKnowledge, ...buildMedicalKnowledge()];
+
 function wantsCap57(q) {
   return /(employment ordinance|cap\.?\s*57|chapter\s*57|statutory|hong kong law|hk law|labour law|labor law)/i.test(
+    q
+  );
+}
+
+function wantsMedical(q) {
+  return /(medical|health insurance|outpatient|hospital|dental|specialist|gp visit|blue cross|plan\s*[12]|physio|chinese medicine|vaccination|checkup)/i.test(
     q
   );
 }
@@ -253,6 +258,7 @@ function wantsCap57(q) {
 export function findAnswer(raw) {
   const q = raw.toLowerCase().trim();
   const preferCap57 = wantsCap57(q);
+  const preferMedical = wantsMedical(q);
   let best = null;
   let bestScore = 0;
 
@@ -264,11 +270,14 @@ export function findAnswer(raw) {
     if (preferCap57 && item.category === "cap57" && score > 0) {
       score += 50;
     }
+    if (preferMedical && item.category === "medical" && score > 0) {
+      score += 60;
+    }
     if (score > bestScore) {
       bestScore = score;
       best = item;
     }
   }
 
-  return best;
+  return refineMedicalAnswer(raw, best);
 }
