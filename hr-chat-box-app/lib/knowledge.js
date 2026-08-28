@@ -6,6 +6,7 @@ import {
   buildStaffManualKnowledge,
   refineStaffManualAnswer,
   wantsStaffManual,
+  detectManualTopic,
 } from "./staffManual.js";
 
 export const CAP57_URL = "https://www.elegislation.gov.hk/hk/cap57";
@@ -197,13 +198,28 @@ export function findAnswer(raw) {
   ) {
     return medical;
   }
-  if (medical && medical.category === "medical" && preferMedical && !preferManual) {
-    return medical;
+
+  const manualTopic = detectManualTopic(q);
+  if (manualTopic || preferManual) {
+    const manual = refineStaffManualAnswer(raw, best);
+    if (manual && manual.category === "manual") {
+      // Prefer medical only when question is clearly plan/benefit pricing
+      if (
+        medical &&
+        medical.category === "medical" &&
+        preferMedical &&
+        /(plan\s*[12]|gp claim|claim for gp|specialist limit|dental benefit)/i.test(
+          q
+        )
+      ) {
+        return medical;
+      }
+      return manual;
+    }
   }
 
-  if (preferManual) {
-    const manual = refineStaffManualAnswer(raw, best);
-    if (manual && manual.category === "manual") return manual;
+  if (medical && medical.category === "medical" && preferMedical) {
+    return medical;
   }
 
   return medical || best;
