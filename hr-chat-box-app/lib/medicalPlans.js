@@ -316,19 +316,21 @@ export function buildMedicalKnowledge() {
       topic: "GP consultation limits",
       category: "medical",
       triggers: [
+        "gp",
         "gp visit",
         "gp consultation",
         "gp limit",
         "gp benefit",
+        "gp claim",
+        "claim for gp",
+        "how much can i claim for gp",
+        "how much gp",
         "general practitioner",
         "family doctor",
         "clinic visit limit",
         "outpatient gp",
       ],
-      answer:
-        `GP outpatient limits: Plan 1 (manager+) ${money(p1.outpatient.gpPerVisit)} per visit, max ${p1.outpatient.gpMaxVisits} visits/year; ` +
-        `Plan 2 (below manager) ${money(p2.outpatient.gpPerVisit)} per visit, max ${p2.outpatient.gpMaxVisits} visits/year. ` +
-        `Both reimburse at 100%, one visit per day. At Blue Cross network clinics, co-payment for GP is HK$0.`,
+      answer: "Plan 1 (manager+): $280. Plan 2 (below manager): $240.",
       source: "Medical Plan Outpatient Benefits",
     },
     {
@@ -342,10 +344,7 @@ export function buildMedicalKnowledge() {
         "see a specialist",
         "referral letter",
       ],
-      answer:
-        `Specialist outpatient limits: Plan 1 (manager+) ${money(p1.outpatient.specialistPerVisit)} per visit, max ${p1.outpatient.specialistMaxVisits}/year; ` +
-        `Plan 2 (below manager) ${money(p2.outpatient.specialistPerVisit)} per visit, max ${p2.outpatient.specialistMaxVisits}/year. ` +
-        `No referral letter is required under either plan schedule. Reimbursement is 100%, one visit per day. Network clinic co-payment for specialist is HK$0.`,
+      answer: "Plan 1 (manager+): $630. Plan 2 (below manager): $530.",
       source: "Medical Plan Outpatient Benefits",
     },
     {
@@ -384,10 +383,7 @@ export function buildMedicalKnowledge() {
         "filling",
         "tooth extraction",
       ],
-      answer:
-        `Dental cover is the same annual ceiling for both grades: overall maximum ${money(p1.dental.overallMaxPerYear)} per year at 100% Reasonable & Customary. ` +
-        `Covered items include oral examination, scale & polish, fillings, simple extractions (excluding wisdom teeth and surgical cases), abscess drainage, medication, and required X-rays. ` +
-        `Plan codes are DENT 1 (manager+) and DENT 2 (below manager).`,
+      answer: "$900 per year (same for Plan 1 and Plan 2).",
       source: "Medical Plan Dental Benefits",
     },
     {
@@ -435,55 +431,123 @@ export function buildMedicalKnowledge() {
   ];
 }
 
+function detectBenefit(q) {
+  if (
+    /\bgp\b|general practitioner|family doctor|gp visit|gp consultation|gp limit|gp benefit|claim for gp|gp claim/.test(
+      q
+    )
+  ) {
+    return "gp";
+  }
+  if (/specialist/.test(q)) return "specialist";
+  if (/chinese medicine|acupuncture|bonesetting/.test(q)) return "chinese";
+  if (/physio|chiropractic/.test(q)) return "physio";
+  if (/x-ray|laboratory|lab test|diagnostic/.test(q)) return "diagnostic";
+  if (/vaccination|routine checkup|body check/.test(q)) return "checkup";
+  if (/dental|dentist|teeth|filling|scale/.test(q)) return "dental";
+  if (/room and board/.test(q)) return "room";
+  if (/\bicu\b/.test(q)) return "icu";
+  if (/hospital|surg|surgeon|hospitalisation|hospitalization/.test(q)) {
+    return "hospital";
+  }
+  return null;
+}
+
+function dollars(n) {
+  return `$${Number(n).toLocaleString("en-HK")}`;
+}
+
+function conciseBenefitAnswer(plan, benefit) {
+  const o = plan.outpatient;
+  const h = plan.hospital;
+  switch (benefit) {
+    case "gp":
+      return dollars(o.gpPerVisit);
+    case "specialist":
+      return dollars(o.specialistPerVisit);
+    case "chinese":
+      return dollars(o.chineseMedicinePerVisit);
+    case "physio":
+      return dollars(o.physioPerVisit);
+    case "diagnostic":
+      return dollars(o.diagnosticPerDisability);
+    case "checkup":
+      return dollars(o.vaccinationOrCheckupPerVisit);
+    case "dental":
+      return dollars(plan.dental.overallMaxPerYear);
+    case "room":
+      return `${dollars(h.roomAndBoardPerDay)}/day`;
+    case "icu":
+      return `${dollars(h.icuPerDay)}/day`;
+    case "hospital":
+      return `${dollars(h.roomAndBoardPerDay)}/day room & board (max ${h.roomAndBoardMaxDays} days)`;
+    default:
+      return null;
+  }
+}
+
+function shortCompare(benefit) {
+  const a = conciseBenefitAnswer(medicalPlans.plan1, benefit);
+  const b = conciseBenefitAnswer(medicalPlans.plan2, benefit);
+  if (!a || !b) return null;
+  return `Plan 1 (manager+): ${a}. Plan 2 (below manager): ${b}.`;
+}
+
 export function refineMedicalAnswer(question, item) {
   if (!item || item.category !== "medical") return item;
   const q = question.toLowerCase();
   const key = detectPlanKey(q);
-  if (!key) return item;
+  const benefit = detectBenefit(q);
 
-  const plan = medicalPlans[key];
-  const source =
-    key === "plan1"
-      ? "Medical Plan 1 (Manager and above)"
-      : "Medical Plan 2 (Below manager)";
-  const sourceUrl = key === "plan1" ? PLAN1_PDF : PLAN2_PDF;
+  const sourceFor = (planKey) =>
+    planKey === "plan1"
+      ? {
+          source: "Medical Plan 1 (Manager and above)",
+          sourceUrl: PLAN1_PDF,
+        }
+      : planKey === "plan2"
+        ? {
+            source: "Medical Plan 2 (Below manager)",
+            sourceUrl: PLAN2_PDF,
+          }
+        : {
+            source: "Medical Plan 1 & 2 Benefit Schedules",
+          };
 
-  if (/(hospital|surg|icu|room and board|surgeon)/.test(q)) {
+  // Specific benefit + known plan → concise amount only (e.g. "$240")
+  if (benefit && key) {
+    const amount = conciseBenefitAnswer(medicalPlans[key], benefit);
+    if (amount) {
+      return {
+        ...item,
+        answer: amount,
+        source: undefined,
+        sourceUrl: undefined,
+      };
+    }
+  }
+
+  // Specific benefit, plan unknown → short Plan 1 vs Plan 2 compare
+  if (benefit && !key) {
+    const compare = shortCompare(benefit);
+    if (compare) {
+      return {
+        ...item,
+        answer: compare,
+        ...sourceFor(null),
+      };
+    }
+  }
+
+  // Known plan, general medical question → one short line
+  if (key && !benefit) {
+    const plan = medicalPlans[key];
     return {
       ...item,
-      answer: `Based on your grade, here is the hospital position. ${hospitalSummary(plan)} ${supplementarySummary(plan)}`,
-      source,
-      sourceUrl,
+      answer: `${plan.code}: GP ${dollars(plan.outpatient.gpPerVisit)}, Specialist ${dollars(plan.outpatient.specialistPerVisit)}, Dental ${dollars(plan.dental.overallMaxPerYear)}/year.`,
+      ...sourceFor(key),
     };
   }
-  if (/(dental|dentist|teeth|filling|scale)/.test(q)) {
-    return {
-      ...item,
-      answer: `Based on your grade: ${dentalSummary(plan)}`,
-      source,
-      sourceUrl,
-    };
-  }
-  if (
-    /(gp|specialist|outpatient|chinese|physio|vaccination|checkup|x-ray|lab|medical benefit|medical plan|health insurance|medical coverage|medical insurance)/.test(
-      q
-    )
-  ) {
-    return {
-      ...item,
-      answer:
-        `Based on your grade (${plan.audience}): ${outpatientSummary(plan)} ` +
-        `${hospitalSummary(plan)} ${supplementarySummary(plan)} ${dentalSummary(plan)}`,
-      source,
-      sourceUrl,
-    };
-  }
-  return {
-    ...item,
-    answer:
-      `Based on your grade (${plan.audience}): ${outpatientSummary(plan)} ` +
-      `Ask me about GP, specialist, hospital, or dental if you want one section only.`,
-    source,
-    sourceUrl,
-  };
+
+  return item;
 }

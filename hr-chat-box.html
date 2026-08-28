@@ -539,6 +539,7 @@
       "plan 2",
       "plan2",
       "below manager medical",
+      "below manager",
       "staff medical plan",
       "non-manager medical"
     ],
@@ -551,16 +552,21 @@
     "topic": "GP consultation limits",
     "category": "medical",
     "triggers": [
+      "gp",
       "gp visit",
       "gp consultation",
       "gp limit",
       "gp benefit",
+      "gp claim",
+      "claim for gp",
+      "how much can i claim for gp",
+      "how much gp",
       "general practitioner",
       "family doctor",
       "clinic visit limit",
       "outpatient gp"
     ],
-    "answer": "GP outpatient limits: Plan 1 (manager+) HK$280 per visit, max 30 visits/year; Plan 2 (below manager) HK$240 per visit, max 30 visits/year. Both reimburse at 100%, one visit per day. At Blue Cross network clinics, co-payment for GP is HK$0.",
+    "answer": "Plan 1 (manager+): $280. Plan 2 (below manager): $240.",
     "source": "Medical Plan Outpatient Benefits"
   },
   {
@@ -574,7 +580,7 @@
       "see a specialist",
       "referral letter"
     ],
-    "answer": "Specialist outpatient limits: Plan 1 (manager+) HK$630 per visit, max 15/year; Plan 2 (below manager) HK$530 per visit, max 15/year. No referral letter is required under either plan schedule. Reimbursement is 100%, one visit per day. Network clinic co-payment for specialist is HK$0.",
+    "answer": "Plan 1 (manager+): $630. Plan 2 (below manager): $530.",
     "source": "Medical Plan Outpatient Benefits"
   },
   {
@@ -606,7 +612,7 @@
       "filling",
       "tooth extraction"
     ],
-    "answer": "Dental cover is the same annual ceiling for both grades: overall maximum HK$900 per year at 100% Reasonable & Customary. Covered items include oral examination, scale & polish, fillings, simple extractions (excluding wisdom teeth and surgical cases), abscess drainage, medication, and required X-rays. Plan codes are DENT 1 (manager+) and DENT 2 (below manager).",
+    "answer": "$900 per year (same for Plan 1 and Plan 2).",
     "source": "Medical Plan Dental Benefits"
   },
   {
@@ -651,11 +657,11 @@
     const askBtn = document.getElementById("askBtn");
 
     function wantsCap57(q) {
-      return /(employment ordinance|cap\.\?\s*57|chapter\s*57|statutory|hong kong law|hk law|labour law|labor law)/i.test(q);
+      return /(employment ordinance|cap\.?\s*57|chapter\s*57|statutory|hong kong law|hk law|labour law|labor law)/i.test(q);
     }
 
     function wantsMedical(q) {
-      return /(medical|health insurance|outpatient|hospital|dental|specialist|gp visit|blue cross|plan\s*[12]|physio|chinese medicine|vaccination|checkup)/i.test(q);
+      return /(medical|health insurance|outpatient|hospital|dental|specialist|\bgp\b|blue cross|plan\s*[12]|physio|chinese medicine|vaccination|checkup|claim)/i.test(q);
     }
 
     function detectPlanKey(q) {
@@ -663,6 +669,25 @@
       if (/plan\s*1|manager grade|manager and above|mgr and above|manager\+|for managers|as a manager|i am a manager|i'm a manager|\bmanager\b|\bmgr\b/.test(q)) return "plan1";
       return null;
     }
+
+    function detectBenefit(q) {
+      if (/\bgp\b|general practitioner|family doctor|gp visit|gp consultation|gp limit|gp benefit|claim for gp|gp claim|how much gp/.test(q)) return "gp";
+      if (/specialist/.test(q)) return "specialist";
+      if (/chinese medicine|acupuncture|bonesetting/.test(q)) return "chinese";
+      if (/physio|chiropractic/.test(q)) return "physio";
+      if (/x-ray|laboratory|lab test|diagnostic/.test(q)) return "diagnostic";
+      if (/vaccination|routine checkup|body check/.test(q)) return "checkup";
+      if (/dental|dentist|teeth|filling|scale/.test(q)) return "dental";
+      if (/room and board/.test(q)) return "room";
+      if (/\bicu\b/.test(q)) return "icu";
+      if (/hospital|surg|surgeon|hospitalisation|hospitalization/.test(q)) return "hospital";
+      return null;
+    }
+
+    const conciseAmounts = {
+      plan1: { gp: "$280", specialist: "$630", chinese: "$260", physio: "$600", diagnostic: "$800", checkup: "$260", dental: "$900", room: "$1,000/day", icu: "$2,000/day", hospital: "$1,000/day room & board (max 45 days)" },
+      plan2: { gp: "$240", specialist: "$530", chinese: "$220", physio: "$500", diagnostic: "$700", checkup: "$220", dental: "$900", room: "$1,000/day", icu: "$2,000/day", hospital: "$1,000/day room & board (max 45 days)" }
+    };
 
     function findAnswer(raw) {
       const q = raw.toLowerCase().trim();
@@ -672,7 +697,7 @@
       let bestScore = 0;
       for (const item of knowledge) {
         let score = 0;
-        for (const trigger of item.triggers) {
+        for (const trigger of item.triggers || []) {
           if (q.includes(trigger)) score += trigger.length;
         }
         if (preferCap57 && item.category === "cap57" && score > 0) score += 50;
@@ -682,11 +707,31 @@
           best = item;
         }
       }
-      if (!best || best.category !== "medical") return best;
+
       const key = detectPlanKey(q);
-      if (!key) return best;
-      const planItem = knowledge.find((k) => k.id === (key === "plan1" ? 203 : 204));
-      return planItem || best;
+      const benefit = detectBenefit(q);
+      if (benefit && key && conciseAmounts[key][benefit]) {
+        return {
+          ...(best || { category: "medical" }),
+          answer: conciseAmounts[key][benefit]
+        };
+      }
+      if (benefit && !key && conciseAmounts.plan1[benefit]) {
+        return {
+          ...(best || { category: "medical" }),
+          answer: "Plan 1 (manager+): " + conciseAmounts.plan1[benefit] + ". Plan 2 (below manager): " + conciseAmounts.plan2[benefit] + "."
+        };
+      }
+      if (best && best.category === "medical" && key && !benefit) {
+        const a = conciseAmounts[key];
+        return {
+          ...best,
+          answer: (key === "plan1" ? "Plan 1" : "Plan 2") + ": GP " + a.gp + ", Specialist " + a.specialist + ", Dental " + a.dental + "/year.",
+          source: key === "plan1" ? "Medical Plan 1 (Manager and above)" : "Medical Plan 2 (Below manager)",
+          sourceUrl: key === "plan1" ? "benefits/medical-plan-1-manager.pdf" : "benefits/medical-plan-2-staff.pdf"
+        };
+      }
+      return best;
     }
 
     function addBubble(text, role, source, sourceUrl) {
