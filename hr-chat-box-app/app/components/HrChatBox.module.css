@@ -18,28 +18,11 @@
   border-bottom: 3px solid var(--pink);
 }
 
-.headerTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 6px;
-}
-
 .header h1 {
   margin: 0;
   font-size: 1.4rem;
   font-weight: 700;
   letter-spacing: 0.01em;
-}
-
-.role {
-  margin: 0;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  opacity: 0.95;
 }
 
 .header p {
@@ -48,19 +31,45 @@
   opacity: 0.95;
 }
 
-.headerLink {
-  color: var(--white);
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: 999px;
-  padding: 4px 10px;
-  white-space: nowrap;
+.faq {
+  padding: 12px 16px 0;
+  background: linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+  border-bottom: 1px solid var(--line);
 }
 
-.headerLink:hover {
-  background: rgba(255, 255, 255, 0.14);
+.faqLabel {
+  margin: 0 0 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.faqRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 12px;
+}
+
+.faqBtn {
+  font: inherit;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  padding: 8px 14px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--blue-dark);
+  background: var(--white);
+  box-shadow: 0 1px 2px rgba(30, 64, 120, 0.06);
+}
+
+.faqBtn:hover {
+  border-color: var(--pink);
+  color: var(--pink-dark);
+  background: var(--pink-soft);
 }
 
 .messages {

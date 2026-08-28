@@ -1,11 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CAP57_URL, findAnswer } from "../../lib/knowledge";
+import { findAnswer } from "../../lib/knowledge";
 import styles from "./HrChatBox.module.css";
 
 const welcome =
-  "Hello, I’m your HR specialist. Ask about the Staff Manual, medical benefits (Plan 1/2), or Cap. 57 — I’ll answer concisely.";
+  "Hello. Ask about the Staff Manual, medical benefits (Plan 1/2), or Employment Ordinance — or tap a Quick FAQ below.";
+
+const FAQ_SHORTCUTS = [
+  { label: "Leave entitlement", query: "leave entitlement" },
+  { label: "Bad weather arrangement", query: "bad weather arrangement" },
+  { label: "Staff benefits", query: "staff benefits" },
+];
 
 export default function HrChatBox() {
   const [messages, setMessages] = useState([
@@ -20,8 +26,8 @@ export default function HrChatBox() {
     }
   }, [messages]);
 
-  function ask() {
-    const text = question.trim();
+  function ask(preset) {
+    const text = (typeof preset === "string" ? preset : question).trim();
     if (!text) return;
 
     const match = findAnswer(text);
@@ -57,20 +63,25 @@ export default function HrChatBox() {
   return (
     <main className={styles.app} aria-label="HR Chat box">
       <header className={styles.header}>
-        <div className={styles.headerTop}>
-          <p className={styles.role}>HR Specialist</p>
-          <a
-            className={styles.headerLink}
-            href={CAP57_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Cap. 57
-          </a>
-        </div>
         <h1>HR Chat box</h1>
         <p>Staff Manual · Medical benefits · Employment Ordinance</p>
       </header>
+
+      <section className={styles.faq} aria-label="Frequently asked topics">
+        <p className={styles.faqLabel}>Quick FAQ</p>
+        <div className={styles.faqRow}>
+          {FAQ_SHORTCUTS.map((item) => (
+            <button
+              key={item.query}
+              type="button"
+              className={styles.faqBtn}
+              onClick={() => ask(item.query)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      </section>
 
       <div
         id="messages"
@@ -119,7 +130,7 @@ export default function HrChatBox() {
             onChange={(event) => setQuestion(event.target.value)}
             onKeyDown={onKeyDown}
           />
-          <button type="button" className={styles.askBtn} onClick={ask}>
+          <button type="button" className={styles.askBtn} onClick={() => ask()}>
             Ask
           </button>
         </div>

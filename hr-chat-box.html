@@ -56,23 +56,6 @@
       border-bottom: 3px solid var(--pink);
     }
 
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 6px;
-    }
-
-    .role {
-      margin: 0;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      opacity: 0.95;
-    }
-
     .speaker {
       margin-bottom: 6px;
       font-size: 0.7rem;
@@ -95,19 +78,45 @@
       opacity: 0.95;
     }
 
-    .header-link {
-      color: var(--white);
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      border-radius: 999px;
-      padding: 4px 10px;
-      white-space: nowrap;
+    .faq {
+      padding: 12px 16px 0;
+      background: linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+      border-bottom: 1px solid var(--line);
     }
 
-    .header-link:hover {
-      background: rgba(255, 255, 255, 0.14);
+    .faq-label {
+      margin: 0 0 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    .faq-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-bottom: 12px;
+    }
+
+    .faq-btn {
+      font: inherit;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      cursor: pointer;
+      padding: 8px 14px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--blue-dark);
+      background: var(--white);
+      box-shadow: 0 1px 2px rgba(30, 64, 120, 0.06);
+    }
+
+    .faq-btn:hover {
+      border-color: var(--pink);
+      color: var(--pink-dark);
+      background: var(--pink-soft);
     }
 
     #messages {
@@ -207,15 +216,18 @@
 <body>
   <main class="app" aria-label="HR Chat box">
     <header>
-      <div class="header-top">
-        <p class="role">HR Specialist</p>
-        <a class="header-link" href="https://www.elegislation.gov.hk/hk/cap57" target="_blank" rel="noopener noreferrer">
-          Cap. 57
-        </a>
-      </div>
       <h1>HR Chat box</h1>
       <p>Staff Manual · Medical benefits · Employment Ordinance</p>
     </header>
+
+    <section class="faq" aria-label="Frequently asked topics">
+      <p class="faq-label">Quick FAQ</p>
+      <div class="faq-row">
+        <button type="button" class="faq-btn" data-faq="leave entitlement">Leave entitlement</button>
+        <button type="button" class="faq-btn" data-faq="bad weather arrangement">Bad weather arrangement</button>
+        <button type="button" class="faq-btn" data-faq="staff benefits">Staff benefits</button>
+      </div>
+    </section>
 
     <div id="messages" role="log" aria-live="polite"></div>
 
@@ -1004,6 +1016,22 @@
     "sourceUrl": "benefits/hr-staff-manual.pdf"
   },
   {
+    "id": 3711,
+    "topic": "Staff benefits overview",
+    "category": "manual",
+    "triggers": [
+      "staff benefits",
+      "staff benefit",
+      "employee benefits",
+      "what benefits",
+      "company benefits",
+      "benefits overview"
+    ],
+    "answer": "Main staff benefits: annual leave (14–18 days by service), public/official holidays, sick/marriage/maternity/paternity leave, group medical after eligibility (Plan 1 manager+ / Plan 2 below manager), MPF, and rental reimbursement for permanent full-time staff (up to 40% of monthly notional salary). Ask about a specific benefit for exact figures.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
     "id": 372,
     "topic": "Official half-day holidays",
     "category": "manual",
@@ -1395,6 +1423,21 @@
     "sourceUrl": "benefits/hr-staff-manual.pdf"
   },
   {
+    "id": 4211,
+    "topic": "Bad weather arrangement",
+    "category": "manual",
+    "triggers": [
+      "bad weather",
+      "bad weather arrangement",
+      "weather arrangement",
+      "weather policy",
+      "typhoon and rainstorm"
+    ],
+    "answer": "Typhoon: Signal 1/3 — report as usual. Pre-No. 8 / No. 8+ before work — do not report; if issued at work, staff are released; if lowered before 13:30, resume within 2 hours. Rainstorm: Amber/Red — report as usual; Black before work — do not report; during work continue unless unsafe; if Black lowered before 13:30, resume within 2 hours. Tell supervisor/HR ASAP if you cannot report.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
     "id": 422,
     "topic": "Rainstorm",
     "category": "manual",
@@ -1451,7 +1494,7 @@
     }
 
     function wantsStaffManual(q) {
-      return /(staff manual|hr manual|handbook|probation|notice|working hours|office hours|annual leave|sick leave|marriage|maternity|paternity|bereavement|menstruation|menstrual|compensation leave|toil|no-pay|unpaid leave|jury|meal allowance|payday|salary|mpf|provident|rental|breastfeeding|lactation|typhoon|signal|rainstorm|clock in|punctuality|official holiday|promotion|transfer|retirement|dismiss|exit interview|performance|pms|appraisal|training|sponsorship|study leave|grievance|harassment|bullying|disciplinary|conflict of interest|outside work|second job|gift|declaration of interest|staff card|access card|scrc|equal opportunity|reference check|roster|direct dialogue|carry forward|leave application|child safeguarding|recognition payment|bonus)/i.test(q);
+      return /(staff manual|hr manual|handbook|probation|notice|working hours|office hours|annual leave|sick leave|marriage|maternity|paternity|bereavement|menstruation|menstrual|compensation leave|toil|no-pay|unpaid leave|jury|meal allowance|payday|salary|mpf|provident|rental|breastfeeding|lactation|typhoon|signal|rainstorm|bad weather|weather arrangement|staff benefits|employee benefits|clock in|punctuality|official holiday|promotion|transfer|retirement|dismiss|exit interview|performance|pms|appraisal|training|sponsorship|study leave|grievance|harassment|bullying|disciplinary|conflict of interest|outside work|second job|gift|declaration of interest|staff card|access card|scrc|equal opportunity|reference check|roster|direct dialogue|carry forward|leave application|child safeguarding|recognition payment|bonus)/i.test(q);
     }
 
     function detectPlanKey(q) {
@@ -1578,8 +1621,8 @@
       messagesEl.scrollTop = messagesEl.scrollHeight;
     }
 
-    function ask() {
-      const text = questionEl.value.trim();
+    function ask(preset) {
+      const text = (typeof preset === "string" ? preset : questionEl.value).trim();
       if (!text) return;
 
       addBubble(text, "user");
@@ -1591,19 +1634,20 @@
       } else {
         addBubble(
           "I don’t have that yet. Try: annual leave, probation, notice, working hours, sick/marriage/maternity leave, or Plan 2 GP claim.",
-          "bot",
-          "Employment Ordinance Cap. 57",
-          CAP57_URL
+          "bot"
         );
       }
     }
 
     addBubble(
-      "Hello, I’m your HR specialist. Ask about the Staff Manual, medical benefits (Plan 1/2), or Cap. 57 — I’ll answer concisely.",
+      "Hello. Ask about the Staff Manual, medical benefits (Plan 1/2), or Employment Ordinance — or tap a Quick FAQ below.",
       "bot"
     );
 
-    askBtn.addEventListener("click", ask);
+    askBtn.addEventListener("click", () => ask());
+    document.querySelectorAll(".faq-btn").forEach((btn) => {
+      btn.addEventListener("click", () => ask(btn.getAttribute("data-faq")));
+    });
     questionEl.addEventListener("keydown", (event) => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();

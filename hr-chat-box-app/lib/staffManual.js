@@ -402,6 +402,20 @@ const topics = [
       "Holiday year 1 Jul–30 Jun. 1–3 yrs: 14 days; 4: 15; 5: 16; 6: 17; 7+: 18. Accrues from day 1; take after probation. Carry-forward max 14 days at 31 Dec / 30 Jun; excess lapses.",
   },
   {
+    id: 3711,
+    topic: "Staff benefits overview",
+    triggers: [
+      "staff benefits",
+      "staff benefit",
+      "employee benefits",
+      "what benefits",
+      "company benefits",
+      "benefits overview",
+    ],
+    answer:
+      "Main staff benefits: annual leave (14–18 days by service), public/official holidays, sick/marriage/maternity/paternity leave, group medical after eligibility (Plan 1 manager+ / Plan 2 below manager), MPF, and rental reimbursement for permanent full-time staff (up to 40% of monthly notional salary). Ask about a specific benefit for exact figures.",
+  },
+  {
     id: 372,
     topic: "Official half-day holidays",
     triggers: [
@@ -714,6 +728,19 @@ const topics = [
       "Pre-No. 8 / No. 8+ before work: do not report. Issued during work: staff released (vulnerable/remote travellers first). If lowered before 13:30: resume within 2 hours. No work/travel (incl. online meetings) under bad-weather signal unless CEO approves.",
   },
   {
+    id: 4211,
+    topic: "Bad weather arrangement",
+    triggers: [
+      "bad weather",
+      "bad weather arrangement",
+      "weather arrangement",
+      "weather policy",
+      "typhoon and rainstorm",
+    ],
+    answer:
+      "Typhoon: Signal 1/3 — report as usual. Pre-No. 8 / No. 8+ before work — do not report; if issued at work, staff are released; if lowered before 13:30, resume within 2 hours. Rainstorm: Amber/Red — report as usual; Black before work — do not report; during work continue unless unsafe; if Black lowered before 13:30, resume within 2 hours. Tell supervisor/HR ASAP if you cannot report.",
+  },
+  {
     id: 422,
     topic: "Rainstorm",
     triggers: [
@@ -811,7 +838,7 @@ export function refineStaffManualAnswer(question, item) {
 }
 
 export function wantsStaffManual(q) {
-  return /(staff manual|hr manual|employee manual|handbook|probation|notice period|working hours|office hours|annual leave|sick leave|marriage leave|maternity leave|paternity leave|bereavement|menstruation|menstrual|compensation leave|time off in lieu|\btoil\b|no-pay leave|unpaid leave|jury|meal allowance|payday|salary|mpf|provident|rental|breastfeeding|lactation|typhoon|signal|rainstorm|clock in|punctuality|official holiday|half day|promotion|transfer|retirement|dismiss|exit interview|performance|pms|appraisal|training|sponsorship|study leave|grievance|harassment|bullying|disciplinary|conflict of interest|outside work|second job|gift|advantage|declaration of interest|staff card|access card|scrc|equal opportunity|reference check|roster|direct dialogue|carry forward|leave application|child safeguarding|recognition payment|bonus)/i.test(
+  return /(staff manual|hr manual|employee manual|handbook|probation|notice period|working hours|office hours|annual leave|sick leave|marriage leave|maternity leave|paternity leave|bereavement|menstruation|menstrual|compensation leave|time off in lieu|\btoil\b|no-pay leave|unpaid leave|jury|meal allowance|payday|salary|mpf|provident|rental|breastfeeding|lactation|typhoon|signal|rainstorm|bad weather|weather arrangement|staff benefits|employee benefits|clock in|punctuality|official holiday|half day|promotion|transfer|retirement|dismiss|exit interview|performance|pms|appraisal|training|sponsorship|study leave|grievance|harassment|bullying|disciplinary|conflict of interest|outside work|second job|gift|advantage|declaration of interest|staff card|access card|scrc|equal opportunity|reference check|roster|direct dialogue|carry forward|leave application|child safeguarding|recognition payment|bonus)/i.test(
     q
   );
 }
