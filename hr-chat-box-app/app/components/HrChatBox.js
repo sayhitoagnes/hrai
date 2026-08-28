@@ -57,17 +57,19 @@ export default function HrChatBox() {
   return (
     <main className={styles.app} aria-label="HR Chat box">
       <header className={styles.header}>
-        <p className={styles.role}>HR Specialist</p>
+        <div className={styles.headerTop}>
+          <p className={styles.role}>HR Specialist</p>
+          <a
+            className={styles.headerLink}
+            href={CAP57_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Cap. 57
+          </a>
+        </div>
         <h1>HR Chat box</h1>
-        <p>Concise answers from the Staff Manual, medical plans, and Cap. 57.</p>
-        <a
-          className={styles.headerLink}
-          href={CAP57_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Open Employment Ordinance (Cap. 57)
-        </a>
+        <p>Staff Manual · Medical benefits · Employment Ordinance</p>
       </header>
 
       <div
@@ -107,14 +109,6 @@ export default function HrChatBox() {
       </div>
 
       <div className={styles.composer}>
-        <button
-          type="button"
-          className={styles.contactHr}
-          disabled
-          title="Coming next"
-        >
-          Contact HR (coming next)
-        </button>
         <div className={styles.row}>
           <textarea
             className={styles.question}
@@ -129,14 +123,6 @@ export default function HrChatBox() {
             Ask
           </button>
         </div>
-        <p className={styles.hint}>
-          Concise HR answers for this workshop demo. Sources: Staff Manual and
-          medical Plan 1/2 schedules. Cap. 57 link:{" "}
-          <a href={CAP57_URL} target="_blank" rel="noopener noreferrer">
-            elegislation.gov.hk
-          </a>
-          .
-        </p>
       </div>
     </main>
   );

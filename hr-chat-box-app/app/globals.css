@@ -1,11 +1,14 @@
 :root {
-  --pink: #e91e8c;
-  --pink-dark: #c2186e;
-  --pink-soft: #fce4f0;
-  --pink-wash: #fff5fa;
-  --ink: #2a1f24;
-  --muted: #6b5560;
-  --line: #f0d4e3;
+  --pink: #e11d8a;
+  --pink-dark: #be185d;
+  --pink-soft: #fce7f3;
+  --blue: #2563b4;
+  --blue-mid: #3b82c4;
+  --blue-dark: #1e4f8c;
+  --blue-soft: #e8f1fb;
+  --ink: #1f2937;
+  --muted: #64748b;
+  --line: #dbe4f0;
   --white: #ffffff;
 }
 
@@ -25,9 +28,9 @@ body {
   font-family: "Segoe UI", "Helvetica Neue", sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(ellipse 80% 50% at 10% 0%, #ffd6ea 0%, transparent 55%),
-    radial-gradient(ellipse 60% 40% at 100% 100%, #f8c8de 0%, transparent 50%),
-    linear-gradient(160deg, #fff8fb 0%, #ffeef6 45%, #fff5fa 100%);
+    radial-gradient(ellipse 70% 45% at 0% 0%, rgba(37, 99, 180, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 40% at 100% 100%, rgba(225, 29, 138, 0.1) 0%, transparent 50%),
+    linear-gradient(160deg, #ffffff 0%, #f5f9ff 50%, #fff8fc 100%);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
