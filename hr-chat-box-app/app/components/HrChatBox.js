@@ -5,7 +5,7 @@ import { CAP57_URL, findAnswer } from "../../lib/knowledge";
 import styles from "./HrChatBox.module.css";
 
 const welcome =
-  "Hello, I’m your HR specialist. Ask me about company policy, Cap. 57 entitlements, or your medical benefits (Plan 1 for manager grade and above; Plan 2 for staff below manager).";
+  "Hello, I’m your HR specialist. Ask about the Staff Manual, medical benefits (Plan 1/2), or Cap. 57 — I’ll answer concisely.";
 
 export default function HrChatBox() {
   const [messages, setMessages] = useState([
@@ -36,7 +36,7 @@ export default function HrChatBox() {
       : {
           id: `bot-${Date.now()}`,
           role: "bot",
-          text: "I don’t have enough detail on that yet to advise you properly. Please ask about medical benefits (Plan 1 manager+ / Plan 2 below manager), rest days, annual leave, sickness allowance, maternity or paternity leave, statutory holidays, wages, notice, or severance — or contact HR directly for your individual case.",
+          text: "I don’t have that yet. Try: annual leave, probation, notice, working hours, sick/marriage/maternity leave, or Plan 2 GP claim.",
         };
 
     setMessages((prev) => [
@@ -59,7 +59,7 @@ export default function HrChatBox() {
       <header className={styles.header}>
         <p className={styles.role}>HR Specialist</p>
         <h1>HR Chat box</h1>
-        <p>Practical answers on policy, Cap. 57, and medical benefits by grade.</p>
+        <p>Concise answers from the Staff Manual, medical plans, and Cap. 57.</p>
         <a
           className={styles.headerLink}
           href={CAP57_URL}
@@ -119,7 +119,7 @@ export default function HrChatBox() {
           <textarea
             className={styles.question}
             rows={2}
-            placeholder="Ask about Plan 1 / Plan 2 medical benefits…"
+            placeholder="Ask about leave, probation, GP claim…"
             aria-label="Your question"
             value={question}
             onChange={(event) => setQuestion(event.target.value)}
@@ -130,13 +130,12 @@ export default function HrChatBox() {
           </button>
         </div>
         <p className={styles.hint}>
-          Answers are given in an HR advisory tone for this workshop demo.
-          Medical limits come from the Blue Cross Plan 1 / Plan 2 schedules.
-          Cap. 57 references link to{" "}
+          Concise HR answers for this workshop demo. Sources: Staff Manual and
+          medical Plan 1/2 schedules. Cap. 57 link:{" "}
           <a href={CAP57_URL} target="_blank" rel="noopener noreferrer">
             elegislation.gov.hk
           </a>
-          . Not a substitute for formal legal or claims advice on complex cases.
+          .
         </p>
       </div>
     </main>

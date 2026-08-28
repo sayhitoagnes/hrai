@@ -10,6 +10,10 @@ The chat includes short Employment Ordinance (Cap. 57) summaries and links to
 https://www.elegislation.gov.hk/hk/cap57  
 It does **not** scrape or search the live ordinance page (that site requires a browser check-in). Answers are summaries only, not legal advice.
 
+## Staff Manual note
+The chat answers common Staff Manual questions concisely (probation, leave, hours, weather, etc.).
+Company/organisation names are omitted from chat replies. Full PDF: `public/benefits/hr-staff-manual.pdf`.
+
 ## Medical benefits note
 Plan 1 (manager grade and above) and Plan 2 (below manager) Blue Cross schedules are loaded into the chat from:
 - `public/benefits/medical-plan-1-manager.pdf`

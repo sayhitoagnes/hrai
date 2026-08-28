@@ -210,7 +210,7 @@
     <header>
       <p class="role">HR Specialist</p>
       <h1>HR Chat box</h1>
-      <p>Practical answers on policy, Cap. 57, and medical benefits by grade. 57, and medical benefits by grade.</p>
+      <p>Concise answers from the Staff Manual, medical plans, and Cap. 57. 57, and medical benefits by grade. 57, and medical benefits by grade.</p>
       <a class="header-link" href="https://www.elegislation.gov.hk/hk/cap57" target="_blank" rel="noopener noreferrer">
         Open Employment Ordinance (Cap. 57)
       </a>
@@ -223,7 +223,7 @@
         Contact HR (coming next)
       </button>
       <div class="row">
-        <textarea id="question" rows="2" placeholder="Ask about Plan 1 / Plan 2 medical benefits…" aria-label="Your question"></textarea>
+        <textarea id="question" rows="2" placeholder="Ask about leave, probation, GP claim…" aria-label="Your question"></textarea>
         <button id="askBtn" type="button">Ask</button>
       </div>
       <p class="hint">
@@ -241,42 +241,15 @@
 
     const knowledge = [
   {
-    "id": 1,
-    "topic": "Typhoon / Signal 8",
+    "id": 4,
+    "topic": "Health insurance pointer",
     "triggers": [
-      "signal 8",
-      "signal no. 8",
-      "typhoon",
-      "report to the office",
-      "report to office",
-      "wfh today",
-      "work from home today"
+      "health insurance",
+      "medical plan",
+      "medical coverage"
     ],
-    "answer": "Thanks for checking in. Under our Disaster Protocol, when Typhoon Signal No. 8 is in force you should work remotely rather than report to the office. Please stay safe and keep your manager updated if your working arrangement changes during the day.",
-    "source": "Disaster Protocol"
-  },
-  {
-    "id": 2,
-    "topic": "Annual leave basics",
-    "triggers": [
-      "annual leave",
-      "how many days",
-      "vacation days",
-      "leave days"
-    ],
-    "answer": "Under our company Leave Policy, full-time colleagues receive 15 days of annual leave each year. Please submit your leave request through the usual process so your manager can approve coverage before you take time off.",
-    "source": "Leave Policy"
-  },
-  {
-    "id": 3,
-    "topic": "Sick leave",
-    "triggers": [
-      "sick leave",
-      "medical certificate",
-      "medical leave"
-    ],
-    "answer": "If you are unwell, please take sick leave and rest. Under our Leave Policy, a medical certificate is required when the policy asks for one. Notify your manager as soon as you can, and HR can help if you need support on documentation.",
-    "source": "Leave Policy"
+    "answer": "Ask your grade (Plan 1 manager+ / Plan 2 below manager) and the benefit (e.g. GP, specialist).",
+    "source": "Medical Plan 1 & 2 Benefit Schedules"
   },
   {
     "id": 5,
@@ -286,8 +259,8 @@
       "work from home policy",
       "wfh policy"
     ],
-    "answer": "Remote work is allowed under our Remote Work Guidelines and still needs manager approval where the policy requires it. Please follow the published guidelines for eligibility, working hours, and communication expectations.",
-    "source": "Remote Work Guidelines"
+    "answer": "Follow published remote-work guidelines and manager approval. Typhoon/rainstorm WFH follows Staff Manual weather rules.",
+    "source": "HR Staff Manual"
   },
   {
     "id": 6,
@@ -297,19 +270,8 @@
       "reimbursement",
       "claim expense"
     ],
-    "answer": "Please submit your expense claim through the standard reimbursement process and attach your receipts. Once Finance/HR has reviewed a complete claim, reimbursement follows the usual payment cycle.",
+    "answer": "Submit via the standard reimbursement process with receipts.",
     "source": "Benefits Guide"
-  },
-  {
-    "id": 7,
-    "topic": "Code of conduct",
-    "triggers": [
-      "code of conduct",
-      "workplace rules",
-      "employee handbook"
-    ],
-    "answer": "All colleagues are expected to follow the code of conduct in the Employee Handbook. If you are unsure whether a situation is appropriate, please ask HR before acting — we would rather clarify early than leave you guessing.",
-    "source": "Employee Handbook"
   },
   {
     "id": 101,
@@ -325,7 +287,7 @@
       "hong kong employment law",
       "hk employment law"
     ],
-    "answer": "Happy to help. Cap. 57 is Hong Kong’s Employment Ordinance — the baseline legal protection for employees. In practice, continuous-contract colleagues are entitled to at least 1 rest day every 7 days, paid annual leave of 7–14 days after each 12 months of service, sickness allowance for absences of 4+ consecutive days (usually at 4/5 of average daily wages), 14 weeks’ maternity leave, 5 days’ paternity leave, statutory holidays, and wage payment within 7 days after the wage period ends. Our company policy may be more generous than these legal minimums.",
+    "answer": "Cap. 57 is HK’s Employment Ordinance. Key minimums for continuous-contract staff include rest days, paid annual leave 7–14 days, sickness allowance, 14 weeks’ maternity leave, 5 days’ paternity leave, and wage payment within 7 days after the wage period.",
     "source": "Employment Ordinance Cap. 57",
     "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
   },
@@ -339,7 +301,7 @@
       "4 weeks",
       "continuous employment"
     ],
-    "answer": "From an HR perspective, you are usually under a continuous contract if you have worked for the same employer for 4 consecutive weeks or more, and at least 18 hours in each of those weeks. Once that status applies, you gain Cap. 57 benefits such as rest days, paid annual leave, sickness allowance, and holiday pay after 3 months.",
+    "answer": "Usually: 4+ consecutive weeks with the same employer and ≥18 hours each week.",
     "source": "Employment Ordinance Cap. 57",
     "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
   },
@@ -354,7 +316,7 @@
       "day off every week",
       "weekly rest"
     ],
-    "answer": "If you are under a continuous contract, you are entitled to at least 1 rest day in every 7-day period. That rest day is a continuous 24-hour period when you should not be required to work. Your manager/employer should appoint rest days; if they are not fixed in advance, you should be told before each week starts.",
+    "answer": "Continuous-contract staff: at least 1 rest day every 7 days (24 continuous hours).",
     "source": "Employment Ordinance Cap. 57",
     "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
   },
@@ -364,16 +326,12 @@
     "category": "cap57",
     "triggers": [
       "statutory annual leave",
-      "paid annual leave under",
       "cap 57 annual leave",
       "employment ordinance annual leave",
       "statutory leave",
-      "how many annual leave under law",
-      "legal annual leave",
-      "annual leave entitlement under",
-      "how many days of annual leave"
+      "legal annual leave"
     ],
-    "answer": "Here is the statutory annual leave position under Cap. 57 after each 12 months of continuous contract service: Year 1–2 = 7 days; Year 3 = 8; Year 4 = 9; Year 5 = 10; Year 6 = 11; Year 7 = 12; Year 8 = 13; Year 9 or above = 14 days. Leave dates are appointed by the employer after consulting you, with written notice at least 14 days in advance unless you agree to shorter notice. Leave pay is based on your average daily wage over the previous 12 months. Separately, our company policy gives full-time staff 15 days, which is more generous than the legal minimum.",
+    "answer": "After each 12 months under continuous contract: Year 1–2 = 7 days; then up to 14 days from Year 9+. Staff Manual company leave may be higher.",
     "source": "Employment Ordinance Cap. 57",
     "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
   },
@@ -383,40 +341,12 @@
     "category": "cap57",
     "triggers": [
       "sickness allowance",
-      "paid sick leave",
       "statutory sick",
       "4 consecutive days",
       "sick leave pay",
       "cap 57 sick"
     ],
-    "answer": "Under Cap. 57, if you are on a continuous contract you accumulate paid sickness days at 2 days per month in the first 12 months, then 4 days per month, up to 120 days in total. Sickness allowance is payable when you take at least 4 consecutive sickness days with a medical certificate. The usual daily rate is 4/5 of your average daily wages. Please also follow our internal sick-leave reporting steps so payroll can process it correctly.",
-    "source": "Employment Ordinance Cap. 57",
-    "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
-  },
-  {
-    "id": 106,
-    "topic": "Maternity leave",
-    "category": "cap57",
-    "triggers": [
-      "maternity leave",
-      "pregnancy leave",
-      "14 weeks",
-      "maternity pay"
-    ],
-    "answer": "Congratulations — and thank you for asking early. An eligible female employee under a continuous contract is entitled to 14 continuous weeks of maternity leave. If the baby arrives later than expected, extra days equal to that delay are added, and up to 4 further weeks may be available for pregnancy-related illness or disability. Maternity leave pay is generally 4/5 of average daily wages, with pay for weeks 11–14 capped at HK$80,000. Paid maternity leave normally requires at least 40 weeks’ continuous employment immediately before leave starts, plus the required pregnancy notice to HR/your employer.",
-    "source": "Employment Ordinance Cap. 57",
-    "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
-  },
-  {
-    "id": 107,
-    "topic": "Paternity leave",
-    "category": "cap57",
-    "triggers": [
-      "paternity leave",
-      "father leave",
-      "paternity pay"
-    ],
-    "answer": "An eligible male employee under a continuous contract is entitled to 5 days of paternity leave for each confinement of his spouse/partner. You may take those 5 days together or separately, from 4 weeks before the expected delivery date to 14 weeks after the actual birth. Paternity leave pay is 4/5 of average daily wages and normally requires at least 40 weeks’ continuous employment immediately before the leave day, plus the required documents. Please notify HR/your employer at least 3 months before the expected delivery, or at least 5 days before the leave date if that earlier notice was not given.",
+    "answer": "Accumulate 2 days/month in year 1, then 4/month (max 120). Paid for ≥4 consecutive sickness days with medical certificate, usually at 4/5 average daily wages.",
     "source": "Employment Ordinance Cap. 57",
     "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
   },
@@ -430,39 +360,7 @@
       "public holiday pay",
       "holiday entitlement under law"
     ],
-    "answer": "Under Cap. 57, employees are entitled to statutory holidays. The current list includes 1 January, Lunar New Year Days 1–3, Ching Ming, Labour Day, Buddha’s Birthday, Tuen Ng, HKSAR Establishment Day, the day after Mid-Autumn, National Day, Chung Yeung, Winter Solstice or Christmas (employer’s choice), and the first weekday after Christmas; Easter Monday is added from 2026. If you are asked to work on a statutory holiday, your employer must arrange an alternative holiday within 60 days before or after, with at least 48 hours’ prior notice. Holiday pay applies if you have at least 3 months under a continuous contract before that holiday. Cash cannot replace the holiday itself.",
-    "source": "Employment Ordinance Cap. 57",
-    "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
-  },
-  {
-    "id": 109,
-    "topic": "Wages and payday",
-    "category": "cap57",
-    "triggers": [
-      "wage period",
-      "when must wages be paid",
-      "payday law",
-      "payment of wages",
-      "unpaid wages",
-      "wage payment"
-    ],
-    "answer": "Under Cap. 57, your wages must be paid as soon as practicable after the wage period ends, and no later than 7 days after that period. On termination, most termination payments (except severance payment) must also be paid within 7 days. Wage deductions are tightly limited by law, so please speak with HR if something unexpected appears on your payslip.",
-    "source": "Employment Ordinance Cap. 57",
-    "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
-  },
-  {
-    "id": 110,
-    "topic": "Termination notice",
-    "category": "cap57",
-    "triggers": [
-      "termination notice",
-      "notice period",
-      "resignation notice",
-      "payment in lieu of notice",
-      "dismiss",
-      "termination of employment"
-    ],
-    "answer": "Here is the Cap. 57 notice position in plain terms. During the first month of probation, no notice is required. After the first month of probation, notice is as agreed in the contract but not less than 7 days. After probation (or if there is no probation): if the contract sets a notice period, follow it but not less than 7 days; if it sets no notice period, notice must be at least 1 month. Either side may give payment in lieu of notice instead of working the notice. If you are planning a resignation, HR can help you calculate the correct notice date.",
+    "answer": "Statutory holidays are set by Cap. 57 / General Holidays rules. Holiday pay usually needs ≥3 months under a continuous contract before that holiday.",
     "source": "Employment Ordinance Cap. 57",
     "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
   },
@@ -477,7 +375,7 @@
       "lsp",
       "severance"
     ],
-    "answer": "Severance payment generally applies if you have at least 24 months under a continuous contract and leave because of redundancy, layoff, or non-renewal of a fixed-term contract due to redundancy. Long service payment generally applies after at least 5 years under a continuous contract in the qualifying situations. For a monthly-paid employee, the usual formula is 2/3 × last month’s wages × years of service. Last month’s wages used in the formula are capped at HK$22,500 (so each year is capped at HK$15,000), and the total is capped at HK$390,000. Severance should be paid within 2 months after the employer receives your written claim. If this relates to your own case, please contact HR so we can review your service record properly.",
+    "answer": "Severance: usually ≥24 months continuous + redundancy/layoff. LSP: usually ≥5 years in qualifying cases. Formula often 2/3 × monthly wages × years (wage capped at $22,500; total capped at $390,000).",
     "source": "Employment Ordinance Cap. 57",
     "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
   },
@@ -649,6 +547,306 @@
     ],
     "answer": "For Blue Cross network clinics, co-payment on the listed outpatient services (GP, specialist, physio, Chinese medicine) is HK$0 under both plans. For network outpatient surgery such as gastroscopy/colonoscopy, use your electronic Medical Service Card at designated Blue Cross network clinics for full cover under the schedule. If you need the full benefit tables, open Plan 1 (manager+) or Plan 2 (below manager) from the benefits folder, or tell me your grade and the benefit you need.",
     "source": "Medical Plan 1 & 2 Benefit Schedules"
+  },
+  {
+    "id": 301,
+    "topic": "Staff manual overview",
+    "category": "manual",
+    "triggers": [
+      "staff manual",
+      "hr manual",
+      "employee manual",
+      "hr policy",
+      "company policy",
+      "staff handbook",
+      "employee handbook"
+    ],
+    "answer": "Ask about probation, notice, working hours, annual leave, sick leave, marriage/maternity/paternity/bereavement leave, menstruation leave, compensation leave, payday, medical eligibility, meal allowance, or typhoon/rainstorm arrangements.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 302,
+    "topic": "Probation period",
+    "category": "manual",
+    "triggers": [
+      "probation",
+      "probation period",
+      "probationary",
+      "how long is probation"
+    ],
+    "answer": "Assistant Manager or above: 6 months. Senior Officer I or below: 3 months.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 303,
+    "topic": "Termination notice",
+    "category": "manual",
+    "triggers": [
+      "notice period",
+      "resignation notice",
+      "termination notice",
+      "how much notice",
+      "quit notice"
+    ],
+    "answer": "After probation — Manager or above: 3 months; Assistant Manager: 2 months; Senior Officer I or below: 1 month. During probation, shorter notice applies by grade/month (see Staff Manual §8.1).",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 304,
+    "topic": "Working hours",
+    "category": "manual",
+    "triggers": [
+      "working hours",
+      "office hours",
+      "work hours",
+      "lunch time",
+      "flexible working",
+      "what time do we start"
+    ],
+    "answer": "42.5 hours/week including 1-hour lunch. Mon–Fri options: 8:30–17:00, 9:00–17:30, or 9:30–18:00 (lunch 12:00–14:00).",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 305,
+    "topic": "Payday",
+    "category": "manual",
+    "triggers": [
+      "payday",
+      "salary date",
+      "when is salary paid",
+      "pay day",
+      "salary payment"
+    ],
+    "answer": "Office staff: on/about the 25th each month (earlier if 25th is weekend/public holiday). Direct Dialogue team: last workday of the month.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 306,
+    "topic": "Annual leave",
+    "category": "manual",
+    "triggers": [
+      "annual leave",
+      "how many annual leave",
+      "vacation days",
+      "leave entitlement",
+      "leave days",
+      "holiday year"
+    ],
+    "answer": "Holiday year 1 Jul–30 Jun. Entitlement: 1–3 yrs = 14 days; 4 = 15; 5 = 16; 6 = 17; 7+ = 18. Available after probation. Max carry-forward 14 days at 31 Dec / 30 Jun.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 307,
+    "topic": "Official half-day holidays",
+    "category": "manual",
+    "triggers": [
+      "official holiday",
+      "half day holiday",
+      "half working day",
+      "organisation holiday"
+    ],
+    "answer": "4 half working days’ paid official holidays per year (schedule announced at start of each calendar year).",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 308,
+    "topic": "Sick leave",
+    "category": "manual",
+    "triggers": [
+      "sick leave",
+      "sickness day",
+      "paid sick",
+      "medical certificate leave"
+    ],
+    "answer": "Accumulate 2 paid sickness days/month in year 1, then 4/month; max 120 days. Notify supervisor/HR by 08:00; submit form + medical certificate next business day.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 309,
+    "topic": "Marriage leave",
+    "category": "manual",
+    "triggers": [
+      "marriage leave",
+      "wedding leave"
+    ],
+    "answer": "3 paid working days after probation, within 1 week before/after registration (marriage certificate required).",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 310,
+    "topic": "Maternity leave",
+    "category": "manual",
+    "triggers": [
+      "maternity leave",
+      "pregnancy leave"
+    ],
+    "answer": "14 weeks paid maternity leave. Apply ≥2 months before start; medical certificate with expected confinement date required.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 311,
+    "topic": "Paternity leave",
+    "category": "manual",
+    "triggers": [
+      "paternity leave",
+      "father leave"
+    ],
+    "answer": "5 working days per child, within 4 weeks before expected delivery to 14 weeks after birth. Notify intention ≥3 months ahead; confirm dates ≥5 days before leave.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 312,
+    "topic": "Bereavement leave",
+    "category": "manual",
+    "triggers": [
+      "bereavement leave",
+      "compassionate leave",
+      "funeral leave",
+      "death leave"
+    ],
+    "answer": "After probation: 3 working days per occasion for spouse, child, parent, parent-in-law, sibling, grandparent, or grandchild (within 3 months of death).",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 313,
+    "topic": "Menstruation leave",
+    "category": "manual",
+    "triggers": [
+      "menstruation leave",
+      "menstrual leave",
+      "period leave"
+    ],
+    "answer": "Full-time female staff after 3 months’ service: 1 day/month (max 12/year). Deducted from sick-leave balance. No medical certificate required.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 314,
+    "topic": "Compensation leave",
+    "category": "manual",
+    "triggers": [
+      "compensation leave",
+      "time off in lieu",
+      "toil",
+      "overtime leave",
+      "cl balance"
+    ],
+    "answer": "For approved overtime on special duties/travel. Max 24 hours CL accumulated at month-end; excess lapses unless CEO extends. Not paid out in cash.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 315,
+    "topic": "No-pay leave",
+    "category": "manual",
+    "triggers": [
+      "no-pay leave",
+      "unpaid leave",
+      "no pay leave"
+    ],
+    "answer": "Only in special cases after annual leave and CL are used, or during probation. CEO approval required.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 316,
+    "topic": "Jury leave",
+    "category": "manual",
+    "triggers": [
+      "jury leave",
+      "jury duty",
+      "jury service"
+    ],
+    "answer": "Paid leave for Hong Kong jury service; not deducted from annual leave.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 317,
+    "topic": "Meal allowance",
+    "category": "manual",
+    "triggers": [
+      "meal allowance",
+      "overtime meal",
+      "lunch allowance",
+      "dinner allowance"
+    ],
+    "answer": "For approved weekend/public-holiday overtime (≥4 hours) when meal not provided: lunch max $60; dinner max $80. Pre-approve with CEO.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 318,
+    "topic": "Medical insurance eligibility",
+    "category": "manual",
+    "triggers": [
+      "medical insurance eligibility",
+      "when can i join medical",
+      "group medical",
+      "enrol medical"
+    ],
+    "answer": "Eligible after probation, or after 3 months’ service for Assistant Manager or above. Covers outpatient and hospitalisation.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 319,
+    "topic": "Typhoon work arrangement",
+    "category": "manual",
+    "triggers": [
+      "typhoon",
+      "signal 8",
+      "signal no. 8",
+      "pre-no 8",
+      "typhoon signal",
+      "report to the office",
+      "report to office",
+      "wfh today",
+      "work from home today"
+    ],
+    "answer": "Signal Pre-No. 8 / No. 8 or above before work: do not report for duty. If issued during work: staff released. If lowered before 13:30: resume within 2 hours.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 320,
+    "topic": "Rainstorm work arrangement",
+    "category": "manual",
+    "triggers": [
+      "rainstorm",
+      "black rainstorm",
+      "amber rainstorm",
+      "red rainstorm"
+    ],
+    "answer": "Amber/Red before work: report as usual. Black Rainstorm before work: do not report. Follow supervisor/HR updates for during-work releases.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 321,
+    "topic": "Attendance",
+    "category": "manual",
+    "triggers": [
+      "punctuality",
+      "clock in",
+      "late attendance",
+      "attendance"
+    ],
+    "answer": "Clock in/out each workday. Habitual lateness is misconduct and may lead to disciplinary action.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
   }
 ];
 
@@ -657,11 +855,15 @@
     const askBtn = document.getElementById("askBtn");
 
     function wantsCap57(q) {
-      return /(employment ordinance|cap\.?\s*57|chapter\s*57|statutory|hong kong law|hk law|labour law|labor law)/i.test(q);
+      return /(employment ordinance|cap\.\?\s*57|chapter\s*57|statutory|hong kong law|hk law|labour law|labor law)/i.test(q);
     }
 
     function wantsMedical(q) {
-      return /(medical|health insurance|outpatient|hospital|dental|specialist|\bgp\b|blue cross|plan\s*[12]|physio|chinese medicine|vaccination|checkup|claim)/i.test(q);
+      return /(medical|health insurance|outpatient|hospital|dental|specialist|\bgp\b|blue cross|plan\s*[12]|physio|chinese medicine|vaccination|checkup|claim for gp|gp claim)/i.test(q);
+    }
+
+    function wantsStaffManual(q) {
+      return /(staff manual|hr manual|employee manual|handbook|probation|notice period|working hours|office hours|annual leave|sick leave|marriage leave|maternity leave|paternity leave|bereavement|menstruation leave|menstrual leave|compensation leave|time off in lieu|no-pay leave|jury|meal allowance|payday|salary date|typhoon|signal 8|rainstorm|clock in|punctuality|official holiday|half day holiday|report to the office|report to office)/i.test(q);
     }
 
     function detectPlanKey(q) {
@@ -693,6 +895,7 @@
       const q = raw.toLowerCase().trim();
       const preferCap57 = wantsCap57(q);
       const preferMedical = wantsMedical(q);
+      const preferManual = wantsStaffManual(q);
       let best = null;
       let bestScore = 0;
       for (const item of knowledge) {
@@ -702,6 +905,7 @@
         }
         if (preferCap57 && item.category === "cap57" && score > 0) score += 50;
         if (preferMedical && item.category === "medical" && score > 0) score += 60;
+        if (preferManual && item.category === "manual" && score > 0) score += 70;
         if (score > bestScore) {
           bestScore = score;
           best = item;
@@ -711,25 +915,17 @@
       const key = detectPlanKey(q);
       const benefit = detectBenefit(q);
       if (benefit && key && conciseAmounts[key][benefit]) {
-        return {
-          ...(best || { category: "medical" }),
-          answer: conciseAmounts[key][benefit]
-        };
+        return { ...(best || { category: "medical" }), answer: conciseAmounts[key][benefit], source: undefined, sourceUrl: undefined };
       }
-      if (benefit && !key && conciseAmounts.plan1[benefit]) {
-        return {
-          ...(best || { category: "medical" }),
-          answer: "Plan 1 (manager+): " + conciseAmounts.plan1[benefit] + ". Plan 2 (below manager): " + conciseAmounts.plan2[benefit] + "."
-        };
+      if (benefit && !key && conciseAmounts.plan1[benefit] && !preferManual) {
+        return { ...(best || { category: "medical" }), answer: "Plan 1 (manager+): " + conciseAmounts.plan1[benefit] + ". Plan 2 (below manager): " + conciseAmounts.plan2[benefit] + "." };
+      }
+      if (preferManual && best && best.category === "manual") {
+        return { ...best, source: undefined, sourceUrl: undefined };
       }
       if (best && best.category === "medical" && key && !benefit) {
         const a = conciseAmounts[key];
-        return {
-          ...best,
-          answer: (key === "plan1" ? "Plan 1" : "Plan 2") + ": GP " + a.gp + ", Specialist " + a.specialist + ", Dental " + a.dental + "/year.",
-          source: key === "plan1" ? "Medical Plan 1 (Manager and above)" : "Medical Plan 2 (Below manager)",
-          sourceUrl: key === "plan1" ? "benefits/medical-plan-1-manager.pdf" : "benefits/medical-plan-2-staff.pdf"
-        };
+        return { ...best, answer: (key === "plan1" ? "Plan 1" : "Plan 2") + ": GP " + a.gp + ", Specialist " + a.specialist + ", Dental " + a.dental + "/year.", source: undefined, sourceUrl: undefined };
       }
       return best;
     }
@@ -777,7 +973,7 @@
         addBubble(match.answer, "bot", match.source, match.sourceUrl);
       } else {
         addBubble(
-          "I don’t have enough detail on that yet to advise you properly. Please ask about medical benefits (Plan 1 manager+ / Plan 2 below manager), rest days, annual leave, sickness allowance, maternity or paternity leave, statutory holidays, wages, notice, or severance — or contact HR directly for your individual case.",
+          "I don’t have that yet. Try: annual leave, probation, notice, working hours, sick/marriage/maternity leave, or Plan 2 GP claim.",
           "bot",
           "Employment Ordinance Cap. 57",
           CAP57_URL
@@ -786,7 +982,7 @@
     }
 
     addBubble(
-      "Hello, I’m your HR specialist. Ask me about company policy, Cap. 57 entitlements, or your medical benefits (Plan 1 for manager grade and above; Plan 2 for staff below manager).",
+      "Hello, I’m your HR specialist. Ask about the Staff Manual, medical benefits (Plan 1/2), or Cap. 57 — I’ll answer concisely.",
       "bot"
     );
 
