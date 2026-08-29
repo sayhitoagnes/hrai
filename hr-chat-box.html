@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HR Chat box</title>
+  <style>
+    :root {
+      --pink: #e11d8a;
+      --pink-dark: #be185d;
+      --pink-soft: #fce7f3;
+      --blue: #2563b4;
+      --blue-mid: #3b82c4;
+      --blue-dark: #1e4f8c;
+      --blue-soft: #e8f1fb;
+      --ink: #1f2937;
+      --muted: #64748b;
+      --line: #dbe4f0;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 70% 45% at 0% 0%, rgba(37, 99, 180, 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 40% at 100% 100%, rgba(225, 29, 138, 0.1) 0%, transparent 50%),
+        linear-gradient(160deg, #ffffff 0%, #f5f9ff 50%, #fff8fc 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .app {
+      width: min(580px, 100%);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(30, 64, 120, 0.1);
+      display: flex;
+      flex-direction: column;
+      min-height: 640px;
+      max-height: min(860px, 92vh);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 55%, var(--pink) 100%);
+      color: var(--white);
+      padding: 18px 20px 16px;
+      border-bottom: 3px solid var(--pink);
+    }
+
+    .speaker {
+      margin-bottom: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    header p {
+      margin: 6px 0 0;
+      font-size: 0.86rem;
+      opacity: 0.95;
+    }
+
+    .faq {
+      padding: 12px 16px 0;
+      background: linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq-label {
+      margin: 0 0 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    .faq-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-bottom: 12px;
+    }
+
+    .faq-btn {
+      font: inherit;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      cursor: pointer;
+      padding: 8px 14px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--blue-dark);
+      background: var(--white);
+      box-shadow: 0 1px 2px rgba(30, 64, 120, 0.06);
+    }
+
+    .faq-btn:hover {
+      border-color: var(--pink);
+      color: var(--pink-dark);
+      background: var(--pink-soft);
+    }
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: linear-gradient(180deg, #f7faff 0%, #ffffff 45%, #fff7fb 100%);
+    }
+
+    .bubble {
+      max-width: 88%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      line-height: 1.45;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+    }
+
+    .bubble.bot {
+      align-self: flex-start;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--blue);
+      border-bottom-left-radius: 6px;
+    }
+
+    .bubble.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--pink) 0%, #d9489a 100%);
+      color: var(--white);
+      border-bottom-right-radius: 6px;
+    }
+
+    .source {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    a.source:hover { text-decoration: underline; }
+
+    .composer {
+      padding: 14px 16px 16px;
+      border-top: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+    }
+
+    #question {
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font: inherit;
+      resize: none;
+      min-height: 48px;
+      max-height: 120px;
+      outline: none;
+    }
+
+    #question:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 180, 0.15);
+    }
+
+    button {
+      font: inherit;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      padding: 12px 16px;
+      font-weight: 600;
+    }
+
+    #askBtn {
+      background: var(--blue);
+      color: var(--white);
+      min-width: 72px;
+    }
+
+    #askBtn:hover { background: var(--blue-dark); }
+  </style>
+</head>
+<body>
+  <main class="app" aria-label="HR Chat box">
+    <header>
+      <h1>HR Chat box</h1>
+      <p>Staff Manual · Medical benefits · Employment Ordinance</p>
+    </header>
+
+    <section class="faq" aria-label="Frequently asked topics">
+      <p class="faq-label">Quick FAQ</p>
+      <div class="faq-row">
+        <button type="button" class="faq-btn" data-faq="leave entitlement">Leave entitlement</button>
+        <button type="button" class="faq-btn" data-faq="bad weather arrangement">Bad weather arrangement</button>
+        <button type="button" class="faq-btn" data-faq="staff benefits">Staff benefits</button>
+      </div>
+    </section>
+
+    <div id="messages" role="log" aria-live="polite"></div>
+
+    <div class="composer">
+      <div class="row">
+        <textarea id="question" rows="2" placeholder="Ask about leave, probation, GP claim…" aria-label="Your question"></textarea>
+        <button id="askBtn" type="button">Ask</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const CAP57_URL = "https://www.elegislation.gov.hk/hk/cap57";
+
+    const knowledge = [
+  {
+    "id": 4,
+    "topic": "Health insurance pointer",
+    "triggers": [
+      "health insurance",
+      "medical plan",
+      "medical coverage"
+    ],
+    "answer": "Ask your grade (Plan 1 manager+ / Plan 2 below manager) and the benefit (e.g. GP, specialist).",
+    "source": "Medical Plan 1 & 2 Benefit Schedules"
+  },
+  {
+    "id": 5,
+    "topic": "Remote work",
+    "triggers": [
+      "remote work",
+      "work from home policy",
+      "wfh policy"
+    ],
+    "answer": "Follow published remote-work guidelines and manager approval. Typhoon/rainstorm WFH follows Staff Manual weather rules.",
+    "source": "HR Staff Manual"
+  },
+  {
+    "id": 6,
+    "topic": "Expense claim",
+    "triggers": [
+      "expense",
+      "reimbursement",
+      "claim expense"
+    ],
+    "answer": "Submit via the standard reimbursement process with receipts.",
+    "source": "Benefits Guide"
+  },
+  {
+    "id": 101,
+    "topic": "Employment Ordinance overview",
+    "category": "cap57",
+    "triggers": [
+      "what is the employment ordinance",
+      "what is cap 57",
+      "what is cap. 57",
+      "explain the employment ordinance",
+      "employment ordinance of hk",
+      "employment ordinance of hong kong",
+      "hong kong employment law",
+      "hk employment law"
+    ],
+    "answer": "Cap. 57 is HK’s Employment Ordinance. Key minimums for continuous-contract staff include rest days, paid annual leave 7–14 days, sickness allowance, 14 weeks’ maternity leave, 5 days’ paternity leave, and wage payment within 7 days after the wage period.",
+    "source": "Employment Ordinance Cap. 57",
+    "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
+  },
+  {
+    "id": 102,
+    "topic": "Continuous contract",
+    "category": "cap57",
+    "triggers": [
+      "continuous contract",
+      "18 hours",
+      "4 weeks",
+      "continuous employment"
+    ],
+    "answer": "Usually: 4+ consecutive weeks with the same employer and ≥18 hours each week.",
+    "source": "Employment Ordinance Cap. 57",
+    "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
+  },
+  {
+    "id": 103,
+    "topic": "Rest days",
+    "category": "cap57",
+    "triggers": [
+      "rest day",
+      "rest days",
+      "one day off",
+      "day off every week",
+      "weekly rest"
+    ],
+    "answer": "Continuous-contract staff: at least 1 rest day every 7 days (24 continuous hours).",
+    "source": "Employment Ordinance Cap. 57",
+    "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
+  },
+  {
+    "id": 104,
+    "topic": "Statutory annual leave",
+    "category": "cap57",
+    "triggers": [
+      "statutory annual leave",
+      "cap 57 annual leave",
+      "employment ordinance annual leave",
+      "statutory leave",
+      "legal annual leave"
+    ],
+    "answer": "After each 12 months under continuous contract: Year 1–2 = 7 days; then up to 14 days from Year 9+. Staff Manual company leave may be higher.",
+    "source": "Employment Ordinance Cap. 57",
+    "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
+  },
+  {
+    "id": 105,
+    "topic": "Sickness allowance",
+    "category": "cap57",
+    "triggers": [
+      "sickness allowance",
+      "statutory sick",
+      "4 consecutive days",
+      "sick leave pay",
+      "cap 57 sick"
+    ],
+    "answer": "Accumulate 2 days/month in year 1, then 4/month (max 120). Paid for ≥4 consecutive sickness days with medical certificate, usually at 4/5 average daily wages.",
+    "source": "Employment Ordinance Cap. 57",
+    "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
+  },
+  {
+    "id": 108,
+    "topic": "Statutory holidays",
+    "category": "cap57",
+    "triggers": [
+      "statutory holiday",
+      "statutory holidays",
+      "public holiday pay",
+      "holiday entitlement under law"
+    ],
+    "answer": "Statutory holidays are set by Cap. 57 / General Holidays rules. Holiday pay usually needs ≥3 months under a continuous contract before that holiday.",
+    "source": "Employment Ordinance Cap. 57",
+    "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
+  },
+  {
+    "id": 111,
+    "topic": "Severance and long service",
+    "category": "cap57",
+    "triggers": [
+      "severance payment",
+      "long service payment",
+      "redundancy",
+      "lsp",
+      "severance"
+    ],
+    "answer": "Severance: usually ≥24 months continuous + redundancy/layoff. LSP: usually ≥5 years in qualifying cases. Formula often 2/3 × monthly wages × years (wage capped at $22,500; total capped at $390,000).",
+    "source": "Employment Ordinance Cap. 57",
+    "sourceUrl": "https://www.elegislation.gov.hk/hk/cap57"
+  },
+  {
+    "id": 201,
+    "topic": "Medical plan which applies",
+    "category": "medical",
+    "triggers": [
+      "which medical plan",
+      "what medical plan",
+      "my medical plan",
+      "medical plan for manager",
+      "medical plan for staff",
+      "plan 1 or plan 2",
+      "manager grade medical",
+      "below manager medical"
+    ],
+    "answer": "As your HR specialist: medical cover is split by grade. Plan 1 applies to manager grade and above. Plan 2 applies to staff below manager grade. Both are Blue Cross schedules. Please tell me your grade, or ask about a benefit type (GP, specialist, hospital, dental), and I’ll quote the exact limits.",
+    "source": "Medical Plan 1 & 2 Benefit Schedules"
+  },
+  {
+    "id": 202,
+    "topic": "Medical benefits overview",
+    "category": "medical",
+    "triggers": [
+      "medical benefit",
+      "medical benefits",
+      "health insurance",
+      "medical insurance",
+      "medical coverage",
+      "medical plan",
+      "company medical",
+      "outpatient benefit",
+      "hospital benefit"
+    ],
+    "answer": "Happy to help. Your medical outpatient plan depends on grade: Plan 1 is for manager grade and above; Plan 2 is for staff below manager grade. Key outpatient limits — Plan 1 vs Plan 2: GP HK$280 vs HK$240; Specialist HK$630 vs HK$530; X-ray/lab HK$800 vs HK$700 per disability; Physio HK$600 vs HK$500; Chinese medicine HK$260 vs HK$220; Vaccination/checkup HK$260 vs HK$220. Hospital, supplementary (80% after HK$500 deductible, max HK$150,000/disability), and dental (HK$900/year) schedules are aligned across both plans. Tell me your grade (manager+ or below manager), or ask about GP / specialist / hospital / dental, and I’ll give the exact figures.",
+    "source": "Medical Plan 1 & 2 Benefit Schedules"
+  },
+  {
+    "id": 203,
+    "topic": "Plan 1 overview",
+    "category": "medical",
+    "triggers": [
+      "plan 1",
+      "plan1",
+      "manager medical",
+      "manager and above medical",
+      "mgr and above"
+    ],
+    "answer": "Plan 1 is for manager grade and above (Blue Cross (Asia-Pacific) Insurance Limited). Plan 1 (Manager grade and above) outpatient limits (Blue Cross, OP 1, 100% reimbursement): GP HK$280/visit, max 30/year; Specialist HK$630/visit, max 15/year (no referral letter required); diagnostic X-ray/lab up to HK$800 per disability; physiotherapy/chiropractic HK$600/visit, max 15/year; Chinese medicine HK$260/visit, max 20/year; vaccination/routine checkup HK$260/visit, max 1/year. At Blue Cross network clinics, co-payment for the listed outpatient services is HK$0. Plan 1 (Manager grade and above) hospital & surgical cover (Blue Cross, HS 1): semi-private room, 100% reimbursement. Room & board HK$1,000/day up to 45 days; miscellaneous hospital charges up to HK$17,500; physician hospital visits HK$1,000/day up to 45 days; ICU HK$2,000/day up to 7 days. Surgeon fees up to Complex HK$25,500 / Major HK$17,000 / Intermediate HK$8,500 / Minor HK$4,250. Anaesthetist and operating theatre each follow the same tier caps (Complex HK$7,650 / Major HK$5,100 / Intermediate HK$2,550 / Minor HK$1,275). Public-hospital general ward cash allowance HK$500/day up to 31 days. Plan 1 (Manager grade and above) supplementary medical benefit (Blue Cross, MM 1): 80% reimbursement after a HK$500 deductible, overall maximum HK$150,000 per disability, entitled accommodation Semi-Private. This sits on top of the basic hospital & surgical schedule for eligible confinement/surgical expenses. Plan 1 (Manager grade and above) dental benefit (Blue Cross, DENT 1): overall maximum HK$900 in any one year at 100% Reasonable & Customary. Covered items include X-rays before dental service, abscess drainage, medication, fillings, simple extractions (exclude wisdom teeth & surgical cases), oral examination, scale & polish.",
+    "source": "Medical Plan 1 (Manager and above)",
+    "sourceUrl": "benefits/medical-plan-1-manager.pdf"
+  },
+  {
+    "id": 204,
+    "topic": "Plan 2 overview",
+    "category": "medical",
+    "triggers": [
+      "plan 2",
+      "plan2",
+      "below manager medical",
+      "below manager",
+      "staff medical plan",
+      "non-manager medical"
+    ],
+    "answer": "Plan 2 is for staff below manager grade (Blue Cross (Asia-Pacific) Insurance Limited). Plan 2 (Staff below manager grade) outpatient limits (Blue Cross, OP 2, 100% reimbursement): GP HK$240/visit, max 30/year; Specialist HK$530/visit, max 15/year (no referral letter required); diagnostic X-ray/lab up to HK$700 per disability; physiotherapy/chiropractic HK$500/visit, max 15/year; Chinese medicine HK$220/visit, max 20/year; vaccination/routine checkup HK$220/visit, max 1/year. At Blue Cross network clinics, co-payment for the listed outpatient services is HK$0. Plan 2 (Staff below manager grade) hospital & surgical cover (Blue Cross, HS 2): semi-private room, 100% reimbursement. Room & board HK$1,000/day up to 45 days; miscellaneous hospital charges up to HK$17,500; physician hospital visits HK$1,000/day up to 45 days; ICU HK$2,000/day up to 7 days. Surgeon fees up to Complex HK$25,500 / Major HK$17,000 / Intermediate HK$8,500 / Minor HK$4,250. Anaesthetist and operating theatre each follow the same tier caps (Complex HK$7,650 / Major HK$5,100 / Intermediate HK$2,550 / Minor HK$1,275). Public-hospital general ward cash allowance HK$500/day up to 31 days. Plan 2 (Staff below manager grade) supplementary medical benefit (Blue Cross, MM 2): 80% reimbursement after a HK$500 deductible, overall maximum HK$150,000 per disability, entitled accommodation Semi-Private. This sits on top of the basic hospital & surgical schedule for eligible confinement/surgical expenses. Plan 2 (Staff below manager grade) dental benefit (Blue Cross, DENT 2): overall maximum HK$900 in any one year at 100% Reasonable & Customary. Covered items include X-rays before dental service, abscess drainage, medication, fillings, simple extractions (exclude wisdom teeth & surgical cases), oral examination, scale & polish.",
+    "source": "Medical Plan 2 (Below manager)",
+    "sourceUrl": "benefits/medical-plan-2-staff.pdf"
+  },
+  {
+    "id": 205,
+    "topic": "GP consultation limits",
+    "category": "medical",
+    "triggers": [
+      "gp",
+      "gp visit",
+      "gp consultation",
+      "gp limit",
+      "gp benefit",
+      "gp claim",
+      "claim for gp",
+      "how much can i claim for gp",
+      "how much gp",
+      "general practitioner",
+      "family doctor",
+      "clinic visit limit",
+      "outpatient gp"
+    ],
+    "answer": "Plan 1 (manager+): $280. Plan 2 (below manager): $240.",
+    "source": "Medical Plan Outpatient Benefits"
+  },
+  {
+    "id": 206,
+    "topic": "Specialist consultation limits",
+    "category": "medical",
+    "triggers": [
+      "specialist",
+      "specialist visit",
+      "specialist consultation",
+      "see a specialist",
+      "referral letter"
+    ],
+    "answer": "Plan 1 (manager+): $630. Plan 2 (below manager): $530.",
+    "source": "Medical Plan Outpatient Benefits"
+  },
+  {
+    "id": 207,
+    "topic": "Hospital and surgical limits",
+    "category": "medical",
+    "triggers": [
+      "hospital",
+      "hospitalisation",
+      "hospitalization",
+      "surgical",
+      "surgery benefit",
+      "room and board",
+      "icu",
+      "surgeon fee"
+    ],
+    "answer": "Hospital & surgical schedules are the same for Plan 1 and Plan 2 (semi-private, 100% reimbursement): room & board HK$1,000/day up to 45 days; miscellaneous hospital charges up to HK$17,500; physician visits HK$1,000/day up to 45 days; ICU HK$2,000/day up to 7 days; surgeon fees up to Complex HK$25,500 / Major HK$17,000 / Intermediate HK$8,500 / Minor HK$4,250. Supplementary cover is also aligned: 80% after HK$500 deductible, overall max HK$150,000 per disability.",
+    "source": "Medical Plan Hospital & Surgical Benefits"
+  },
+  {
+    "id": 208,
+    "topic": "Dental benefits",
+    "category": "medical",
+    "triggers": [
+      "dental",
+      "dentist",
+      "scale and polish",
+      "teeth cleaning",
+      "filling",
+      "tooth extraction"
+    ],
+    "answer": "$900 per year (same for Plan 1 and Plan 2).",
+    "source": "Medical Plan Dental Benefits"
+  },
+  {
+    "id": 209,
+    "topic": "Chinese medicine physio checkup",
+    "category": "medical",
+    "triggers": [
+      "chinese medicine",
+      "acupuncture",
+      "bonesetting",
+      "physiotherapy",
+      "chiropractic",
+      "vaccination",
+      "routine checkup",
+      "body check",
+      "x-ray",
+      "laboratory test"
+    ],
+    "answer": "Other outpatient limits — Plan 1 (manager+) vs Plan 2 (below manager): Chinese medicine HK$260 vs HK$220 per visit (max 20/year); Physiotherapy/chiropractic HK$600 vs HK$500 per visit (max 15/year); Diagnostic X-ray/lab HK$800 vs HK$700 per disability; Vaccination/routine checkup HK$260 vs HK$220 (1 visit/year). Chinese medicine, physio, GP and specialist visits share an overall combined maximum of 30 visits per year.",
+    "source": "Medical Plan Outpatient Benefits"
+  },
+  {
+    "id": 210,
+    "topic": "Network clinic and claims tip",
+    "category": "medical",
+    "triggers": [
+      "network clinic",
+      "blue cross",
+      "medical card",
+      "how to claim",
+      "claim medical",
+      "co-payment",
+      "copay"
+    ],
+    "answer": "For Blue Cross network clinics, co-payment on the listed outpatient services (GP, specialist, physio, Chinese medicine) is HK$0 under both plans. For network outpatient surgery such as gastroscopy/colonoscopy, use your electronic Medical Service Card at designated Blue Cross network clinics for full cover under the schedule. If you need the full benefit tables, open Plan 1 (manager+) or Plan 2 (below manager) from the benefits folder, or tell me your grade and the benefit you need.",
+    "source": "Medical Plan 1 & 2 Benefit Schedules"
+  },
+  {
+    "id": 301,
+    "topic": "Staff manual overview",
+    "category": "manual",
+    "triggers": [
+      "staff manual",
+      "hr manual",
+      "employee manual",
+      "staff handbook",
+      "employee handbook",
+      "what can i ask",
+      "hr policy"
+    ],
+    "answer": "Covered: appointment, grades, probation, transfer, promotion, notice/dismissal, retirement, hours, pay/MPF/medical/rental, leave types, PMS, training sponsorship, conduct/grievance/discipline, conflict of interest, typhoon/rainstorm.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 302,
+    "topic": "Manual purpose and confidentiality",
+    "category": "manual",
+    "triggers": [
+      "purpose of the manual",
+      "who does the manual apply",
+      "can i share the manual",
+      "manual confidential"
+    ],
+    "answer": "Internal use only. Gives HR terms/benefits/policies. Gaps follow HK labour law. No photocopying/disclosure to unauthorised parties. Policies may be changed by the organisation.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 310,
+    "topic": "Equal opportunity",
+    "category": "manual",
+    "triggers": [
+      "equal opportunity",
+      "equal employment",
+      "discrimination in hiring",
+      "recruitment policy"
+    ],
+    "answer": "Equal opportunity employer. Appointments based on experience, competencies and qualifications — not gender, age, race, religion, marital status, sexual orientation or family status.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 311,
+    "topic": "Reference and qualification check",
+    "category": "manual",
+    "triggers": [
+      "reference check",
+      "qualification check",
+      "fraudulent information",
+      "previous employer check"
+    ],
+    "answer": "HR checks references/qualifications on final applicants (original certificates; usually last 2 employers). Fraudulent information may lead to denial of employment or dismissal.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 312,
+    "topic": "Staff card and access card",
+    "category": "manual",
+    "triggers": [
+      "staff card",
+      "access card",
+      "lost staff card",
+      "lost access card",
+      "return staff card"
+    ],
+    "answer": "Issued on start. Report loss to HR immediately for cancellation/re-issue. Not transferable. Return both on last working day.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 313,
+    "topic": "SCRC",
+    "category": "manual",
+    "triggers": [
+      "scrc",
+      "sexual conviction",
+      "sexual conviction record check",
+      "criminal conviction check"
+    ],
+    "answer": "Offers are conditional on SCRC. Employees must renew when the checking code expires and inform HR of the valid code.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 314,
+    "topic": "Staff grades",
+    "category": "manual",
+    "triggers": [
+      "staff grade",
+      "job grade",
+      "grading system",
+      "what grades",
+      "assistant manager grade",
+      "officer grade",
+      "senior officer"
+    ],
+    "answer": "Grades: CEO; Director / Deputy / Assistant Director; Senior Manager / Manager / Assistant Manager; Senior Officer I / II / Officer / Assistant Officer; Coordinator.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 320,
+    "topic": "Probation period",
+    "category": "manual",
+    "triggers": [
+      "probation",
+      "probation period",
+      "probationary",
+      "how long is probation",
+      "extend probation",
+      "extended probation"
+    ],
+    "answer": "Assistant Manager or above: 6 months. Senior Officer I or below: 3 months. May be extended if performance/attitude needs more observation (dept head + CEO). End-of-probation appraisal with supervisor/dept head; CEO endorses.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 321,
+    "topic": "Transfer",
+    "category": "manual",
+    "triggers": [
+      "transfer",
+      "reassign",
+      "change department",
+      "another role"
+    ],
+    "answer": "Organisation may transfer/reassign roles with reasonable prior notice and the employee’s consent, for operational/HR planning needs.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 322,
+    "topic": "Promotion",
+    "category": "manual",
+    "triggers": [
+      "promotion",
+      "promote",
+      "how to get promoted"
+    ],
+    "answer": "Prefer promote-from-within. Based on potential for higher role, performance, service, vacancy and finances — not just tenure. Nominated by supervisor/dept head, approved by CEO, administered by HR.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 330,
+    "topic": "Termination notice after probation",
+    "category": "manual",
+    "triggers": [
+      "notice period",
+      "resignation notice",
+      "termination notice",
+      "how much notice",
+      "quit notice",
+      "resign notice"
+    ],
+    "answer": "After probation (unless contract says otherwise): Manager or above — 3 months; Assistant Manager — 2 months; Senior Officer I or below — 1 month. Written notice or payment in lieu.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 331,
+    "topic": "Termination notice during probation",
+    "category": "manual",
+    "triggers": [
+      "notice during probation",
+      "probation notice",
+      "first month notice"
+    ],
+    "answer": "Unless contract says otherwise — Manager+: 1st month immediate; months 2–3: 7 calendar days; months 4–6: 1 month. Assistant Manager: 1 month (then 2 months after probation). Senior Officer I or below: N/A in 1st month column; then 1 month. Extended probation uses same probation notice rules.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 332,
+    "topic": "Leave during notice period",
+    "category": "manual",
+    "triggers": [
+      "leave during notice",
+      "annual leave after resignation",
+      "leave in notice period"
+    ],
+    "answer": "If approved annual leave falls in the notice period, Department Head may re-approve to protect handover. Tell HR immediately of any leave change.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 333,
+    "topic": "Summary dismissal",
+    "category": "manual",
+    "triggers": [
+      "summary dismissal",
+      "dismiss without notice",
+      "instant dismissal",
+      "fired without notice"
+    ],
+    "answer": "May dismiss immediately without payment in lieu for: wilful disobedience; misconduct inconsistent with duties; fraud/dishonesty; habitual neglect; or other EO grounds allowing termination without notice.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 334,
+    "topic": "Exit interview",
+    "category": "manual",
+    "triggers": [
+      "exit interview",
+      "leaving interview"
+    ],
+    "answer": "Exit interviews for voluntary leavers (resignation or retirement).",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 335,
+    "topic": "Retirement age",
+    "category": "manual",
+    "triggers": [
+      "retirement",
+      "retirement age",
+      "retire"
+    ],
+    "answer": "Employment ends at age 65 unless a new/separate agreement is made with consent.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 340,
+    "topic": "Working hours",
+    "category": "manual",
+    "triggers": [
+      "working hours",
+      "office hours",
+      "work hours",
+      "lunch time",
+      "what time do we start",
+      "finish work"
+    ],
+    "answer": "Office: 42.5 hrs/week including 1-hour lunch. Mon–Fri options: 8:30–17:00, 9:00–17:30, or 9:30–18:00 (lunch window 12:00–14:00). Overtime generally unpaid unless contract says otherwise.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 341,
+    "topic": "Direct Dialogue / shift hours",
+    "category": "manual",
+    "triggers": [
+      "direct dialogue",
+      "shift employee",
+      "roster",
+      "duty roster",
+      "40 hours"
+    ],
+    "answer": "Direct Dialogue / shift staff: 40 hrs/week including 1-hour lunch; 2 rest days per roster. No lunch on half-day work. Roster changes should be advised in advance.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 342,
+    "topic": "Flexible working hours",
+    "category": "manual",
+    "triggers": [
+      "flexible working",
+      "flexi hours",
+      "flexible working hours"
+    ],
+    "answer": "Office staff may apply for flexible hours for training/duties/events outside normal hours, with prior approval of supervisor and dept head or CEO.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 343,
+    "topic": "Attendance and punctuality",
+    "category": "manual",
+    "triggers": [
+      "punctuality",
+      "clock in",
+      "clock out",
+      "late attendance",
+      "attendance",
+      "habitual late"
+    ],
+    "answer": "Clock in/out each workday. Inform supervisor ASAP if unable to attend. Habitual lateness = misconduct → disciplinary action.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 350,
+    "topic": "Payday",
+    "category": "manual",
+    "triggers": [
+      "payday",
+      "salary date",
+      "when is salary paid",
+      "pay day",
+      "salary payment",
+      "25th"
+    ],
+    "answer": "Office staff: on/about the 25th (earlier if weekend/PH). Direct Dialogue: last workday of the month. First 3 months’ pay for new joiners: cheque on last working day. Final pay: cheque within 7 days after termination.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 351,
+    "topic": "Discretionary recognition payment",
+    "category": "manual",
+    "triggers": [
+      "discretionary recognition",
+      "recognition payment",
+      "bonus",
+      "year end bonus",
+      "december payment"
+    ],
+    "answer": "Discretionary; needs ≥3 months’ service in prior FY (pro-rata). Paid on/about 31 Dec. Not payable if employment ended on/before 31 Dec, or after summary dismissal / resigning to avoid dismissal.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 352,
+    "topic": "MPF",
+    "category": "manual",
+    "triggers": [
+      "mpf",
+      "mandatory provident fund",
+      "provident fund",
+      "pension contribution"
+    ],
+    "answer": "Staff join a registered MPF scheme. Employee and employer each contribute per MPF Ordinance rates. Voluntary extra employee contributions allowed within legal limits.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 353,
+    "topic": "Salary review",
+    "category": "manual",
+    "triggers": [
+      "salary review",
+      "pay rise",
+      "salary adjustment",
+      "july salary"
+    ],
+    "answer": "Usually reviewed around July (or more often at org discretion), based on finances, performance and cost of living. Need completed probation by effective date for pro-rata. Resign before announcement → not eligible.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 354,
+    "topic": "Pay confidentiality",
+    "category": "manual",
+    "triggers": [
+      "salary confidential",
+      "remuneration confidential",
+      "discuss salary"
+    ],
+    "answer": "Remuneration information is strictly confidential.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 355,
+    "topic": "Medical insurance eligibility",
+    "category": "manual",
+    "triggers": [
+      "medical insurance eligibility",
+      "when can i join medical",
+      "group medical",
+      "enrol medical",
+      "medical scheme"
+    ],
+    "answer": "Eligible after probation, or after 3 months’ service for Assistant Manager or above. Covers outpatient + hospitalisation. Plan details on HR server / medical Plan 1–2 schedules.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 356,
+    "topic": "Rental reimbursement eligibility",
+    "category": "manual",
+    "triggers": [
+      "rental reimbursement",
+      "rent reimbursement",
+      "rental scheme",
+      "housing benefit",
+      "staff quarters"
+    ],
+    "answer": "Permanent full-time only (not part-time/contract). Up to 40% of monthly notional salary for primary residence rent. New joiners after probation. Apply with stamped lease; claims usually by 20 March of the tax year.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 357,
+    "topic": "Rental what is covered",
+    "category": "manual",
+    "triggers": [
+      "rental rates",
+      "management fees rental",
+      "car parking rental",
+      "what rental covers"
+    ],
+    "answer": "Rent for primary residence; rates & management fees included. Agent commission, utilities, car park generally excluded unless inclusive in lease. Lease in employee or joint with spouse.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 358,
+    "topic": "Breastfeeding / lactation",
+    "category": "manual",
+    "triggers": [
+      "breastfeeding",
+      "lactation",
+      "express milk",
+      "nursing break"
+    ],
+    "answer": "About two 45-minute lactation breaks/day in a private designated room. Email dept head + HR ≥2 weeks ahead.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 359,
+    "topic": "Meal allowance",
+    "category": "manual",
+    "triggers": [
+      "meal allowance",
+      "overtime meal",
+      "lunch allowance",
+      "dinner allowance"
+    ],
+    "answer": "Weekend/PH authorised OT ≥4 hours, meal not provided, within lunch 12:00–14:00 or dinner 19:00–21:00: lunch max $60; dinner max $80 (not both). Pre-approve with CEO; claim with receipts.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 370,
+    "topic": "Public holidays",
+    "category": "manual",
+    "triggers": [
+      "public holiday",
+      "public holidays",
+      "general holiday",
+      "ph leave"
+    ],
+    "answer": "Per General Holidays Ordinance. No payment in lieu of unused PHs. If terminated before 3 months’ service, statutory/public holidays are unpaid (prepaid amounts deducted from final pay).",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 371,
+    "topic": "Annual leave",
+    "category": "manual",
+    "triggers": [
+      "annual leave",
+      "how many annual leave",
+      "vacation days",
+      "leave entitlement",
+      "leave days",
+      "holiday year",
+      "carry forward leave"
+    ],
+    "answer": "Holiday year 1 Jul–30 Jun. 1–3 yrs: 14 days; 4: 15; 5: 16; 6: 17; 7+: 18. Accrues from day 1; take after probation. Carry-forward max 14 days at 31 Dec / 30 Jun; excess lapses.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 3711,
+    "topic": "Staff benefits overview",
+    "category": "manual",
+    "triggers": [
+      "staff benefits",
+      "staff benefit",
+      "employee benefits",
+      "what benefits",
+      "company benefits",
+      "benefits overview"
+    ],
+    "answer": "Main staff benefits: annual leave (14–18 days by service), public/official holidays, sick/marriage/maternity/paternity leave, group medical after eligibility (Plan 1 manager+ / Plan 2 below manager), MPF, and rental reimbursement for permanent full-time staff (up to 40% of monthly notional salary). Ask about a specific benefit for exact figures.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 372,
+    "topic": "Official half-day holidays",
+    "category": "manual",
+    "triggers": [
+      "official holiday",
+      "half day holiday",
+      "half working day",
+      "organisation holiday"
+    ],
+    "answer": "4 half working days’ paid official holidays/year (management sets dates; announced each calendar year).",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 373,
+    "topic": "Sick leave",
+    "category": "manual",
+    "triggers": [
+      "sick leave",
+      "sickness day",
+      "paid sick",
+      "medical certificate leave",
+      "call in sick"
+    ],
+    "answer": "Accumulate 2 paid sickness days/month in year 1, then 4/month; max 120. Notify supervisor/dept head/CEO and cc HR by 08:00. Submit form + medical/attendance certificate next business day.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 374,
+    "topic": "No-pay leave",
+    "category": "manual",
+    "triggers": [
+      "no-pay leave",
+      "unpaid leave",
+      "no pay leave"
+    ],
+    "answer": "Only special cases after annual leave + CL used, or during probation. CEO approval. If >5 consecutive working days, Sat/Sun/PH counted; deducted from payroll.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 375,
+    "topic": "Marriage leave",
+    "category": "manual",
+    "triggers": [
+      "marriage leave",
+      "wedding leave"
+    ],
+    "answer": "3 paid working days after probation (incl. LGBTQ). Within 1 week before/after registration. Must be employed on marriage day. Marriage certificate required.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 376,
+    "topic": "Maternity leave",
+    "category": "manual",
+    "triggers": [
+      "maternity leave",
+      "pregnancy leave"
+    ],
+    "answer": "14 weeks paid (per EO). Medical certificate with expected date. Seek approval ≥2 months before start. Default start: 4 weeks before expected confinement if not otherwise agreed (window 2–4 weeks before). Late delivery adds extra days. Submit obstetrician certificate on return.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 377,
+    "topic": "Paternity leave",
+    "category": "manual",
+    "triggers": [
+      "paternity leave",
+      "father leave"
+    ],
+    "answer": "5 working days per child; separately or together; from 4 weeks before expected delivery to 14 weeks after birth. Notify intention ≥3 months ahead; confirm dates ≥5 days before leave.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 378,
+    "topic": "Bereavement leave",
+    "category": "manual",
+    "triggers": [
+      "bereavement leave",
+      "compassionate leave",
+      "funeral leave",
+      "death leave"
+    ],
+    "answer": "After probation: 3 working days per occasion for spouse, child, parent, parent-in-law, sibling, grandparent or grandchild; within 3 months of death.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 379,
+    "topic": "Jury leave",
+    "category": "manual",
+    "triggers": [
+      "jury leave",
+      "jury duty",
+      "jury service"
+    ],
+    "answer": "Paid leave for HK jury service; not deducted from annual leave. Inform dept head + HR when summoned.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 380,
+    "topic": "Menstruation leave",
+    "category": "manual",
+    "triggers": [
+      "menstruation leave",
+      "menstrual leave",
+      "period leave"
+    ],
+    "answer": "Full-time female staff after 3 months: 1 day/month (max 12/year); no carry-forward. Half-day counts as 1 day. Deducted from sick-leave balance; no cash. No medical certificate. Supervisor/dept head approve → HR same day.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 381,
+    "topic": "Compensation leave",
+    "category": "manual",
+    "triggers": [
+      "compensation leave",
+      "time off in lieu",
+      "toil",
+      "overtime leave",
+      "cl balance",
+      "overtime"
+    ],
+    "answer": "For management-requested OT (special duties/travel/weekends/PH), not voluntary OT. Max 24 CL hours at month-end; excess lapses unless CEO extends. Round down to 0.5 hr. Prior written approval (dept head + CEO). Not paid in cash.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 382,
+    "topic": "Overtime travel rules",
+    "category": "manual",
+    "triggers": [
+      "overtime travel",
+      "overseas overtime",
+      "flight overtime",
+      "overtime local event"
+    ],
+    "answer": "Overseas travel OT max 7.5 hrs/day (flight; exit-to-hotel-check-in; hotel-check-out-to-home). No CL on rest days with no duty. Local event OT: home→work→home on Sat/Sun/PH or outside weekday hours.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 383,
+    "topic": "Leave application",
+    "category": "manual",
+    "triggers": [
+      "leave application",
+      "how to apply leave",
+      "apply for leave",
+      "cancel leave"
+    ],
+    "answer": "Submit prescribed form ≥1 week before leave; approved form to HR ≥2 working days before. Cancel/change needs supervisor + dept head approval; inform HR.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 384,
+    "topic": "Leave without notice",
+    "category": "manual",
+    "triggers": [
+      "leave without notice",
+      "absent without approval",
+      "no show"
+    ],
+    "answer": "Leave (except emergency sick leave) without prior notice/approval = work negligence. Habitual negligence may lead to summary dismissal or discipline.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 390,
+    "topic": "PMS cycle",
+    "category": "manual",
+    "triggers": [
+      "pms",
+      "performance appraisal",
+      "performance review",
+      "performance management",
+      "appraisal period"
+    ],
+    "answer": "Annual cycle Jul–Jun for all full-time (permanent + contract). Review 15 May–30 Jun; CEO calibration 1–31 Jul; return to staff 1 Aug. No formal annual review for part-timers.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 391,
+    "topic": "PMS rating scale",
+    "category": "manual",
+    "triggers": [
+      "performance rating",
+      "rating scale",
+      "appraisal rating",
+      "score a b c"
+    ],
+    "answer": "A substantially exceed (13–15); B consistently exceed (10–12); C meet (7–9); D partially meet (4–6); E below (1–3). Objectives 60% + competencies 40%. Child Safeguarding: pass/fail only (pass = 8).",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 392,
+    "topic": "Child safeguarding training",
+    "category": "manual",
+    "triggers": [
+      "child safeguarding",
+      "safeguarding essential",
+      "safeguarding course"
+    ],
+    "answer": "To pass Child Safeguarding competency: complete “Safeguarding Essential” + “Keeping Children and Young People Safe…”, or “Safeguarding Essentials Refresher”, and show daily safeguarding awareness.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 400,
+    "topic": "Training sponsorship eligibility",
+    "category": "manual",
+    "triggers": [
+      "training sponsorship",
+      "education sponsorship",
+      "course sponsorship",
+      "study leave",
+      "external training"
+    ],
+    "answer": "Need employment + ≥3 months’ service + satisfactory performance. Apply ≥1 month before enrolment. Study leave and/or fee reimbursement possible. Approval lapses if course not started within 3 months.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 401,
+    "topic": "Training reimbursement exclusions",
+    "category": "manual",
+    "triggers": [
+      "training reimbursement",
+      "course fee claim",
+      "what training fees",
+      "examination fee"
+    ],
+    "answer": "Reimburse tuition/course fees on successful completion (no advance). Not covered: application/caution/graduation/membership/registration/student/textbook/exam/exemption/travel/reservation fees. Still employed and not resigned when paid. Claim in same FY as completion.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 402,
+    "topic": "Training service commitment",
+    "category": "manual",
+    "triggers": [
+      "training commitment",
+      "service commitment",
+      "sponsorship commitment",
+      "repay sponsorship"
+    ],
+    "answer": "Claimed ≤$5,000: no service bond. $5,001–$10,000: 2 months’ service after course completion. Fail to serve → repay full amount claimed (unless CEO approves otherwise).",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 410,
+    "topic": "Code of conduct",
+    "category": "manual",
+    "triggers": [
+      "code of conduct",
+      "staff declaration",
+      "whistleblowing",
+      "values conduct"
+    ],
+    "answer": "All staff sign a Staff Declaration on joining. Follow Global Policy on Values, Conduct and Whistleblowing for details.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 411,
+    "topic": "Harassment bullying discrimination",
+    "category": "manual",
+    "triggers": [
+      "harassment",
+      "bullying",
+      "discrimination complaint",
+      "dignity at work"
+    ],
+    "answer": "Harassment, bullying and discrimination are unacceptable. Complaints taken seriously, promptly and confidentially. See Harassment, Bullying & Discrimination Policy.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 412,
+    "topic": "Grievance",
+    "category": "manual",
+    "triggers": [
+      "grievance",
+      "complaint procedure",
+      "raise a grievance"
+    ],
+    "answer": "Fair grievance handling aims to resolve problems properly. See Grievance Policy for steps.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 413,
+    "topic": "Disciplinary",
+    "category": "manual",
+    "triggers": [
+      "disciplinary",
+      "discipline policy",
+      "misconduct process"
+    ],
+    "answer": "Disciplinary rules protect operational standards and staff/org interests. See Disciplinary Policy.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 414,
+    "topic": "Outside work / conflict",
+    "category": "manual",
+    "triggers": [
+      "outside work",
+      "second job",
+      "part time job outside",
+      "conflict of interest",
+      "side business"
+    ],
+    "answer": "Need prior written approval before any outside business/employment/service. Must declare conflicts to HR/CEO. Breach may mean discipline including summary dismissal; serious cases may be reported to ICAC.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 415,
+    "topic": "Gifts and advantages",
+    "category": "manual",
+    "triggers": [
+      "gift",
+      "advantage",
+      "sponsorship offered",
+      "accept gift",
+      "bribery"
+    ],
+    "answer": "Do not solicit/accept advantages linked to duties unless permission given. See Gifts and sponsorship offered to staff policy.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 416,
+    "topic": "Declaration of interest",
+    "category": "manual",
+    "triggers": [
+      "declaration of interest",
+      "declare interest",
+      "interest declaration"
+    ],
+    "answer": "Manager grade (incl. Assistant Manager) and above: annual declaration. Others: when needed. Report changes in writing ASAP. Form on HR server.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 420,
+    "topic": "Typhoon signal 1 or 3",
+    "category": "manual",
+    "triggers": [
+      "signal 1",
+      "signal 3",
+      "signal no. 1",
+      "signal no. 3"
+    ],
+    "answer": "Signal 1 or 3 before work: report for duty as scheduled.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 421,
+    "topic": "Typhoon signal 8",
+    "category": "manual",
+    "triggers": [
+      "typhoon",
+      "signal 8",
+      "signal no. 8",
+      "pre-no 8",
+      "pre no 8",
+      "report to the office",
+      "report to office",
+      "wfh today",
+      "work from home today",
+      "extreme weather"
+    ],
+    "answer": "Pre-No. 8 / No. 8+ before work: do not report. Issued during work: staff released (vulnerable/remote travellers first). If lowered before 13:30: resume within 2 hours. No work/travel (incl. online meetings) under bad-weather signal unless CEO approves.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 4211,
+    "topic": "Bad weather arrangement",
+    "category": "manual",
+    "triggers": [
+      "bad weather",
+      "bad weather arrangement",
+      "weather arrangement",
+      "weather policy",
+      "typhoon and rainstorm"
+    ],
+    "answer": "Typhoon: Signal 1/3 — report as usual. Pre-No. 8 / No. 8+ before work — do not report; if issued at work, staff are released; if lowered before 13:30, resume within 2 hours. Rainstorm: Amber/Red — report as usual; Black before work — do not report; during work continue unless unsafe; if Black lowered before 13:30, resume within 2 hours. Tell supervisor/HR ASAP if you cannot report.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 422,
+    "topic": "Rainstorm",
+    "category": "manual",
+    "triggers": [
+      "rainstorm",
+      "black rainstorm",
+      "amber rainstorm",
+      "red rainstorm",
+      "black rain"
+    ],
+    "answer": "Amber/Red before work: report as usual. Black before work: do not report. During work: usually continue unless dangerous (Black). If Black lowered before 13:30: resume within 2 hours. End of day: release as usual; shelter may be provided if staff stay.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 423,
+    "topic": "Weather difficulty reporting",
+    "category": "manual",
+    "triggers": [
+      "cannot report due to weather",
+      "difficulty reporting for duty",
+      "stuck in typhoon"
+    ],
+    "answer": "Tell supervisor/HR ASAP if you have difficulty reporting. Weather rules also apply during WFH periods.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  },
+  {
+    "id": 430,
+    "topic": "Manual amendments",
+    "category": "manual",
+    "triggers": [
+      "manual update",
+      "policy change",
+      "amendment of manual",
+      "who to ask hr"
+    ],
+    "answer": "Policies may be changed anytime; latest announced by email. Questions → supervisor, dept head, CEO or HR.",
+    "source": "HR Staff Manual",
+    "sourceUrl": "benefits/hr-staff-manual.pdf"
+  }
+];
+
+    const messagesEl = document.getElementById("messages");
+    const questionEl = document.getElementById("question");
+    const askBtn = document.getElementById("askBtn");
+
+    function wantsCap57(q) {
+      return /(employment ordinance|cap\.\?\s*57|chapter\s*57|statutory|hong kong law|hk law|labour law|labor law)/i.test(q);
+    }
+
+    function wantsMedical(q) {
+      return /(medical|health insurance|outpatient|hospital|dental|specialist|\bgp\b|blue cross|plan\s*[12]|physio|chinese medicine|vaccination|checkup|claim for gp|gp claim)/i.test(q);
+    }
+
+    function wantsStaffManual(q) {
+      return /(staff manual|hr manual|handbook|probation|notice|working hours|office hours|annual leave|sick leave|marriage|maternity|paternity|bereavement|menstruation|menstrual|compensation leave|toil|no-pay|unpaid leave|jury|meal allowance|payday|salary|mpf|provident|rental|breastfeeding|lactation|typhoon|signal|rainstorm|bad weather|weather arrangement|staff benefits|employee benefits|clock in|punctuality|official holiday|promotion|transfer|retirement|dismiss|exit interview|performance|pms|appraisal|training|sponsorship|study leave|grievance|harassment|bullying|disciplinary|conflict of interest|outside work|second job|gift|declaration of interest|staff card|access card|scrc|equal opportunity|reference check|roster|direct dialogue|carry forward|leave application|child safeguarding|recognition payment|bonus)/i.test(q);
+    }
+
+    function detectPlanKey(q) {
+      if (/below manager|non-manager|non manager|staff below|junior staff|officer grade|plan\s*2/.test(q)) return "plan2";
+      if (/plan\s*1|manager grade|manager and above|mgr and above|manager\+|for managers|as a manager|i am a manager|i'm a manager|\bmanager\b|\bmgr\b/.test(q)) return "plan1";
+      return null;
+    }
+
+    function detectBenefit(q) {
+      if (/\bgp\b|general practitioner|family doctor|gp visit|gp consultation|gp limit|gp benefit|claim for gp|gp claim|how much gp/.test(q)) return "gp";
+      if (/specialist/.test(q)) return "specialist";
+      if (/chinese medicine|acupuncture|bonesetting/.test(q)) return "chinese";
+      if (/physio|chiropractic/.test(q)) return "physio";
+      if (/x-ray|laboratory|lab test|diagnostic/.test(q)) return "diagnostic";
+      if (/vaccination|routine checkup|body check/.test(q)) return "checkup";
+      if (/dental|dentist|teeth|filling|scale/.test(q)) return "dental";
+      if (/room and board/.test(q)) return "room";
+      if (/\bicu\b/.test(q)) return "icu";
+      if (/hospital|surg|surgeon|hospitalisation|hospitalization/.test(q)) return "hospital";
+      return null;
+    }
+
+    const conciseAmounts = {
+      plan1: { gp: "$280", specialist: "$630", chinese: "$260", physio: "$600", diagnostic: "$800", checkup: "$260", dental: "$900", room: "$1,000/day", icu: "$2,000/day", hospital: "$1,000/day room & board (max 45 days)" },
+      plan2: { gp: "$240", specialist: "$530", chinese: "$220", physio: "$500", diagnostic: "$700", checkup: "$220", dental: "$900", room: "$1,000/day", icu: "$2,000/day", hospital: "$1,000/day room & board (max 45 days)" }
+    };
+
+    function scoreManualItem(q, item) {
+      let score = 0;
+      for (const trigger of item.triggers || []) {
+        if (q.includes(trigger)) score += trigger.length + 8;
+      }
+      for (const word of (item.topic || '').toLowerCase().split(/\s+/)) {
+        if (word.length > 3 && q.includes(word)) score += 2;
+      }
+      for (const word of q.split(/[^a-z0-9+$/]+/).filter((w) => w.length > 3)) {
+        if ((item.answer || '').toLowerCase().includes(word)) score += 1;
+      }
+      return score;
+    }
+
+    function findAnswer(raw) {
+      const q = raw.toLowerCase().trim();
+      const preferCap57 = wantsCap57(q);
+      const preferMedical = wantsMedical(q);
+      const preferManual = wantsStaffManual(q);
+      let best = null;
+      let bestScore = 0;
+      let bestManual = null;
+      let bestManualScore = 0;
+      for (const item of knowledge) {
+        let score = 0;
+        for (const trigger of item.triggers || []) {
+          if (q.includes(trigger)) score += trigger.length;
+        }
+        if (preferCap57 && item.category === "cap57" && score > 0) score += 50;
+        if (preferMedical && item.category === "medical" && score > 0) score += 60;
+        if (preferManual && item.category === "manual" && score > 0) score += 70;
+        if (score > bestScore) {
+          bestScore = score;
+          best = item;
+        }
+        if (item.category === "manual") {
+          const ms = scoreManualItem(q, item);
+          if (ms > bestManualScore) {
+            bestManualScore = ms;
+            bestManual = item;
+          }
+        }
+      }
+
+      const key = detectPlanKey(q);
+      const benefit = detectBenefit(q);
+      if (benefit && key && conciseAmounts[key][benefit]) {
+        return { ...(best || { category: "medical" }), answer: conciseAmounts[key][benefit], source: undefined, sourceUrl: undefined };
+      }
+      if (benefit && !key && conciseAmounts.plan1[benefit] && /(plan|gp|specialist|dental|medical)/i.test(q) && !preferManual) {
+        return { ...(best || { category: "medical" }), answer: "Plan 1 (manager+): " + conciseAmounts.plan1[benefit] + ". Plan 2 (below manager): " + conciseAmounts.plan2[benefit] + "." };
+      }
+
+      if ((preferManual || bestManualScore >= 6) && bestManual) {
+        if (benefit && key && /(plan\s*[12]|gp claim|claim for gp)/i.test(q)) {
+          // keep medical amount path already handled
+        } else {
+          return { ...bestManual, source: undefined, sourceUrl: undefined };
+        }
+      }
+
+      if (best && best.category === "medical" && key && !benefit) {
+        const a = conciseAmounts[key];
+        return { ...best, answer: (key === "plan1" ? "Plan 1" : "Plan 2") + ": GP " + a.gp + ", Specialist " + a.specialist + ", Dental " + a.dental + "/year.", source: undefined, sourceUrl: undefined };
+      }
+      return best;
+    }
+
+    function addBubble(text, role, source, sourceUrl) {
+      const bubble = document.createElement("div");
+      bubble.className = "bubble " + role;
+      if (role === "bot") {
+        const speaker = document.createElement("div");
+        speaker.className = "speaker";
+        speaker.textContent = "HR Specialist";
+        bubble.appendChild(speaker);
+      }
+      bubble.appendChild(document.createTextNode(text));
+      if (source) {
+        bubble.appendChild(document.createElement("br"));
+        if (sourceUrl) {
+          const link = document.createElement("a");
+          link.className = "source";
+          link.href = sourceUrl;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = "Reference: " + source;
+          bubble.appendChild(link);
+        } else {
+          const tag = document.createElement("div");
+          tag.className = "source";
+          tag.textContent = "Reference: " + source;
+          bubble.appendChild(tag);
+        }
+      }
+      messagesEl.appendChild(bubble);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function ask(preset) {
+      const text = (typeof preset === "string" ? preset : questionEl.value).trim();
+      if (!text) return;
+
+      addBubble(text, "user");
+      questionEl.value = "";
+
+      const match = findAnswer(text);
+      if (match) {
+        addBubble(match.answer, "bot", match.source, match.sourceUrl);
+      } else {
+        addBubble(
+          "I don’t have that yet. Try: annual leave, probation, notice, working hours, sick/marriage/maternity leave, or Plan 2 GP claim.",
+          "bot"
+        );
+      }
+    }
+
+    addBubble(
+      "Hello. Ask about the Staff Manual, medical benefits (Plan 1/2), or Employment Ordinance — or tap a Quick FAQ below.",
+      "bot"
+    );
+
+    askBtn.addEventListener("click", () => ask());
+    document.querySelectorAll(".faq-btn").forEach((btn) => {
+      btn.addEventListener("click", () => ask(btn.getAttribute("data-faq")));
+    });
+    questionEl.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        ask();
+      }
+    });
+  </script>
+</body>
+</html>
