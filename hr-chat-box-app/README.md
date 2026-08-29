@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HR Chat box — DeepSeek RAG
 
-## Getting Started
+An HR knowledge-base chatbot for approved Staff Manual, medical-benefit, and Employment Ordinance content. It uses local retrieval (RAG) to select approved HR excerpts, then asks DeepSeek to answer only from those excerpts.
 
-First, run the development server:
+## How it works
+
+1. An employee enters a question in the browser.
+2. The server searches the approved HR knowledge entries in `lib/`.
+3. The selected excerpts and question are sent to DeepSeek from the server only.
+4. The browser receives a concise answer and the source labels used.
+
+The DeepSeek API key never reaches the browser. If no approved content matches, the app directs the employee to contact HR instead of inventing a policy answer.
+
+## Run locally
+
+1. Copy `.env.example` to `.env.local`.
+2. In `.env.local`, replace `your_deepseek_api_key_here` with a DeepSeek API key created at [platform.deepseek.com](https://platform.deepseek.com).
+3. Install and start:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Share with teammates on Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Push this repository to GitHub (already done for this project).
+2. Sign in to [Vercel](https://vercel.com) and choose **Add New → Project**.
+3. Import `sayhitoagnes/hrai`.
+4. Set **Root Directory** to `hr-chat-box-app`.
+5. Under **Environment Variables**, add:
+   - `DEEPSEEK_API_KEY` — your real DeepSeek API key
+   - `DEEPSEEK_MODEL` — optional; use `deepseek-v4-flash`
+6. Click **Deploy**.
+7. Share the Vercel production URL with your teammates.
 
-## Learn More
+Do not put the API key in GitHub, chat messages, or client-side code. If you rotate the key, update it in Vercel and redeploy.
 
-To learn more about Next.js, take a look at the following resources:
+## Update the HR knowledge base
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Staff Manual content: `lib/staffManual.js`
+- Medical plans: `lib/medicalPlans.js`
+- Employment Ordinance / other content: `lib/knowledge.js`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+After HR approves a content change, commit it and redeploy. The RAG route automatically retrieves from the updated entries.

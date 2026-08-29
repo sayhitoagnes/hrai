@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { findAnswer } from "../../lib/knowledge";
 import styles from "./HrChatBox.module.css";
 
 const welcome =
@@ -18,7 +17,9 @@ export default function HrChatBox() {
     { id: "welcome", role: "bot", text: welcome },
   ]);
   const [question, setQuestion] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const listRef = useRef(null);
+  const messageSequence = useRef(0);
 
   useEffect(() => {
     if (listRef.current) {
@@ -26,31 +27,69 @@ export default function HrChatBox() {
     }
   }, [messages]);
 
-  function ask(preset) {
+  function messageId(prefix) {
+    messageSequence.current += 1;
+    return `${prefix}-${messageSequence.current}`;
+  }
+
+  async function ask(preset) {
     const text = (typeof preset === "string" ? preset : question).trim();
-    if (!text) return;
+    if (!text || isLoading) return;
 
-    const match = findAnswer(text);
-    const reply = match
-      ? {
-          id: `bot-${Date.now()}`,
-          role: "bot",
-          text: match.answer,
-          source: match.source,
-          sourceUrl: match.sourceUrl,
-        }
-      : {
-          id: `bot-${Date.now()}`,
-          role: "bot",
-          text: "I don’t have that yet. Try: annual leave, probation, notice, working hours, sick/marriage/maternity leave, or Plan 2 GP claim.",
-        };
+    const userMessage = { id: messageId("user"), role: "user", text };
+    const pendingMessage = {
+      id: messageId("pending"),
+      role: "bot",
+      text: "Looking up the approved HR knowledge base…",
+      pending: true,
+    };
+    const history = messages
+      .filter((message) => !message.pending)
+      .map((message) => ({
+        role: message.role === "bot" ? "assistant" : "user",
+        content: message.text,
+      }));
 
-    setMessages((prev) => [
-      ...prev,
-      { id: `user-${Date.now()}`, role: "user", text },
-      reply,
-    ]);
+    setMessages((prev) => [...prev, userMessage, pendingMessage]);
     setQuestion("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, history }),
+      });
+      const result = await response.json();
+      const reply = {
+        id: messageId("bot"),
+        role: "bot",
+        text:
+          result.answer ||
+          result.error ||
+          "I could not answer that right now. Please try again or contact HR.",
+        sources: result.sources || [],
+      };
+      setMessages((prev) =>
+        prev.map((message) =>
+          message.id === pendingMessage.id ? reply : message
+        )
+      );
+    } catch {
+      setMessages((prev) =>
+        prev.map((message) =>
+          message.id === pendingMessage.id
+            ? {
+                id: messageId("bot"),
+                role: "bot",
+                text: "I could not connect to the AI service. Please try again or contact HR.",
+              }
+            : message
+        )
+      );
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   function onKeyDown(event) {
@@ -76,6 +115,7 @@ export default function HrChatBox() {
               type="button"
               className={styles.faqBtn}
               onClick={() => ask(item.query)}
+              disabled={isLoading}
             >
               {item.label}
             </button>
@@ -101,19 +141,26 @@ export default function HrChatBox() {
               <div className={styles.speaker}>HR Specialist</div>
             ) : null}
             {message.text}
-            {message.source ? (
-              message.sourceUrl ? (
-                <a
-                  className={styles.source}
-                  href={message.sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Reference: {message.source}
-                </a>
-              ) : (
-                <div className={styles.source}>Reference: {message.source}</div>
-              )
+            {message.sources?.length ? (
+              <div className={styles.sources} aria-label="Sources">
+                {message.sources.map((source) =>
+                  source.sourceUrl ? (
+                    <a
+                      className={styles.source}
+                      href={source.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      key={source.id}
+                    >
+                      Source: {source.source}
+                    </a>
+                  ) : (
+                    <span className={styles.source} key={source.id}>
+                      Source: {source.source}
+                    </span>
+                  )
+                )}
+              </div>
             ) : null}
           </div>
         ))}
@@ -130,8 +177,13 @@ export default function HrChatBox() {
             onChange={(event) => setQuestion(event.target.value)}
             onKeyDown={onKeyDown}
           />
-          <button type="button" className={styles.askBtn} onClick={() => ask()}>
-            Ask
+          <button
+            type="button"
+            className={styles.askBtn}
+            onClick={() => ask()}
+            disabled={isLoading}
+          >
+            {isLoading ? "Thinking…" : "Ask"}
           </button>
         </div>
       </div>

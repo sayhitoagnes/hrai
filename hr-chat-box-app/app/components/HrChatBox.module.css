@@ -127,6 +127,12 @@
   text-decoration: none;
 }
 
+.sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 a.source:hover {
   text-decoration: underline;
 }
@@ -175,4 +181,10 @@ a.source:hover {
 
 .askBtn:hover {
   background: var(--blue-dark);
+}
+
+.askBtn:disabled,
+.faqBtn:disabled {
+  cursor: wait;
+  opacity: 0.65;
 }
