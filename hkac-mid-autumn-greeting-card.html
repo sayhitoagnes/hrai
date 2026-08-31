@@ -6,17 +6,22 @@
   <title>Hong Kong Arts Centre — Mid-Autumn Greeting Card</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #1c1c1c;
-      --white: #ffffff;
-      --moon-glow: #f5e6b8;
-      --sky-deep: #0d3d4a;
-      --sky-mid: #1a6b7a;
-      --sky-warm: #c9952a;
-      --bokeh-gold: rgba(255, 210, 90, 0.85);
-      --bokeh-soft: rgba(255, 230, 150, 0.45);
+      --paper: #f5f0e8;
+      --paper-deep: #ebe4d8;
+      --ink: #2c2c30;
+      --navy: #1e2a3a;
+      --gold: #b8893a;
+      --gold-light: #d4a85a;
+      --moon: #f0d9a0;
+      --moon-glow: #f8e8c4;
+      --dusk-top: #c8d4e8;
+      --dusk-mid: #e8d0c4;
+      --dusk-bottom: #f0e4d4;
+      --lantern: #e8a84c;
+      --lantern-soft: #f0c878;
     }
 
     * {
@@ -30,164 +35,223 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #111;
-      font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+      background: #e8e4dc;
+      font-family: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
       padding: 24px;
     }
 
     .card {
       width: min(540px, 100%);
       aspect-ratio: 4 / 5;
-      background: var(--bg);
+      background: var(--paper);
       position: relative;
       overflow: hidden;
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 20px 60px rgba(44, 44, 48, 0.12);
+      display: grid;
+      grid-template-rows: 42% 1fr auto;
     }
 
-    .brand {
-      position: absolute;
-      top: 6.5%;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      color: var(--white);
-      z-index: 3;
-    }
-
-    .brand-name {
-      font-size: clamp(11px, 2.6vw, 13px);
-      font-weight: 400;
-      letter-spacing: 0.02em;
-      line-height: 1.35;
-      white-space: nowrap;
-    }
-
-    .brand-logo {
-      width: clamp(52px, 12vw, 64px);
-      height: auto;
-      margin: 10px auto 0;
-      display: block;
-    }
-
-    .portal {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -46%);
-      width: 78%;
-      aspect-ratio: 1;
-      border-radius: 50%;
+    /* Sky & moon illustration zone */
+    .sky {
+      position: relative;
+      background: linear-gradient(180deg, var(--dusk-top) 0%, var(--dusk-mid) 55%, var(--dusk-bottom) 100%);
       overflow: hidden;
-      background: radial-gradient(circle at 50% 28%, var(--sky-warm) 0%, var(--sky-mid) 38%, var(--sky-deep) 100%);
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04);
     }
 
-    .portal::before {
+    .sky::after {
       content: "";
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 18% 22%, var(--bokeh-gold) 0%, transparent 18%),
-        radial-gradient(circle at 72% 18%, var(--bokeh-soft) 0%, transparent 14%),
-        radial-gradient(circle at 38% 12%, var(--bokeh-gold) 0%, transparent 12%),
-        radial-gradient(circle at 85% 32%, var(--bokeh-soft) 0%, transparent 16%),
-        radial-gradient(circle at 12% 48%, var(--bokeh-soft) 0%, transparent 10%),
-        radial-gradient(circle at 58% 8%, rgba(255, 240, 180, 0.6) 0%, transparent 8%),
-        radial-gradient(circle at 92% 55%, var(--bokeh-soft) 0%, transparent 12%);
-      filter: blur(1px);
-      opacity: 0.95;
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(245, 240, 232, 0.7) 0%, transparent 70%),
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(255, 240, 220, 0.2) 0%, transparent 35%);
+      pointer-events: none;
     }
 
     .moon {
       position: absolute;
-      top: 14%;
+      top: 18%;
       left: 50%;
       transform: translateX(-50%);
-      width: 22%;
+      width: 34%;
       aspect-ratio: 1;
       border-radius: 50%;
-      background: radial-gradient(circle at 38% 32%, #fffef5 0%, var(--moon-glow) 45%, #d4b86a 100%);
+      background: radial-gradient(circle at 40% 35%, #fffef8 0%, var(--moon-glow) 35%, var(--moon) 70%, #d4b070 100%);
       box-shadow:
-        0 0 28px rgba(245, 230, 184, 0.55),
-        0 0 60px rgba(245, 230, 184, 0.25);
+        0 0 40px rgba(240, 217, 160, 0.5),
+        0 0 80px rgba(240, 217, 160, 0.2);
     }
-
-    .stars {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: rgba(255, 255, 255, 0.75);
-      border-radius: 50%;
-    }
-
-    .star:nth-child(1) { top: 22%; left: 24%; }
-    .star:nth-child(2) { top: 18%; left: 68%; width: 3px; height: 3px; opacity: 0.9; }
-    .star:nth-child(3) { top: 30%; left: 82%; opacity: 0.6; }
-    .star:nth-child(4) { top: 34%; left: 14%; opacity: 0.55; }
-    .star:nth-child(5) { top: 42%; left: 76%; opacity: 0.5; }
-    .star:nth-child(6) { top: 48%; left: 20%; opacity: 0.45; }
 
     .osmanthus {
       position: absolute;
-      bottom: 8%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 70%;
-      height: 18%;
-      opacity: 0.22;
-      background:
-        radial-gradient(circle at 20% 70%, rgba(255, 220, 120, 0.8) 0 8%, transparent 9%),
-        radial-gradient(circle at 35% 55%, rgba(255, 220, 120, 0.7) 0 7%, transparent 8%),
-        radial-gradient(circle at 50% 65%, rgba(255, 220, 120, 0.75) 0 9%, transparent 10%),
-        radial-gradient(circle at 65% 50%, rgba(255, 220, 120, 0.65) 0 7%, transparent 8%),
-        radial-gradient(circle at 80% 68%, rgba(255, 220, 120, 0.7) 0 8%, transparent 9%);
-      filter: blur(0.5px);
+      width: 38%;
+      height: 55%;
+      opacity: 0.55;
+      pointer-events: none;
     }
 
-    .headline {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 88%;
+    .osmanthus--left {
+      top: 8%;
+      left: -4%;
+      transform: rotate(-12deg);
+    }
+
+    .osmanthus--right {
+      top: 6%;
+      right: -4%;
+      transform: scaleX(-1) rotate(-8deg);
+    }
+
+    /* Typography zone */
+    .message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 36px 20px;
       text-align: center;
-      font-family: "Great Vibes", cursive;
-      font-size: clamp(28px, 7.2vw, 42px);
-      color: var(--white);
-      line-height: 1.1;
-      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.25);
-      z-index: 2;
-      white-space: nowrap;
+    }
+
+    .chinese-title {
+      font-family: "Noto Serif TC", "Songti SC", serif;
+      font-size: clamp(36px, 9vw, 48px);
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: 0.18em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .english-title {
+      font-size: clamp(13px, 3.2vw, 15px);
+      font-weight: 400;
+      color: var(--navy);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin-bottom: 18px;
     }
 
     .subline {
+      font-size: clamp(12px, 2.8vw, 14px);
+      font-weight: 300;
+      color: #5a5a60;
+      line-height: 1.65;
+      max-width: 320px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Lantern illustration & branding */
+    .footer {
+      padding: 0 36px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .lanterns {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: clamp(20px, 6vw, 36px);
+    }
+
+    .lantern {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lantern--sm { transform: scale(0.78); opacity: 0.85; }
+    .lantern--lg { transform: scale(1); }
+
+    .lantern-body {
+      width: 36px;
+      height: 44px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50% 50% 45% 45% / 40% 40% 60% 60%;
+      background: linear-gradient(180deg, var(--lantern-soft) 0%, var(--lantern) 100%);
+      position: relative;
+      box-shadow: 0 4px 16px rgba(232, 168, 76, 0.25);
+    }
+
+    .lantern-body::before {
+      content: "";
       position: absolute;
-      top: 67%;
+      top: -6px;
       left: 50%;
       transform: translateX(-50%);
-      width: 72%;
-      text-align: center;
-      font-size: clamp(9px, 2.1vw, 11px);
+      width: 18px;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .lantern-body::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 10px;
+      background: var(--gold-light);
+    }
+
+    .lantern-tassel {
+      width: 8px;
+      height: 12px;
+      margin-top: 2px;
+      background: linear-gradient(180deg, var(--gold-light), var(--gold));
+      border-radius: 0 0 4px 4px;
+      opacity: 0.7;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      align-self: flex-start;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-mark svg {
+      width: 20px;
+      height: auto;
+    }
+
+    .brand-text {
+      font-size: 10px;
       font-weight: 400;
-      line-height: 1.55;
-      color: #1a1a1a;
-      letter-spacing: 0.01em;
-      z-index: 2;
+      color: var(--navy);
+      letter-spacing: 0.06em;
+      line-height: 1.4;
+      text-transform: uppercase;
     }
 
     .notes {
       max-width: 540px;
       margin-top: 20px;
-      color: #bbb;
+      color: #888;
       font-size: 12px;
       line-height: 1.6;
-      font-family: "Montserrat", sans-serif;
     }
 
     @media print {
@@ -196,9 +260,7 @@
         padding: 0;
       }
 
-      .notes {
-        display: none;
-      }
+      .notes { display: none; }
 
       .card {
         box-shadow: none;
@@ -211,32 +273,65 @@
 <body>
   <div>
     <article class="card" role="img" aria-label="Hong Kong Arts Centre Mid-Autumn Festival greeting card">
-      <header class="brand">
-        <div class="brand-name">Hong Kong<br />Arts Centre</div>
-        <svg class="brand-logo" viewBox="0 0 80 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M18 8H34V64H18V8Z" fill="white" />
-          <path d="M34 8L66 64H48L34 36V8Z" fill="white" />
+      <section class="sky" aria-hidden="true">
+        <div class="moon"></div>
+        <svg class="osmanthus osmanthus--left" viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 150 C50 120, 40 80, 70 60 C90 45, 110 70, 100 100 C95 115, 80 130, 60 140" stroke="#b8893a" stroke-width="1.2" fill="none" opacity="0.6"/>
+          <path d="M70 60 C85 40, 110 35, 120 55 C125 65, 115 80, 100 85" stroke="#b8893a" stroke-width="1" fill="none" opacity="0.5"/>
+          <circle cx="55" cy="95" r="4" fill="#d4a85a" opacity="0.7"/>
+          <circle cx="68" cy="78" r="3.5" fill="#d4a85a" opacity="0.6"/>
+          <circle cx="82" cy="62" r="4" fill="#d4a85a" opacity="0.65"/>
+          <circle cx="105" cy="72" r="3" fill="#d4a85a" opacity="0.55"/>
+          <circle cx="95" cy="108" r="3.5" fill="#d4a85a" opacity="0.6"/>
         </svg>
-      </header>
+        <svg class="osmanthus osmanthus--right" viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 150 C50 120, 40 80, 70 60 C90 45, 110 70, 100 100 C95 115, 80 130, 60 140" stroke="#b8893a" stroke-width="1.2" fill="none" opacity="0.6"/>
+          <path d="M70 60 C85 40, 110 35, 120 55 C125 65, 115 80, 100 85" stroke="#b8893a" stroke-width="1" fill="none" opacity="0.5"/>
+          <circle cx="55" cy="95" r="4" fill="#d4a85a" opacity="0.7"/>
+          <circle cx="68" cy="78" r="3.5" fill="#d4a85a" opacity="0.6"/>
+          <circle cx="82" cy="62" r="4" fill="#d4a85a" opacity="0.65"/>
+          <circle cx="105" cy="72" r="3" fill="#d4a85a" opacity="0.55"/>
+          <circle cx="95" cy="108" r="3.5" fill="#d4a85a" opacity="0.6"/>
+        </svg>
+      </section>
 
-      <div class="portal">
-        <div class="moon" aria-hidden="true"></div>
-        <div class="stars" aria-hidden="true">
-          <span class="star"></span>
-          <span class="star"></span>
-          <span class="star"></span>
-          <span class="star"></span>
-          <span class="star"></span>
-          <span class="star"></span>
+      <section class="message">
+        <h1 class="chinese-title">中秋佳節</h1>
+        <p class="english-title">Happy Mid-Autumn Festival</p>
+        <div class="divider" aria-hidden="true"></div>
+        <p class="subline">May warmth and togetherness<br />fill your heart this season.</p>
+      </section>
+
+      <footer class="footer">
+        <div class="lanterns" aria-hidden="true">
+          <div class="lantern lantern--sm">
+            <div class="lantern-body"></div>
+            <div class="lantern-tassel"></div>
+          </div>
+          <div class="lantern lantern--lg">
+            <div class="lantern-body"></div>
+            <div class="lantern-tassel"></div>
+          </div>
+          <div class="lantern lantern--sm">
+            <div class="lantern-body"></div>
+            <div class="lantern-tassel"></div>
+          </div>
         </div>
-        <div class="osmanthus" aria-hidden="true"></div>
-        <h1 class="headline">Happy Mid-Autumn Festival</h1>
-        <p class="subline">Gathering Under the Moonlight,<br />Embracing Harmony Together.</p>
-      </div>
+
+        <div class="brand">
+          <div class="brand-mark">
+            <svg viewBox="0 0 80 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M18 8H34V64H18V8Z" fill="white" />
+              <path d="M34 8L66 64H48L34 36V8Z" fill="white" />
+            </svg>
+          </div>
+          <div class="brand-text">Hong Kong<br />Arts Centre</div>
+        </div>
+      </footer>
     </article>
 
     <p class="notes">
-      Print at 540 × 675 px (4:5) or scale proportionally for A5/A6. Open in Chrome and use Print → Save as PDF for email distribution.
+      Print at 540 × 675 px (4:5). Open in Chrome → Print → Save as PDF for email distribution.
     </p>
   </div>
 </body>
