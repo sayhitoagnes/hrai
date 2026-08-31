@@ -6,22 +6,16 @@
   <title>Hong Kong Arts Centre — Mid-Autumn Greeting Card</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --paper: #f5f0e8;
-      --paper-deep: #ebe4d8;
-      --ink: #2c2c30;
-      --navy: #1e2a3a;
-      --gold: #b8893a;
-      --gold-light: #d4a85a;
-      --moon: #f0d9a0;
-      --moon-glow: #f8e8c4;
-      --dusk-top: #c8d4e8;
-      --dusk-mid: #e8d0c4;
-      --dusk-bottom: #f0e4d4;
-      --lantern: #e8a84c;
-      --lantern-soft: #f0c878;
+      --white: #ffffff;
+      --off-white: #f7f7f5;
+      --ink: #111111;
+      --navy: #1a2233;
+      --gold: #c9a24d;
+      --gold-soft: #e8d5a8;
+      --slate: #5c6470;
     }
 
     * {
@@ -35,197 +29,121 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #e8e4dc;
-      font-family: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+      background: #e6e6e4;
+      font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
       padding: 24px;
     }
 
     .card {
       width: min(540px, 100%);
       aspect-ratio: 4 / 5;
-      background: var(--paper);
+      background: var(--white);
       position: relative;
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(44, 44, 48, 0.12);
+      box-shadow: 0 16px 48px rgba(17, 17, 17, 0.1);
       display: grid;
-      grid-template-rows: 42% 1fr auto;
+      grid-template-rows: 1fr auto;
     }
 
-    /* Sky & moon illustration zone */
-    .sky {
+    .hero {
       position: relative;
-      background: linear-gradient(180deg, var(--dusk-top) 0%, var(--dusk-mid) 55%, var(--dusk-bottom) 100%);
+      background: var(--navy);
       overflow: hidden;
     }
 
-    .sky::after {
+    .hero::before {
       content: "";
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(245, 240, 232, 0.7) 0%, transparent 70%),
-        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.25) 0%, transparent 40%),
-        radial-gradient(circle at 80% 20%, rgba(255, 240, 220, 0.2) 0%, transparent 35%);
-      pointer-events: none;
+      background: linear-gradient(160deg, #243048 0%, var(--navy) 55%, #121820 100%);
+    }
+
+    .triangle {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      opacity: 0.9;
+    }
+
+    .triangle--1 {
+      bottom: 18%;
+      left: -8%;
+      border-width: 0 0 180px 220px;
+      border-color: transparent transparent var(--gold) transparent;
+      opacity: 0.22;
+    }
+
+    .triangle--2 {
+      top: 12%;
+      right: -6%;
+      border-width: 140px 160px 0 0;
+      border-color: var(--gold-soft) transparent transparent transparent;
+      opacity: 0.14;
+    }
+
+    .triangle--3 {
+      bottom: 0;
+      right: 18%;
+      border-width: 0 90px 110px 0;
+      border-color: transparent var(--white) transparent transparent;
+      opacity: 0.06;
     }
 
     .moon {
       position: absolute;
-      top: 18%;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 14%;
+      right: 12%;
+      width: 42%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 32%, #fff8e8 0%, var(--gold-soft) 42%, var(--gold) 100%);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .moon-cut {
+      position: absolute;
+      top: 22%;
+      right: 6%;
       width: 34%;
       aspect-ratio: 1;
       border-radius: 50%;
-      background: radial-gradient(circle at 40% 35%, #fffef8 0%, var(--moon-glow) 35%, var(--moon) 70%, #d4b070 100%);
-      box-shadow:
-        0 0 40px rgba(240, 217, 160, 0.5),
-        0 0 80px rgba(240, 217, 160, 0.2);
+      background: #1e2838;
     }
 
-    .osmanthus {
+    .grid-line {
       position: absolute;
-      width: 38%;
-      height: 55%;
-      opacity: 0.55;
-      pointer-events: none;
+      background: rgba(255, 255, 255, 0.06);
     }
 
-    .osmanthus--left {
-      top: 8%;
-      left: -4%;
-      transform: rotate(-12deg);
-    }
-
-    .osmanthus--right {
-      top: 6%;
-      right: -4%;
-      transform: scaleX(-1) rotate(-8deg);
-    }
-
-    /* Typography zone */
-    .message {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 28px 36px 20px;
-      text-align: center;
-    }
-
-    .chinese-title {
-      font-family: "Noto Serif TC", "Songti SC", serif;
-      font-size: clamp(36px, 9vw, 48px);
-      font-weight: 600;
-      color: var(--ink);
-      letter-spacing: 0.18em;
-      line-height: 1.2;
-      margin-bottom: 10px;
-    }
-
-    .english-title {
-      font-size: clamp(13px, 3.2vw, 15px);
-      font-weight: 400;
-      color: var(--navy);
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-
-    .divider {
-      width: 48px;
+    .grid-line--h {
+      left: 8%;
+      right: 8%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin-bottom: 18px;
+      top: 62%;
     }
 
-    .subline {
-      font-size: clamp(12px, 2.8vw, 14px);
-      font-weight: 300;
-      color: #5a5a60;
-      line-height: 1.65;
-      max-width: 320px;
-      letter-spacing: 0.02em;
+    .grid-line--v {
+      top: 10%;
+      bottom: 10%;
+      width: 1px;
+      left: 38%;
     }
 
-    /* Lantern illustration & branding */
-    .footer {
-      padding: 0 36px 28px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 22px;
-    }
-
-    .lanterns {
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      gap: clamp(20px, 6vw, 36px);
-    }
-
-    .lantern {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .lantern--sm { transform: scale(0.78); opacity: 0.85; }
-    .lantern--lg { transform: scale(1); }
-
-    .lantern-body {
-      width: 36px;
-      height: 44px;
-      border: 1.5px solid var(--gold);
-      border-radius: 50% 50% 45% 45% / 40% 40% 60% 60%;
-      background: linear-gradient(180deg, var(--lantern-soft) 0%, var(--lantern) 100%);
-      position: relative;
-      box-shadow: 0 4px 16px rgba(232, 168, 76, 0.25);
-    }
-
-    .lantern-body::before {
-      content: "";
+    .brand-top {
       position: absolute;
-      top: -6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 18px;
-      height: 5px;
-      background: var(--gold);
-      border-radius: 2px;
-    }
-
-    .lantern-body::after {
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 2px;
-      height: 10px;
-      background: var(--gold-light);
-    }
-
-    .lantern-tassel {
-      width: 8px;
-      height: 12px;
-      margin-top: 2px;
-      background: linear-gradient(180deg, var(--gold-light), var(--gold));
-      border-radius: 0 0 4px 4px;
-      opacity: 0.7;
-    }
-
-    .brand {
+      top: 7%;
+      left: 8%;
       display: flex;
       align-items: center;
-      gap: 12px;
-      align-self: flex-start;
+      gap: 10px;
+      z-index: 2;
     }
 
     .brand-mark {
-      width: 36px;
-      height: 36px;
-      background: var(--navy);
+      width: 28px;
+      height: 28px;
+      background: var(--white);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -233,17 +151,95 @@
     }
 
     .brand-mark svg {
-      width: 20px;
+      width: 16px;
       height: auto;
     }
 
-    .brand-text {
-      font-size: 10px;
-      font-weight: 400;
-      color: var(--navy);
-      letter-spacing: 0.06em;
-      line-height: 1.4;
+    .brand-mark svg path {
+      fill: var(--ink);
+    }
+
+    .brand-name {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.45;
+    }
+
+    .hero-copy {
+      position: absolute;
+      left: 8%;
+      bottom: 10%;
+      z-index: 2;
+      max-width: 72%;
+    }
+
+    .hero-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      font-size: clamp(26px, 6.4vw, 34px);
+      font-weight: 600;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--white);
+    }
+
+    .content {
+      padding: 28px 8% 32px;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 28%;
+    }
+
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .subline {
+      font-size: clamp(12px, 2.8vw, 14px);
+      font-weight: 300;
+      color: var(--slate);
+      line-height: 1.7;
+      max-width: 360px;
+      letter-spacing: 0.01em;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid #ececea;
+    }
+
+    .footer-tag {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #9a9ea6;
+    }
+
+    .footer-year {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: 0.08em;
     }
 
     .notes {
@@ -273,61 +269,45 @@
 <body>
   <div>
     <article class="card" role="img" aria-label="Hong Kong Arts Centre Mid-Autumn Festival greeting card">
-      <section class="sky" aria-hidden="true">
-        <div class="moon"></div>
-        <svg class="osmanthus osmanthus--left" viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M30 150 C50 120, 40 80, 70 60 C90 45, 110 70, 100 100 C95 115, 80 130, 60 140" stroke="#b8893a" stroke-width="1.2" fill="none" opacity="0.6"/>
-          <path d="M70 60 C85 40, 110 35, 120 55 C125 65, 115 80, 100 85" stroke="#b8893a" stroke-width="1" fill="none" opacity="0.5"/>
-          <circle cx="55" cy="95" r="4" fill="#d4a85a" opacity="0.7"/>
-          <circle cx="68" cy="78" r="3.5" fill="#d4a85a" opacity="0.6"/>
-          <circle cx="82" cy="62" r="4" fill="#d4a85a" opacity="0.65"/>
-          <circle cx="105" cy="72" r="3" fill="#d4a85a" opacity="0.55"/>
-          <circle cx="95" cy="108" r="3.5" fill="#d4a85a" opacity="0.6"/>
-        </svg>
-        <svg class="osmanthus osmanthus--right" viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M30 150 C50 120, 40 80, 70 60 C90 45, 110 70, 100 100 C95 115, 80 130, 60 140" stroke="#b8893a" stroke-width="1.2" fill="none" opacity="0.6"/>
-          <path d="M70 60 C85 40, 110 35, 120 55 C125 65, 115 80, 100 85" stroke="#b8893a" stroke-width="1" fill="none" opacity="0.5"/>
-          <circle cx="55" cy="95" r="4" fill="#d4a85a" opacity="0.7"/>
-          <circle cx="68" cy="78" r="3.5" fill="#d4a85a" opacity="0.6"/>
-          <circle cx="82" cy="62" r="4" fill="#d4a85a" opacity="0.65"/>
-          <circle cx="105" cy="72" r="3" fill="#d4a85a" opacity="0.55"/>
-          <circle cx="95" cy="108" r="3.5" fill="#d4a85a" opacity="0.6"/>
-        </svg>
-      </section>
+      <section class="hero">
+        <div class="triangle triangle--1" aria-hidden="true"></div>
+        <div class="triangle triangle--2" aria-hidden="true"></div>
+        <div class="triangle triangle--3" aria-hidden="true"></div>
+        <div class="grid-line grid-line--h" aria-hidden="true"></div>
+        <div class="grid-line grid-line--v" aria-hidden="true"></div>
 
-      <section class="message">
-        <h1 class="chinese-title">中秋佳節</h1>
-        <p class="english-title">Happy Mid-Autumn Festival</p>
-        <div class="divider" aria-hidden="true"></div>
-        <p class="subline">May warmth and togetherness<br />fill your heart this season.</p>
-      </section>
+        <div class="moon" aria-hidden="true"></div>
+        <div class="moon-cut" aria-hidden="true"></div>
 
-      <footer class="footer">
-        <div class="lanterns" aria-hidden="true">
-          <div class="lantern lantern--sm">
-            <div class="lantern-body"></div>
-            <div class="lantern-tassel"></div>
-          </div>
-          <div class="lantern lantern--lg">
-            <div class="lantern-body"></div>
-            <div class="lantern-tassel"></div>
-          </div>
-          <div class="lantern lantern--sm">
-            <div class="lantern-body"></div>
-            <div class="lantern-tassel"></div>
-          </div>
-        </div>
-
-        <div class="brand">
+        <header class="brand-top">
           <div class="brand-mark">
             <svg viewBox="0 0 80 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M18 8H34V64H18V8Z" fill="white" />
-              <path d="M34 8L66 64H48L34 36V8Z" fill="white" />
+              <path d="M18 8H34V64H18V8Z" />
+              <path d="M34 8L66 64H48L34 36V8Z" />
             </svg>
           </div>
-          <div class="brand-text">Hong Kong<br />Arts Centre</div>
+          <div class="brand-name">Hong Kong<br />Arts Centre</div>
+        </header>
+
+        <div class="hero-copy">
+          <p class="hero-label">Mid-Autumn Festival</p>
+          <h1 class="hero-title">Happy<br />Mid-Autumn<br />Festival</h1>
         </div>
-      </footer>
+      </section>
+
+      <section class="content">
+        <div>
+          <div class="divider" aria-hidden="true"></div>
+          <p class="subline">
+            Wishing our colleagues warmth, unity, and a season filled with shared moments of joy.
+          </p>
+        </div>
+
+        <footer class="footer">
+          <span class="footer-tag">Arts at the Centre</span>
+          <span class="footer-year">2025</span>
+        </footer>
+      </section>
     </article>
 
     <p class="notes">
