@@ -186,6 +186,12 @@
     }
     .dish.ok { border-color: #6aaa7a; background: #1a2a20; }
     .dish.miss { border-color: #8a3b32; background: #2a1816; }
+    @media (max-width: 480px) {
+      .dish { aspect-ratio: 4 / 5; min-height: 88px; padding: 6px 4px; }
+      .dish .mark { font-size: 18px; }
+      .dish .name { font-size: 10px; }
+      .dish .tile-hint { font-size: 9px; }
+    }
     .score-hero {
       font-family: "Cormorant Garamond", "Noto Serif TC", serif;
       font-size: clamp(40px, 9vw, 62px); line-height: 1; margin: 18px 0 6px; font-weight: 500;
@@ -363,7 +369,7 @@
         zh: "年糕",
         en: "Nian gao",
         hintZh: "新年黏糕 · 不是中秋",
-        hintEn: "sticky New Year cake · not Mid-Autumn",
+        hintEn: "New Year cake · not Mid-Autumn",
         missZh: "走錯場了。糕是年糕：新年的黏糕，不是月餅。",
         missEn: "Wrong party. 糕 here is 年糕 — sticky Lunar New Year cake, not mooncake.",
         ok: false
@@ -374,8 +380,8 @@
         mark: "湯圓",
         zh: "湯圓",
         en: "Tangyuan",
-        hintZh: "冬至／元宵的圓子 · 不是中秋",
-        hintEn: "sweet rice balls · 冬至 / 元宵",
+        hintZh: "冬至／元宵 · 不是中秋",
+        hintEn: "rice balls · 冬至 / 元宵",
         missZh: "走錯場了。圓是湯圓：冬至／元宵的圓子，今晚不請。",
         missEn: "Wrong party. 圓 here is 湯圓 — sweet rice balls for 冬至 / 元宵, not Mid-Autumn.",
         ok: false
