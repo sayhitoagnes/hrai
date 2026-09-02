@@ -116,16 +116,11 @@
       text-align: left; background: rgba(255,255,255,.4); font-family: "Noto Serif TC", "Cormorant Garamond", serif;
       font-size: 20px; line-height: 1.5;
     }
-    .ticket { margin: 22px 0 0; padding: 14px; border: 1px dashed var(--gold); cursor: pointer; }
-    .ticket code { display: block; font-size: 20px; letter-spacing: .12em; font-weight: 700; margin-top: 4px; }
     .score-pill { display: inline-block; background: #1a1714; color: #d4c08a; padding: 6px 12px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
     .hr-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 16px; }
     .hr-nav button { background: transparent; color: #d4c08a; border: 1px solid rgba(255,255,255,.16); padding: 8px 12px; font-size: 12px; letter-spacing: .06em; font-weight: 700; }
     .hr-nav button.on { background: rgba(176,137,58,.2); }
     .steps { color: #3e3558; padding-left: 18px; line-height: 1.6; }
-    .draw-stage { min-height: 120px; display: grid; place-items: center; text-align: center; }
-    .winner-name { font-family: "Cormorant Garamond", "Noto Serif TC", serif; font-size: clamp(32px, 7vw, 52px); margin: 8px 0; }
-    .grid-2 { display: grid; gap: 12px; }
     .hud {
       display: flex; justify-content: space-between; gap: 10px; align-items: baseline;
       padding: 10px 14px; font-size: 13px; letter-spacing: .06em; font-weight: 700;
@@ -198,7 +193,6 @@
     footer.legal { margin-top: 36px; color: #7a7166; font-size: 12px; text-align: center; line-height: 1.55; }
     footer.legal a { color: #d4c08a; }
     @media (min-width: 680px) {
-      .grid-2 { grid-template-columns: 1fr 1fr; }
       .card, .blessing-card { padding: 32px; }
     }
   </style>
@@ -220,18 +214,18 @@
     <section id="screen-welcome" class="screen on">
       <p class="kicker" data-i18n="kicker">Mid-Autumn 2026 · Staff evening</p>
       <h1 id="mainTitle">The Mooncake Puzzle<span>月餅謎局 · 燈謎</span></h1>
-      <p class="lead" data-i18n="welcomeLead">A Mid-Autumn evening for Hong Kong Arts Centre staff. Match eight mooncake pairs, set the reunion table, then six lantern riddles. Write one line. Completing enters the prize draw.</p>
+      <p class="lead" data-i18n="welcomeLead">A Mid-Autumn evening for Hong Kong Arts Centre staff. Match eight mooncake pairs, set the reunion table, then six lantern riddles. Write one line. The last card shows your score.</p>
       <div class="meta">
         <span class="chip" data-i18n="chip1">About 10 minutes</span>
         <span class="chip" data-i18n="chip2">Two games · six 燈謎</span>
-        <span class="chip" data-i18n="chip3">One line · one draw</span>
+        <span class="chip" data-i18n="chip3">One line · a score</span>
       </div>
       <div class="card">
-        <label class="field" for="staffName" data-i18n="nameLabel">Name, as HR will see it</label>
+        <label class="field" for="staffName" data-i18n="nameLabel">Your name</label>
         <input id="staffName" type="text" maxlength="60" autocomplete="name" placeholder="e.g. Chan Mei Ling" oninput="document.getElementById('nameErr').textContent=''">
         <p class="tiny" id="nameErr" style="color:#8a3b32;margin:8px 0 0;min-height:1.2em"></p>
         <div class="row"><button class="btn gold wide" type="button" onclick="startHunt()" data-i18n="startBtn">Open the evening</button></div>
-        <p class="tiny" style="margin:14px 0 0" data-i18n="privacy">Your answers stay on this device. Copy the lucky ticket if HR asks for it — nothing is emailed from this page.</p>
+        <p class="tiny" style="margin:14px 0 0" data-i18n="privacy">Your answers stay on this device. Nothing is emailed from this page.</p>
       </div>
     </section>
 
@@ -315,17 +309,6 @@
         <p class="poem" id="blessingText"></p>
         <div class="inscription" id="shownInscription"></div>
         <p style="margin:18px 0 0;font-size:13px;color:#6a6258" data-i18n="fromHkac">Hong Kong Arts Centre · 香港藝術中心</p>
-        <div class="ticket" id="ticketBox" role="button" tabindex="0" onclick="copyTicket()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();copyTicket();}">
-          <span data-i18n="ticketLabel">Lucky ticket</span>
-          <code id="ticketCode"></code>
-        </div>
-      </div>
-      <div class="card" style="margin-top:16px">
-        <p style="margin:0 0 12px;color:#3e3558" data-i18n="ticketHelp">Tap the ticket to copy it. Completing the games and the lantern riddles is enough for the draw.</p>
-        <div class="row">
-          <button class="btn gold" type="button" onclick="copyTicket()" data-i18n="copyBtn">Copy ticket</button>
-        </div>
-        <p class="tiny" id="mailNote" style="margin:12px 0 0"></p>
       </div>
     </section>
 
@@ -334,49 +317,19 @@
       <h1>Run the evening<span>中秋月餅謎局 · 燈謎</span></h1>
       <div class="hr-nav">
         <button type="button" class="on" data-tab="howto" onclick="hrTab('howto')">How to run</button>
-        <button type="button" data-tab="setup" onclick="hrTab('setup')">Setup</button>
         <button type="button" data-tab="email" onclick="hrTab('email')">Invitation</button>
-        <button type="button" data-tab="draw" onclick="hrTab('draw')">Lucky draw</button>
       </div>
       <div id="hr-howto" class="card">
         <ol class="steps">
           <li data-i18n="how1">Place this file on a shared drive and copy the link. No login is required.</li>
-          <li data-i18n="how2">In Setup, enter the prize and deadline.</li>
-          <li data-i18n="how3">Copy the invitation and share it once with all staff (~70).</li>
-          <li data-i18n="how4">After the deadline, paste the names of people who finished into the draw.</li>
-          <li data-i18n="how5">If a link cannot be shared, staff may send you a lantern inscription of their own. Every completer still enters the draw.</li>
+          <li data-i18n="how2">Copy the invitation and share it once with all staff (~70).</li>
+          <li data-i18n="how3">There is no lucky draw. The closing card is a score and a blessing only.</li>
         </ol>
-        <p class="tiny" style="margin:16px 0 0">Fair play: everyone who finishes the two games and the lantern riddles has an equal chance. The score is for the evening, not a ranking.</p>
-      </div>
-      <div id="hr-setup" class="card" hidden>
-        <div class="grid-2">
-          <div>
-            <label class="field" for="prizeName">Prize</label>
-            <input id="prizeName" type="text" maxlength="80" placeholder="Mid-Autumn mooncake gift set" oninput="saveSetup()">
-          </div>
-          <div>
-            <label class="field" for="deadline">Deadline</label>
-            <input id="deadline" type="text" maxlength="80" placeholder="Friday 12:00 noon" oninput="saveSetup()">
-          </div>
-        </div>
       </div>
       <div id="hr-email" class="card" hidden>
         <p style="margin:0 0 10px;color:#3e3558">Copy into Teams, WhatsApp, or a notice, then paste the play link.</p>
         <textarea id="inviteText" readonly></textarea>
         <div class="row"><button class="btn" type="button" onclick="copyInvite()">Copy invitation</button></div>
-      </div>
-      <div id="hr-draw" class="card" hidden>
-        <label class="field" for="drawList">Names of people who finished, one per line</label>
-        <textarea id="drawList" placeholder="Chan Mei Ling&#10;Alex Wong"></textarea>
-        <div class="row">
-          <button class="btn gold" type="button" onclick="drawWinner()">Draw the winner</button>
-          <button class="btn ghost" type="button" onclick="fillDemo()">Load demo names</button>
-        </div>
-        <div class="draw-stage" id="drawStage"><p class="tiny" data-i18n="drawIdle">One name will be chosen.</p></div>
-        <textarea id="announceText" hidden readonly style="min-height:110px;margin-top:8px"></textarea>
-        <div class="row" id="announceRow" hidden>
-          <button class="btn" type="button" onclick="copyAnnounce()">Copy announcement</button>
-        </div>
       </div>
     </section>
 
@@ -408,92 +361,92 @@
       {
         kind: "choice",
         label: { zh: "第一盞 · 詩", en: "Lantern I · Verse" },
-        zh: "「海上生明月，________。」",
-        en: "“From the sea the bright moon rises, ________.”",
-        hint: { zh: "張九齡《望月懷遠》。選出下句。", en: "Zhang Jiuling, Looking at the Moon, Thinking of Far Away. Complete the couplet." },
+        zh: "「嫦娥應悔偷靈藥，________。」",
+        en: "“Chang’e must regret stealing the elixir, ________.”",
+        hint: { zh: "李商隱《嫦娥》。不是蘇軾，也不是張九齡。", en: "Li Shangyin, Chang’e. Not Su Shi, and not Zhang Jiuling." },
         options: [
-          { zh: "天涯共此時", en: "we share this hour across the world’s edge", ok: true },
-          { zh: "把酒問青天", en: "I raise wine and ask the blue sky", ok: false },
-          { zh: "低頭思故鄉", en: "I bow my head and think of home", ok: false },
-          { zh: "江清月近人", en: "the clear river brings the moon close", ok: false }
+          { zh: "天涯共此時", en: "we share this hour across the world’s edge", ok: false },
+          { zh: "高處不勝寒", en: "it is too cold, this high", ok: false },
+          { zh: "碧海青天夜夜心", en: "blue sea, green sky, a heart night after night", ok: true },
+          { zh: "千里共嬋娟", en: "share the fair moon across a thousand miles", ok: false }
         ],
-        noteOk: { zh: "同看一輪月，雖各在一方。", en: "The same moon, even when the desks are not." },
-        noteNo: { zh: "下句是「天涯共此時」。蘇軾的「把酒問青天」是另一首中秋名篇。", en: "The line is “we share this hour across the world’s edge.” Su Shi’s question to the sky belongs to another Mid-Autumn poem." }
+        noteOk: { zh: "碧海青天夜夜心：廣寒宮裡的悔與孤。", en: "Blue sea, green sky — the lonely heart of the cold palace." },
+        noteNo: { zh: "下句是「碧海青天夜夜心」。天涯共此時、千里共嬋娟、高處不勝寒都是別的月亮。", en: "The line is “blue sea, green sky, a heart night after night.” The other moons belong to other poems." }
       },
       {
         kind: "choice",
         label: { zh: "第二盞 · 成語", en: "Lantern II · Idiom" },
-        zh: "謎面：中秋菊開。打一成語。",
-        en: "Riddle: chrysanthemums open at Mid-Autumn. Guess a four-character idiom.",
-        hint: { zh: "香港公司中秋最常見的線上形式，仍是燈謎。此題取傳統謎格。", en: "Lantern riddles remain the format Hong Kong offices actually use. This one follows the classical 謎格." },
+        zh: "謎面：八月十五的月亮。打一成語。",
+        en: "Riddle: the moon on the fifteenth of the eighth month. Guess a four-character idiom.",
+        hint: { zh: "十五即「正」，月即「明」。不是最常見的「花好月圓」。", en: "The fifteenth is 正; the moon is 明. Not the usual 花好月圓." },
         options: [
-          { zh: "花好月圓", en: "flowers fair, moon full", ok: true },
-          { zh: "春華秋實", en: "spring blossom, autumn fruit", ok: false },
-          { zh: "水月鏡花", en: "moon in water, flowers in a mirror", ok: false },
-          { zh: "明日黃花", en: "yesterday’s chrysanthemum", ok: false }
+          { zh: "花好月圓", en: "flowers fair, moon full", ok: false },
+          { zh: "正大光明", en: "upright and bright (正大光明)", ok: true },
+          { zh: "光明正大", en: "open and honourable (光明正大)", ok: false },
+          { zh: "月白風清", en: "a white moon, a clear wind", ok: false }
         ],
-        noteOk: { zh: "花好月圓：中秋最端正的四字。", en: "The most exact four characters for this night." },
-        noteNo: { zh: "謎底是「花好月圓」。菊開為花好，中秋為月圓。", en: "The answer is 花好月圓: chrysanthemums for the flowers, Mid-Autumn for the full moon." }
+        noteOk: { zh: "八月十五為「正」，月為「明」，合「正大光明」。", en: "The fifteenth is 正, the moon is 明: 正大光明." },
+        noteNo: { zh: "謎底是「正大光明」。花好月圓太順口；光明正大字序不同。", en: "The answer is 正大光明. 花好月圓 is the easy Mid-Autumn idiom; 光明正大 rearranges the same words." }
       },
       {
         kind: "choice",
         label: { zh: "第三盞 · 燈謎", en: "Lantern III · Cryptic" },
-        zh: "謎面：舉杯邀明月。打一禮貌用語。",
-        en: "Riddle: “I raise my cup and invite the bright moon.” Guess a phrase of courtesy.",
-        hint: { zh: "李白。謎底是兩個字的客套話。", en: "Li Bai. The answer is a two-character courtesy." },
+        zh: "謎面：吳剛伐桂。打一成語。",
+        en: "Riddle: Wu Gang chopping the osmanthus tree. Guess a four-character idiom.",
+        hint: { zh: "斧落枝生，永無了時。不是堅持就會成功。", en: "The wound closes as fast as the axe falls. This is not perseverance rewarded." },
         options: [
-          { zh: "賞光", en: "to honour us with your presence (賞光)", ok: true },
-          { zh: "乾杯", en: "cheers / 乾杯", ok: false },
-          { zh: "久違", en: "it has been too long (久違)", ok: false },
-          { zh: "見諒", en: "please forgive me (見諒)", ok: false }
+          { zh: "水滴石穿", en: "dripping water wears through stone", ok: false },
+          { zh: "愚公移山", en: "the Foolish Old Man moves mountains", ok: false },
+          { zh: "功虧一簣", en: "to fall short by one basket of earth", ok: false },
+          { zh: "徒勞無功", en: "labour in vain (徒勞無功)", ok: true }
         ],
-        noteOk: { zh: "邀明月，即請月來賞光。", en: "To invite the moon is to ask it to 賞光 — to honour the gathering with its light." },
-        noteNo: { zh: "謎底是「賞光」：請明月來賞此光。乾杯是飲酒，不是此謎。", en: "The answer is 賞光. Cheers is the toast, not the riddle." }
+        noteOk: { zh: "桂樹隨砍隨合，故為徒勞無功。", en: "The tree heals as he chops. The labour is in vain." },
+        noteNo: { zh: "謎底是「徒勞無功」。水滴石穿、愚公移山都是終有成；吳剛沒有終點。", en: "The answer is 徒勞無功. Dripping water and the Foolish Old Man eventually succeed; Wu Gang does not." }
       },
       {
         kind: "choice",
-        label: { zh: "第四盞 · 玉兔", en: "Lantern IV · The rabbit" },
-        zh: "月中玉兔並不在做月餅。較古的說法裡，牠整夜在做什麼？",
-        en: "The jade rabbit on the moon is not baking. In the older telling, what does it do all night?",
-        hint: { zh: "與長生有關。杵臼的聲音，不是烤箱的聲音。", en: "It has to do with immortality. Think of a pestle, not an oven." },
+        label: { zh: "第四盞 · 仙藥", en: "Lantern IV · The elixir" },
+        zh: "較通行的說法裡，后羿從誰處得到本應夫妻共享的不死藥？",
+        en: "In the usual telling, from whom did Hou Yi receive the elixir that was meant to be shared?",
+        hint: { zh: "西王母的蟠桃宴一系。不是月宮裡的人給的。", en: "The Queen Mother’s line of myth. Not someone already on the moon." },
         options: [
-          { zh: "為嫦娥點燈", en: "lighting lanterns for Chang’e", ok: false },
-          { zh: "搗煉長生藥", en: "pounding the elixir of immortality", ok: true },
-          { zh: "看守后羿的弓", en: "guarding Hou Yi’s bow", ok: false },
-          { zh: "把月亮擀成餅", en: "rolling the moon into a cake", ok: false }
+          { zh: "嫦娥", en: "Chang’e", ok: false },
+          { zh: "玉兔", en: "the jade rabbit", ok: false },
+          { zh: "西王母", en: "the Queen Mother of the West", ok: true },
+          { zh: "吳剛", en: "Wu Gang", ok: false }
         ],
-        noteOk: { zh: "玉兔搗藥：月宮裡的工作是煉丹，不是烘焙。", en: "The rabbit pounds medicine. The moon’s labour is an elixir, not a bakery." },
-        noteNo: { zh: "正解是搗藥。點燈、守弓、擀餅都是後人添的可愛，不是古說。", en: "The older image is pounding elixir. Lanterns, bows and pastry are later sweetness." }
+        noteOk: { zh: "西王母賜藥，后羿本欲與妻分食；嫦娥獨吞，乃奔月。", en: "The Queen Mother granted it. Hou Yi meant to share it; Chang’e swallowed it whole and rose." },
+        noteNo: { zh: "正解是西王母。嫦娥、玉兔、吳剛都在藥被吞之後的月宮裡。", en: "The answer is the Queen Mother of the West. Chang’e, the rabbit and Wu Gang belong to the moon after the elixir is gone." }
       },
       {
         kind: "choice",
-        label: { zh: "第五盞 · 大坑", en: "Lantern V · A Hong Kong night" },
-        zh: "逾百年來，銅鑼灣大坑在中秋最為人知的，是哪一樁事？",
-        en: "For more than a century, what is Tai Hang in Causeway Bay most known for at Mid-Autumn?",
-        hint: { zh: "火、街、一條龍。不是放天燈。", en: "Fire, a street, a dragon. Not sky lanterns over the harbour." },
+        label: { zh: "第五盞 · 大坑", en: "Lantern V · Tai Hang" },
+        zh: "銅鑼灣大坑舞火龍，相傳最初是為了什麼？",
+        en: "The Tai Hang fire-dragon dance in Causeway Bay: in the folk origin, what was it first for?",
+        hint: { zh: "清末街坊，香火走瘟。不是祭月，也不是慶豐收。", en: "Late-Qing neighbours, incense against a plague. Not an offering to the moon, and not a harvest rite." },
         options: [
-          { zh: "維港放天燈", en: "sky lanterns over Victoria Harbour", ok: false },
-          { zh: "海洋公園兔燈巡遊", en: "a rabbit-lantern parade at Ocean Park", ok: false },
-          { zh: "舞火龍巡遊", en: "a fire-dragon dance through the streets", ok: true },
-          { zh: "辦公室博餅賭月餅", en: "office dice for mooncakes (博餅)", ok: false }
+          { zh: "祭月宮嫦娥", en: "to make an offering to Chang’e", ok: false },
+          { zh: "驅疫祈安", en: "to drive out pestilence and ask for peace", ok: true },
+          { zh: "慶中秋豐收", en: "to celebrate a Mid-Autumn harvest", ok: false },
+          { zh: "送神出海", en: "to send the gods out to sea", ok: false }
         ],
-        noteOk: { zh: "大坑舞火龍：草龍插滿香，在街上走。這是香港自己的中秋。", en: "Tai Hang’s fire dragon: a straw body, thick with incense, walking the street. Hong Kong’s own Mid-Autumn." },
-        noteNo: { zh: "正解是大坑舞火龍。天燈較近台灣平溪；博餅是閩南的骰子戲。", en: "Tai Hang’s fire dragon. Sky lanterns belong more to Pingxi; 博餅 is a Minnan dice game." }
+        noteOk: { zh: "傳說為驅瘟疫而舞草龍、插線香。後來才成為中秋的街景。", en: "The legend is a plague: a straw dragon, thick with incense. The Mid-Autumn street came later." },
+        noteNo: { zh: "正解是驅疫祈安。祭嫦娥、慶豐收、送神都不是這條街的起源說法。", en: "The folk origin is driving out pestilence. Offerings to Chang’e, harvest, and sending gods to sea are other rites." }
       },
       {
         kind: "choice",
-        label: { zh: "第六盞 · 嫦娥", en: "Lantern VI · Chang’e" },
-        zh: "后羿射日，其妻吞下本應共享的仙藥，飛入月宮。十五夜裡人最念的，是哪一位？",
-        en: "Hou Yi shot the suns; his wife swallowed the elixir meant to be shared and rose to the moon. On the fifteenth night, whose name do people still call?",
-        hint: { zh: "廣寒宮。不是織女。", en: "The cold palace. Not the Weaver Girl." },
+        label: { zh: "第六盞 · 月中之樹", en: "Lantern VI · The tree" },
+        zh: "月中那位樵夫永在砍一棵隨砍隨合的樹。那是什麼樹？",
+        en: "The woodcutter on the moon chops a tree that heals as fast as the axe falls. What tree is it?",
+        hint: { zh: "花香如桂。不是蟠桃，也不是柳。", en: "The scent is osmanthus. Not the peaches of immortality, and not a willow." },
         options: [
-          { zh: "織女", en: "Zhinü, the Weaver Girl", ok: false },
-          { zh: "女媧", en: "Nüwa", ok: false },
-          { zh: "西王母", en: "The Queen Mother of the West", ok: false },
-          { zh: "嫦娥", en: "Chang’e", ok: true }
+          { zh: "桃樹", en: "a peach tree", ok: false },
+          { zh: "柳樹", en: "a willow", ok: false },
+          { zh: "桂樹", en: "an osmanthus tree", ok: true },
+          { zh: "榕樹", en: "a banyan", ok: false }
         ],
-        noteOk: { zh: "嫦娥奔月：中秋抬頭，仍是這一名字。", en: "Chang’e flew to the moon. On the fifteenth night, it is still her name people call." },
-        noteNo: { zh: "正解是嫦娥。織女是七夕；女媧、西王母是別的神話。", en: "The answer is Chang’e. The Weaver Girl belongs to Qixi; Nüwa and the Queen Mother are other myths." }
+        noteOk: { zh: "吳剛伐桂：月中桂樹，香在秋。", en: "Wu Gang chops osmanthus. The moon’s tree is a tree of autumn." },
+        noteNo: { zh: "正解是桂樹。蟠桃屬西王母；柳與榕不是這個故事。", en: "The tree is osmanthus. Peaches belong to the Queen Mother; willow and banyan are other stories." }
       },
       { kind: "inscribe" }
     ];
@@ -507,10 +460,10 @@
     const I18N = {
       en: {
         kicker: "Mid-Autumn 2026 · Staff evening",
-        welcomeLead: "A Mid-Autumn evening for Hong Kong Arts Centre staff. Match eight mooncake pairs, set the reunion table, then six lantern riddles. Write one line. Completing enters the prize draw.",
-        chip1: "About 10 minutes", chip2: "Two games · six 燈謎", chip3: "One line · one draw",
-        nameLabel: "Name, as HR will see it", startBtn: "Open the evening",
-        privacy: "Your answers stay on this device. Copy the lucky ticket if HR asks for it — nothing is emailed from this page.",
+        welcomeLead: "A Mid-Autumn evening for Hong Kong Arts Centre staff. Match eight mooncake pairs, set the reunion table, then six lantern riddles. Write one line. The last card shows your score.",
+        chip1: "About 10 minutes", chip2: "Two games · six 燈謎", chip3: "One line · a score",
+        nameLabel: "Your name", startBtn: "Open the evening",
+        privacy: "Your answers stay on this device. Nothing is emailed from this page.",
         lanternKicker: "Prologue", lanternTitle: "Light one lantern",
         lanternLead: "A single lantern is enough. Then the board is laid.",
         lanternHint: "Touch the lantern", beginRiddles: "To the puzzle",
@@ -536,21 +489,14 @@
         nextBtn: "Continue", lastBtn: "Receive the closing card",
         blessKicker: "Closing card",
         fromHkac: "Hong Kong Arts Centre · 香港藝術中心",
-        ticketLabel: "Lucky ticket",
-        ticketHelp: "Tap the ticket to copy it. Completing the games and the lantern riddles is enough for the draw.",
-        copyBtn: "Copy ticket",
         how1: "Place this file on a shared drive and copy the link. No login is required.",
-        how2: "In Setup, enter the prize and deadline.",
-        how3: "Copy the invitation and share it once with all staff (~70).",
-        how4: "After the deadline, paste the names of people who finished into the draw.",
-        how5: "If a link cannot be shared, staff may send you a lantern inscription of their own. Every completer still enters the draw.",
-        drawIdle: "One name will be chosen.",
+        how2: "Copy the invitation and share it once with all staff (~70).",
+        how3: "There is no lucky draw. The closing card is a score and a blessing only.",
         hrLink: "HR organiser desk", staffLink: "Staff evening",
         footer: "Hong Kong Arts Centre · 2 Harbour Road, Wan Chai · Internal staff activity.",
-        needName: "Please enter your name so HR can recognise the ticket.",
+        needName: "Please enter your name for the closing card.",
         litHint: "It is lit. You may go in.",
         copied: "Copied.",
-        needTwo: "Add at least one name.",
         chosen: "The lantern chooses",
         insLabel: "第七盞 · 題燈",
         insZh: "題燈",
@@ -561,10 +507,10 @@
       },
       zh: {
         kicker: "2026 中秋 · 同事月餅謎局",
-        welcomeLead: "香港藝術中心同事的中秋：先配對八對月餅，再擺團圓桌，然後六題燈謎，最後自題一句。完成即可抽獎。",
-        chip1: "約十分鐘", chip2: "兩局 · 六題燈謎", chip3: "一句燈語 · 一次抽獎",
-        nameLabel: "姓名（人事部將以此核對）", startBtn: "打開今晚",
-        privacy: "作答只留在此裝置。人事部若需要券號，請自行複製。本頁不會寄出任何電郵。",
+        welcomeLead: "香港藝術中心同事的中秋：先配對八對月餅，再擺團圓桌，然後六題燈謎，最後自題一句。結語卡會顯示分數。",
+        chip1: "約十分鐘", chip2: "兩局 · 六題燈謎", chip3: "一句燈語 · 分數",
+        nameLabel: "你的姓名", startBtn: "打開今晚",
+        privacy: "作答只留在此裝置。本頁不會寄出任何電郵。",
         lanternKicker: "序", lanternTitle: "點一盞燈",
         lanternLead: "一盞即夠。然後擺盤。",
         lanternHint: "輕觸花燈", beginRiddles: "到謎局",
@@ -590,21 +536,14 @@
         nextBtn: "繼續", lastBtn: "收取結語卡",
         blessKicker: "結語卡",
         fromHkac: "香港藝術中心 · Hong Kong Arts Centre",
-        ticketLabel: "幸運券",
-        ticketHelp: "輕觸券號即可複製。完成遊戲與燈謎即可抽獎。",
-        copyBtn: "複製券號",
         how1: "把本檔放到共用雲端並複製連結。不必登入。",
-        how2: "在設定填寫獎品與截止時間。",
-        how3: "複製邀請，一次分享給約 70 位同事。",
-        how4: "截止後，把已完成同事的姓名貼進抽獎。",
-        how5: "若未能分享連結，同事可把自題燈語交給你。凡完成者同樣可抽獎。",
-        drawIdle: "將抽出一個姓名。",
+        how2: "複製邀請，一次分享給約 70 位同事。",
+        how3: "沒有抽獎。結語卡只有分數與祝福。",
         hrLink: "人事統籌台", staffLink: "同事今晚",
         footer: "香港藝術中心 · 灣仔港灣道 2 號 · 內部員工活動。",
-        needName: "請先填寫姓名，人事部才能核對券號。",
+        needName: "請先填寫姓名，結語卡上會用到。",
         litHint: "燈已亮。可以進去。",
         copied: "已複製。",
-        needTwo: "請先貼上至少一個姓名。",
         chosen: "花燈選中了",
         insLabel: "第七盞 · 題燈",
         insZh: "題燈",
@@ -616,7 +555,7 @@
     };
 
     const state = {
-      lang: "en", name: "", i: 0, correct: 0, ticket: "", locked: false, lit: false, inscription: "", score: 0, turns: 0
+      lang: "en", name: "", i: 0, correct: 0, locked: false, lit: false, inscription: "", score: 0, turns: 0
     };
 
     const game = {
@@ -1067,15 +1006,11 @@
     }
 
     function finishHunt() {
-      const seed = state.name.replace(/\s+/g, "").slice(0, 3).toUpperCase() || "HK";
-      state.ticket = "HKAC-MAF-" + seed + Math.floor(1000 + (Math.abs(hash(state.name + Date.now())) % 9000));
       state.score = totalScore();
       renderBlessing();
       show("screen-blessing");
       chime(784);
     }
-
-    function hash(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h << 5) - h + s.charCodeAt(i); return h; }
 
     function renderBlessing() {
       const total = totalScore();
@@ -1102,65 +1037,29 @@
         ? "香港藝術中心祝你中秋安好。未能同桌，仍共這一輪月。"
         : "Hong Kong Arts Centre wishes you a settled Mid-Autumn. We are not at one table, and still under one moon.";
       document.getElementById("shownInscription").textContent = state.inscription;
-      document.getElementById("ticketCode").textContent = state.ticket;
-      const note = document.getElementById("mailNote");
-      if (note && !note.textContent) note.textContent = "";
-    }
-
-    function setup() {
-      return {
-        prize: (document.getElementById("prizeName").value || localStorage.getItem("hkac_prize") || "a Mid-Autumn mooncake gift set").trim(),
-        deadline: (document.getElementById("deadline").value || localStorage.getItem("hkac_deadline") || "[deadline]").trim()
-      };
-    }
-    function saveSetup() {
-      localStorage.setItem("hkac_prize", document.getElementById("prizeName").value.trim());
-      localStorage.setItem("hkac_deadline", document.getElementById("deadline").value.trim());
-      refreshInvite();
-    }
-    function loadSetup() {
-      document.getElementById("prizeName").value = localStorage.getItem("hkac_prize") || "Mid-Autumn mooncake gift set";
-      document.getElementById("deadline").value = localStorage.getItem("hkac_deadline") || "";
-      refreshInvite();
-    }
-
-    async function copyTicket() {
-      const text = state.name + " · " + state.ticket + " · " + state.inscription;
-      try { await navigator.clipboard.writeText(text); } catch (e) {
-        const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
-      }
-      document.getElementById("mailNote").textContent = t("copied") + " " + text;
     }
 
     function hrTab(id) {
-      ["howto", "setup", "email", "draw"].forEach(k => { document.getElementById("hr-" + k).hidden = k !== id; });
+      ["howto", "email"].forEach(k => { document.getElementById("hr-" + k).hidden = k !== id; });
       document.querySelectorAll(".hr-nav button").forEach(b => b.classList.toggle("on", b.getAttribute("data-tab") === id));
       if (id === "email") refreshInvite();
     }
 
     function refreshInvite() {
-      const cfg = setup();
       const playLink = "[PASTE THE SHARED LINK TO index.html HERE]";
       document.getElementById("inviteText").value =
 `Hong Kong Arts Centre · Mid-Autumn 2026
 
 Dear colleagues,
 
-You are invited to The Mooncake Puzzle / 月餅謎局 · 燈謎: match eight pairs of cakes, set a reunion table, then six lantern riddles, then write one line. Completing enters the prize draw. Nothing is emailed from the page — copy your ticket if asked.
+You are invited to The Mooncake Puzzle / 月餅謎局 · 燈謎: match eight pairs of cakes, set a reunion table, then six lantern riddles, then write one line. The last card shows your score. There is no lucky draw.
 
 1. Open: ${playLink}
 2. Enter your name, light the lantern, play both games, then the 燈謎.
-3. Keep your lucky ticket if HR asks for it.
-
-Prize: ${cfg.prize || "a Mid-Autumn mooncake gift set"}
-Deadline: ${cfg.deadline || "[add date and time]"}
-Draw: one winner, at random, among everyone who finishes.
-
-If the link will not open, send HR your name and one lantern line of your own. You still enter the draw.
 
 各位同事：
 
-香港藝術中心誠邀參加「月餅謎局 · 燈謎」：先配對八對月餅，再擺團圓桌，然後六題燈謎，最後自題一句。完成即可抽獎。本頁不會寄電郵。獎品：${cfg.prize || "中秋月餅禮盒"}。截止：${cfg.deadline || "［請填日期時間］"}。
+香港藝術中心誠邀參加「月餅謎局 · 燈謎」：先配對八對月餅，再擺團圓桌，然後六題燈謎，最後自題一句。結語卡會顯示分數。沒有抽獎。
 
 Hong Kong Arts Centre
 2 Harbour Road, Wan Chai
@@ -1172,56 +1071,7 @@ Hong Kong Arts Centre
       catch (e) { document.getElementById("inviteText").select(); document.execCommand("copy"); }
     }
 
-    function namesFromBox() {
-      return [...new Set(document.getElementById("drawList").value.split(/\r?\n/).map(s => s.trim()).filter(Boolean))];
-    }
-    function fillDemo() {
-      document.getElementById("drawList").value = ["Chan Mei Ling", "Alex Wong", "Pat Lee", "Sam Yu", "Taylor Ng", "Jordan Ho", "Chris Lam", "Morgan Cheung"].join("\n");
-    }
-    function drawWinner() {
-      const names = namesFromBox();
-      const stage = document.getElementById("drawStage");
-      if (!names.length) { stage.innerHTML = "<p class='tiny'>" + t("needTwo") + "</p>"; return; }
-      let ticks = 0;
-      const max = 20 + Math.floor(Math.random() * 8);
-      const timer = setInterval(() => {
-        stage.innerHTML = "<p class='serif' style='font-size:28px;color:#d4c08a'>" + escapeHtml(names[Math.floor(Math.random() * names.length)]) + "</p>";
-        ticks += 1;
-        if (ticks >= max) {
-          clearInterval(timer);
-          const buf = new Uint32Array(1); crypto.getRandomValues(buf);
-          const winner = names[buf[0] % names.length];
-          stage.innerHTML = "<p class='tiny'>" + t("chosen") + "</p><p class='winner-name'>" + escapeHtml(winner) + "</p>";
-          const cfg = setup();
-          document.getElementById("announceText").hidden = false;
-          document.getElementById("announceRow").hidden = false;
-          document.getElementById("announceText").value =
-`Subject: [HKAC Mid-Autumn] 花好月圓 — this year’s lantern
-
-Dear colleagues,
-
-This year’s Mooncake Puzzle winner is: ${winner}
-
-Prize: ${cfg.prize || "a Mid-Autumn mooncake gift set"}
-
-Hong Kong Arts Centre thanks every colleague who lit a lantern with us.
-
-香港藝術中心祝各位中秋安好。
-
-HR`;
-          chime(880);
-        }
-      }, 90);
-    }
-    async function copyAnnounce() {
-      try { await navigator.clipboard.writeText(document.getElementById("announceText").value); }
-      catch (e) { document.getElementById("announceText").select(); document.execCommand("copy"); }
-    }
-    function escapeHtml(s) {
-      return s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-    }
-
-    loadSetup();
+    refreshInvite();
     if (location.hash === "#hr") showHr();
   </script>
 </body>
