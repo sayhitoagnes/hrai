@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mooncake Puzzle · 燈謎 | Hong Kong Arts Centre</title>
+  <meta name="description" content="A staff Mid-Autumn evening for Hong Kong Arts Centre: mooncake pairs, a reunion table, six lantern riddles, and one inscribed line.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --night: #10141c;
+      --paper: #f4efe4;
+      --ink: #1a1714;
+      --muted: #6a6258;
+      --gold: #b0893a;
+      --line: #d9d0c0;
+      --cream: #fbf7ef;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "Source Sans 3", "Noto Sans TC", ui-sans-serif, system-ui, sans-serif;
+      color: var(--cream);
+      background: #10141c;
+      min-height: 100vh;
+    }
+    button, input, textarea { font-family: inherit; }
+    button { cursor: pointer; }
+    .sky { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; background: radial-gradient(900px 500px at 88% 0%, #243044 0%, transparent 55%), #10141c; }
+    .moon {
+      position: absolute; top: 5vh; right: 8vw; width: min(18vw, 120px); aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle at 38% 32%, #f7f0d8, #d4c08a 62%, #a89058);
+      box-shadow: 0 0 60px 16px rgba(212, 192, 138, .18);
+      opacity: .9;
+    }
+    .wrap { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 22px 20px 72px; }
+    header.appbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .brand-text strong { display: block; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; }
+    .brand-text em { font-style: normal; font-size: 12px; color: #c4b49a; }
+    .lang { display: flex; border: 1px solid rgba(255,255,255,.16); }
+    .lang button { background: transparent; color: #c4b49a; border: 0; padding: 7px 11px; font-size: 11px; letter-spacing: .08em; font-weight: 700; }
+    .lang button.on { background: rgba(176,137,58,.22); color: #fbf7ef; }
+    .screen { display: none; animation: fade .4s ease; }
+    .screen.on { display: block; }
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+    .kicker { letter-spacing: .28em; text-transform: uppercase; font-size: 11px; color: var(--gold); margin: 0 0 14px; font-weight: 700; }
+    h1, h2, .serif { font-family: "Cormorant Garamond", "Noto Serif TC", serif; }
+    h1 { font-size: clamp(36px, 7vw, 58px); line-height: 1.08; font-weight: 500; margin: 0 0 12px; }
+    h1 span { display: block; font-size: .48em; color: #d4c08a; margin-top: 8px; font-weight: 500; }
+    .lead { color: #cfc3ae; font-size: 17px; line-height: 1.65; max-width: 38rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 28px; }
+    .chip { border: 1px solid rgba(176,137,58,.4); color: #d4c08a; padding: 6px 12px; font-size: 12px; letter-spacing: .04em; }
+    .card {
+      background: var(--paper); color: var(--ink); padding: 26px 24px;
+      box-shadow: 0 24px 50px rgba(0,0,0,.28);
+    }
+    label.field { display: block; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; color: #5c5348; }
+    input[type="text"], textarea {
+      width: 100%; border: 1px solid var(--line); border-radius: 0; padding: 12px 14px;
+      font-size: 16px; background: var(--cream); color: var(--ink);
+    }
+    textarea { min-height: 150px; resize: vertical; line-height: 1.5; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 0; border-radius: 0; padding: 13px 22px; font-weight: 700; font-size: 14px; letter-spacing: .06em;
+      background: #1a1714; color: #fbf7ef;
+    }
+    .btn:disabled { opacity: .4; cursor: default; }
+    .btn.gold { background: var(--gold); color: #1a1714; }
+    .card .btn.ghost { background: transparent; color: var(--ink); border: 1px solid #1a1714; }
+    .btn.ghost { background: transparent; color: var(--cream); border: 1px solid rgba(255,255,255,.28); }
+    .btn.wide { width: 100%; }
+    .row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .tiny { font-size: 12px; color: #8a7f70; line-height: 1.5; }
+    .progress { display: flex; gap: 14px; margin: 0 0 22px; }
+    .progress b {
+      flex: 1; height: 3px; background: rgba(255,255,255,.12); display: block;
+    }
+    .progress b.on { background: var(--gold); }
+    .progress b.done { background: #cfc3ae; }
+    .label { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin: 0 0 10px; font-weight: 700; }
+    .q-zh { font-family: "Noto Serif TC", serif; font-size: 22px; line-height: 1.55; margin: 0 0 8px; }
+    .q-en { color: var(--muted); font-size: 15px; line-height: 1.55; margin: 0 0 6px; font-style: italic; }
+    .hint { font-size: 13px; color: #8a7f70; margin: 0 0 16px; }
+    .opts { display: grid; gap: 8px; }
+    .opt {
+      text-align: left; border: 1px solid var(--line); background: var(--cream); color: var(--ink);
+      padding: 13px 14px; font-size: 15px; line-height: 1.4;
+    }
+    .opt:hover:not(:disabled) { border-color: var(--gold); }
+    .opt.correct { border-color: #2f6b45; background: #eef6f0; }
+    .opt.wrong { border-color: #8a3b32; background: #f8eee8; }
+    .feedback { min-height: 24px; margin: 14px 0 0; font-size: 14px; line-height: 1.5; }
+    .lantern-stage { text-align: center; padding: 8px 0; }
+    .lantern-svg { width: min(180px, 58vw); cursor: pointer; }
+    .lantern-svg.lit { filter: drop-shadow(0 0 24px rgba(212,192,138,.55)); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
+    .chips button {
+      border: 1px solid var(--line); background: var(--cream); color: var(--ink);
+      padding: 8px 12px; font-size: 13px;
+    }
+    .chips button.on { border-color: var(--gold); background: #f3ead2; }
+    .count { font-size: 12px; color: #8a7f70; text-align: right; }
+    .blessing-card {
+      background: linear-gradient(180deg, #fbf7ef, #efe4cc); color: var(--ink);
+      padding: 36px 28px; text-align: center; position: relative;
+    }
+    .blessing-card:before {
+      content: ""; position: absolute; inset: 12px; border: 1px solid rgba(176,137,58,.45); pointer-events: none;
+    }
+    .poem { font-family: "Cormorant Garamond", "Noto Serif TC", serif; font-size: clamp(20px, 4vw, 26px); line-height: 1.6; margin: 16px 0 0; font-style: italic; }
+    .inscription {
+      margin: 22px auto 0; max-width: 28rem; padding: 16px 18px; border-left: 3px solid var(--gold);
+      text-align: left; background: rgba(255,255,255,.4); font-family: "Noto Serif TC", "Cormorant Garamond", serif;
+      font-size: 20px; line-height: 1.5;
+    }
+    .score-pill { display: inline-block; background: #1a1714; color: #d4c08a; padding: 6px 12px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+    .hr-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 16px; }
+    .hr-nav button { background: transparent; color: #d4c08a; border: 1px solid rgba(255,255,255,.16); padding: 8px 12px; font-size: 12px; letter-spacing: .06em; font-weight: 700; }
+    .hr-nav button.on { background: rgba(176,137,58,.2); }
+    .steps { color: #3e3558; padding-left: 18px; line-height: 1.6; }
+    .hud {
+      display: flex; justify-content: space-between; gap: 10px; align-items: baseline;
+      padding: 10px 14px; font-size: 13px; letter-spacing: .06em; font-weight: 700;
+      background: #0c1018; border: 1px solid rgba(176,137,58,.35); border-bottom: 0;
+      font-variant-numeric: tabular-nums;
+    }
+    .hud span { color: #d4c08a; }
+    .hud b { color: #fbf7ef; font-weight: 700; }
+    .play-stage {
+      position: relative; background: radial-gradient(circle at 50% 120%, #243044 0%, #0c1018 55%);
+      border: 1px solid rgba(176,137,58,.35);
+      padding-bottom: 8px;
+    }
+    .board {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+      padding: 16px; width: 100%; max-width: 400px; margin: 0 auto;
+    }
+    #tableBoard { max-width: 440px; gap: 8px; }
+    .tile {
+      aspect-ratio: 1; border: 1px solid rgba(176,137,58,.4); border-radius: 12px; padding: 6px;
+      background: #161b24; position: relative; min-width: 0; min-height: 56px;
+      touch-action: manipulation; display: grid; place-items: center;
+      color: #d4c08a; font-family: "Noto Serif TC", serif; font-size: 22px;
+    }
+    .tile:disabled { cursor: default; }
+    .tile.face, .tile.matched { border-color: transparent; background: transparent; }
+    .tile.matched { opacity: .55; }
+    .tile.on { box-shadow: 0 0 0 3px #d4c08a; }
+    .cake {
+      display: block; width: 88%; height: 88%; margin: 6%; border-radius: 50%;
+      box-shadow: inset 0 3px 0 rgba(255,255,255,.22), 0 6px 10px rgba(0,0,0,.25);
+      position: relative;
+    }
+    .cake:after {
+      content: ""; position: absolute; inset: 22%; border-radius: 50%;
+    }
+    .cake.k0 { background: radial-gradient(circle at 35% 30%, #e8c97a, #b0893a 62%, #7a5a28); }
+    .cake.k0:after { background: #d4c08a; }
+    .cake.k1 { background: radial-gradient(circle at 35% 30%, #c4a07a, #6b3f2a 62%, #3a2218); }
+    .cake.k1:after { background: #8a5a3a; }
+    .cake.k2 { background: radial-gradient(circle at 35% 30%, #f0d48a, #c9a24a 58%, #8a6a28); }
+    .cake.k2:after { background: #f3c14a; }
+    .cake.k3 { background: radial-gradient(circle at 35% 30%, #fbf7ef, #e4d8c0 62%, #b8a888); }
+    .cake.k3:after { background: #f4efe4; }
+    .cake.k4 { background: radial-gradient(circle at 35% 30%, #c8d4a8, #6a7a48 62%, #3e4a28); }
+    .cake.k4:after { background: #9aaa68; }
+    .cake.k5 { background: radial-gradient(circle at 35% 30%, #d8c4e0, #6a4a78 62%, #3a2848); }
+    .cake.k5:after { background: #b89ac8; }
+    .cake.k6 { background: radial-gradient(circle at 35% 30%, #f0e0c8, #c08050 62%, #704028); }
+    .cake.k6:after { background: #e8b070; }
+    .cake.k7 { background: radial-gradient(circle at 35% 30%, #c8dce8, #4a6a88 62%, #283848); }
+    .cake.k7:after { background: #88b0c8; }
+    .dish {
+      aspect-ratio: 1; border: 1px solid rgba(176,137,58,.4); border-radius: 12px; padding: 8px;
+      background: #161b24; min-width: 0; min-height: 56px; touch-action: manipulation;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+      color: #fbf7ef;
+    }
+    .dish .mark { font-family: "Noto Serif TC", serif; font-size: 20px; color: #d4c08a; line-height: 1; }
+    .dish .name { font-size: 11px; letter-spacing: .03em; line-height: 1.25; text-align: center; }
+    .dish.chosen { box-shadow: 0 0 0 3px #d4c08a; background: #1c2430; }
+    .dish.ok { border-color: #6aaa7a; background: #1a2a20; box-shadow: none; }
+    .dish.miss { border-color: #8a3b32; background: #2a1816; }
+    @media (max-width: 480px) {
+      .dish { aspect-ratio: 1; min-height: 68px; padding: 5px 3px; }
+      .dish .mark { font-size: 16px; }
+      .dish .name { font-size: 9px; }
+    }
+    .score-hero {
+      font-family: "Cormorant Garamond", "Noto Serif TC", serif;
+      font-size: clamp(40px, 9vw, 62px); line-height: 1; margin: 18px 0 6px; font-weight: 500;
+    }
+    .score-hero span { display: block; font-size: 13px; letter-spacing: .18em; text-transform: uppercase;
+      color: #8a7f70; margin-bottom: 8px; font-family: "Source Sans 3", "Noto Sans TC", sans-serif; font-weight: 700; }
+    .score-break { font-size: 13px; color: #6a6258; margin: 0 0 8px; letter-spacing: .04em; }
+    .feedback.ok { font-weight: 700; }
+    footer.legal { margin-top: 36px; color: #7a7166; font-size: 12px; text-align: center; line-height: 1.55; }
+    footer.legal a { color: #d4c08a; }
+    @media (min-width: 680px) {
+      .card, .blessing-card { padding: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"><div class="moon"></div></div>
+  <div class="wrap">
+    <header class="appbar">
+      <div class="brand-text">
+        <strong>Hong Kong Arts Centre</strong>
+        <em>香港藝術中心</em>
+      </div>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" id="btn-en" class="on" onclick="setLang('en')">EN</button>
+        <button type="button" id="btn-zh" onclick="setLang('zh')">繁</button>
+      </div>
+    </header>
+
+    <section id="screen-welcome" class="screen on">
+      <p class="kicker" data-i18n="kicker">Mid-Autumn 2026 · Staff evening</p>
+      <h1 id="mainTitle">The Mooncake Puzzle<span>月餅謎局 · 燈謎</span></h1>
+      <p class="lead" data-i18n="welcomeLead">A Mid-Autumn evening for Hong Kong Arts Centre staff. Match eight mooncake pairs, set the reunion table, then six lantern riddles. Write one line. The last card shows your score.</p>
+      <div class="meta">
+        <span class="chip" data-i18n="chip1">About 10 minutes</span>
+        <span class="chip" data-i18n="chip2">Two games · six 燈謎</span>
+        <span class="chip" data-i18n="chip3">One line · a score</span>
+      </div>
+      <div class="card">
+        <label class="field" for="staffName" data-i18n="nameLabel">Your name</label>
+        <input id="staffName" type="text" maxlength="60" autocomplete="name" placeholder="e.g. Chan Mei Ling" oninput="document.getElementById('nameErr').textContent=''">
+        <p class="tiny" id="nameErr" style="color:#8a3b32;margin:8px 0 0;min-height:1.2em"></p>
+        <div class="row"><button class="btn gold wide" type="button" onclick="startHunt()" data-i18n="startBtn">Open the evening</button></div>
+        <p class="tiny" style="margin:14px 0 0" data-i18n="privacy">Your answers stay on this device. Nothing is emailed from this page.</p>
+      </div>
+    </section>
+
+    <section id="screen-lantern" class="screen">
+      <p class="kicker" data-i18n="lanternKicker">Prologue</p>
+      <h1 data-i18n="lanternTitle">Light one lantern<span>點一盞燈</span></h1>
+      <p class="lead" data-i18n="lanternLead">A single lantern is enough. Then the board is laid.</p>
+      <div class="lantern-stage">
+        <svg class="lantern-svg" id="lanternSvg" viewBox="0 0 200 260" role="button" tabindex="0" aria-label="Light the lantern" onclick="lightLantern()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();lightLantern();}">
+          <line x1="100" y1="10" x2="100" y2="32" stroke="#b0893a" stroke-width="2"/>
+          <rect x="78" y="28" width="44" height="8" fill="#b0893a"/>
+          <path id="lanternBody" d="M52 72 C52 50 74 42 100 42 C126 42 148 50 148 72 L148 168 C148 192 126 204 100 204 C74 204 52 192 52 168 Z" fill="#3a241c"/>
+          <ellipse cx="100" cy="72" rx="48" ry="9" fill="#5a3828"/>
+          <ellipse id="flame" cx="100" cy="118" rx="9" ry="15" fill="#f0d48a" opacity="0"/>
+          <rect x="97" y="204" width="6" height="20" fill="#b0893a"/>
+        </svg>
+        <p class="lead" id="lanternHint" data-i18n="lanternHint" style="text-align:center">Touch the lantern</p>
+        <div class="row" style="justify-content:center">
+          <button class="btn gold" id="beginRiddles" type="button" disabled onclick="beginHunt()" data-i18n="beginRiddles">To the puzzle</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-play" class="screen">
+      <p class="kicker" data-i18n="playKicker">The board</p>
+      <h1 data-i18n="playTitle">Find the eight pairs<span>八對月餅</span></h1>
+      <p class="lead" data-i18n="playLead">Tap one cake, then another. A pair stays open. Eight pairs finish the board.</p>
+      <div class="hud">
+        <span>Pairs <b id="hudPairs">0</b> / 8</span>
+        <span>Turns <b id="hudTurns">0</b></span>
+      </div>
+      <div class="play-stage">
+        <div class="board" id="puzzleBoard" role="grid" aria-label="Mooncake pairs"></div>
+      </div>
+      <p class="tiny" id="playHint" style="margin:12px 0 0;color:#cfc3ae"></p>
+      <div class="row">
+        <button class="btn ghost" type="button" onclick="dealBoard()" data-i18n="playReset">Clear the table</button>
+        <button class="btn gold wide" id="playWinBtn" type="button" style="display:none" onclick="goToTable()" data-i18n="playContinue">To the reunion table</button>
+      </div>
+    </section>
+
+    <section id="screen-table" class="screen">
+      <p class="kicker" data-i18n="tableKicker">The table</p>
+      <h1 data-i18n="tableTitle">Set the reunion table<span>團圓桌</span></h1>
+      <p class="lead" data-i18n="tableLead">Twelve guests. Four seats under tonight’s moon. Choose four, then seat them. No tasting until the places are full.</p>
+      <div class="hud">
+        <span>Seated <b id="hudTable">0</b> / 4</span>
+        <span>Score <b id="hudTableScore">0</b></span>
+      </div>
+      <div class="play-stage">
+        <div class="board" id="tableBoard" role="grid" aria-label="Reunion table"></div>
+      </div>
+      <p class="tiny" id="tableHint" style="margin:12px 0 0;color:#cfc3ae"></p>
+      <div class="row">
+        <button class="btn ghost" type="button" onclick="dealTable()" data-i18n="tableReset">Clear the table</button>
+        <button class="btn gold wide" id="tableSeatBtn" type="button" onclick="seatTable()" data-i18n="tableSeat" disabled>Seat them</button>
+        <button class="btn gold wide" id="tableWinBtn" type="button" style="display:none" onclick="goToRiddles()" data-i18n="tableContinue">To the lantern riddles</button>
+      </div>
+    </section>
+
+    <section id="screen-station" class="screen">
+      <p class="kicker" id="stKicker">Lantern I of IV</p>
+      <div class="progress" id="progress" aria-hidden="true"></div>
+      <div class="card">
+        <p class="label" id="roomLabel"></p>
+        <p class="q-zh" id="qZh"></p>
+        <p class="q-en" id="qEn"></p>
+        <p class="hint" id="qHint"></p>
+        <div id="stBody"></div>
+        <p class="feedback" id="feedback"></p>
+        <button class="btn gold wide" id="nextBtn" type="button" style="display:none;margin-top:12px" onclick="advanceStation()" data-i18n="nextBtn">Continue</button>
+      </div>
+    </section>
+
+    <section id="screen-blessing" class="screen">
+      <p class="kicker" data-i18n="blessKicker">Closing card</p>
+      <div class="blessing-card">
+        <span class="score-pill" id="scorePill"></span>
+        <p class="score-hero" id="scoreHero"></p>
+        <p class="score-break" id="scoreBreak"></p>
+        <h2 class="serif" id="helloName" style="margin:16px 0 0;font-size:28px"></h2>
+        <p class="poem" id="blessingText"></p>
+        <div class="inscription" id="shownInscription"></div>
+        <p style="margin:18px 0 0;font-size:13px;color:#6a6258" data-i18n="fromHkac">Hong Kong Arts Centre · 香港藝術中心</p>
+      </div>
+    </section>
+
+    <section id="screen-hr" class="screen">
+      <p class="kicker">HR organiser · 人事統籌</p>
+      <h1>Run the evening<span>中秋月餅謎局 · 燈謎</span></h1>
+      <div class="hr-nav">
+        <button type="button" class="on" data-tab="howto" onclick="hrTab('howto')">How to run</button>
+        <button type="button" data-tab="email" onclick="hrTab('email')">Invitation</button>
+      </div>
+      <div id="hr-howto" class="card">
+        <ol class="steps">
+          <li data-i18n="how1">Place this file on a shared drive and copy the link. No login is required.</li>
+          <li data-i18n="how2">Copy the invitation and share it once with all staff (~70).</li>
+          <li data-i18n="how3">There is no lucky draw. The closing card is a score and a blessing only.</li>
+        </ol>
+      </div>
+      <div id="hr-email" class="card" hidden>
+        <p style="margin:0 0 10px;color:#3e3558">Copy into Teams, WhatsApp, or a notice, then paste the play link.</p>
+        <textarea id="inviteText" readonly></textarea>
+        <div class="row"><button class="btn" type="button" onclick="copyInvite()">Copy invitation</button></div>
+      </div>
+    </section>
+
+    <footer class="legal">
+      <p>
+        <a href="#" onclick="showHr();return false;" data-i18n="hrLink">HR organiser desk</a>
+        ·
+        <a href="#" onclick="showWelcome();return false;" data-i18n="staffLink">Staff viewing</a>
+      </p>
+      <p data-i18n="footer">Hong Kong Arts Centre · 2 Harbour Road, Wan Chai · Internal staff activity.</p>
+    </footer>
+  </div>
+
+  <script>
+    const PAIRS = 8;
+    const TABLE_NEED = 4;
+    const PTS = 10;
+    const TABLE_ITEMS = [
+      { id: "cake", mark: "月餅", zh: "月餅", en: "Yuebing", ok: true },
+      { id: "pomelo", mark: "柚子", zh: "柚子", en: "Youzi", ok: true },
+      { id: "lantern", mark: "花燈", zh: "花燈", en: "Huadeng", ok: true },
+      { id: "tea", mark: "清茶", zh: "清茶", en: "Qingcha", ok: true },
+      { id: "zongzi", mark: "粽子", zh: "粽子", en: "Zongzi", ok: false },
+      { id: "niangao", mark: "年糕", zh: "年糕", en: "Niangao", ok: false },
+      { id: "jiaozi", mark: "餃子", zh: "餃子", en: "Jiaozi", ok: false },
+      { id: "tangyuan", mark: "湯圓", zh: "湯圓", en: "Tangyuan", ok: false },
+      { id: "yuanxiao", mark: "元宵", zh: "元宵", en: "Yuanxiao", ok: false },
+      { id: "luobo", mark: "蘿蔔糕", zh: "蘿蔔糕", en: "Luobogao", ok: false },
+      { id: "yolk", mark: "蛋黃酥", zh: "蛋黃酥", en: "Danhuangsu", ok: false },
+      { id: "peach", mark: "桃花", zh: "桃花", en: "Taohua", ok: false }
+    ];
+    const ROOMS = [
+      {
+        kind: "choice",
+        label: { zh: "第一盞 · 詩", en: "Lantern I · Verse" },
+        zh: "「嫦娥應悔偷靈藥，________。」",
+        en: "“Chang’e must regret stealing the elixir, ________.”",
+        hint: { zh: "李商隱《嫦娥》。不是蘇軾，也不是張九齡。", en: "Li Shangyin, Chang’e. Not Su Shi, and not Zhang Jiuling." },
+        options: [
+          { zh: "天涯共此時", en: "we share this hour across the world’s edge", ok: false },
+          { zh: "高處不勝寒", en: "it is too cold, this high", ok: false },
+          { zh: "碧海青天夜夜心", en: "blue sea, green sky, a heart night after night", ok: true },
+          { zh: "千里共嬋娟", en: "share the fair moon across a thousand miles", ok: false }
+        ],
+        noteOk: { zh: "碧海青天夜夜心：廣寒宮裡的悔與孤。", en: "Blue sea, green sky — the lonely heart of the cold palace." },
+        noteNo: { zh: "下句是「碧海青天夜夜心」。天涯共此時、千里共嬋娟、高處不勝寒都是別的月亮。", en: "The line is “blue sea, green sky, a heart night after night.” The other moons belong to other poems." }
+      },
+      {
+        kind: "choice",
+        label: { zh: "第二盞 · 成語", en: "Lantern II · Idiom" },
+        zh: "謎面：八月十五的月亮。打一成語。",
+        en: "Riddle: the moon on the fifteenth of the eighth month. Guess a four-character idiom.",
+        hint: { zh: "十五即「正」，月即「明」。不是最常見的「花好月圓」。", en: "The fifteenth is 正; the moon is 明. Not the usual 花好月圓." },
+        options: [
+          { zh: "花好月圓", en: "flowers fair, moon full", ok: false },
+          { zh: "正大光明", en: "upright and bright (正大光明)", ok: true },
+          { zh: "光明正大", en: "open and honourable (光明正大)", ok: false },
+          { zh: "月白風清", en: "a white moon, a clear wind", ok: false }
+        ],
+        noteOk: { zh: "八月十五為「正」，月為「明」，合「正大光明」。", en: "The fifteenth is 正, the moon is 明: 正大光明." },
+        noteNo: { zh: "謎底是「正大光明」。花好月圓太順口；光明正大字序不同。", en: "The answer is 正大光明. 花好月圓 is the easy Mid-Autumn idiom; 光明正大 rearranges the same words." }
+      },
+      {
+        kind: "choice",
+        label: { zh: "第三盞 · 燈謎", en: "Lantern III · Cryptic" },
+        zh: "謎面：吳剛伐桂。打一成語。",
+        en: "Riddle: Wu Gang chopping the osmanthus tree. Guess a four-character idiom.",
+        hint: { zh: "斧落枝生，永無了時。不是堅持就會成功。", en: "The wound closes as fast as the axe falls. This is not perseverance rewarded." },
+        options: [
+          { zh: "水滴石穿", en: "dripping water wears through stone", ok: false },
+          { zh: "愚公移山", en: "the Foolish Old Man moves mountains", ok: false },
+          { zh: "功虧一簣", en: "to fall short by one basket of earth", ok: false },
+          { zh: "徒勞無功", en: "labour in vain (徒勞無功)", ok: true }
+        ],
+        noteOk: { zh: "桂樹隨砍隨合，故為徒勞無功。", en: "The tree heals as he chops. The labour is in vain." },
+        noteNo: { zh: "謎底是「徒勞無功」。水滴石穿、愚公移山都是終有成；吳剛沒有終點。", en: "The answer is 徒勞無功. Dripping water and the Foolish Old Man eventually succeed; Wu Gang does not." }
+      },
+      {
+        kind: "choice",
+        label: { zh: "第四盞 · 仙藥", en: "Lantern IV · The elixir" },
+        zh: "較通行的說法裡，后羿從誰處得到本應夫妻共享的不死藥？",
+        en: "In the usual telling, from whom did Hou Yi receive the elixir that was meant to be shared?",
+        hint: { zh: "西王母的蟠桃宴一系。不是月宮裡的人給的。", en: "The Queen Mother’s line of myth. Not someone already on the moon." },
+        options: [
+          { zh: "嫦娥", en: "Chang’e", ok: false },
+          { zh: "玉兔", en: "the jade rabbit", ok: false },
+          { zh: "西王母", en: "the Queen Mother of the West", ok: true },
+          { zh: "吳剛", en: "Wu Gang", ok: false }
+        ],
+        noteOk: { zh: "西王母賜藥，后羿本欲與妻分食；嫦娥獨吞，乃奔月。", en: "The Queen Mother granted it. Hou Yi meant to share it; Chang’e swallowed it whole and rose." },
+        noteNo: { zh: "正解是西王母。嫦娥、玉兔、吳剛都在藥被吞之後的月宮裡。", en: "The answer is the Queen Mother of the West. Chang’e, the rabbit and Wu Gang belong to the moon after the elixir is gone." }
+      },
+      {
+        kind: "choice",
+        label: { zh: "第五盞 · 大坑", en: "Lantern V · Tai Hang" },
+        zh: "銅鑼灣大坑舞火龍，相傳最初是為了什麼？",
+        en: "The Tai Hang fire-dragon dance in Causeway Bay: in the folk origin, what was it first for?",
+        hint: { zh: "清末街坊，香火走瘟。不是祭月，也不是慶豐收。", en: "Late-Qing neighbours, incense against a plague. Not an offering to the moon, and not a harvest rite." },
+        options: [
+          { zh: "祭月宮嫦娥", en: "to make an offering to Chang’e", ok: false },
+          { zh: "驅疫祈安", en: "to drive out pestilence and ask for peace", ok: true },
+          { zh: "慶中秋豐收", en: "to celebrate a Mid-Autumn harvest", ok: false },
+          { zh: "送神出海", en: "to send the gods out to sea", ok: false }
+        ],
+        noteOk: { zh: "傳說為驅瘟疫而舞草龍、插線香。後來才成為中秋的街景。", en: "The legend is a plague: a straw dragon, thick with incense. The Mid-Autumn street came later." },
+        noteNo: { zh: "正解是驅疫祈安。祭嫦娥、慶豐收、送神都不是這條街的起源說法。", en: "The folk origin is driving out pestilence. Offerings to Chang’e, harvest, and sending gods to sea are other rites." }
+      },
+      {
+        kind: "choice",
+        label: { zh: "第六盞 · 月中之樹", en: "Lantern VI · The tree" },
+        zh: "月中那位樵夫永在砍一棵隨砍隨合的樹。那是什麼樹？",
+        en: "The woodcutter on the moon chops a tree that heals as fast as the axe falls. What tree is it?",
+        hint: { zh: "花香如桂。不是蟠桃，也不是柳。", en: "The scent is osmanthus. Not the peaches of immortality, and not a willow." },
+        options: [
+          { zh: "桃樹", en: "a peach tree", ok: false },
+          { zh: "柳樹", en: "a willow", ok: false },
+          { zh: "桂樹", en: "an osmanthus tree", ok: true },
+          { zh: "榕樹", en: "a banyan", ok: false }
+        ],
+        noteOk: { zh: "吳剛伐桂：月中桂樹，香在秋。", en: "Wu Gang chops osmanthus. The moon’s tree is a tree of autumn." },
+        noteNo: { zh: "正解是桂樹。蟠桃屬西王母；柳與榕不是這個故事。", en: "The tree is osmanthus. Peaches belong to the Queen Mother; willow and banyan are other stories." }
+      },
+      { kind: "inscribe" }
+    ];
+
+    const PROMPTS = [
+      { zh: "但願人長久", en: "May we last, as the moon does" },
+      { zh: "千里共嬋娟", en: "Share the fair moon across the miles" },
+      { zh: "燈火未闌人未散", en: "While the lanterns are still alight" }
+    ];
+
+    const I18N = {
+      en: {
+        kicker: "Mid-Autumn 2026 · Staff evening",
+        welcomeLead: "A Mid-Autumn evening for Hong Kong Arts Centre staff. Match eight mooncake pairs, set the reunion table, then six lantern riddles. Write one line. The last card shows your score.",
+        chip1: "About 10 minutes", chip2: "Two games · six 燈謎", chip3: "One line · a score",
+        nameLabel: "Your name", startBtn: "Open the evening",
+        privacy: "Your answers stay on this device. Nothing is emailed from this page.",
+        lanternKicker: "Prologue", lanternTitle: "Light one lantern",
+        lanternLead: "A single lantern is enough. Then the board is laid.",
+        lanternHint: "Touch the lantern", beginRiddles: "To the puzzle",
+        playKicker: "The board", playTitle: "Find the eight pairs",
+        playLead: "Tap one cake, then another. A pair stays open. Eight pairs open the reunion table.",
+        playReset: "Clear the table",
+        playMiss: "Those two will not sit. Try again.",
+        playDone: "The table is quiet. Next: set the reunion table.",
+        playContinue: "To the reunion table",
+        tableKicker: "The table", tableTitle: "Set the reunion table",
+        tableLead: "Twelve guests. Four seats under tonight’s moon. Choose four, then seat them. No tasting until the places are full.",
+        tableNeed: "Choose four guests, then seat them. The house will not say who belongs until the places are full.",
+        tableMiss: "None of these four were invited. Clear them and try another set.",
+        tablePartial: "Some of these may stay. The others were not invited. Fill the empty seats.",
+        tableFull: "Four seats only. Unseat one first.",
+        tableOk: "This one may stay.",
+        tableDone: "The table is set. Six lantern riddles wait.",
+        tableReset: "Clear the table",
+        tableSeat: "Seat them",
+        tableContinue: "To the lantern riddles",
+        ansOk: "Correct.",
+        ansNo: "Not this one.",
+        scoreLabel: "Score",
+        scorePairs: "Pairs",
+        scoreTable: "Table",
+        scoreRiddles: "Riddles",
+        nextBtn: "Continue", lastBtn: "Receive the closing card",
+        blessKicker: "Closing card",
+        fromHkac: "Hong Kong Arts Centre · 香港藝術中心",
+        how1: "Place this file on a shared drive and copy the link. No login is required.",
+        how2: "Copy the invitation and share it once with all staff (~70).",
+        how3: "There is no lucky draw. The closing card is a score and a blessing only.",
+        hrLink: "HR organiser desk", staffLink: "Staff evening",
+        footer: "Hong Kong Arts Centre · 2 Harbour Road, Wan Chai · Internal staff activity.",
+        needName: "Please enter your name for the closing card.",
+        litHint: "It is lit. You may go in.",
+        copied: "Copied.",
+        chosen: "The lantern chooses",
+        insLabel: "第七盞 · 題燈",
+        insZh: "題燈",
+        insEn: "Write one line for colleagues who are not in the same room tonight. It will appear on your closing card.",
+        insHint: "At most 40 characters. A prompt below may be used, or your own line.",
+        insNeed: "A line is required — even a short one.",
+        insCount: "characters"
+      },
+      zh: {
+        kicker: "2026 中秋 · 同事月餅謎局",
+        welcomeLead: "香港藝術中心同事的中秋：先配對八對月餅，再擺團圓桌，然後六題燈謎，最後自題一句。結語卡會顯示分數。",
+        chip1: "約十分鐘", chip2: "兩局 · 六題燈謎", chip3: "一句燈語 · 分數",
+        nameLabel: "你的姓名", startBtn: "打開今晚",
+        privacy: "作答只留在此裝置。本頁不會寄出任何電郵。",
+        lanternKicker: "序", lanternTitle: "點一盞燈",
+        lanternLead: "一盞即夠。然後擺盤。",
+        lanternHint: "輕觸花燈", beginRiddles: "到謎局",
+        playKicker: "棋盤", playTitle: "八對月餅",
+        playLead: "先點一枚，再點另一枚。成對即留。八對齊後擺團圓桌。",
+        playReset: "重開",
+        playMiss: "這兩枚不成對。再試。",
+        playDone: "月餅收齊。下一局：團圓桌。",
+        playContinue: "去團圓桌",
+        tableKicker: "團圓桌", tableTitle: "擺一桌中秋",
+        tableLead: "十二位客人，四個座位。先點四位，再請入席。未坐滿，不試菜。",
+        tableNeed: "先選四位，再請入席。未坐滿，不會告訴你誰該留下。",
+        tableMiss: "這四位都不請。請撤下，另選一組。",
+        tablePartial: "有人可以留下。其餘不是今晚的客人。請補上空位。",
+        tableFull: "只有四席。請先撤一位。",
+        tableOk: "可以入座。",
+        tableDone: "桌子擺好了。六題燈謎在後。",
+        tableReset: "重開",
+        tableSeat: "請入席",
+        tableContinue: "去燈謎",
+        ansOk: "正確。",
+        ansNo: "不是這句。",
+        scoreLabel: "分數",
+        scorePairs: "配對",
+        scoreTable: "團圓桌",
+        scoreRiddles: "燈謎",
+        nextBtn: "繼續", lastBtn: "收取結語卡",
+        blessKicker: "結語卡",
+        fromHkac: "香港藝術中心 · Hong Kong Arts Centre",
+        how1: "把本檔放到共用雲端並複製連結。不必登入。",
+        how2: "複製邀請，一次分享給約 70 位同事。",
+        how3: "沒有抽獎。結語卡只有分數與祝福。",
+        hrLink: "人事統籌台", staffLink: "同事今晚",
+        footer: "香港藝術中心 · 灣仔港灣道 2 號 · 內部員工活動。",
+        needName: "請先填寫姓名，結語卡上會用到。",
+        litHint: "燈已亮。可以進去。",
+        copied: "已複製。",
+        chosen: "花燈選中了",
+        insLabel: "第七盞 · 題燈",
+        insZh: "題燈",
+        insEn: "為今晚未能同室的同事寫一句。它會出現在結語卡上。",
+        insHint: "不多於 40 字。可用下列成句，也可自撰。",
+        insNeed: "請寫一句，短亦可。",
+        insCount: "字"
+      }
+    };
+
+    const state = {
+      lang: "en", name: "", i: 0, correct: 0, locked: false, lit: false, inscription: "", score: 0, turns: 0
+    };
+
+    const game = {
+      running: false, pairs: 0, turns: 0, board: [], open: [], busy: false, deal: 0
+    };
+
+    const table = {
+      running: false, found: 0, items: [], busy: false
+    };
+
+    function riddleCount() {
+      return ROOMS.filter(r => r.kind === "choice").length;
+    }
+    function maxScore() {
+      return PAIRS * PTS + TABLE_NEED * PTS + riddleCount() * PTS;
+    }
+    function totalScore() {
+      return game.pairs * PTS + table.found * PTS + state.correct * PTS;
+    }
+
+    function t(key) { return I18N[state.lang][key]; }
+
+    function setLang(lang) {
+      state.lang = lang;
+      document.getElementById("btn-en").classList.toggle("on", lang === "en");
+      document.getElementById("btn-zh").classList.toggle("on", lang === "zh");
+      document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
+      const mainTitle = document.getElementById("mainTitle");
+      if (mainTitle) {
+        mainTitle.innerHTML = lang === "zh" ? "月餅謎局 · 燈謎<span>The Mooncake Puzzle</span>" : "The Mooncake Puzzle<span>月餅謎局 · 燈謎</span>";
+      }
+      document.getElementById("staffName").placeholder = lang === "zh" ? "例如：陳美玲" : "e.g. Chan Mei Ling";
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (I18N.en[key] === undefined) return;
+        if (key === "lanternTitle") {
+          el.innerHTML = lang === "zh" ? "點一盞燈<span>Light one lantern</span>" : "Light one lantern<span>點一盞燈</span>";
+        } else if (key === "playTitle") {
+          el.innerHTML = lang === "zh" ? "八對月餅<span>Find the eight pairs</span>" : "Find the eight pairs<span>八對月餅</span>";
+        } else if (key === "tableTitle") {
+          el.innerHTML = lang === "zh" ? "擺一桌中秋<span>Set the reunion table</span>" : "Set the reunion table<span>團圓桌</span>";
+        } else el.textContent = I18N[lang][key];
+      });
+      if (document.getElementById("screen-station").classList.contains("on")) renderRoom();
+      if (document.getElementById("screen-play").classList.contains("on")) paintBoard();
+      if (document.getElementById("screen-table").classList.contains("on")) paintTable();
+      paintHud();
+      paintTableHud();
+      if (document.getElementById("screen-blessing").classList.contains("on")) renderBlessing();
+      refreshInvite();
+    }
+
+    function show(id) {
+      if (id !== "screen-play") stopPuzzle();
+      if (id !== "screen-table") table.running = false;
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("on"));
+      document.getElementById(id).classList.add("on");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    function showHr() { show("screen-hr"); }
+    function showWelcome() { show("screen-welcome"); }
+
+    function startHunt() {
+      const name = document.getElementById("staffName").value.trim();
+      const err = document.getElementById("nameErr");
+      if (!name) {
+        err.textContent = t("needName");
+        document.getElementById("staffName").focus();
+        return;
+      }
+      err.textContent = "";
+      state.name = name; state.i = 0; state.correct = 0; state.score = 0; state.turns = 0; state.lit = false; state.inscription = "";
+      table.found = 0; table.items = []; table.running = false;
+      document.getElementById("beginRiddles").disabled = true;
+      document.getElementById("lanternBody").setAttribute("fill", "#3a241c");
+      document.getElementById("flame").setAttribute("opacity", "0");
+      document.getElementById("lanternSvg").classList.remove("lit");
+      document.getElementById("lanternHint").textContent = t("lanternHint");
+      show("screen-lantern");
+    }
+
+    function chime(freq) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator(); const g = ctx.createGain();
+        o.type = "sine"; o.frequency.value = freq; g.gain.value = 0.05;
+        o.connect(g); g.connect(ctx.destination); o.start();
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.9);
+        o.stop(ctx.currentTime + 0.9);
+      } catch (e) {}
+    }
+
+    function lightLantern() {
+      if (state.lit) return;
+      state.lit = true;
+      document.getElementById("lanternBody").setAttribute("fill", "#a85a32");
+      document.getElementById("flame").setAttribute("opacity", "1");
+      document.getElementById("lanternSvg").classList.add("lit");
+      document.getElementById("beginRiddles").disabled = false;
+      document.getElementById("lanternHint").textContent = t("litHint");
+      chime(523.25);
+    }
+
+    function beginHunt() {
+      if (!state.lit) return;
+      show("screen-play");
+      dealBoard();
+    }
+
+    function shuffle(list) {
+      for (let i = list.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const hold = list[i];
+        list[i] = list[j];
+        list[j] = hold;
+      }
+      return list;
+    }
+
+    function dealBoard() {
+      const kinds = [];
+      for (let k = 0; k < PAIRS; k++) { kinds.push(k, k); }
+      shuffle(kinds);
+      game.deal += 1;
+      game.board = kinds.map(k => ({ k: k, face: false, matched: false }));
+      game.pairs = 0;
+      game.turns = 0;
+      game.open = [];
+      game.busy = false;
+      game.running = true;
+      const winBtn = document.getElementById("playWinBtn");
+      if (winBtn) winBtn.style.display = "none";
+      const hint = document.getElementById("playHint");
+      if (hint) hint.textContent = "";
+      paintBoard();
+      paintHud();
+    }
+
+    function paintHud() {
+      const pairsEl = document.getElementById("hudPairs");
+      const turnsEl = document.getElementById("hudTurns");
+      if (pairsEl) {
+        pairsEl.textContent = game.pairs;
+        const wrap = pairsEl.parentElement;
+        if (wrap && wrap.firstChild) wrap.firstChild.textContent = (state.lang === "zh" ? "成對 " : "Pairs ");
+        if (pairsEl.nextSibling) pairsEl.nextSibling.textContent = " / 8";
+      }
+      if (turnsEl) {
+        turnsEl.textContent = game.turns;
+        const wrap = turnsEl.parentElement;
+        if (wrap && wrap.firstChild) wrap.firstChild.textContent = (state.lang === "zh" ? "翻次 " : "Turns ");
+      }
+    }
+
+    function stopPuzzle() {
+      game.running = false;
+      game.busy = false;
+      game.open = [];
+    }
+
+    function goToTable() {
+      if (game.pairs < PAIRS) return;
+      stopPuzzle();
+      state.turns = game.turns;
+      show("screen-table");
+      dealTable();
+    }
+
+    function dealTable() {
+      table.items = shuffle(TABLE_ITEMS.map(item => ({ ...item, locked: false, chosen: false, flashMiss: false })));
+      table.found = 0;
+      table.busy = false;
+      table.running = true;
+      const winBtn = document.getElementById("tableWinBtn");
+      if (winBtn) winBtn.style.display = "none";
+      const seatBtn = document.getElementById("tableSeatBtn");
+      if (seatBtn) seatBtn.style.display = "inline-flex";
+      const hint = document.getElementById("tableHint");
+      if (hint) hint.textContent = t("tableNeed");
+      paintTable();
+      paintTableHud();
+    }
+
+    function tableChosenCount() {
+      return table.items.filter(item => item.chosen && !item.locked).length;
+    }
+
+    function tableRemaining() {
+      return TABLE_NEED - table.found;
+    }
+
+    function syncSeatBtn() {
+      const seatBtn = document.getElementById("tableSeatBtn");
+      if (!seatBtn) return;
+      const remain = tableRemaining();
+      seatBtn.disabled = !table.running || table.busy || remain <= 0 || tableChosenCount() !== remain;
+      seatBtn.style.display = table.running && remain > 0 ? "inline-flex" : "none";
+    }
+
+    function paintTableHud() {
+      const foundEl = document.getElementById("hudTable");
+      const scoreEl = document.getElementById("hudTableScore");
+      if (foundEl) {
+        foundEl.textContent = table.found;
+        const wrap = foundEl.parentElement;
+        if (wrap && wrap.firstChild) wrap.firstChild.textContent = (state.lang === "zh" ? "入席 " : "Seated ");
+        if (foundEl.nextSibling) foundEl.nextSibling.textContent = " / 4";
+      }
+      if (scoreEl) {
+        scoreEl.textContent = totalScore();
+        const wrap = scoreEl.parentElement;
+        if (wrap && wrap.firstChild) wrap.firstChild.textContent = t("scoreLabel") + " ";
+      }
+      syncSeatBtn();
+    }
+
+    function paintTable() {
+      const box = document.getElementById("tableBoard");
+      if (!box) return;
+      box.innerHTML = "";
+      table.items.forEach((item, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        let cls = "dish";
+        if (item.locked) cls += " ok";
+        else if (item.chosen) cls += " chosen";
+        if (item.flashMiss) cls += " miss";
+        btn.className = cls;
+        btn.disabled = !table.running || table.busy || item.locked;
+        btn.setAttribute("aria-pressed", item.chosen || item.locked ? "true" : "false");
+        btn.dataset.id = item.id;
+        const mark = document.createElement("span");
+        mark.className = "mark";
+        mark.textContent = item.mark;
+        const name = document.createElement("span");
+        name.className = "name";
+        name.textContent = state.lang === "zh" ? item.zh : item.en;
+        btn.appendChild(mark);
+        btn.appendChild(name);
+        btn.onclick = () => tapDish(i);
+        box.appendChild(btn);
+      });
+      syncSeatBtn();
+    }
+
+    function tapDish(i) {
+      if (!table.running || table.busy) return;
+      const item = table.items[i];
+      if (!item || item.locked) return;
+      const hint = document.getElementById("tableHint");
+      if (item.chosen) {
+        item.chosen = false;
+        if (hint) hint.textContent = t("tableNeed");
+        paintTable();
+        return;
+      }
+      if (tableChosenCount() >= tableRemaining()) {
+        if (hint) hint.textContent = t("tableFull");
+        return;
+      }
+      item.chosen = true;
+      if (hint) hint.textContent = "";
+      paintTable();
+    }
+
+    function seatTable() {
+      if (!table.running || table.busy) return;
+      const remain = tableRemaining();
+      const batch = table.items.filter(item => item.chosen && !item.locked);
+      if (batch.length !== remain || remain <= 0) return;
+      table.busy = true;
+      let gained = 0;
+      batch.forEach(item => {
+        if (item.ok) {
+          item.locked = true;
+          item.chosen = false;
+          gained += 1;
+        } else {
+          item.chosen = false;
+          item.flashMiss = true;
+        }
+      });
+      table.found += gained;
+      const hint = document.getElementById("tableHint");
+      paintTableHud();
+      if (table.found >= TABLE_NEED) {
+        table.running = false;
+        if (hint) hint.textContent = t("tableDone");
+        const winBtn = document.getElementById("tableWinBtn");
+        if (winBtn) winBtn.style.display = "inline-flex";
+        const seatBtn = document.getElementById("tableSeatBtn");
+        if (seatBtn) seatBtn.style.display = "none";
+        chime(880);
+      } else if (gained) {
+        if (hint) hint.textContent = t("tablePartial");
+        chime(520 + table.found * 40);
+      } else {
+        if (hint) hint.textContent = t("tableMiss");
+        chime(196);
+      }
+      paintTable();
+      setTimeout(() => {
+        table.items.forEach(item => { item.flashMiss = false; });
+        table.busy = false;
+        paintTable();
+      }, 650);
+    }
+
+    function goToRiddles() {
+      if (table.found < TABLE_NEED) return;
+      table.running = false;
+      state.turns = game.turns;
+      state.i = 0;
+      renderRoom();
+      show("screen-station");
+    }
+
+    function renderRoom() {
+      const total = ROOMS.length;
+      document.getElementById("stKicker").textContent =
+        (state.lang === "zh" ? "第 " + (state.i + 1) + " 盞，共 " + total + " 盞" : "Lantern " + (state.i + 1) + " of " + total);
+      const prog = document.getElementById("progress");
+      prog.innerHTML = "";
+      for (let n = 0; n < total; n++) {
+        const b = document.createElement("b");
+        if (n < state.i) b.className = "done";
+        else if (n === state.i) b.className = "on";
+        prog.appendChild(b);
+      }
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("feedback").className = "feedback";
+      document.getElementById("nextBtn").style.display = "none";
+      document.getElementById("nextBtn").textContent = state.i === total - 1 ? t("lastBtn") : t("nextBtn");
+      document.getElementById("stBody").innerHTML = "";
+      state.locked = false;
+      const room = ROOMS[state.i];
+      if (room.kind === "inscribe") return renderInscribe();
+      document.getElementById("roomLabel").textContent = room.label[state.lang];
+      document.getElementById("qZh").textContent = room.zh;
+      document.getElementById("qEn").textContent = room.en;
+      document.getElementById("qHint").textContent = room.hint[state.lang];
+      const box = document.createElement("div");
+      box.className = "opts";
+      room.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button"; btn.className = "opt";
+        btn.textContent = state.lang === "zh" ? opt.zh + "  ·  " + opt.en : opt.en + "  ·  " + opt.zh;
+        btn.onclick = () => choose(idx, box);
+        box.appendChild(btn);
+      });
+      document.getElementById("stBody").appendChild(box);
+    }
+
+    function choose(idx, box) {
+      if (state.locked) return;
+      state.locked = true;
+      const room = ROOMS[state.i];
+      const correctIdx = room.options.findIndex(o => o.ok);
+      [...box.children].forEach((b, i) => {
+        b.disabled = true;
+        if (i === correctIdx) b.classList.add("correct");
+        if (i === idx && !room.options[i].ok) b.classList.add("wrong");
+      });
+      const ok = room.options[idx].ok;
+      if (ok) { state.correct += 1; chime(659.25); }
+      const mark = ok ? t("ansOk") : t("ansNo");
+      const note = ok ? room.noteOk[state.lang] : room.noteNo[state.lang];
+      const fb = document.getElementById("feedback");
+      fb.textContent = mark + " " + note;
+      fb.className = "feedback" + (ok ? " ok" : "");
+      fb.style.color = ok ? "#2f6b45" : "#6a3b32";
+      document.getElementById("nextBtn").style.display = "inline-flex";
+    }
+
+    function paintBoard() {
+      const box = document.getElementById("puzzleBoard");
+      if (!box) return;
+      box.innerHTML = "";
+      game.board.forEach((cell, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        const show = cell.face || cell.matched;
+        btn.className = "tile" + (show ? " face" : "") + (cell.matched ? " matched" : "") + (game.open.indexOf(i) >= 0 ? " on" : "");
+        btn.disabled = !game.running || game.busy || cell.matched;
+        btn.dataset.kind = String(cell.k);
+        btn.setAttribute("aria-label", show ? ("mooncake " + (cell.k + 1)) : "face down");
+        if (show) {
+          const cake = document.createElement("span");
+          cake.className = "cake k" + cell.k;
+          cake.setAttribute("aria-hidden", "true");
+          btn.appendChild(cake);
+        } else {
+          btn.textContent = "月";
+        }
+        btn.onclick = () => tapTile(i);
+        box.appendChild(btn);
+      });
+    }
+
+    function tapTile(i) {
+      if (!game.running || game.busy) return;
+      const cell = game.board[i];
+      if (!cell || cell.matched || cell.face) return;
+      cell.face = true;
+      game.open.push(i);
+      paintBoard();
+      if (game.open.length < 2) return;
+      game.turns += 1;
+      paintHud();
+      const a = game.open[0];
+      const b = game.open[1];
+      if (game.board[a].k === game.board[b].k) {
+        game.board[a].matched = true;
+        game.board[b].matched = true;
+        game.open = [];
+        game.pairs += 1;
+        paintHud();
+        chime(520 + game.pairs * 40);
+        paintBoard();
+        if (game.pairs >= PAIRS) {
+          game.running = false;
+          state.score = game.pairs;
+          state.turns = game.turns;
+          const hint = document.getElementById("playHint");
+          if (hint) hint.textContent = t("playDone");
+          const winBtn = document.getElementById("playWinBtn");
+          if (winBtn) winBtn.style.display = "inline-flex";
+          chime(880);
+        }
+      } else {
+        game.busy = true;
+        const hint = document.getElementById("playHint");
+        if (hint) hint.textContent = t("playMiss");
+        chime(196);
+        const deal = game.deal;
+        setTimeout(() => {
+          if (deal !== game.deal) return;
+          game.board[a].face = false;
+          game.board[b].face = false;
+          game.open = [];
+          game.busy = false;
+          if (hint && game.pairs < PAIRS) hint.textContent = "";
+          paintBoard();
+        }, 700);
+      }
+    }
+
+    function renderInscribe() {
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("nextBtn").style.display = "none";
+      document.getElementById("nextBtn").textContent = t("lastBtn");
+      document.getElementById("stBody").innerHTML = "";
+      document.getElementById("roomLabel").textContent = t("insLabel");
+      document.getElementById("qZh").textContent = t("insZh");
+      document.getElementById("qEn").textContent = t("insEn");
+      document.getElementById("qHint").textContent = t("insHint");
+      const chips = document.createElement("div");
+      chips.className = "chips";
+      const area = document.createElement("textarea");
+      area.maxLength = 40;
+      area.rows = 3;
+      area.value = state.inscription;
+      const count = document.createElement("div");
+      count.className = "count";
+      const paintCount = () => { count.textContent = area.value.length + " / 40 " + t("insCount"); };
+      paintCount();
+      PROMPTS.forEach(p => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = p[state.lang];
+        b.onclick = () => {
+          area.value = p[state.lang];
+          state.inscription = area.value.trim();
+          [...chips.children].forEach(c => c.classList.toggle("on", c === b));
+          paintCount();
+          readyInscribe();
+        };
+        chips.appendChild(b);
+      });
+      area.oninput = () => {
+        state.inscription = area.value.trim();
+        [...chips.children].forEach(c => c.classList.remove("on"));
+        paintCount();
+        readyInscribe();
+      };
+      document.getElementById("stBody").appendChild(chips);
+      document.getElementById("stBody").appendChild(area);
+      document.getElementById("stBody").appendChild(count);
+      readyInscribe();
+    }
+
+    function readyInscribe() {
+      const ok = state.inscription.length > 0;
+      document.getElementById("feedback").textContent = ok ? "" : t("insNeed");
+      document.getElementById("feedback").style.color = "#8a7f70";
+      document.getElementById("nextBtn").style.display = ok ? "inline-flex" : "none";
+    }
+
+    function advanceStation() {
+      if (state.i < ROOMS.length - 1) { state.i += 1; renderRoom(); }
+      else finishHunt();
+    }
+
+    function finishHunt() {
+      state.score = totalScore();
+      renderBlessing();
+      show("screen-blessing");
+      chime(784);
+    }
+
+    function renderBlessing() {
+      const total = totalScore();
+      const cap = maxScore();
+      const pairsPts = game.pairs * PTS;
+      const tablePts = table.found * PTS;
+      const riddlePts = state.correct * PTS;
+      const riddleCap = riddleCount() * PTS;
+      document.getElementById("helloName").textContent = (state.lang === "zh" ? "" : "Dear ") + state.name;
+      document.getElementById("scorePill").textContent =
+        (state.lang === "zh" ? "翻次 " : "Turns ") + (state.turns || 0);
+      const hero = document.getElementById("scoreHero");
+      if (hero) {
+        hero.innerHTML = "<span>" + t("scoreLabel") + "</span>" + total + " / " + cap;
+      }
+      const br = document.getElementById("scoreBreak");
+      if (br) {
+        br.textContent =
+          t("scorePairs") + " " + pairsPts +
+          " · " + t("scoreTable") + " " + tablePts +
+          " · " + t("scoreRiddles") + " " + riddlePts + " / " + riddleCap;
+      }
+      document.getElementById("blessingText").textContent = state.lang === "zh"
+        ? "香港藝術中心祝你中秋安好。未能同桌，仍共這一輪月。"
+        : "Hong Kong Arts Centre wishes you a settled Mid-Autumn. We are not at one table, and still under one moon.";
+      document.getElementById("shownInscription").textContent = state.inscription;
+    }
+
+    function hrTab(id) {
+      ["howto", "email"].forEach(k => { document.getElementById("hr-" + k).hidden = k !== id; });
+      document.querySelectorAll(".hr-nav button").forEach(b => b.classList.toggle("on", b.getAttribute("data-tab") === id));
+      if (id === "email") refreshInvite();
+    }
+
+    function refreshInvite() {
+      const playLink = "[PASTE THE SHARED LINK TO index.html HERE]";
+      document.getElementById("inviteText").value =
+`Hong Kong Arts Centre · Mid-Autumn 2026
+
+Dear colleagues,
+
+You are invited to The Mooncake Puzzle / 月餅謎局 · 燈謎: match eight pairs of cakes, set a reunion table, then six lantern riddles, then write one line. The last card shows your score. There is no lucky draw.
+
+1. Open: ${playLink}
+2. Enter your name, light the lantern, play both games, then the 燈謎.
+
+各位同事：
+
+香港藝術中心誠邀參加「月餅謎局 · 燈謎」：先配對八對月餅，再擺團圓桌，然後六題燈謎，最後自題一句。結語卡會顯示分數。沒有抽獎。
+
+Hong Kong Arts Centre
+2 Harbour Road, Wan Chai
+`;
+    }
+
+    async function copyInvite() {
+      try { await navigator.clipboard.writeText(document.getElementById("inviteText").value); }
+      catch (e) { document.getElementById("inviteText").select(); document.execCommand("copy"); }
+    }
+
+    refreshInvite();
+    if (location.hash === "#hr") showHr();
+  </script>
+</body>
+</html>
