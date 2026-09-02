@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Mooncake Puzzle · 燈謎 | Hong Kong Arts Centre</title>
-  <meta name="description" content="A staff Mid-Autumn evening for Hong Kong Arts Centre: match eight mooncake pairs, try three lantern riddles, and inscribe one line.">
+  <meta name="description" content="A staff Mid-Autumn evening for Hong Kong Arts Centre: mooncake pairs, a reunion table, six lantern riddles, and one inscribed line.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -177,6 +177,24 @@
     .cake.k6:after { background: #e8b070; }
     .cake.k7 { background: radial-gradient(circle at 35% 30%, #c8dce8, #4a6a88 62%, #283848); }
     .cake.k7:after { background: #88b0c8; }
+    .dish {
+      aspect-ratio: 1; border: 1px solid rgba(176,137,58,.4); border-radius: 12px; padding: 8px;
+      background: #161b24; min-width: 0; min-height: 56px; touch-action: manipulation;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+      color: #fbf7ef;
+    }
+    .dish .mark { font-family: "Noto Serif TC", serif; font-size: 26px; color: #d4c08a; line-height: 1; }
+    .dish .name { font-size: 11px; letter-spacing: .03em; line-height: 1.25; }
+    .dish.ok { border-color: #6aaa7a; background: #1a2a20; }
+    .dish.miss { border-color: #8a3b32; background: #2a1816; }
+    .score-hero {
+      font-family: "Cormorant Garamond", "Noto Serif TC", serif;
+      font-size: clamp(40px, 9vw, 62px); line-height: 1; margin: 18px 0 6px; font-weight: 500;
+    }
+    .score-hero span { display: block; font-size: 13px; letter-spacing: .18em; text-transform: uppercase;
+      color: #8a7f70; margin-bottom: 8px; font-family: "Source Sans 3", "Noto Sans TC", sans-serif; font-weight: 700; }
+    .score-break { font-size: 13px; color: #6a6258; margin: 0 0 8px; letter-spacing: .04em; }
+    .feedback.ok { font-weight: 700; }
     footer.legal { margin-top: 36px; color: #7a7166; font-size: 12px; text-align: center; line-height: 1.55; }
     footer.legal a { color: #d4c08a; }
     @media (min-width: 680px) {
@@ -202,10 +220,10 @@
     <section id="screen-welcome" class="screen on">
       <p class="kicker" data-i18n="kicker">Mid-Autumn 2026 · Staff evening</p>
       <h1 id="mainTitle">The Mooncake Puzzle<span>月餅謎局 · 燈謎</span></h1>
-      <p class="lead" data-i18n="welcomeLead">A mooncake pair puzzle and three lantern riddles for Hong Kong Arts Centre staff. Match eight pairs, then verse, idiom, and a cryptic 燈謎. Write one line. Completing enters the prize draw.</p>
+      <p class="lead" data-i18n="welcomeLead">A Mid-Autumn evening for Hong Kong Arts Centre staff. Match eight mooncake pairs, set the reunion table, then six lantern riddles. Write one line. Completing enters the prize draw.</p>
       <div class="meta">
-        <span class="chip" data-i18n="chip1">About 8 minutes</span>
-        <span class="chip" data-i18n="chip2">Eight pairs · three 燈謎</span>
+        <span class="chip" data-i18n="chip1">About 10 minutes</span>
+        <span class="chip" data-i18n="chip2">Two games · six 燈謎</span>
         <span class="chip" data-i18n="chip3">One line · one draw</span>
       </div>
       <div class="card">
@@ -251,7 +269,25 @@
       <p class="tiny" id="playHint" style="margin:12px 0 0;color:#cfc3ae"></p>
       <div class="row">
         <button class="btn ghost" type="button" onclick="dealBoard()" data-i18n="playReset">Clear the table</button>
-        <button class="btn gold wide" id="playWinBtn" type="button" style="display:none" onclick="goToRiddles()" data-i18n="playContinue">To the lantern riddles</button>
+        <button class="btn gold wide" id="playWinBtn" type="button" style="display:none" onclick="goToTable()" data-i18n="playContinue">To the reunion table</button>
+      </div>
+    </section>
+
+    <section id="screen-table" class="screen">
+      <p class="kicker" data-i18n="tableKicker">The table</p>
+      <h1 data-i18n="tableTitle">Set the reunion table<span>團圓桌</span></h1>
+      <p class="lead" data-i18n="tableLead">Tap the four things that belong to Mid-Autumn. The others belong to a different festival.</p>
+      <div class="hud">
+        <span>Found <b id="hudTable">0</b> / 4</span>
+        <span>Score <b id="hudTableScore">0</b></span>
+      </div>
+      <div class="play-stage">
+        <div class="board" id="tableBoard" role="grid" aria-label="Reunion table"></div>
+      </div>
+      <p class="tiny" id="tableHint" style="margin:12px 0 0;color:#cfc3ae"></p>
+      <div class="row">
+        <button class="btn ghost" type="button" onclick="dealTable()" data-i18n="tableReset">Clear the table</button>
+        <button class="btn gold wide" id="tableWinBtn" type="button" style="display:none" onclick="goToRiddles()" data-i18n="tableContinue">To the lantern riddles</button>
       </div>
     </section>
 
@@ -273,6 +309,8 @@
       <p class="kicker" data-i18n="blessKicker">Closing card</p>
       <div class="blessing-card">
         <span class="score-pill" id="scorePill"></span>
+        <p class="score-hero" id="scoreHero"></p>
+        <p class="score-break" id="scoreBreak"></p>
         <h2 class="serif" id="helloName" style="margin:16px 0 0;font-size:28px"></h2>
         <p class="poem" id="blessingText"></p>
         <div class="inscription" id="shownInscription"></div>
@@ -283,7 +321,7 @@
         </div>
       </div>
       <div class="card" style="margin-top:16px">
-        <p style="margin:0 0 12px;color:#3e3558" data-i18n="ticketHelp">Tap the ticket to copy it. Completing the pairs and the lantern riddles is enough for the draw.</p>
+        <p style="margin:0 0 12px;color:#3e3558" data-i18n="ticketHelp">Tap the ticket to copy it. Completing the games and the lantern riddles is enough for the draw.</p>
         <div class="row">
           <button class="btn gold" type="button" onclick="copyTicket()" data-i18n="copyBtn">Copy ticket</button>
         </div>
@@ -308,7 +346,7 @@
           <li data-i18n="how4">After the deadline, paste the names of people who finished into the draw.</li>
           <li data-i18n="how5">If a link cannot be shared, staff may send you a lantern inscription of their own. Every completer still enters the draw.</li>
         </ol>
-        <p class="tiny" style="margin:16px 0 0">Fair play: everyone who finishes the pairs and the lantern riddles has an equal chance. Turns and riddle scores are not a ranking.</p>
+        <p class="tiny" style="margin:16px 0 0">Fair play: everyone who finishes the two games and the lantern riddles has an equal chance. The score is for the evening, not a ranking.</p>
       </div>
       <div id="hr-setup" class="card" hidden>
         <div class="grid-2">
@@ -354,6 +392,18 @@
 
   <script>
     const PAIRS = 8;
+    const TABLE_NEED = 4;
+    const PTS = 10;
+    const TABLE_ITEMS = [
+      { id: "cake", mark: "餅", zh: "月餅", en: "Mooncake", ok: true },
+      { id: "pomelo", mark: "柚", zh: "柚子", en: "Pomelo", ok: true },
+      { id: "lantern", mark: "燈", zh: "花燈", en: "Lantern", ok: true },
+      { id: "tea", mark: "茶", zh: "茶", en: "Tea", ok: true },
+      { id: "zongzi", mark: "粽", zh: "粽子", en: "Zongzi", ok: false },
+      { id: "niangao", mark: "糕", zh: "年糕", en: "New Year cake", ok: false },
+      { id: "jiaozi", mark: "餃", zh: "餃子", en: "Dumplings", ok: false },
+      { id: "tangyuan", mark: "圓", zh: "湯圓", en: "Tangyuan", ok: false }
+    ];
     const ROOMS = [
       {
         kind: "choice",
@@ -400,6 +450,51 @@
         noteOk: { zh: "邀明月，即請月來賞光。", en: "To invite the moon is to ask it to 賞光 — to honour the gathering with its light." },
         noteNo: { zh: "謎底是「賞光」：請明月來賞此光。乾杯是飲酒，不是此謎。", en: "The answer is 賞光. Cheers is the toast, not the riddle." }
       },
+      {
+        kind: "choice",
+        label: { zh: "第四盞 · 玉兔", en: "Lantern IV · The rabbit" },
+        zh: "月中玉兔並不在做月餅。較古的說法裡，牠整夜在做什麼？",
+        en: "The jade rabbit on the moon is not baking. In the older telling, what does it do all night?",
+        hint: { zh: "與長生有關。杵臼的聲音，不是烤箱的聲音。", en: "It has to do with immortality. Think of a pestle, not an oven." },
+        options: [
+          { zh: "為嫦娥點燈", en: "lighting lanterns for Chang’e", ok: false },
+          { zh: "搗煉長生藥", en: "pounding the elixir of immortality", ok: true },
+          { zh: "看守后羿的弓", en: "guarding Hou Yi’s bow", ok: false },
+          { zh: "把月亮擀成餅", en: "rolling the moon into a cake", ok: false }
+        ],
+        noteOk: { zh: "玉兔搗藥：月宮裡的工作是煉丹，不是烘焙。", en: "The rabbit pounds medicine. The moon’s labour is an elixir, not a bakery." },
+        noteNo: { zh: "正解是搗藥。點燈、守弓、擀餅都是後人添的可愛，不是古說。", en: "The older image is pounding elixir. Lanterns, bows and pastry are later sweetness." }
+      },
+      {
+        kind: "choice",
+        label: { zh: "第五盞 · 大坑", en: "Lantern V · A Hong Kong night" },
+        zh: "逾百年來，銅鑼灣大坑在中秋最為人知的，是哪一樁事？",
+        en: "For more than a century, what is Tai Hang in Causeway Bay most known for at Mid-Autumn?",
+        hint: { zh: "火、街、一條龍。不是放天燈。", en: "Fire, a street, a dragon. Not sky lanterns over the harbour." },
+        options: [
+          { zh: "維港放天燈", en: "sky lanterns over Victoria Harbour", ok: false },
+          { zh: "海洋公園兔燈巡遊", en: "a rabbit-lantern parade at Ocean Park", ok: false },
+          { zh: "舞火龍巡遊", en: "a fire-dragon dance through the streets", ok: true },
+          { zh: "辦公室博餅賭月餅", en: "office dice for mooncakes (博餅)", ok: false }
+        ],
+        noteOk: { zh: "大坑舞火龍：草龍插滿香，在街上走。這是香港自己的中秋。", en: "Tai Hang’s fire dragon: a straw body, thick with incense, walking the street. Hong Kong’s own Mid-Autumn." },
+        noteNo: { zh: "正解是大坑舞火龍。天燈較近台灣平溪；博餅是閩南的骰子戲。", en: "Tai Hang’s fire dragon. Sky lanterns belong more to Pingxi; 博餅 is a Minnan dice game." }
+      },
+      {
+        kind: "choice",
+        label: { zh: "第六盞 · 嫦娥", en: "Lantern VI · Chang’e" },
+        zh: "后羿射日，其妻吞下本應共享的仙藥，飛入月宮。十五夜裡人最念的，是哪一位？",
+        en: "Hou Yi shot the suns; his wife swallowed the elixir meant to be shared and rose to the moon. On the fifteenth night, whose name do people still call?",
+        hint: { zh: "廣寒宮。不是織女。", en: "The cold palace. Not the Weaver Girl." },
+        options: [
+          { zh: "織女", en: "Zhinü, the Weaver Girl", ok: false },
+          { zh: "女媧", en: "Nüwa", ok: false },
+          { zh: "西王母", en: "The Queen Mother of the West", ok: false },
+          { zh: "嫦娥", en: "Chang’e", ok: true }
+        ],
+        noteOk: { zh: "嫦娥奔月：中秋抬頭，仍是這一名字。", en: "Chang’e flew to the moon. On the fifteenth night, it is still her name people call." },
+        noteNo: { zh: "正解是嫦娥。織女是七夕；女媧、西王母是別的神話。", en: "The answer is Chang’e. The Weaver Girl belongs to Qixi; Nüwa and the Queen Mother are other myths." }
+      },
       { kind: "inscribe" }
     ];
 
@@ -412,24 +507,37 @@
     const I18N = {
       en: {
         kicker: "Mid-Autumn 2026 · Staff evening",
-        welcomeLead: "A mooncake pair puzzle and three lantern riddles for Hong Kong Arts Centre staff. Match eight pairs, then verse, idiom, and a cryptic 燈謎. Write one line. Completing enters the prize draw.",
-        chip1: "About 8 minutes", chip2: "Eight pairs · three 燈謎", chip3: "One line · one draw",
+        welcomeLead: "A Mid-Autumn evening for Hong Kong Arts Centre staff. Match eight mooncake pairs, set the reunion table, then six lantern riddles. Write one line. Completing enters the prize draw.",
+        chip1: "About 10 minutes", chip2: "Two games · six 燈謎", chip3: "One line · one draw",
         nameLabel: "Name, as HR will see it", startBtn: "Open the evening",
         privacy: "Your answers stay on this device. Copy the lucky ticket if HR asks for it — nothing is emailed from this page.",
         lanternKicker: "Prologue", lanternTitle: "Light one lantern",
         lanternLead: "A single lantern is enough. Then the board is laid.",
         lanternHint: "Touch the lantern", beginRiddles: "To the puzzle",
         playKicker: "The board", playTitle: "Find the eight pairs",
-        playLead: "Tap one cake, then another. A pair stays open. Eight pairs open the lantern riddles.",
+        playLead: "Tap one cake, then another. A pair stays open. Eight pairs open the reunion table.",
         playReset: "Clear the table",
         playMiss: "Those two will not sit. Try again.",
-        playDone: "The table is quiet. Three lantern riddles wait.",
-        playContinue: "To the lantern riddles",
+        playDone: "The table is quiet. Next: set the reunion table.",
+        playContinue: "To the reunion table",
+        tableKicker: "The table", tableTitle: "Set the reunion table",
+        tableLead: "Tap the four things that belong to Mid-Autumn. The others belong to a different festival.",
+        tableMiss: "Not this night.",
+        tableOk: "Correct. This belongs on the Mid-Autumn table.",
+        tableDone: "The table is set. Six lantern riddles wait.",
+        tableReset: "Clear the table",
+        tableContinue: "To the lantern riddles",
+        ansOk: "Correct.",
+        ansNo: "Not this one.",
+        scoreLabel: "Score",
+        scorePairs: "Pairs",
+        scoreTable: "Table",
+        scoreRiddles: "Riddles",
         nextBtn: "Continue", lastBtn: "Receive the closing card",
         blessKicker: "Closing card",
         fromHkac: "Hong Kong Arts Centre · 香港藝術中心",
         ticketLabel: "Lucky ticket",
-        ticketHelp: "Tap the ticket to copy it. Completing the pairs and the lantern riddles is enough for the draw.",
+        ticketHelp: "Tap the ticket to copy it. Completing the games and the lantern riddles is enough for the draw.",
         copyBtn: "Copy ticket",
         how1: "Place this file on a shared drive and copy the link. No login is required.",
         how2: "In Setup, enter the prize and deadline.",
@@ -444,7 +552,7 @@
         copied: "Copied.",
         needTwo: "Add at least one name.",
         chosen: "The lantern chooses",
-        insLabel: "第四盞 · 題燈",
+        insLabel: "第七盞 · 題燈",
         insZh: "題燈",
         insEn: "Write one line for colleagues who are not in the same room tonight. It will appear on your closing card.",
         insHint: "At most 40 characters. A prompt below may be used, or your own line.",
@@ -453,24 +561,37 @@
       },
       zh: {
         kicker: "2026 中秋 · 同事月餅謎局",
-        welcomeLead: "香港藝術中心同事的中秋：先配對八對月餅，再答三題燈謎——詩、成語、謎語——然後自題一句。完成即可抽獎。",
-        chip1: "約八分鐘", chip2: "八對 · 三題燈謎", chip3: "一句燈語 · 一次抽獎",
+        welcomeLead: "香港藝術中心同事的中秋：先配對八對月餅，再擺團圓桌，然後六題燈謎，最後自題一句。完成即可抽獎。",
+        chip1: "約十分鐘", chip2: "兩局 · 六題燈謎", chip3: "一句燈語 · 一次抽獎",
         nameLabel: "姓名（人事部將以此核對）", startBtn: "打開今晚",
         privacy: "作答只留在此裝置。人事部若需要券號，請自行複製。本頁不會寄出任何電郵。",
         lanternKicker: "序", lanternTitle: "點一盞燈",
         lanternLead: "一盞即夠。然後擺盤。",
         lanternHint: "輕觸花燈", beginRiddles: "到謎局",
         playKicker: "棋盤", playTitle: "八對月餅",
-        playLead: "先點一枚，再點另一枚。成對即留。八對齊後進入燈謎。",
+        playLead: "先點一枚，再點另一枚。成對即留。八對齊後擺團圓桌。",
         playReset: "重開",
         playMiss: "這兩枚不成對。再試。",
-        playDone: "月餅收齊。三題燈謎在後。",
-        playContinue: "去燈謎",
+        playDone: "月餅收齊。下一局：團圓桌。",
+        playContinue: "去團圓桌",
+        tableKicker: "團圓桌", tableTitle: "擺一桌中秋",
+        tableLead: "點出四樣屬於中秋的東西。其餘是別的節日。",
+        tableMiss: "不是這一夜。",
+        tableOk: "正確。這屬於中秋桌。",
+        tableDone: "桌子擺好了。六題燈謎在後。",
+        tableReset: "重開",
+        tableContinue: "去燈謎",
+        ansOk: "正確。",
+        ansNo: "不是這句。",
+        scoreLabel: "分數",
+        scorePairs: "配對",
+        scoreTable: "團圓桌",
+        scoreRiddles: "燈謎",
         nextBtn: "繼續", lastBtn: "收取結語卡",
         blessKicker: "結語卡",
         fromHkac: "香港藝術中心 · Hong Kong Arts Centre",
         ticketLabel: "幸運券",
-        ticketHelp: "輕觸券號即可複製。完成配對與燈謎即可抽獎。",
+        ticketHelp: "輕觸券號即可複製。完成遊戲與燈謎即可抽獎。",
         copyBtn: "複製券號",
         how1: "把本檔放到共用雲端並複製連結。不必登入。",
         how2: "在設定填寫獎品與截止時間。",
@@ -485,7 +606,7 @@
         copied: "已複製。",
         needTwo: "請先貼上至少一個姓名。",
         chosen: "花燈選中了",
-        insLabel: "第四盞 · 題燈",
+        insLabel: "第七盞 · 題燈",
         insZh: "題燈",
         insEn: "為今晚未能同室的同事寫一句。它會出現在結語卡上。",
         insHint: "不多於 40 字。可用下列成句，也可自撰。",
@@ -501,6 +622,20 @@
     const game = {
       running: false, pairs: 0, turns: 0, board: [], open: [], busy: false, deal: 0
     };
+
+    const table = {
+      running: false, found: 0, items: [], busy: false
+    };
+
+    function riddleCount() {
+      return ROOMS.filter(r => r.kind === "choice").length;
+    }
+    function maxScore() {
+      return PAIRS * PTS + TABLE_NEED * PTS + riddleCount() * PTS;
+    }
+    function totalScore() {
+      return game.pairs * PTS + table.found * PTS + state.correct * PTS;
+    }
 
     function t(key) { return I18N[state.lang][key]; }
 
@@ -521,17 +656,22 @@
           el.innerHTML = lang === "zh" ? "點一盞燈<span>Light one lantern</span>" : "Light one lantern<span>點一盞燈</span>";
         } else if (key === "playTitle") {
           el.innerHTML = lang === "zh" ? "八對月餅<span>Find the eight pairs</span>" : "Find the eight pairs<span>八對月餅</span>";
+        } else if (key === "tableTitle") {
+          el.innerHTML = lang === "zh" ? "擺一桌中秋<span>Set the reunion table</span>" : "Set the reunion table<span>團圓桌</span>";
         } else el.textContent = I18N[lang][key];
       });
       if (document.getElementById("screen-station").classList.contains("on")) renderRoom();
       if (document.getElementById("screen-play").classList.contains("on")) paintBoard();
+      if (document.getElementById("screen-table").classList.contains("on")) paintTable();
       paintHud();
+      paintTableHud();
       if (document.getElementById("screen-blessing").classList.contains("on")) renderBlessing();
       refreshInvite();
     }
 
     function show(id) {
       if (id !== "screen-play") stopPuzzle();
+      if (id !== "screen-table") table.running = false;
       document.querySelectorAll(".screen").forEach(s => s.classList.remove("on"));
       document.getElementById(id).classList.add("on");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -549,6 +689,7 @@
       }
       err.textContent = "";
       state.name = name; state.i = 0; state.correct = 0; state.score = 0; state.turns = 0; state.lit = false; state.inscription = "";
+      table.found = 0; table.items = []; table.running = false;
       document.getElementById("beginRiddles").disabled = true;
       document.getElementById("lanternBody").setAttribute("fill", "#3a241c");
       document.getElementById("flame").setAttribute("opacity", "0");
@@ -636,10 +777,103 @@
       game.open = [];
     }
 
-    function goToRiddles() {
+    function goToTable() {
       if (game.pairs < PAIRS) return;
       stopPuzzle();
-      state.score = game.pairs;
+      state.turns = game.turns;
+      show("screen-table");
+      dealTable();
+    }
+
+    function dealTable() {
+      table.items = shuffle(TABLE_ITEMS.map(item => ({ ...item, picked: false })));
+      table.found = 0;
+      table.busy = false;
+      table.running = true;
+      const winBtn = document.getElementById("tableWinBtn");
+      if (winBtn) winBtn.style.display = "none";
+      const hint = document.getElementById("tableHint");
+      if (hint) hint.textContent = "";
+      paintTable();
+      paintTableHud();
+    }
+
+    function paintTableHud() {
+      const foundEl = document.getElementById("hudTable");
+      const scoreEl = document.getElementById("hudTableScore");
+      if (foundEl) {
+        foundEl.textContent = table.found;
+        const wrap = foundEl.parentElement;
+        if (wrap && wrap.firstChild) wrap.firstChild.textContent = (state.lang === "zh" ? "找到 " : "Found ");
+        if (foundEl.nextSibling) foundEl.nextSibling.textContent = " / 4";
+      }
+      if (scoreEl) {
+        scoreEl.textContent = totalScore();
+        const wrap = scoreEl.parentElement;
+        if (wrap && wrap.firstChild) wrap.firstChild.textContent = t("scoreLabel") + " ";
+      }
+    }
+
+    function paintTable() {
+      const box = document.getElementById("tableBoard");
+      if (!box) return;
+      box.innerHTML = "";
+      table.items.forEach((item, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "dish" + (item.picked && item.ok ? " ok" : "");
+        btn.disabled = !table.running || table.busy || (item.picked && item.ok);
+        btn.dataset.ok = item.ok ? "1" : "0";
+        btn.dataset.id = item.id;
+        const mark = document.createElement("span");
+        mark.className = "mark";
+        mark.textContent = item.mark;
+        const name = document.createElement("span");
+        name.className = "name";
+        name.textContent = state.lang === "zh" ? item.zh : item.en;
+        btn.appendChild(mark);
+        btn.appendChild(name);
+        btn.onclick = () => tapDish(i);
+        box.appendChild(btn);
+      });
+    }
+
+    function tapDish(i) {
+      if (!table.running || table.busy) return;
+      const item = table.items[i];
+      if (!item || (item.picked && item.ok)) return;
+      const hint = document.getElementById("tableHint");
+      if (item.ok) {
+        item.picked = true;
+        table.found += 1;
+        paintTableHud();
+        chime(520 + table.found * 40);
+        if (hint) hint.textContent = t("tableOk");
+        paintTable();
+        if (table.found >= TABLE_NEED) {
+          table.running = false;
+          if (hint) hint.textContent = t("tableDone");
+          const winBtn = document.getElementById("tableWinBtn");
+          if (winBtn) winBtn.style.display = "inline-flex";
+          chime(880);
+        }
+      } else {
+        table.busy = true;
+        if (hint) hint.textContent = t("tableMiss");
+        chime(196);
+        const btn = document.querySelectorAll("#tableBoard .dish")[i];
+        if (btn) btn.classList.add("miss");
+        setTimeout(() => {
+          table.busy = false;
+          if (hint && table.found < TABLE_NEED) hint.textContent = "";
+          paintTable();
+        }, 550);
+      }
+    }
+
+    function goToRiddles() {
+      if (table.found < TABLE_NEED) return;
+      table.running = false;
       state.turns = game.turns;
       state.i = 0;
       renderRoom();
@@ -647,20 +881,21 @@
     }
 
     function renderRoom() {
-      const roman = ["I", "II", "III", "IV"];
+      const total = ROOMS.length;
       document.getElementById("stKicker").textContent =
-        (state.lang === "zh" ? "第 " + (state.i + 1) + " 盞，共四盞" : "Lantern " + roman[state.i] + " of IV");
+        (state.lang === "zh" ? "第 " + (state.i + 1) + " 盞，共 " + total + " 盞" : "Lantern " + (state.i + 1) + " of " + total);
       const prog = document.getElementById("progress");
       prog.innerHTML = "";
-      for (let n = 0; n < 4; n++) {
+      for (let n = 0; n < total; n++) {
         const b = document.createElement("b");
         if (n < state.i) b.className = "done";
         else if (n === state.i) b.className = "on";
         prog.appendChild(b);
       }
       document.getElementById("feedback").textContent = "";
+      document.getElementById("feedback").className = "feedback";
       document.getElementById("nextBtn").style.display = "none";
-      document.getElementById("nextBtn").textContent = state.i === 3 ? t("lastBtn") : t("nextBtn");
+      document.getElementById("nextBtn").textContent = state.i === total - 1 ? t("lastBtn") : t("nextBtn");
       document.getElementById("stBody").innerHTML = "";
       state.locked = false;
       const room = ROOMS[state.i];
@@ -693,8 +928,12 @@
       });
       const ok = room.options[idx].ok;
       if (ok) { state.correct += 1; chime(659.25); }
-      document.getElementById("feedback").textContent = ok ? room.noteOk[state.lang] : room.noteNo[state.lang];
-      document.getElementById("feedback").style.color = ok ? "#2f6b45" : "#6a3b32";
+      const mark = ok ? t("ansOk") : t("ansNo");
+      const note = ok ? room.noteOk[state.lang] : room.noteNo[state.lang];
+      const fb = document.getElementById("feedback");
+      fb.textContent = mark + " " + note;
+      fb.className = "feedback" + (ok ? " ok" : "");
+      fb.style.color = ok ? "#2f6b45" : "#6a3b32";
       document.getElementById("nextBtn").style.display = "inline-flex";
     }
 
@@ -772,9 +1011,6 @@
     }
 
     function renderInscribe() {
-      document.getElementById("stKicker").textContent = state.lang === "zh" ? "題燈" : "Inscription";
-      const prog = document.getElementById("progress");
-      prog.innerHTML = "<b class='done'></b><b class='on'></b>";
       document.getElementById("feedback").textContent = "";
       document.getElementById("nextBtn").style.display = "none";
       document.getElementById("nextBtn").textContent = t("lastBtn");
@@ -833,6 +1069,7 @@
     function finishHunt() {
       const seed = state.name.replace(/\s+/g, "").slice(0, 3).toUpperCase() || "HK";
       state.ticket = "HKAC-MAF-" + seed + Math.floor(1000 + (Math.abs(hash(state.name + Date.now())) % 9000));
+      state.score = totalScore();
       renderBlessing();
       show("screen-blessing");
       chime(784);
@@ -841,11 +1078,26 @@
     function hash(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h << 5) - h + s.charCodeAt(i); return h; }
 
     function renderBlessing() {
+      const total = totalScore();
+      const cap = maxScore();
+      const pairsPts = game.pairs * PTS;
+      const tablePts = table.found * PTS;
+      const riddlePts = state.correct * PTS;
+      const riddleCap = riddleCount() * PTS;
       document.getElementById("helloName").textContent = (state.lang === "zh" ? "" : "Dear ") + state.name;
       document.getElementById("scorePill").textContent =
-        (state.lang === "zh" ? "成對 " : "Pairs ") + (state.score || 0) +
-        " · " + (state.lang === "zh" ? "燈謎 " : "riddles ") + (state.correct || 0) + "/3" +
-        " · " + (state.lang === "zh" ? "翻次 " : "turns ") + (state.turns || 0);
+        (state.lang === "zh" ? "翻次 " : "Turns ") + (state.turns || 0);
+      const hero = document.getElementById("scoreHero");
+      if (hero) {
+        hero.innerHTML = "<span>" + t("scoreLabel") + "</span>" + total + " / " + cap;
+      }
+      const br = document.getElementById("scoreBreak");
+      if (br) {
+        br.textContent =
+          t("scorePairs") + " " + pairsPts +
+          " · " + t("scoreTable") + " " + tablePts +
+          " · " + t("scoreRiddles") + " " + riddlePts + " / " + riddleCap;
+      }
       document.getElementById("blessingText").textContent = state.lang === "zh"
         ? "香港藝術中心祝你中秋安好。未能同桌，仍共這一輪月。"
         : "Hong Kong Arts Centre wishes you a settled Mid-Autumn. We are not at one table, and still under one moon.";
@@ -894,10 +1146,10 @@
 
 Dear colleagues,
 
-You are invited to The Mooncake Puzzle / 月餅謎局 · 燈謎: match eight pairs of cakes, then three lantern riddles (verse, idiom, cryptic), then write one line. Completing enters the prize draw. Nothing is emailed from the page — copy your ticket if asked.
+You are invited to The Mooncake Puzzle / 月餅謎局 · 燈謎: match eight pairs of cakes, set a reunion table, then six lantern riddles, then write one line. Completing enters the prize draw. Nothing is emailed from the page — copy your ticket if asked.
 
 1. Open: ${playLink}
-2. Enter your name, light the lantern, play the puzzle, then the 燈謎.
+2. Enter your name, light the lantern, play both games, then the 燈謎.
 3. Keep your lucky ticket if HR asks for it.
 
 Prize: ${cfg.prize || "a Mid-Autumn mooncake gift set"}
@@ -908,7 +1160,7 @@ If the link will not open, send HR your name and one lantern line of your own. Y
 
 各位同事：
 
-香港藝術中心誠邀參加「月餅謎局 · 燈謎」：先配對八對月餅，再答三題燈謎（詩、成語、謎語），然後自題一句。完成即可抽獎。本頁不會寄電郵。獎品：${cfg.prize || "中秋月餅禮盒"}。截止：${cfg.deadline || "［請填日期時間］"}。
+香港藝術中心誠邀參加「月餅謎局 · 燈謎」：先配對八對月餅，再擺團圓桌，然後六題燈謎，最後自題一句。完成即可抽獎。本頁不會寄電郵。獎品：${cfg.prize || "中秋月餅禮盒"}。截止：${cfg.deadline || "［請填日期時間］"}。
 
 Hong Kong Arts Centre
 2 Harbour Road, Wan Chai
