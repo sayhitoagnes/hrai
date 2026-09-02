@@ -178,8 +178,12 @@
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
       color: #fbf7ef;
     }
-    .dish .mark { font-family: "Noto Serif TC", serif; font-size: 26px; color: #d4c08a; line-height: 1; }
-    .dish .name { font-size: 11px; letter-spacing: .03em; line-height: 1.25; }
+    .dish .mark { font-family: "Noto Serif TC", serif; font-size: 22px; color: #d4c08a; line-height: 1; }
+    .dish .name { font-size: 11px; letter-spacing: .03em; line-height: 1.25; text-align: center; }
+    .dish .tile-hint {
+      display: block; font-size: 10px; letter-spacing: .02em; line-height: 1.25;
+      color: #d4c08a; font-style: normal; margin-top: 2px;
+    }
     .dish.ok { border-color: #6aaa7a; background: #1a2a20; }
     .dish.miss { border-color: #8a3b32; background: #2a1816; }
     .score-hero {
@@ -270,7 +274,7 @@
     <section id="screen-table" class="screen">
       <p class="kicker" data-i18n="tableKicker">The table</p>
       <h1 data-i18n="tableTitle">Set the reunion table<span>團圓桌</span></h1>
-      <p class="lead" data-i18n="tableLead">Tap the four things that belong to Mid-Autumn. The others belong to a different festival.</p>
+      <p class="lead" data-i18n="tableLead">The pantry mixed the festivals. Tap the four Mid-Autumn guests. Send 年糕 (sticky New Year cake) and 湯圓 (sweet rice balls for 冬至 / 元宵) home — they came to the wrong party.</p>
       <div class="hud">
         <span>Found <b id="hudTable">0</b> / 4</span>
         <span>Score <b id="hudTableScore">0</b></span>
@@ -348,14 +352,34 @@
     const TABLE_NEED = 4;
     const PTS = 10;
     const TABLE_ITEMS = [
-      { id: "cake", mark: "餅", zh: "月餅", en: "Mooncake", ok: true },
-      { id: "pomelo", mark: "柚", zh: "柚子", en: "Pomelo", ok: true },
-      { id: "lantern", mark: "燈", zh: "花燈", en: "Lantern", ok: true },
-      { id: "tea", mark: "茶", zh: "茶", en: "Tea", ok: true },
-      { id: "zongzi", mark: "粽", zh: "粽子", en: "Zongzi", ok: false },
-      { id: "niangao", mark: "糕", zh: "年糕", en: "New Year cake", ok: false },
-      { id: "jiaozi", mark: "餃", zh: "餃子", en: "Dumplings", ok: false },
-      { id: "tangyuan", mark: "圓", zh: "湯圓", en: "Tangyuan", ok: false }
+      { id: "cake", mark: "月餅", zh: "月餅", en: "Mooncake", ok: true },
+      { id: "pomelo", mark: "柚子", zh: "柚子", en: "Pomelo", ok: true },
+      { id: "lantern", mark: "花燈", zh: "花燈", en: "Lantern", ok: true },
+      { id: "tea", mark: "清茶", zh: "清茶", en: "Tea", ok: true },
+      { id: "zongzi", mark: "粽子", zh: "粽子", en: "Zongzi", hintZh: "端午節", hintEn: "Dragon Boat", ok: false },
+      {
+        id: "niangao",
+        mark: "年糕",
+        zh: "年糕",
+        en: "Nian gao",
+        hintZh: "新年黏糕 · 不是中秋",
+        hintEn: "sticky New Year cake · not Mid-Autumn",
+        missZh: "走錯場了。糕是年糕：新年的黏糕，不是月餅。",
+        missEn: "Wrong party. 糕 here is 年糕 — sticky Lunar New Year cake, not mooncake.",
+        ok: false
+      },
+      { id: "jiaozi", mark: "餃子", zh: "餃子", en: "Dumplings", hintZh: "冬至／新年", hintEn: "Winter / New Year", ok: false },
+      {
+        id: "tangyuan",
+        mark: "湯圓",
+        zh: "湯圓",
+        en: "Tangyuan",
+        hintZh: "冬至／元宵的圓子 · 不是中秋",
+        hintEn: "sweet rice balls · 冬至 / 元宵",
+        missZh: "走錯場了。圓是湯圓：冬至／元宵的圓子，今晚不請。",
+        missEn: "Wrong party. 圓 here is 湯圓 — sweet rice balls for 冬至 / 元宵, not Mid-Autumn.",
+        ok: false
+      }
     ];
     const ROOMS = [
       {
@@ -474,9 +498,9 @@
         playDone: "The table is quiet. Next: set the reunion table.",
         playContinue: "To the reunion table",
         tableKicker: "The table", tableTitle: "Set the reunion table",
-        tableLead: "Tap the four things that belong to Mid-Autumn. The others belong to a different festival.",
-        tableMiss: "Not this night.",
-        tableOk: "Correct. This belongs on the Mid-Autumn table.",
+        tableLead: "The pantry mixed the festivals. Tap the four Mid-Autumn guests. Send 年糕 (sticky New Year cake) and 湯圓 (sweet rice balls for 冬至 / 元宵) home — they came to the wrong party.",
+        tableMiss: "Wrong party. That guest is crashing a different festival.",
+        tableOk: "Seat taken. 年糕 and 湯圓 can wait for another night.",
         tableDone: "The table is set. Six lantern riddles wait.",
         tableReset: "Clear the table",
         tableContinue: "To the lantern riddles",
@@ -521,9 +545,9 @@
         playDone: "月餅收齊。下一局：團圓桌。",
         playContinue: "去團圓桌",
         tableKicker: "團圓桌", tableTitle: "擺一桌中秋",
-        tableLead: "點出四樣屬於中秋的東西。其餘是別的節日。",
-        tableMiss: "不是這一夜。",
-        tableOk: "正確。這屬於中秋桌。",
+        tableLead: "廚房把節日搞混了。點出中秋請來的四位。年糕是新年的黏糕；湯圓是冬至／元宵的圓子——今晚不請，請送回家。",
+        tableMiss: "走錯場了。那位是別的節日的客人。",
+        tableOk: "入座。年糕、湯圓請改日再來。",
         tableDone: "桌子擺好了。六題燈謎在後。",
         tableReset: "重開",
         tableContinue: "去燈謎",
@@ -769,7 +793,14 @@
         mark.textContent = item.mark;
         const name = document.createElement("span");
         name.className = "name";
+        const hint = state.lang === "zh" ? item.hintZh : item.hintEn;
         name.textContent = state.lang === "zh" ? item.zh : item.en;
+        if (hint) {
+          const hintEl = document.createElement("em");
+          hintEl.className = "tile-hint";
+          hintEl.textContent = hint;
+          name.appendChild(hintEl);
+        }
         btn.appendChild(mark);
         btn.appendChild(name);
         btn.onclick = () => tapDish(i);
@@ -798,7 +829,8 @@
         }
       } else {
         table.busy = true;
-        if (hint) hint.textContent = t("tableMiss");
+        const missNote = state.lang === "zh" ? (item.missZh || t("tableMiss")) : (item.missEn || t("tableMiss"));
+        if (hint) hint.textContent = missNote;
         chime(196);
         const btn = document.querySelectorAll("#tableBoard .dish")[i];
         if (btn) btn.classList.add("miss");
