@@ -138,6 +138,7 @@
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
       padding: 16px; width: 100%; max-width: 400px; margin: 0 auto;
     }
+    #tableBoard { max-width: 440px; gap: 8px; }
     .tile {
       aspect-ratio: 1; border: 1px solid rgba(176,137,58,.4); border-radius: 12px; padding: 6px;
       background: #161b24; position: relative; min-width: 0; min-height: 56px;
@@ -178,14 +179,15 @@
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
       color: #fbf7ef;
     }
-    .dish .mark { font-family: "Noto Serif TC", serif; font-size: 22px; color: #d4c08a; line-height: 1; }
+    .dish .mark { font-family: "Noto Serif TC", serif; font-size: 20px; color: #d4c08a; line-height: 1; }
     .dish .name { font-size: 11px; letter-spacing: .03em; line-height: 1.25; text-align: center; }
-    .dish.ok { border-color: #6aaa7a; background: #1a2a20; }
+    .dish.chosen { box-shadow: 0 0 0 3px #d4c08a; background: #1c2430; }
+    .dish.ok { border-color: #6aaa7a; background: #1a2a20; box-shadow: none; }
     .dish.miss { border-color: #8a3b32; background: #2a1816; }
     @media (max-width: 480px) {
-      .dish { aspect-ratio: 1; min-height: 72px; padding: 6px 4px; }
-      .dish .mark { font-size: 20px; }
-      .dish .name { font-size: 10px; }
+      .dish { aspect-ratio: 1; min-height: 68px; padding: 5px 3px; }
+      .dish .mark { font-size: 16px; }
+      .dish .name { font-size: 9px; }
     }
     .score-hero {
       font-family: "Cormorant Garamond", "Noto Serif TC", serif;
@@ -275,9 +277,9 @@
     <section id="screen-table" class="screen">
       <p class="kicker" data-i18n="tableKicker">The table</p>
       <h1 data-i18n="tableTitle">Set the reunion table<span>團圓桌</span></h1>
-      <p class="lead" data-i18n="tableLead">Eight guests, four seats. Mid-Autumn is picky tonight. Tap who belongs — the rest can explain themselves to another festival.</p>
+      <p class="lead" data-i18n="tableLead">Twelve guests. Four seats under tonight’s moon. Choose four, then seat them. No tasting until the places are full.</p>
       <div class="hud">
-        <span>Found <b id="hudTable">0</b> / 4</span>
+        <span>Seated <b id="hudTable">0</b> / 4</span>
         <span>Score <b id="hudTableScore">0</b></span>
       </div>
       <div class="play-stage">
@@ -286,6 +288,7 @@
       <p class="tiny" id="tableHint" style="margin:12px 0 0;color:#cfc3ae"></p>
       <div class="row">
         <button class="btn ghost" type="button" onclick="dealTable()" data-i18n="tableReset">Clear the table</button>
+        <button class="btn gold wide" id="tableSeatBtn" type="button" onclick="seatTable()" data-i18n="tableSeat" disabled>Seat them</button>
         <button class="btn gold wide" id="tableWinBtn" type="button" style="display:none" onclick="goToRiddles()" data-i18n="tableContinue">To the lantern riddles</button>
       </div>
     </section>
@@ -353,14 +356,18 @@
     const TABLE_NEED = 4;
     const PTS = 10;
     const TABLE_ITEMS = [
-      { id: "cake", mark: "月餅", zh: "月餅", en: "Mooncake", ok: true },
-      { id: "pomelo", mark: "柚子", zh: "柚子", en: "Pomelo", ok: true },
-      { id: "lantern", mark: "花燈", zh: "花燈", en: "Lantern", ok: true },
-      { id: "tea", mark: "清茶", zh: "清茶", en: "Tea", ok: true },
+      { id: "cake", mark: "月餅", zh: "月餅", en: "Yuebing", ok: true },
+      { id: "pomelo", mark: "柚子", zh: "柚子", en: "Youzi", ok: true },
+      { id: "lantern", mark: "花燈", zh: "花燈", en: "Huadeng", ok: true },
+      { id: "tea", mark: "清茶", zh: "清茶", en: "Qingcha", ok: true },
       { id: "zongzi", mark: "粽子", zh: "粽子", en: "Zongzi", ok: false },
-      { id: "niangao", mark: "年糕", zh: "年糕", en: "Nian gao", ok: false },
-      { id: "jiaozi", mark: "餃子", zh: "餃子", en: "Dumplings", ok: false },
-      { id: "tangyuan", mark: "湯圓", zh: "湯圓", en: "Tangyuan", ok: false }
+      { id: "niangao", mark: "年糕", zh: "年糕", en: "Niangao", ok: false },
+      { id: "jiaozi", mark: "餃子", zh: "餃子", en: "Jiaozi", ok: false },
+      { id: "tangyuan", mark: "湯圓", zh: "湯圓", en: "Tangyuan", ok: false },
+      { id: "yuanxiao", mark: "元宵", zh: "元宵", en: "Yuanxiao", ok: false },
+      { id: "luobo", mark: "蘿蔔糕", zh: "蘿蔔糕", en: "Luobogao", ok: false },
+      { id: "yolk", mark: "蛋黃酥", zh: "蛋黃酥", en: "Danhuangsu", ok: false },
+      { id: "peach", mark: "桃花", zh: "桃花", en: "Taohua", ok: false }
     ];
     const ROOMS = [
       {
@@ -479,11 +486,15 @@
         playDone: "The table is quiet. Next: set the reunion table.",
         playContinue: "To the reunion table",
         tableKicker: "The table", tableTitle: "Set the reunion table",
-        tableLead: "Eight guests, four seats. Mid-Autumn is picky tonight. Tap who belongs — the rest can explain themselves to another festival.",
-        tableMiss: "Not tonight. That guest can try another festival.",
+        tableLead: "Twelve guests. Four seats under tonight’s moon. Choose four, then seat them. No tasting until the places are full.",
+        tableNeed: "Choose four guests, then seat them. The house will not say who belongs until the places are full.",
+        tableMiss: "None of these four were invited. Clear them and try another set.",
+        tablePartial: "Some of these may stay. The others were not invited. Fill the empty seats.",
+        tableFull: "Four seats only. Unseat one first.",
         tableOk: "This one may stay.",
         tableDone: "The table is set. Six lantern riddles wait.",
         tableReset: "Clear the table",
+        tableSeat: "Seat them",
         tableContinue: "To the lantern riddles",
         ansOk: "Correct.",
         ansNo: "Not this one.",
@@ -526,11 +537,15 @@
         playDone: "月餅收齊。下一局：團圓桌。",
         playContinue: "去團圓桌",
         tableKicker: "團圓桌", tableTitle: "擺一桌中秋",
-        tableLead: "八位客人，四個座位。中秋今晚很挑。點出該入席的——其餘請向別的節日報到。",
-        tableMiss: "不是今晚。那位請改日再來。",
+        tableLead: "十二位客人，四個座位。先點四位，再請入席。未坐滿，不試菜。",
+        tableNeed: "先選四位，再請入席。未坐滿，不會告訴你誰該留下。",
+        tableMiss: "這四位都不請。請撤下，另選一組。",
+        tablePartial: "有人可以留下。其餘不是今晚的客人。請補上空位。",
+        tableFull: "只有四席。請先撤一位。",
         tableOk: "可以入座。",
         tableDone: "桌子擺好了。六題燈謎在後。",
         tableReset: "重開",
+        tableSeat: "請入席",
         tableContinue: "去燈謎",
         ansOk: "正確。",
         ansNo: "不是這句。",
@@ -730,16 +745,34 @@
     }
 
     function dealTable() {
-      table.items = shuffle(TABLE_ITEMS.map(item => ({ ...item, picked: false })));
+      table.items = shuffle(TABLE_ITEMS.map(item => ({ ...item, locked: false, chosen: false, flashMiss: false })));
       table.found = 0;
       table.busy = false;
       table.running = true;
       const winBtn = document.getElementById("tableWinBtn");
       if (winBtn) winBtn.style.display = "none";
+      const seatBtn = document.getElementById("tableSeatBtn");
+      if (seatBtn) seatBtn.style.display = "inline-flex";
       const hint = document.getElementById("tableHint");
-      if (hint) hint.textContent = "";
+      if (hint) hint.textContent = t("tableNeed");
       paintTable();
       paintTableHud();
+    }
+
+    function tableChosenCount() {
+      return table.items.filter(item => item.chosen && !item.locked).length;
+    }
+
+    function tableRemaining() {
+      return TABLE_NEED - table.found;
+    }
+
+    function syncSeatBtn() {
+      const seatBtn = document.getElementById("tableSeatBtn");
+      if (!seatBtn) return;
+      const remain = tableRemaining();
+      seatBtn.disabled = !table.running || table.busy || remain <= 0 || tableChosenCount() !== remain;
+      seatBtn.style.display = table.running && remain > 0 ? "inline-flex" : "none";
     }
 
     function paintTableHud() {
@@ -748,7 +781,7 @@
       if (foundEl) {
         foundEl.textContent = table.found;
         const wrap = foundEl.parentElement;
-        if (wrap && wrap.firstChild) wrap.firstChild.textContent = (state.lang === "zh" ? "找到 " : "Found ");
+        if (wrap && wrap.firstChild) wrap.firstChild.textContent = (state.lang === "zh" ? "入席 " : "Seated ");
         if (foundEl.nextSibling) foundEl.nextSibling.textContent = " / 4";
       }
       if (scoreEl) {
@@ -756,6 +789,7 @@
         const wrap = scoreEl.parentElement;
         if (wrap && wrap.firstChild) wrap.firstChild.textContent = t("scoreLabel") + " ";
       }
+      syncSeatBtn();
     }
 
     function paintTable() {
@@ -765,9 +799,13 @@
       table.items.forEach((item, i) => {
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "dish" + (item.picked && item.ok ? " ok" : "");
-        btn.disabled = !table.running || table.busy || (item.picked && item.ok);
-        btn.dataset.ok = item.ok ? "1" : "0";
+        let cls = "dish";
+        if (item.locked) cls += " ok";
+        else if (item.chosen) cls += " chosen";
+        if (item.flashMiss) cls += " miss";
+        btn.className = cls;
+        btn.disabled = !table.running || table.busy || item.locked;
+        btn.setAttribute("aria-pressed", item.chosen || item.locked ? "true" : "false");
         btn.dataset.id = item.id;
         const mark = document.createElement("span");
         mark.className = "mark";
@@ -780,39 +818,70 @@
         btn.onclick = () => tapDish(i);
         box.appendChild(btn);
       });
+      syncSeatBtn();
     }
 
     function tapDish(i) {
       if (!table.running || table.busy) return;
       const item = table.items[i];
-      if (!item || (item.picked && item.ok)) return;
+      if (!item || item.locked) return;
       const hint = document.getElementById("tableHint");
-      if (item.ok) {
-        item.picked = true;
-        table.found += 1;
-        paintTableHud();
-        chime(520 + table.found * 40);
-        if (hint) hint.textContent = t("tableOk");
+      if (item.chosen) {
+        item.chosen = false;
+        if (hint) hint.textContent = t("tableNeed");
         paintTable();
-        if (table.found >= TABLE_NEED) {
-          table.running = false;
-          if (hint) hint.textContent = t("tableDone");
-          const winBtn = document.getElementById("tableWinBtn");
-          if (winBtn) winBtn.style.display = "inline-flex";
-          chime(880);
+        return;
+      }
+      if (tableChosenCount() >= tableRemaining()) {
+        if (hint) hint.textContent = t("tableFull");
+        return;
+      }
+      item.chosen = true;
+      if (hint) hint.textContent = "";
+      paintTable();
+    }
+
+    function seatTable() {
+      if (!table.running || table.busy) return;
+      const remain = tableRemaining();
+      const batch = table.items.filter(item => item.chosen && !item.locked);
+      if (batch.length !== remain || remain <= 0) return;
+      table.busy = true;
+      let gained = 0;
+      batch.forEach(item => {
+        if (item.ok) {
+          item.locked = true;
+          item.chosen = false;
+          gained += 1;
+        } else {
+          item.chosen = false;
+          item.flashMiss = true;
         }
+      });
+      table.found += gained;
+      const hint = document.getElementById("tableHint");
+      paintTableHud();
+      if (table.found >= TABLE_NEED) {
+        table.running = false;
+        if (hint) hint.textContent = t("tableDone");
+        const winBtn = document.getElementById("tableWinBtn");
+        if (winBtn) winBtn.style.display = "inline-flex";
+        const seatBtn = document.getElementById("tableSeatBtn");
+        if (seatBtn) seatBtn.style.display = "none";
+        chime(880);
+      } else if (gained) {
+        if (hint) hint.textContent = t("tablePartial");
+        chime(520 + table.found * 40);
       } else {
-        table.busy = true;
         if (hint) hint.textContent = t("tableMiss");
         chime(196);
-        const btn = document.querySelectorAll("#tableBoard .dish")[i];
-        if (btn) btn.classList.add("miss");
-        setTimeout(() => {
-          table.busy = false;
-          if (hint && table.found < TABLE_NEED) hint.textContent = "";
-          paintTable();
-        }, 550);
       }
+      paintTable();
+      setTimeout(() => {
+        table.items.forEach(item => { item.flashMiss = false; });
+        table.busy = false;
+        paintTable();
+      }, 650);
     }
 
     function goToRiddles() {
