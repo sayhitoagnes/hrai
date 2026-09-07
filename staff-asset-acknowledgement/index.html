@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Asset Acknowledgement Form | Hong Kong Arts Centre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #141414;
+      --ink-soft: #3d3a36;
+      --muted: #6f6a64;
+      --line: #d9d2c8;
+      --line-strong: #1a1a1a;
+      --paper: #f6f1ea;
+      --sheet: #fffcf7;
+      --accent: #a61c2b;
+      --accent-soft: #f8e8ea;
+      --ok: #1c5c43;
+      --ok-soft: #e4f3ec;
+      --warn: #8a5a12;
+      --warn-soft: #f8efd8;
+      --shadow: 0 18px 40px rgba(28, 24, 20, 0.08);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 500px at 10% -10%, #fff 0%, transparent 50%),
+        linear-gradient(180deg, #efe8de 0%, var(--paper) 28%, #ece6dc 100%);
+    }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    header.site {
+      padding: 18px 0 8px;
+    }
+    .site-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand img {
+      height: 72px;
+      width: auto;
+      display: block;
+    }
+    .brand h1 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1.55rem;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: 0.01em;
+      line-height: 1.15;
+    }
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .header-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .btn {
+      border: 1px solid var(--line-strong);
+      background: var(--sheet);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 500;
+    }
+    .btn:hover { background: #fff; }
+    .btn.primary {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+    .btn.primary:hover { background: #000; }
+    .btn.accent {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .btn.ghost { background: transparent; }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .chip.draft { background: var(--warn-soft); color: var(--warn); }
+    .chip.staff_signed { background: #e8eef8; color: #254a86; }
+    .chip.completed { background: var(--ok-soft); color: var(--ok); }
+    .chip.returned { background: #eeeae4; color: var(--ink-soft); }
+    main { padding: 8px 0 64px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 18px;
+      margin: 18px 0 22px;
+    }
+    .panel {
+      background: var(--sheet);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-copy, .hero-note { padding: 22px 24px; }
+    .kicker {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin: 0 0 8px;
+    }
+    .hero h2 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 2rem;
+      margin: 0 0 10px;
+      font-weight: 600;
+    }
+    .hero p, .muted { color: var(--ink-soft); line-height: 1.55; }
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .search {
+      flex: 1;
+      min-width: 220px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: var(--sheet);
+    }
+    .cards { display: grid; gap: 12px; }
+    .card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 16px 18px;
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+      background: var(--sheet);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .card:hover { border-color: var(--ink); }
+    .card h3 { margin: 0 0 4px; font-size: 1.05rem; }
+    .meta { color: var(--muted); font-size: 0.85rem; }
+    .sheet {
+      background: var(--sheet);
+      border: 1px solid var(--line-strong);
+      border-radius: 4px;
+      box-shadow: var(--shadow);
+      padding: 28px 30px 36px;
+    }
+    .form-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 16px;
+      margin-bottom: 18px;
+    }
+    .form-title h2 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      margin: 0;
+      font-size: 1.85rem;
+      font-weight: 600;
+    }
+    .form-title .ref { color: var(--muted); font-size: 0.8rem; margin-top: 4px; }
+    .grid-2, .grid-4 { display: grid; gap: 12px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; margin: 16px 0; }
+    .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    label.field { display: flex; flex-direction: column; gap: 6px; font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+    label.field input, label.field select, label.field textarea {
+      border: 0;
+      border-bottom: 1px solid var(--ink);
+      background: transparent;
+      padding: 8px 2px;
+      font-size: 0.98rem;
+      font-weight: 400;
+      color: var(--ink);
+      border-radius: 0;
+    }
+    label.field input:focus, label.field select:focus, label.field textarea:focus {
+      outline: none;
+      border-bottom-width: 2px;
+    }
+    .ack-line {
+      margin: 8px 0 18px;
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+    .event-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 4px; }
+    .event {
+      border: 1px solid var(--line);
+      background: transparent;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+    }
+    .event.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+    table.assets {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    table.assets th, table.assets td {
+      border: 1px solid var(--ink);
+      padding: 8px 10px;
+      vertical-align: top;
+    }
+    table.assets th {
+      background: #f3eee6;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-align: left;
+    }
+    .asset-name { font-weight: 600; }
+    .detail-row { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+    .detail-row label { font-size: 0.82rem; color: var(--ink-soft); display: flex; gap: 6px; align-items: center; font-weight: 400; }
+    .detail-row input[type="text"], .detail-row input[type="date"] {
+      border: 0;
+      border-bottom: 1px dashed var(--muted);
+      background: transparent;
+      min-width: 140px;
+      padding: 2px 4px;
+    }
+    .notes {
+      margin-top: 22px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .notes h3 { margin: 0 0 8px; font-size: 0.95rem; }
+    .notes ol { margin: 0; padding-left: 18px; color: var(--ink-soft); }
+    .notes li { margin: 6px 0; }
+    .policy {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-top: 14px;
+      padding: 12px;
+      background: var(--accent-soft);
+      border-radius: 10px;
+    }
+    .signs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 22px;
+    }
+    .sign-box {
+      border: 1px solid var(--ink);
+      min-height: 180px;
+      padding: 12px;
+      background: #fff;
+    }
+    .sign-box h3 { margin: 0 0 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .sign-box img { max-width: 100%; height: 88px; object-fit: contain; display: block; }
+    .sign-meta { color: var(--muted); font-size: 0.8rem; margin-top: 8px; }
+    .actions-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+      position: sticky;
+      bottom: 12px;
+      background: rgba(255,252,247,0.94);
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .banner {
+      margin: 12px 0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+    .banner.error { background: var(--accent-soft); color: var(--accent); }
+    .banner.ok { background: var(--ok-soft); color: var(--ok); }
+    .empty { padding: 28px; text-align: center; color: var(--muted); }
+    dialog {
+      border: 1px solid var(--ink);
+      border-radius: 12px;
+      padding: 0;
+      width: min(560px, 94vw);
+      background: var(--sheet);
+    }
+    dialog::backdrop { background: rgba(20, 16, 12, 0.45); }
+    .dlg { padding: 18px 20px 20px; }
+    .dlg h3 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.5rem; margin: 0 0 8px; }
+    canvas.pad {
+      width: 100%;
+      height: 160px;
+      border: 1px dashed var(--muted);
+      background: #fff;
+      touch-action: none;
+      border-radius: 8px;
+    }
+    footer.site {
+      padding: 8px 0 28px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+    .back {
+      background: none;
+      border: 0;
+      padding: 0;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    @media (max-width: 860px) {
+      .hero, .grid-2, .grid-4, .signs { grid-template-columns: 1fr; }
+      .brand img { height: 56px; }
+      .sheet { padding: 18px 14px 24px; }
+      table.assets { display: block; overflow-x: auto; }
+    }
+    @media print {
+      body { background: #fff; }
+      header.site .header-actions, .actions-bar, .back, .event-row, footer.site, dialog { display: none !important; }
+      .sheet { box-shadow: none; border: 0; padding: 0; }
+      .wrap { width: 100%; }
+      main { padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <div class="wrap site-bar">
+      <a class="brand" href="#" id="homeLink">
+        <img src="assets/hkac-logo.png" alt="Hong Kong Arts Centre" />
+        <div>
+          <h1>Asset Acknowledgement</h1>
+          <p>Hong Kong Arts Centre · Paperless Form R1</p>
+        </div>
+      </a>
+      <div class="header-actions">
+        <button class="btn ghost" id="importBtn" type="button">Import JSON</button>
+        <button class="btn ghost" id="exportBtn" type="button">Export JSON</button>
+        <button class="btn primary" id="newBtn" type="button">New acknowledgement</button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="wrap" id="app"></div>
+  </main>
+  <footer class="site">
+    <div class="wrap">Demo records are synthetic. Assigned assets remain the sole property of Hong Kong Arts Centre (HKAC). Electronic signatures in this prototype are for process demonstration, not a certified digital-signature service.</div>
+  </footer>
+  <dialog id="signDialog">
+    <div class="dlg">
+      <h3 id="signTitle">Staff e-signature</h3>
+      <p class="muted" id="signHint">Draw your signature below. This records acknowledgement of the assets listed on this form.</p>
+      <label class="field" style="margin:12px 0">Typed name
+        <input id="signTyped" autocomplete="name" />
+      </label>
+      <canvas class="pad" id="signPad" width="640" height="200"></canvas>
+      <div class="actions-bar" style="position:static;margin-top:12px">
+        <button class="btn ghost" type="button" id="clearSign">Clear</button>
+        <button class="btn" type="button" id="cancelSign">Cancel</button>
+        <button class="btn accent" type="button" id="confirmSign">Confirm signature</button>
+      </div>
+    </div>
+  </dialog>
+  <input type="file" id="fileInput" accept="application/json" hidden />
+
+  <script>
+    const STORAGE_KEY = "hkac-asset-ack-v1";
+    const EVENT_TYPES = [
+      { id: "onboarding", label: "Onboarding" },
+      { id: "acquisition", label: "Acquisition" },
+      { id: "replacement", label: "Replacement" },
+      { id: "offboarding", label: "Off-boarding" }
+    ];
+    const STATUS_LABEL = {
+      draft: "Draft",
+      staff_signed: "Staff signed",
+      completed: "HR confirmed",
+      returned: "Returned"
+    };
+
+    const emptyAsset = () => ({
+      assigned: false, serial: "", detail: "", received: false, receivedAt: "",
+      returnedAt: "", hrConfirmed: false,
+      keyboard: false, mouse: false, storage: "", others: "",
+      specimen: "", brand: "", sn: "", accessories: "", sim: "", phoneNo: "", replacedSerial: ""
+    });
+
+    const otherSlot = () => ({ assigned: false, spec: "", received: false, receivedAt: "", returnedAt: "", hrConfirmed: false });
+
+    function blankForm(partial = {}) {
+      return {
+        id: partial.id || nextId(),
+        eventType: partial.eventType || "onboarding",
+        status: partial.status || "draft",
+        staff: {
+          name: "", staffNo: "", startDate: "", team: "",
+          ...(partial.staff || {})
+        },
+        createdAt: partial.createdAt || today(),
+        updatedAt: today(),
+        assets: {
+          laptop: emptyAsset(),
+          desktop: emptyAsset(),
+          accessories: emptyAsset(),
+          staffCard: emptyAsset(),
+          medicalCard: emptyAsset(),
+          nameCard: emptyAsset(),
+          doorKey: emptyAsset(),
+          drawerKey: emptyAsset(),
+          lockerKey: emptyAsset(),
+          companyChop: emptyAsset(),
+          mobile: emptyAsset(),
+          ...(partial.assets || {})
+        },
+        others: partial.others || [otherSlot(), otherSlot(), otherSlot(), otherSlot()],
+        policyAccepted: !!partial.policyAccepted,
+        staffSignature: partial.staffSignature || null,
+        hrSignature: partial.hrSignature || null,
+        message: ""
+      };
+    }
+
+    function demoRecords() {
+      const a = blankForm({
+        id: "ACK-2026-001",
+        eventType: "onboarding",
+        status: "draft",
+        createdAt: "2026-09-01",
+        staff: { name: "Chan Mei Ling", staffNo: "S-24018", startDate: "2026-09-01", team: "Education" }
+      });
+      a.assets.laptop.assigned = true;
+      a.assets.laptop.serial = "HKAC-LT-88421";
+      a.assets.accessories.assigned = true;
+      a.assets.accessories.keyboard = true;
+      a.assets.accessories.mouse = true;
+      a.assets.staffCard.assigned = true;
+      a.assets.medicalCard.assigned = true;
+      a.assets.nameCard.assigned = true;
+
+      const b = blankForm({
+        id: "ACK-2026-014",
+        eventType: "replacement",
+        status: "staff_signed",
+        createdAt: "2026-08-12",
+        staff: { name: "Wong Ka Ho", staffNo: "S-23104", startDate: "2023-04-18", team: "Administration" },
+        policyAccepted: true,
+        staffSignature: { typedName: "Wong Ka Ho", signedAt: "2026-08-12 10:18", dataUrl: sampleSig("#1a1a1a") }
+      });
+      b.assets.laptop.assigned = true;
+      b.assets.laptop.serial = "HKAC-LT-90211";
+      b.assets.laptop.replacedSerial = "HKAC-LT-66102";
+      b.assets.laptop.received = true;
+      b.assets.laptop.receivedAt = "2026-08-12";
+
+      const c = blankForm({
+        id: "ACK-2026-021",
+        eventType: "offboarding",
+        status: "completed",
+        createdAt: "2026-07-30",
+        staff: { name: "Tam Yan Chi", staffNo: "S-21077", startDate: "2021-11-02", team: "IT Support" },
+        policyAccepted: true,
+        staffSignature: { typedName: "Tam Yan Chi", signedAt: "2026-07-30 16:02", dataUrl: sampleSig("#222") },
+        hrSignature: { typedName: "Helena Yeung", signedAt: "2026-07-30 16:40", dataUrl: sampleSig("#a61c2b") }
+      });
+      ["laptop", "staffCard", "medicalCard", "doorKey"].forEach((key) => {
+        c.assets[key].assigned = true;
+        c.assets[key].received = true;
+        c.assets[key].receivedAt = "2021-11-02";
+        c.assets[key].returnedAt = "2026-07-30";
+        c.assets[key].hrConfirmed = true;
+      });
+      c.assets.laptop.serial = "HKAC-LT-44109";
+      c.assets.doorKey.detail = "Studio 3";
+      c.status = "returned";
+      return [a, b, c];
+    }
+
+    function sampleSig(color) {
+      const c = document.createElement("canvas");
+      c.width = 400; c.height = 120;
+      const x = c.getContext("2d");
+      x.strokeStyle = color; x.lineWidth = 2.4;
+      x.beginPath(); x.moveTo(30, 80); x.bezierCurveTo(80, 20, 140, 110, 210, 50); x.bezierCurveTo(250, 20, 300, 90, 360, 44);
+      x.stroke();
+      return c.toDataURL("image/png");
+    }
+
+    function today() {
+      const d = new Date();
+      return d.toISOString().slice(0, 10);
+    }
+    function nowStamp() {
+      const d = new Date();
+      return d.toISOString().slice(0, 16).replace("T", " ");
+    }
+    function nextId() {
+      return "ACK-" + new Date().getFullYear() + "-" + String(Math.floor(100 + Math.random() * 900));
+    }
+
+    let state = {
+      view: "list",
+      query: "",
+      records: loadRecords(),
+      currentId: null,
+      signRole: "staff",
+      flash: ""
+    };
+
+    function loadRecords() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length) return parsed;
+        }
+      } catch (e) {}
+      return demoRecords();
+    }
+    function persist() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.records));
+    }
+    function current() {
+      return state.records.find((r) => r.id === state.currentId);
+    }
+
+    function assignedCount(rec) {
+      const core = Object.values(rec.assets).filter((a) => a.assigned).length;
+      const extra = rec.others.filter((o) => o.assigned && o.spec.trim()).length;
+      return core + extra;
+    }
+
+    function render() {
+      const root = document.getElementById("app");
+      if (state.view === "list") root.innerHTML = renderList();
+      else root.innerHTML = renderForm();
+      bind();
+    }
+
+    function renderList() {
+      const q = state.query.trim().toLowerCase();
+      const rows = state.records.filter((r) => {
+        const hay = [r.id, r.staff.name, r.staff.staffNo, r.staff.team, r.eventType].join(" ").toLowerCase();
+        return !q || hay.includes(q);
+      });
+      return `
+        <section class="hero">
+          <div class="panel hero-copy">
+            <p class="kicker">Paperless HR / Admin</p>
+            <h2>Keep a signed record when company property is issued or returned.</h2>
+            <p>Use this form at onboarding, when staff receive or replace equipment, and at off-boarding. Staff sign for receipt; HR/Admin/IT confirm return. The fields match Asset Acknowledgement Form R1.</p>
+          </div>
+          <div class="panel hero-note">
+            <p class="kicker">How to try it</p>
+            <p>Open the Chan Mei Ling onboarding draft, keep the listed assets, accept the notes, then sign as staff and confirm as HR. Print saves a PDF copy. Signing with no assets selected is blocked on purpose.</p>
+          </div>
+        </section>
+        <div class="toolbar">
+          <input class="search" id="searchBox" placeholder="Search staff name, number, or form ID" value="${escapeAttr(state.query)}" />
+          <button class="btn" id="resetDemo" type="button">Reset demo data</button>
+        </div>
+        ${state.flash ? `<div class="banner ok">${escapeHtml(state.flash)}</div>` : ""}
+        <div class="cards">
+          ${rows.length ? rows.map((r) => `
+            <button class="card" data-open="${r.id}" type="button">
+              <div>
+                <h3>${escapeHtml(r.staff.name || "Untitled staff")}</h3>
+                <div class="meta">${escapeHtml(r.id)} · ${labelEvent(r.eventType)} · ${escapeHtml(r.staff.team || "—")} · ${assignedCount(r)} asset(s)</div>
+              </div>
+              <span class="chip ${r.status}">${STATUS_LABEL[r.status] || r.status}</span>
+            </button>
+          `).join("") : `<div class="panel empty">No matching records. Start a new acknowledgement or clear the search.</div>`}
+        </div>
+      `;
+    }
+
+    function labelEvent(id) {
+      return (EVENT_TYPES.find((e) => e.id === id) || {}).label || id;
+    }
+
+    function renderForm() {
+      const rec = current();
+      if (!rec) return `<p>Record not found.</p>`;
+      const locked = rec.status === "returned";
+      const staffLocked = rec.status !== "draft";
+      return `
+        <button class="back" id="backBtn" type="button">← All acknowledgements</button>
+        ${state.flash ? `<div class="banner ${state.flash.startsWith("Cannot") || state.flash.startsWith("Enter") || state.flash.startsWith("Please") ? "error" : "ok"}">${escapeHtml(state.flash)}</div>` : ""}
+        <article class="sheet">
+          <div class="form-top">
+            <div class="form-title">
+              <h2>Asset Acknowledgement Form</h2>
+              <div class="ref">${escapeHtml(rec.id)} · Form R1 · ${labelEvent(rec.eventType)}</div>
+            </div>
+            <span class="chip ${rec.status}">${STATUS_LABEL[rec.status] || rec.status}</span>
+          </div>
+          <div class="event-row">
+            ${EVENT_TYPES.map((e) => `<button class="event ${rec.eventType === e.id ? "active" : ""}" data-event="${e.id}" type="button" ${staffLocked ? "disabled" : ""}>${e.label}</button>`).join("")}
+          </div>
+          <div class="grid-2">
+            ${field("Staff Name", "staff.name", rec.staff.name, staffLocked)}
+            ${field("Staff No.", "staff.staffNo", rec.staff.staffNo, staffLocked)}
+            ${field("Start Date", "staff.startDate", rec.staff.startDate, staffLocked, "date")}
+            ${field("Team / Dept", "staff.team", rec.staff.team, staffLocked)}
+          </div>
+          <p class="ack-line">I, <strong>${escapeHtml(rec.staff.name || "________________")}</strong> (Staff), acknowledge receipt of the following company property from the Company:</p>
+          <table class="assets">
+            <thead>
+              <tr>
+                <th style="width:38%">Company Asset</th>
+                <th>Acknowledge receipt by staff</th>
+                <th>Confirmed return to HR/Admin/IT with date</th>
+                <th>Confirmed by HR</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${assetRow(rec, "laptop", "Laptop, serial no.", { serial: true, replace: rec.eventType === "replacement" })}
+              ${assetRow(rec, "desktop", "Desktop, serial no.", { serial: true, replace: rec.eventType === "replacement" })}
+              ${accessoriesRow(rec)}
+              ${assetRow(rec, "staffCard", "Staff card")}
+              ${assetRow(rec, "medicalCard", "Medical card")}
+              ${assetRow(rec, "nameCard", "Name card")}
+              ${assetRow(rec, "doorKey", "Door key", { detail: "Key / location" })}
+              ${assetRow(rec, "drawerKey", "Drawer key", { detail: "Key / location" })}
+              ${assetRow(rec, "lockerKey", "Locker key", { detail: "Key / location" })}
+              ${chopRow(rec)}
+              ${rec.others.map((o, i) => otherRow(rec, o, i)).join("")}
+              ${mobileRow(rec)}
+            </tbody>
+          </table>
+          <section class="notes">
+            <h3>Notes</h3>
+            <ol>
+              <li>The above asset is the sole property of Hong Kong Arts Centre (“HKAC”) and is assigned to the Staff for carrying out the job duties at HKAC.</li>
+              <li>In the event that the asset is lost/stolen, Staff must notify Admin Dept. immediately for necessary actions to safeguard the data and/or security.</li>
+              <li>Staff is held responsible for covering the cost of a replacement when the assigned asset is lost, stolen or damaged due to negligence. Any normal wear and tear of the asset will not incur any charges.</li>
+              <li>On termination of employment, Staff has to return the assigned asset in a satisfactory condition to HKAC.</li>
+            </ol>
+            <label class="policy">
+              <input type="checkbox" data-path="policyAccepted" ${rec.policyAccepted ? "checked" : ""} ${staffLocked ? "disabled" : ""} />
+              <span>I have read the notes above and understand my responsibility for HKAC property.</span>
+            </label>
+          </section>
+          <section class="signs">
+            <div class="sign-box">
+              <h3>Staff e-signature (receipt)</h3>
+              ${rec.staffSignature ? `<img alt="Staff signature" src="${rec.staffSignature.dataUrl}" /><div class="sign-meta">${escapeHtml(rec.staffSignature.typedName)} · ${escapeHtml(rec.staffSignature.signedAt)}</div>` : `<p class="muted">Not signed yet.</p>`}
+            </div>
+            <div class="sign-box">
+              <h3>HR / Admin / IT confirmation</h3>
+              ${rec.hrSignature ? `<img alt="HR signature" src="${rec.hrSignature.dataUrl}" /><div class="sign-meta">${escapeHtml(rec.hrSignature.typedName)} · ${escapeHtml(rec.hrSignature.signedAt)}</div>` : `<p class="muted">${rec.eventType === "offboarding" ? "Confirm return of assigned assets." : "Confirm issue / return as applicable."}</p>`}
+            </div>
+          </section>
+          <div class="actions-bar">
+            <button class="btn" type="button" id="saveBtn">Save draft</button>
+            <button class="btn accent" type="button" id="staffSignBtn" ${staffLocked ? "disabled" : ""}>Sign as staff</button>
+            <button class="btn primary" type="button" id="hrSignBtn" ${rec.status === "draft" || locked ? "disabled" : ""}>Confirm as HR</button>
+            <button class="btn" type="button" id="printBtn">Print / save PDF</button>
+          </div>
+        </article>
+      `;
+    }
+
+    function field(label, path, value, locked, type = "text") {
+      return `<label class="field">${label}<input data-path="${path}" type="${type}" value="${escapeAttr(value || "")}" ${locked ? "disabled" : ""} /></label>`;
+    }
+
+    function cols(rec, item, pathPrefix, lockedIssue) {
+      const dis = rec.status === "returned" ? "disabled" : "";
+      const issueDis = lockedIssue || rec.status !== "draft" ? "disabled" : "";
+      return `
+        <td>
+          <label><input type="checkbox" data-path="${pathPrefix}.received" ${item.received ? "checked" : ""} ${issueDis} /> Received</label>
+          <div class="detail-row"><input type="date" data-path="${pathPrefix}.receivedAt" value="${escapeAttr(item.receivedAt || "")}" ${issueDis} /></div>
+        </td>
+        <td>
+          <input type="date" data-path="${pathPrefix}.returnedAt" value="${escapeAttr(item.returnedAt || "")}" ${dis} />
+        </td>
+        <td>
+          <label><input type="checkbox" data-path="${pathPrefix}.hrConfirmed" ${item.hrConfirmed ? "checked" : ""} ${rec.status === "draft" ? "disabled" : dis} /> Confirmed</label>
+        </td>
+      `;
+    }
+
+    function assetRow(rec, key, label, opts = {}) {
+      const item = rec.assets[key];
+      const lockedIssue = rec.status !== "draft";
+      return `<tr>
+        <td>
+          <label class="asset-name"><input type="checkbox" data-path="assets.${key}.assigned" ${item.assigned ? "checked" : ""} ${lockedIssue ? "disabled" : ""} /> ${label}</label>
+          ${opts.serial ? `<div class="detail-row"><input type="text" data-path="assets.${key}.serial" placeholder="Serial no." value="${escapeAttr(item.serial)}" ${lockedIssue ? "disabled" : ""} /></div>` : ""}
+          ${opts.replace ? `<div class="detail-row"><input type="text" data-path="assets.${key}.replacedSerial" placeholder="Serial being returned" value="${escapeAttr(item.replacedSerial)}" ${lockedIssue ? "disabled" : ""} /></div>` : ""}
+          ${opts.detail ? `<div class="detail-row"><input type="text" data-path="assets.${key}.detail" placeholder="${opts.detail}" value="${escapeAttr(item.detail)}" ${lockedIssue ? "disabled" : ""} /></div>` : ""}
+        </td>
+        ${cols(rec, item, "assets." + key, lockedIssue)}
+      </tr>`;
+    }
+
+    function accessoriesRow(rec) {
+      const item = rec.assets.accessories;
+      const lockedIssue = rec.status !== "draft";
+      return `<tr>
+        <td>
+          <label class="asset-name"><input type="checkbox" data-path="assets.accessories.assigned" ${item.assigned ? "checked" : ""} ${lockedIssue ? "disabled" : ""} /> Computer accessories</label>
+          <div class="detail-row">
+            <label><input type="checkbox" data-path="assets.accessories.keyboard" ${item.keyboard ? "checked" : ""} ${lockedIssue ? "disabled" : ""} /> keyboard</label>
+            <label><input type="checkbox" data-path="assets.accessories.mouse" ${item.mouse ? "checked" : ""} ${lockedIssue ? "disabled" : ""} /> mouse</label>
+            <label>external storage <input type="text" data-path="assets.accessories.storage" value="${escapeAttr(item.storage)}" ${lockedIssue ? "disabled" : ""} /></label>
+            <label>others <input type="text" data-path="assets.accessories.others" value="${escapeAttr(item.others)}" ${lockedIssue ? "disabled" : ""} /></label>
+          </div>
+        </td>
+        ${cols(rec, item, "assets.accessories", lockedIssue)}
+      </tr>`;
+    }
+
+    function chopRow(rec) {
+      const item = rec.assets.companyChop;
+      const lockedIssue = rec.status !== "draft";
+      return `<tr>
+        <td>
+          <label class="asset-name"><input type="checkbox" data-path="assets.companyChop.assigned" ${item.assigned ? "checked" : ""} ${lockedIssue ? "disabled" : ""} /> Company Chop</label>
+          <div class="detail-row"><input type="text" data-path="assets.companyChop.specimen" placeholder="Specimen" value="${escapeAttr(item.specimen)}" ${lockedIssue ? "disabled" : ""} /></div>
+        </td>
+        ${cols(rec, item, "assets.companyChop", lockedIssue)}
+      </tr>`;
+    }
+
+    function mobileRow(rec) {
+      const item = rec.assets.mobile;
+      const lockedIssue = rec.status !== "draft";
+      return `<tr>
+        <td>
+          <label class="asset-name"><input type="checkbox" data-path="assets.mobile.assigned" ${item.assigned ? "checked" : ""} ${lockedIssue ? "disabled" : ""} /> Company mobile phone</label>
+          <div class="detail-row">
+            <label>Brand / Model <input type="text" data-path="assets.mobile.brand" value="${escapeAttr(item.brand)}" ${lockedIssue ? "disabled" : ""} /></label>
+            <label>S/N No. <input type="text" data-path="assets.mobile.sn" value="${escapeAttr(item.sn)}" ${lockedIssue ? "disabled" : ""} /></label>
+            <label>Accessories included <input type="text" data-path="assets.mobile.accessories" value="${escapeAttr(item.accessories)}" ${lockedIssue ? "disabled" : ""} /></label>
+            <label>SIM card
+              <select data-path="assets.mobile.sim" ${lockedIssue ? "disabled" : ""}>
+                <option value=""></option>
+                <option value="Yes" ${item.sim === "Yes" ? "selected" : ""}>Yes</option>
+                <option value="No" ${item.sim === "No" ? "selected" : ""}>No</option>
+              </select>
+            </label>
+            <label>Phone no. <input type="text" data-path="assets.mobile.phoneNo" value="${escapeAttr(item.phoneNo)}" ${lockedIssue ? "disabled" : ""} /></label>
+            ${rec.eventType === "replacement" ? `<label>Returned S/N <input type="text" data-path="assets.mobile.replacedSerial" value="${escapeAttr(item.replacedSerial)}" ${lockedIssue ? "disabled" : ""} /></label>` : ""}
+          </div>
+        </td>
+        ${cols(rec, item, "assets.mobile", lockedIssue)}
+      </tr>`;
+    }
+
+    function otherRow(rec, item, i) {
+      const lockedIssue = rec.status !== "draft";
+      return `<tr>
+        <td>
+          <label class="asset-name"><input type="checkbox" data-path="others.${i}.assigned" ${item.assigned ? "checked" : ""} ${lockedIssue ? "disabled" : ""} /> Others (please specify)</label>
+          <div class="detail-row"><input type="text" data-path="others.${i}.spec" value="${escapeAttr(item.spec)}" ${lockedIssue ? "disabled" : ""} /></div>
+        </td>
+        ${cols(rec, item, "others." + i, lockedIssue)}
+      </tr>`;
+    }
+
+    function bind() {
+      document.getElementById("searchBox")?.addEventListener("input", (e) => {
+        state.query = e.target.value;
+        state.flash = "";
+        render();
+        const box = document.getElementById("searchBox");
+        if (box) { box.focus(); box.setSelectionRange(state.query.length, state.query.length); }
+      });
+      document.querySelectorAll("[data-open]").forEach((el) => el.addEventListener("click", () => openRecord(el.dataset.open)));
+      document.getElementById("resetDemo")?.addEventListener("click", () => {
+        state.records = demoRecords();
+        persist();
+        state.flash = "Demo records restored.";
+        render();
+      });
+      document.getElementById("backBtn")?.addEventListener("click", () => {
+        state.view = "list";
+        state.flash = "";
+        render();
+      });
+      document.getElementById("saveBtn")?.addEventListener("click", () => {
+        persist();
+        state.flash = "Draft saved in this browser.";
+        render();
+      });
+      document.getElementById("printBtn")?.addEventListener("click", () => window.print());
+      document.getElementById("staffSignBtn")?.addEventListener("click", () => startSign("staff"));
+      document.getElementById("hrSignBtn")?.addEventListener("click", () => startSign("hr"));
+      document.querySelectorAll("[data-event]").forEach((el) => el.addEventListener("click", () => {
+        const rec = current();
+        rec.eventType = el.dataset.event;
+        rec.updatedAt = today();
+        persist();
+        render();
+      }));
+      document.querySelectorAll("[data-path]").forEach((el) => {
+        el.addEventListener("change", () => writePath(current(), el.dataset.path, el.type === "checkbox" ? el.checked : el.value));
+        el.addEventListener("input", () => {
+          if (el.type !== "checkbox") writePath(current(), el.dataset.path, el.value, true);
+        });
+      });
+    }
+
+    function writePath(obj, path, value, silent) {
+      const parts = path.split(".");
+      let cur = obj;
+      for (let i = 0; i < parts.length - 1; i++) cur = cur[parts[i]];
+      cur[parts[parts.length - 1]] = value;
+      if (path.endsWith(".assigned") && value) {
+        const parent = path.replace(/\.assigned$/, "");
+        const item = getPath(obj, parent);
+        if (item && !item.receivedAt) item.receivedAt = today();
+      }
+      if (path.endsWith(".received") && value) {
+        const parent = path.replace(/\.received$/, "");
+        const item = getPath(obj, parent);
+        if (item && !item.receivedAt) item.receivedAt = today();
+      }
+      obj.updatedAt = today();
+      persist();
+      if (!silent && (path.includes("assigned") || path.includes("received") || path.includes("hrConfirmed") || path === "policyAccepted")) render();
+    }
+    function getPath(obj, path) {
+      return path.split(".").reduce((acc, key) => acc?.[key], obj);
+    }
+
+    function openRecord(id) {
+      state.currentId = id;
+      state.view = "form";
+      state.flash = "";
+      render();
+    }
+
+    function startSign(role) {
+      const rec = current();
+      state.flash = "";
+      if (role === "staff") {
+        if (!rec.staff.name.trim() || !rec.staff.staffNo.trim() || !rec.staff.team.trim()) {
+          state.flash = "Enter staff name, staff number, and team/dept before signing.";
+          render();
+          return;
+        }
+        if (!rec.policyAccepted) {
+          state.flash = "Please tick that you have read the notes before signing.";
+          render();
+          return;
+        }
+        if (!assignedCount(rec)) {
+          state.flash = "Cannot sign: select at least one company asset.";
+          render();
+          return;
+        }
+      }
+      state.signRole = role;
+      const dlg = document.getElementById("signDialog");
+      document.getElementById("signTitle").textContent = role === "staff" ? "Staff e-signature" : "HR / Admin / IT confirmation";
+      document.getElementById("signHint").textContent = role === "staff"
+        ? "Draw your signature to acknowledge receipt of the listed HKAC property."
+        : (rec.eventType === "offboarding"
+          ? "Draw your signature to confirm the staff has returned the listed property."
+          : "Draw your signature to confirm this acknowledgement.");
+      document.getElementById("signTyped").value = role === "staff" ? rec.staff.name : (rec.hrSignature?.typedName || "");
+      clearPad();
+      dlg.showModal();
+    }
+
+    const pad = document.getElementById("signPad");
+    const pctx = pad.getContext("2d");
+    let drawing = false;
+    function padPos(e) {
+      const r = pad.getBoundingClientRect();
+      const src = e.touches ? e.touches[0] : e;
+      return { x: (src.clientX - r.left) * (pad.width / r.width), y: (src.clientY - r.top) * (pad.height / r.height) };
+    }
+    function clearPad() {
+      pctx.fillStyle = "#fff";
+      pctx.fillRect(0, 0, pad.width, pad.height);
+      pad.dataset.dirty = "0";
+    }
+    pad.addEventListener("pointerdown", (e) => { drawing = true; pad.setPointerCapture(e.pointerId); const p = padPos(e); pctx.beginPath(); pctx.moveTo(p.x, p.y); });
+    pad.addEventListener("pointermove", (e) => {
+      if (!drawing) return;
+      const p = padPos(e);
+      pctx.lineTo(p.x, p.y);
+      pctx.strokeStyle = "#111";
+      pctx.lineWidth = 2.6;
+      pctx.lineCap = "round";
+      pctx.stroke();
+      pad.dataset.dirty = "1";
+    });
+    pad.addEventListener("pointerup", () => drawing = false);
+    pad.addEventListener("pointerleave", () => drawing = false);
+    document.getElementById("clearSign").addEventListener("click", clearPad);
+    document.getElementById("cancelSign").addEventListener("click", () => document.getElementById("signDialog").close());
+    document.getElementById("confirmSign").addEventListener("click", () => {
+      const rec = current();
+      const typed = document.getElementById("signTyped").value.trim();
+      if (!typed) { alert("Type the signer’s name."); return; }
+      if (pad.dataset.dirty !== "1") { alert("Please draw a signature."); return; }
+      const sig = { typedName: typed, signedAt: nowStamp(), dataUrl: pad.toDataURL("image/png") };
+      if (state.signRole === "staff") {
+        rec.staffSignature = sig;
+        rec.status = "staff_signed";
+        Object.values(rec.assets).forEach((a) => {
+          if (a.assigned) { a.received = true; if (!a.receivedAt) a.receivedAt = today(); }
+        });
+        rec.others.forEach((o) => {
+          if (o.assigned && o.spec.trim()) { o.received = true; if (!o.receivedAt) o.receivedAt = today(); }
+        });
+        state.flash = "Staff signature captured. HR/Admin/IT can now confirm.";
+      } else {
+        rec.hrSignature = sig;
+        rec.status = rec.eventType === "offboarding" ? "returned" : "completed";
+        Object.values(rec.assets).forEach((a) => { if (a.assigned) a.hrConfirmed = true; });
+        rec.others.forEach((o) => { if (o.assigned && o.spec.trim()) o.hrConfirmed = true; });
+        if (rec.eventType === "offboarding") {
+          Object.values(rec.assets).forEach((a) => { if (a.assigned && !a.returnedAt) a.returnedAt = today(); });
+          rec.others.forEach((o) => { if (o.assigned && o.spec.trim() && !o.returnedAt) o.returnedAt = today(); });
+        }
+        state.flash = rec.eventType === "offboarding"
+          ? "HR confirmed return. This acknowledgement is complete."
+          : "HR confirmed this acknowledgement. You can print or save a PDF.";
+      }
+      persist();
+      document.getElementById("signDialog").close();
+      render();
+    });
+
+    document.getElementById("newBtn").addEventListener("click", () => {
+      const rec = blankForm();
+      state.records.unshift(rec);
+      persist();
+      openRecord(rec.id);
+    });
+    document.getElementById("homeLink").addEventListener("click", (e) => {
+      e.preventDefault();
+      state.view = "list";
+      state.flash = "";
+      render();
+    });
+    document.getElementById("exportBtn").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(state.records, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "hkac-asset-acknowledgements.json";
+      a.click();
+    });
+    document.getElementById("importBtn").addEventListener("click", () => document.getElementById("fileInput").click());
+    document.getElementById("fileInput").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(reader.result);
+          if (!Array.isArray(parsed)) throw new Error("not array");
+          state.records = parsed;
+          persist();
+          state.view = "list";
+          state.flash = "Records imported.";
+          render();
+        } catch (err) {
+          state.flash = "Could not import that file. Use a JSON export from this form.";
+          render();
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = "";
+    });
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+    function escapeAttr(s) { return escapeHtml(s); }
+
+    render();
+  </script>
+</body>
+</html>
