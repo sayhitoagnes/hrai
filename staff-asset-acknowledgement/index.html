@@ -848,6 +848,7 @@
       }
       obj.updatedAt = today();
       persist();
+      if (path.includes("assigned") || path.startsWith("staff.") || path === "policyAccepted") state.flash = "";
       if (!silent && (path.includes("assigned") || path.includes("received") || path.includes("hrConfirmed") || path === "policyAccepted")) render();
     }
     function getPath(obj, path) {
@@ -863,7 +864,6 @@
 
     function startSign(role) {
       const rec = current();
-      state.flash = "";
       if (role === "staff") {
         if (!rec.staff.name.trim() || !rec.staff.staffNo.trim() || !rec.staff.team.trim()) {
           state.flash = "Enter staff name, staff number, and team/dept before signing.";
@@ -881,7 +881,9 @@
           return;
         }
       }
+      state.flash = "";
       state.signRole = role;
+      render();
       const dlg = document.getElementById("signDialog");
       document.getElementById("signTitle").textContent = role === "staff" ? "Staff e-signature" : "HR / Admin / IT confirmation";
       document.getElementById("signHint").textContent = role === "staff"
