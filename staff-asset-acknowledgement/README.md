@@ -7,23 +7,25 @@ Paperless web form for Hong Kong Arts Centre staff asset **receipt** and **retur
 - Replacement
 - Off-boarding (return)
 
-Staff and HR/Admin/IT can sign with a drawn e-signature. Records stay in this browser (no login, no database). Demo names are synthetic.
+Staff and HR/Admin/IT can sign with a drawn e-signature. HR can send a **one-time email** so staff open a single-use link to acknowledge receipt or return. After staff sign, the record updates and the link cannot be used again.
+
+Records stay in this browser (no login, no database). Demo names are synthetic.
 
 ## Open the form
 
 1. Open `staff-asset-acknowledgement/index.html` in Chrome or Edge.
-2. Or, from this folder, start a local page and visit it in the browser.
+2. Or open [http://localhost:3000/](http://localhost:3000/) if the local page is running.
 
-## Try the happy path
+## Try the one-time email
 
-1. Open **Onboarding — Chan Mei Ling** (or start a new form).
-2. Confirm the issued assets (laptop serial, cards, accessories).
-3. Tick the policy acknowledgement.
-4. **Sign as staff**, draw a signature, confirm.
-5. **Confirm as HR**, draw an HR signature.
-6. Use **Print / save PDF** for the paperless record.
+1. Open **Onboarding — Chan Mei Ling**.
+2. Confirm the issued assets and the staff email.
+3. Click **Email staff to sign**, then **Send one-time email**.
+4. On the home page, under **Sent mail**, click **Open staff signing link**.
+5. Tick the notes, **Sign and submit**, draw a signature.
+6. Return to HR records — Chan Mei Ling should show **Staff signed**, and opening the same link again should say it has already been used.
 
-Edge case: signing with no assets selected shows an error and does not save a signature.
+Edge case: sending or signing with no assets selected is blocked. A used link cannot be reused (resend creates a new one-time link).
 
 ## Data
 

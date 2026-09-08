@@ -106,9 +106,33 @@
       text-transform: uppercase;
     }
     .chip.draft { background: var(--warn-soft); color: var(--warn); }
+    .chip.awaiting_staff { background: #f3e8f6; color: #6b2d7b; }
     .chip.staff_signed { background: #e8eef8; color: #254a86; }
     .chip.completed { background: var(--ok-soft); color: var(--ok); }
     .chip.returned { background: #eeeae4; color: var(--ink-soft); }
+    body.staff-link .header-actions { display: none; }
+    .letter {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: #fff;
+      margin-top: 12px;
+    }
+    .letter h4 { margin: 0 0 6px; font-size: 0.95rem; }
+    .letter .from { color: var(--muted); font-size: 0.82rem; margin-bottom: 8px; }
+    .mailbox { margin-top: 22px; }
+    .mailbox h3 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1.35rem;
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+    label.field textarea {
+      min-height: 140px;
+      border-bottom: 1px solid var(--ink);
+      resize: vertical;
+    }
+    #emailDialog { width: min(640px, 94vw); }
     main { padding: 8px 0 64px; }
     .hero {
       display: grid;
@@ -374,6 +398,25 @@
   <footer class="site">
     <div class="wrap">Demo records are synthetic. Assigned assets remain the sole property of Hong Kong Arts Centre (HKAC). Electronic signatures in this prototype are for process demonstration, not a certified digital-signature service.</div>
   </footer>
+  <dialog id="emailDialog">
+    <div class="dlg">
+      <h3>One-time signing email</h3>
+      <p class="muted" id="emailHint">Staff receive a single-use link. After they sign, this record updates and the link cannot be used again.</p>
+      <label class="field" style="margin:10px 0">To
+        <input id="emailTo" type="email" />
+      </label>
+      <label class="field">Subject
+        <input id="emailSubject" />
+      </label>
+      <label class="field" style="margin-top:10px">Message
+        <textarea id="emailBody"></textarea>
+      </label>
+      <div class="actions-bar" style="position:static;margin-top:12px">
+        <button class="btn" type="button" id="cancelEmail">Cancel</button>
+        <button class="btn accent" type="button" id="sendEmail">Send one-time email</button>
+      </div>
+    </div>
+  </dialog>
   <dialog id="signDialog">
     <div class="dlg">
       <h3 id="signTitle">Staff e-signature</h3>
@@ -401,6 +444,7 @@
     ];
     const STATUS_LABEL = {
       draft: "Draft",
+      awaiting_staff: "Awaiting staff",
       staff_signed: "Staff signed",
       completed: "HR confirmed",
       returned: "Returned"
@@ -421,7 +465,7 @@
         eventType: partial.eventType || "onboarding",
         status: partial.status || "draft",
         staff: {
-          name: "", staffNo: "", startDate: "", team: "",
+          name: "", staffNo: "", startDate: "", team: "", email: "",
           ...(partial.staff || {})
         },
         createdAt: partial.createdAt || today(),
@@ -444,6 +488,7 @@
         policyAccepted: !!partial.policyAccepted,
         staffSignature: partial.staffSignature || null,
         hrSignature: partial.hrSignature || null,
+        invite: partial.invite || null,
         message: ""
       };
     }
@@ -454,7 +499,7 @@
         eventType: "onboarding",
         status: "draft",
         createdAt: "2026-09-01",
-        staff: { name: "Chan Mei Ling", staffNo: "S-24018", startDate: "2026-09-01", team: "Education" }
+        staff: { name: "Chan Mei Ling", staffNo: "S-24018", startDate: "2026-09-01", team: "Education", email: "mei.ling.chan@hkac.org.hk" }
       });
       a.assets.laptop.assigned = true;
       a.assets.laptop.serial = "HKAC-LT-88421";
@@ -470,7 +515,7 @@
         eventType: "replacement",
         status: "staff_signed",
         createdAt: "2026-08-12",
-        staff: { name: "Wong Ka Ho", staffNo: "S-23104", startDate: "2023-04-18", team: "Administration" },
+        staff: { name: "Wong Ka Ho", staffNo: "S-23104", startDate: "2023-04-18", team: "Administration", email: "ka.ho.wong@hkac.org.hk" },
         policyAccepted: true,
         staffSignature: { typedName: "Wong Ka Ho", signedAt: "2026-08-12 10:18", dataUrl: sampleSig("#1a1a1a") }
       });
@@ -485,7 +530,7 @@
         eventType: "offboarding",
         status: "completed",
         createdAt: "2026-07-30",
-        staff: { name: "Tam Yan Chi", staffNo: "S-21077", startDate: "2021-11-02", team: "IT Support" },
+        staff: { name: "Tam Yan Chi", staffNo: "S-21077", startDate: "2021-11-02", team: "IT Support", email: "yan.chi.tam@hkac.org.hk" },
         policyAccepted: true,
         staffSignature: { typedName: "Tam Yan Chi", signedAt: "2026-07-30 16:02", dataUrl: sampleSig("#222") },
         hrSignature: { typedName: "Helena Yeung", signedAt: "2026-07-30 16:40", dataUrl: sampleSig("#a61c2b") }
@@ -531,6 +576,7 @@
       records: loadRecords(),
       currentId: null,
       signRole: "staff",
+      signToken: null,
       flash: ""
     };
 
@@ -539,10 +585,16 @@
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed) && parsed.length) return parsed;
+          if (Array.isArray(parsed) && parsed.length) return parsed.map(ensureRecord);
         }
       } catch (e) {}
       return demoRecords();
+    }
+    function ensureRecord(r) {
+      if (!r.staff) r.staff = {};
+      if (r.staff.email == null) r.staff.email = "";
+      if (r.invite === undefined) r.invite = null;
+      return r;
     }
     function persist() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state.records));
@@ -552,13 +604,43 @@
     }
 
     function assignedCount(rec) {
-      const core = Object.values(rec.assets).filter((a) => a.assigned).length;
-      const extra = rec.others.filter((o) => o.assigned && o.spec.trim()).length;
+      const core = Object.values(rec.assets || {}).filter((a) => a.assigned).length;
+      const extra = (rec.others || []).filter((o) => o.assigned && String(o.spec || "").trim()).length;
       return core + extra;
     }
 
+    function invitePurpose(rec) {
+      return rec.eventType === "offboarding" ? "return" : "receipt";
+    }
+    function parseSignToken() {
+      const m = String(location.hash || "").match(/^#sign\/([A-Za-z0-9_-]+)/);
+      return m ? m[1] : null;
+    }
+    function findByToken(token) {
+      return state.records.find((r) => r.invite && r.invite.token === token) || null;
+    }
+    function signingUrl(token) {
+      return location.origin + location.pathname + location.search + "#sign/" + token;
+    }
+    function newToken() {
+      const bytes = new Uint8Array(12);
+      crypto.getRandomValues(bytes);
+      return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+    }
+    function pendingInvites() {
+      return state.records.filter((r) => r.invite && r.invite.status === "pending");
+    }
+
     function render() {
+      const token = parseSignToken();
+      state.signToken = token;
+      document.body.classList.toggle("staff-link", !!token);
       const root = document.getElementById("app");
+      if (token) {
+        root.innerHTML = renderStaffLink(token);
+        bindStaffLink();
+        return;
+      }
       if (state.view === "list") root.innerHTML = renderList();
       else root.innerHTML = renderForm();
       bind();
@@ -567,19 +649,20 @@
     function renderList() {
       const q = state.query.trim().toLowerCase();
       const rows = state.records.filter((r) => {
-        const hay = [r.id, r.staff.name, r.staff.staffNo, r.staff.team, r.eventType].join(" ").toLowerCase();
+        const hay = [r.id, r.staff.name, r.staff.staffNo, r.staff.team, r.staff.email, r.eventType].join(" ").toLowerCase();
         return !q || hay.includes(q);
       });
+      const inbox = pendingInvites();
       return `
         <section class="hero">
           <div class="panel hero-copy">
             <p class="kicker">Paperless HR / Admin</p>
             <h2>Keep a signed record when company property is issued or returned.</h2>
-            <p>Use this form at onboarding, when staff receive or replace equipment, and at off-boarding. Staff sign for receipt; HR/Admin/IT confirm return. The fields match Asset Acknowledgement Form R1.</p>
+            <p>Use this form at onboarding, when staff receive or replace equipment, and at off-boarding. Email staff a <strong>one-time link</strong> to sign receipt or return. After they sign, this record updates and the link cannot be used again.</p>
           </div>
           <div class="panel hero-note">
-            <p class="kicker">How to try it</p>
-            <p>Open the Chan Mei Ling onboarding draft, keep the listed assets, accept the notes, then sign as staff and confirm as HR. Print saves a PDF copy. Signing with no assets selected is blocked on purpose.</p>
+            <p class="kicker">How to try the email</p>
+            <p>Open Chan Mei Ling, click <strong>Email staff to sign</strong>, send the one-time email, then open the staff link from Sent mail. After signing, return here — the record should show Staff signed.</p>
           </div>
         </section>
         <div class="toolbar">
@@ -592,12 +675,24 @@
             <button class="card" data-open="${r.id}" type="button">
               <div>
                 <h3>${escapeHtml(r.staff.name || "Untitled staff")}</h3>
-                <div class="meta">${escapeHtml(r.id)} · ${labelEvent(r.eventType)} · ${escapeHtml(r.staff.team || "—")} · ${assignedCount(r)} asset(s)</div>
+                <div class="meta">${escapeHtml(r.id)} · ${labelEvent(r.eventType)} · ${escapeHtml(r.staff.team || "—")} · ${assignedCount(r)} asset(s)${r.invite && r.invite.status === "pending" ? " · email sent" : ""}${r.invite && r.invite.status === "used" ? " · signed via email" : ""}</div>
               </div>
               <span class="chip ${r.status}">${STATUS_LABEL[r.status] || r.status}</span>
             </button>
           `).join("") : `<div class="panel empty">No matching records. Start a new acknowledgement or clear the search.</div>`}
         </div>
+        <section class="mailbox">
+          <h3>Sent mail (this browser)</h3>
+          <p class="muted">This prototype cannot send through the company mail server. The one-time email is generated here so you can open it as the staff member. Outlook can still be opened with the same message.</p>
+          ${inbox.length ? inbox.map((r) => `
+            <article class="letter">
+              <h4>${escapeHtml(r.invite.subject || "Asset acknowledgement")}</h4>
+              <div class="from">To: ${escapeHtml(r.invite.sentTo)} · Sent ${escapeHtml(r.invite.sentAt)} · One-time ${r.invite.purpose} link</div>
+              <p class="muted">${escapeHtml((r.invite.body || "").split("\n")[0] || "")}</p>
+              <button class="btn accent" type="button" data-open-link="${escapeAttr(r.invite.token)}">Open staff signing link</button>
+            </article>
+          `).join("") : `<div class="panel empty">No unused signing emails yet. Open a draft and choose Email staff to sign.</div>`}
+        </section>
       `;
     }
 
@@ -609,10 +704,13 @@
       const rec = current();
       if (!rec) return `<p>Record not found.</p>`;
       const locked = rec.status === "returned";
-      const staffLocked = rec.status !== "draft";
+      const staffLocked = rec.status !== "draft" && rec.status !== "awaiting_staff";
+      const issuedLocked = rec.status !== "draft";
+      const canEmail = rec.status === "draft" || rec.status === "awaiting_staff";
+      const purpose = invitePurpose(rec);
       return `
         <button class="back" id="backBtn" type="button">← All acknowledgements</button>
-        ${state.flash ? `<div class="banner ${state.flash.startsWith("Cannot") || state.flash.startsWith("Enter") || state.flash.startsWith("Please") ? "error" : "ok"}">${escapeHtml(state.flash)}</div>` : ""}
+        ${state.flash ? `<div class="banner ${/^(Cannot|Enter|Please)/.test(state.flash) ? "error" : "ok"}">${escapeHtml(state.flash)}</div>` : ""}
         <article class="sheet">
           <div class="form-top">
             <div class="form-title">
@@ -622,15 +720,21 @@
             <span class="chip ${rec.status}">${STATUS_LABEL[rec.status] || rec.status}</span>
           </div>
           <div class="event-row">
-            ${EVENT_TYPES.map((e) => `<button class="event ${rec.eventType === e.id ? "active" : ""}" data-event="${e.id}" type="button" ${staffLocked ? "disabled" : ""}>${e.label}</button>`).join("")}
+            ${EVENT_TYPES.map((e) => `<button class="event ${rec.eventType === e.id ? "active" : ""}" data-event="${e.id}" type="button" ${issuedLocked ? "disabled" : ""}>${e.label}</button>`).join("")}
           </div>
           <div class="grid-2">
-            ${field("Staff Name", "staff.name", rec.staff.name, staffLocked)}
-            ${field("Staff No.", "staff.staffNo", rec.staff.staffNo, staffLocked)}
-            ${field("Start Date", "staff.startDate", rec.staff.startDate, staffLocked, "date")}
-            ${field("Team / Dept", "staff.team", rec.staff.team, staffLocked)}
+            ${field("Staff Name", "staff.name", rec.staff.name, issuedLocked)}
+            ${field("Staff No.", "staff.staffNo", rec.staff.staffNo, issuedLocked)}
+            ${field("Start Date", "staff.startDate", rec.staff.startDate, issuedLocked, "date")}
+            ${field("Team / Dept", "staff.team", rec.staff.team, issuedLocked)}
+            ${field("Staff email", "staff.email", rec.staff.email || "", staffLocked, "email")}
           </div>
-          <p class="ack-line">I, <strong>${escapeHtml(rec.staff.name || "________________")}</strong> (Staff), acknowledge receipt of the following company property from the Company:</p>
+          ${rec.invite ? `<div class="banner ${rec.invite.status === "used" ? "ok" : "ok"}">${
+            rec.invite.status === "pending"
+              ? `One-time ${rec.invite.purpose} email sent to ${escapeHtml(rec.invite.sentTo)} at ${escapeHtml(rec.invite.sentAt)}. The link works once.`
+              : `Staff signed via the one-time email link at ${escapeHtml(rec.invite.usedAt || rec.invite.sentAt)}.`
+          }</div>` : ""}
+          <p class="ack-line">I, <strong>${escapeHtml(rec.staff.name || "________________")}</strong> (Staff), acknowledge ${purpose === "return" ? "return" : "receipt"} of the following company property ${purpose === "return" ? "to" : "from"} the Company:</p>
           <table class="assets">
             <thead>
               <tr>
@@ -680,8 +784,9 @@
           </section>
           <div class="actions-bar">
             <button class="btn" type="button" id="saveBtn">Save draft</button>
-            <button class="btn accent" type="button" id="staffSignBtn" ${staffLocked ? "disabled" : ""}>Sign as staff</button>
-            <button class="btn primary" type="button" id="hrSignBtn" ${rec.status === "draft" || locked ? "disabled" : ""}>Confirm as HR</button>
+            <button class="btn accent" type="button" id="emailStaffBtn" ${canEmail ? "" : "disabled"}>${rec.invite && rec.invite.status === "pending" ? "Resend one-time email" : "Email staff to sign"}</button>
+            <button class="btn" type="button" id="staffSignBtn" ${staffLocked ? "disabled" : ""}>Sign as staff (in person)</button>
+            <button class="btn primary" type="button" id="hrSignBtn" ${rec.status === "draft" || rec.status === "awaiting_staff" || locked ? "disabled" : ""}>Confirm as HR</button>
             <button class="btn" type="button" id="printBtn">Print / save PDF</button>
           </div>
         </article>
@@ -693,18 +798,18 @@
     }
 
     function cols(rec, item, pathPrefix, lockedIssue) {
+      const issuedLocked = rec.status !== "draft";
       const dis = rec.status === "returned" ? "disabled" : "";
-      const issueDis = lockedIssue || rec.status !== "draft" ? "disabled" : "";
       return `
         <td>
-          <label><input type="checkbox" data-path="${pathPrefix}.received" ${item.received ? "checked" : ""} ${issueDis} /> Received</label>
-          <div class="detail-row"><input type="date" data-path="${pathPrefix}.receivedAt" value="${escapeAttr(item.receivedAt || "")}" ${issueDis} /></div>
+          <label><input type="checkbox" data-path="${pathPrefix}.received" ${item.received ? "checked" : ""} ${issuedLocked ? "disabled" : ""} /> Received</label>
+          <div class="detail-row"><input type="date" data-path="${pathPrefix}.receivedAt" value="${escapeAttr(item.receivedAt || "")}" ${issuedLocked ? "disabled" : ""} /></div>
         </td>
         <td>
           <input type="date" data-path="${pathPrefix}.returnedAt" value="${escapeAttr(item.returnedAt || "")}" ${dis} />
         </td>
         <td>
-          <label><input type="checkbox" data-path="${pathPrefix}.hrConfirmed" ${item.hrConfirmed ? "checked" : ""} ${rec.status === "draft" ? "disabled" : dis} /> Confirmed</label>
+          <label><input type="checkbox" data-path="${pathPrefix}.hrConfirmed" ${item.hrConfirmed ? "checked" : ""} ${rec.status === "draft" || rec.status === "awaiting_staff" ? "disabled" : dis} /> Confirmed</label>
         </td>
       `;
     }
@@ -801,6 +906,7 @@
         state.records = demoRecords();
         persist();
         state.flash = "Demo records restored.";
+        if (location.hash) history.replaceState(null, "", location.pathname + location.search);
         render();
       });
       document.getElementById("backBtn")?.addEventListener("click", () => {
@@ -816,6 +922,10 @@
       document.getElementById("printBtn")?.addEventListener("click", () => window.print());
       document.getElementById("staffSignBtn")?.addEventListener("click", () => startSign("staff"));
       document.getElementById("hrSignBtn")?.addEventListener("click", () => startSign("hr"));
+      document.getElementById("emailStaffBtn")?.addEventListener("click", openEmailDialog);
+      document.querySelectorAll("[data-open-link]").forEach((el) => el.addEventListener("click", () => {
+        location.hash = "sign/" + el.dataset.openLink;
+      }));
       document.querySelectorAll("[data-event]").forEach((el) => el.addEventListener("click", () => {
         const rec = current();
         rec.eventType = el.dataset.event;
@@ -855,6 +965,196 @@
       return path.split(".").reduce((acc, key) => acc?.[key], obj);
     }
 
+    function assignedSummary(rec) {
+      const names = [];
+      const labels = {
+        laptop: "Laptop" + (rec.assets.laptop.serial ? ` (${rec.assets.laptop.serial})` : ""),
+        desktop: "Desktop" + (rec.assets.desktop.serial ? ` (${rec.assets.desktop.serial})` : ""),
+        accessories: "Computer accessories",
+        staffCard: "Staff card",
+        medicalCard: "Medical card",
+        nameCard: "Name card",
+        doorKey: "Door key",
+        drawerKey: "Drawer key",
+        lockerKey: "Locker key",
+        companyChop: "Company chop",
+        mobile: "Company mobile phone"
+      };
+      Object.keys(labels).forEach((k) => { if (rec.assets[k]?.assigned) names.push(labels[k]); });
+      rec.others.forEach((o) => { if (o.assigned && o.spec.trim()) names.push(o.spec.trim()); });
+      return names;
+    }
+
+    function renderStaffLink(token) {
+      const rec = findByToken(token);
+      if (!rec) {
+        return `<div class="panel empty"><h2>This signing link is not valid.</h2><p>Ask HR/Admin to send a new one-time email.</p><button class="btn" id="leaveStaffLink" type="button">Back to HR records</button></div>`;
+      }
+      if (rec.invite.status === "used") {
+        return `<div class="panel empty"><h2>This link has already been used.</h2><p>Your ${rec.invite.purpose} acknowledgement for ${escapeHtml(rec.id)} was recorded at ${escapeHtml(rec.invite.usedAt)}.</p><button class="btn" id="leaveStaffLink" type="button">Back to HR records</button></div>`;
+      }
+      const purpose = rec.invite.purpose || invitePurpose(rec);
+      const items = assignedSummary(rec);
+      return `
+        <p class="kicker">One-time staff access</p>
+        <article class="sheet">
+          <div class="form-top">
+            <div class="form-title">
+              <h2>${purpose === "return" ? "Acknowledge return" : "Acknowledge receipt"}</h2>
+              <div class="ref">${escapeHtml(rec.id)} · ${labelEvent(rec.eventType)} · This link works once</div>
+            </div>
+            <span class="chip awaiting_staff">Awaiting your signature</span>
+          </div>
+          ${state.flash ? `<div class="banner ${/^(Cannot|Enter|Please)/.test(state.flash) ? "error" : "ok"}">${escapeHtml(state.flash)}</div>` : ""}
+          <div class="grid-2">
+            <div class="field">Staff Name<div>${escapeHtml(rec.staff.name)}</div></div>
+            <div class="field">Staff No.<div>${escapeHtml(rec.staff.staffNo)}</div></div>
+            <div class="field">Team / Dept<div>${escapeHtml(rec.staff.team)}</div></div>
+            <div class="field">Email<div>${escapeHtml(rec.staff.email || rec.invite.sentTo)}</div></div>
+          </div>
+          <p class="ack-line">I, <strong>${escapeHtml(rec.staff.name)}</strong>, acknowledge ${purpose === "return" ? "return" : "receipt"} of the following HKAC property:</p>
+          <ul>${items.map((n) => `<li>${escapeHtml(n)}</li>`).join("") || "<li>No assets listed.</li>"}</ul>
+          <section class="notes">
+            <h3>Notes</h3>
+            <ol>
+              <li>The above asset is the sole property of Hong Kong Arts Centre (“HKAC”) and is assigned to the Staff for carrying out the job duties at HKAC.</li>
+              <li>In the event that the asset is lost/stolen, Staff must notify Admin Dept. immediately for necessary actions to safeguard the data and/or security.</li>
+              <li>Staff is held responsible for covering the cost of a replacement when the assigned asset is lost, stolen or damaged due to negligence. Any normal wear and tear of the asset will not incur any charges.</li>
+              <li>On termination of employment, Staff has to return the assigned asset in a satisfactory condition to HKAC.</li>
+            </ol>
+            <label class="policy">
+              <input type="checkbox" id="staffPolicy" ${rec.policyAccepted ? "checked" : ""} />
+              <span>I have read the notes above and understand my responsibility for HKAC property.</span>
+            </label>
+          </section>
+          <section class="signs">
+            <div class="sign-box">
+              <h3>Your e-signature</h3>
+              ${rec.staffSignature ? `<img alt="Staff signature" src="${rec.staffSignature.dataUrl}" /><div class="sign-meta">${escapeHtml(rec.staffSignature.typedName)} · ${escapeHtml(rec.staffSignature.signedAt)}</div>` : `<p class="muted">Sign once to update the HR record. This page will then close.</p>`}
+            </div>
+          </section>
+          <div class="actions-bar">
+            <button class="btn accent" type="button" id="staffLinkSignBtn">Sign and submit</button>
+          </div>
+        </article>
+      `;
+    }
+
+    function bindStaffLink() {
+      document.getElementById("leaveStaffLink")?.addEventListener("click", leaveStaffLink);
+      document.getElementById("staffPolicy")?.addEventListener("change", (e) => {
+        const rec = findByToken(state.signToken);
+        if (!rec) return;
+        rec.policyAccepted = e.target.checked;
+        persist();
+      });
+      document.getElementById("staffLinkSignBtn")?.addEventListener("click", () => {
+        const rec = findByToken(state.signToken);
+        if (!rec) return;
+        state.currentId = rec.id;
+        const box = document.getElementById("staffPolicy");
+        rec.policyAccepted = !!(box && box.checked);
+        persist();
+        startSign("staff");
+      });
+    }
+
+    function leaveStaffLink() {
+      history.replaceState(null, "", location.pathname + location.search);
+      state.signToken = null;
+      state.view = "list";
+      render();
+    }
+
+    function composeEmail(rec) {
+      const purpose = invitePurpose(rec);
+      const token = newToken();
+      const link = signingUrl(token);
+      const kind = purpose === "return" ? "return" : "receipt";
+      const subject = `Please sign: HKAC asset ${kind} ${rec.id}`;
+      const items = assignedSummary(rec);
+      const body = [
+        `Dear ${rec.staff.name},`,
+        "",
+        `Please use this one-time link to acknowledge ${kind} of HKAC company property (${rec.id} — ${labelEvent(rec.eventType)}).`,
+        "",
+        items.length ? ("Items: " + items.join("; ")) : "",
+        "",
+        link,
+        "",
+        "The link works once. After you sign, HR/Admin will see the updated record.",
+        "",
+        "Hong Kong Arts Centre — Admin / HR"
+      ].filter((line, i, arr) => line !== "" || arr[i - 1] !== "").join("\n");
+      return { purpose, token, subject, body, link };
+    }
+
+    function openEmailDialog() {
+      const rec = current();
+      state.flash = "";
+      if (!rec.staff.name.trim() || !rec.staff.staffNo.trim() || !rec.staff.team.trim()) {
+        state.flash = "Enter staff name, staff number, and team/dept before sending the email.";
+        render();
+        return;
+      }
+      if (!String(rec.staff.email || "").trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rec.staff.email.trim())) {
+        state.flash = "Enter a valid staff email before sending the one-time link.";
+        render();
+        return;
+      }
+      if (!assignedCount(rec)) {
+        state.flash = "Cannot send: select at least one company asset.";
+        render();
+        return;
+      }
+      const draft = composeEmail(rec);
+      rec._emailDraft = draft;
+      document.getElementById("emailHint").textContent = draft.purpose === "return"
+        ? "Staff will open a one-time link to acknowledge return. After they sign, this record updates and the link cannot be reused."
+        : "Staff will open a one-time link to acknowledge receipt. After they sign, this record updates and the link cannot be reused.";
+      document.getElementById("emailTo").value = rec.staff.email.trim();
+      document.getElementById("emailSubject").value = draft.subject;
+      document.getElementById("emailBody").value = draft.body;
+      document.getElementById("emailDialog").showModal();
+    }
+
+    function sendOneTimeEmail() {
+      const rec = current();
+      if (!rec || !rec._emailDraft) return;
+      const to = document.getElementById("emailTo").value.trim();
+      const subject = document.getElementById("emailSubject").value.trim();
+      const body = document.getElementById("emailBody").value.trim();
+      if (!to || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
+        alert("Enter a valid email address.");
+        return;
+      }
+      rec.staff.email = to;
+      rec.invite = {
+        token: rec._emailDraft.token,
+        purpose: rec._emailDraft.purpose,
+        sentTo: to,
+        sentAt: nowStamp(),
+        subject,
+        body,
+        status: "pending",
+        usedAt: null
+      };
+      rec.status = "awaiting_staff";
+      rec.updatedAt = today();
+      delete rec._emailDraft;
+      persist();
+      const mailto = "mailto:" + encodeURIComponent(to) + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      const mail = document.createElement("a");
+      mail.href = mailto;
+      mail.style.display = "none";
+      document.body.appendChild(mail);
+      mail.click();
+      mail.remove();
+      document.getElementById("emailDialog").close();
+      state.flash = "One-time email generated for " + to + ". Open it from Sent mail to sign as staff, or send it from Outlook if it opened.";
+      render();
+    }
+
     function openRecord(id) {
       state.currentId = id;
       state.view = "form";
@@ -887,7 +1187,9 @@
       const dlg = document.getElementById("signDialog");
       document.getElementById("signTitle").textContent = role === "staff" ? "Staff e-signature" : "HR / Admin / IT confirmation";
       document.getElementById("signHint").textContent = role === "staff"
-        ? "Draw your signature to acknowledge receipt of the listed HKAC property."
+        ? ((rec.invite && rec.invite.purpose === "return") || rec.eventType === "offboarding"
+          ? "Draw your signature to acknowledge return of the listed HKAC property."
+          : "Draw your signature to acknowledge receipt of the listed HKAC property.")
         : (rec.eventType === "offboarding"
           ? "Draw your signature to confirm the staff has returned the listed property."
           : "Draw your signature to confirm this acknowledgement.");
@@ -933,13 +1235,35 @@
       if (state.signRole === "staff") {
         rec.staffSignature = sig;
         rec.status = "staff_signed";
+        const returning = (rec.invite && rec.invite.purpose === "return") || rec.eventType === "offboarding";
         Object.values(rec.assets).forEach((a) => {
-          if (a.assigned) { a.received = true; if (!a.receivedAt) a.receivedAt = today(); }
+          if (a.assigned) {
+            if (returning) {
+              if (!a.returnedAt) a.returnedAt = today();
+            } else {
+              a.received = true;
+              if (!a.receivedAt) a.receivedAt = today();
+            }
+          }
         });
         rec.others.forEach((o) => {
-          if (o.assigned && o.spec.trim()) { o.received = true; if (!o.receivedAt) o.receivedAt = today(); }
+          if (o.assigned && o.spec.trim()) {
+            if (returning) {
+              if (!o.returnedAt) o.returnedAt = today();
+            } else {
+              o.received = true;
+              if (!o.receivedAt) o.receivedAt = today();
+            }
+          }
         });
-        state.flash = "Staff signature captured. HR/Admin/IT can now confirm.";
+        if (rec.invite && rec.invite.status === "pending") {
+          rec.invite.status = "used";
+          rec.invite.usedAt = nowStamp();
+        }
+        rec.updatedAt = today();
+        state.flash = rec.invite && rec.invite.status === "used"
+          ? "Thank you. Your acknowledgement is saved and the one-time link can no longer be used."
+          : "Staff signature captured. HR/Admin/IT can now confirm.";
       } else {
         rec.hrSignature = sig;
         rec.status = rec.eventType === "offboarding" ? "returned" : "completed";
@@ -966,9 +1290,7 @@
     });
     document.getElementById("homeLink").addEventListener("click", (e) => {
       e.preventDefault();
-      state.view = "list";
-      state.flash = "";
-      render();
+      leaveStaffLink();
     });
     document.getElementById("exportBtn").addEventListener("click", () => {
       const blob = new Blob([JSON.stringify(state.records, null, 2)], { type: "application/json" });
@@ -986,7 +1308,7 @@
         try {
           const parsed = JSON.parse(reader.result);
           if (!Array.isArray(parsed)) throw new Error("not array");
-          state.records = parsed;
+          state.records = parsed.map(ensureRecord);
           persist();
           state.view = "list";
           state.flash = "Records imported.";
@@ -1004,6 +1326,10 @@
       return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     }
     function escapeAttr(s) { return escapeHtml(s); }
+
+    document.getElementById("cancelEmail").addEventListener("click", () => document.getElementById("emailDialog").close());
+    document.getElementById("sendEmail").addEventListener("click", sendOneTimeEmail);
+    window.addEventListener("hashchange", () => { state.flash = ""; render(); });
 
     render();
   </script>
