@@ -222,18 +222,17 @@
     .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
     label.field { display: flex; flex-direction: column; gap: 6px; font-size: 0.8rem; font-weight: 600; color: var(--muted); }
     label.field input, label.field select, label.field textarea {
-      border: 0;
-      border-bottom: 1px solid var(--ink);
-      background: transparent;
-      padding: 8px 2px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 8px 10px;
       font-size: 0.98rem;
       font-weight: 400;
       color: var(--ink);
-      border-radius: 0;
+      border-radius: 6px;
     }
     label.field input:focus, label.field select:focus, label.field textarea:focus {
-      outline: none;
-      border-bottom-width: 2px;
+      outline: 2px solid rgba(20, 16, 12, 0.12);
+      border-color: var(--ink);
     }
     .ack-line {
       margin: 8px 0 18px;
@@ -269,12 +268,12 @@
     .asset-name { font-weight: 600; }
     .detail-row { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
     .detail-row label { font-size: 0.82rem; color: var(--ink-soft); display: flex; gap: 6px; align-items: center; font-weight: 400; }
-    .detail-row input[type="text"], .detail-row input[type="date"] {
-      border: 0;
-      border-bottom: 1px dashed var(--muted);
-      background: transparent;
+    .detail-row input[type="text"], .detail-row input[type="date"], .detail-row select {
+      border: 1px solid var(--line);
+      background: #fff;
       min-width: 140px;
-      padding: 2px 4px;
+      padding: 4px 8px;
+      border-radius: 4px;
     }
     .notes {
       margin-top: 22px;
@@ -703,10 +702,7 @@
     function renderForm() {
       const rec = current();
       if (!rec) return `<p>Record not found.</p>`;
-      const locked = rec.status === "returned";
-      const staffLocked = rec.status !== "draft" && rec.status !== "awaiting_staff";
-      const issuedLocked = rec.status !== "draft";
-      const canEmail = rec.status === "draft" || rec.status === "awaiting_staff";
+      const canEmail = rec.status !== "returned";
       const purpose = invitePurpose(rec);
       return `
         <button class="back" id="backBtn" type="button">← All acknowledgements</button>
@@ -719,15 +715,16 @@
             </div>
             <span class="chip ${rec.status}">${STATUS_LABEL[rec.status] || rec.status}</span>
           </div>
+          <p class="muted" style="margin:0 0 10px">This form is editable. Change staff details or assets as needed, then save. If a one-time email was already sent, resend it so staff see the updated list.</p>
           <div class="event-row">
-            ${EVENT_TYPES.map((e) => `<button class="event ${rec.eventType === e.id ? "active" : ""}" data-event="${e.id}" type="button" ${issuedLocked ? "disabled" : ""}>${e.label}</button>`).join("")}
+            ${EVENT_TYPES.map((e) => `<button class="event ${rec.eventType === e.id ? "active" : ""}" data-event="${e.id}" type="button">${e.label}</button>`).join("")}
           </div>
           <div class="grid-2">
-            ${field("Staff Name", "staff.name", rec.staff.name, issuedLocked)}
-            ${field("Staff No.", "staff.staffNo", rec.staff.staffNo, issuedLocked)}
-            ${field("Start Date", "staff.startDate", rec.staff.startDate, issuedLocked, "date")}
-            ${field("Team / Dept", "staff.team", rec.staff.team, issuedLocked)}
-            ${field("Staff email", "staff.email", rec.staff.email || "", staffLocked, "email")}
+            ${field("Staff Name", "staff.name", rec.staff.name)}
+            ${field("Staff No.", "staff.staffNo", rec.staff.staffNo)}
+            ${field("Start Date", "staff.startDate", rec.staff.startDate, "date")}
+            ${field("Team / Dept", "staff.team", rec.staff.team)}
+            ${field("Staff email", "staff.email", rec.staff.email || "", "email")}
           </div>
           ${rec.invite ? `<div class="banner ${rec.invite.status === "used" ? "ok" : "ok"}">${
             rec.invite.status === "pending"
@@ -768,7 +765,7 @@
               <li>On termination of employment, Staff has to return the assigned asset in a satisfactory condition to HKAC.</li>
             </ol>
             <label class="policy">
-              <input type="checkbox" data-path="policyAccepted" ${rec.policyAccepted ? "checked" : ""} ${staffLocked ? "disabled" : ""} />
+              <input type="checkbox" data-path="policyAccepted" ${rec.policyAccepted ? "checked" : ""} />
               <span>I have read the notes above and understand my responsibility for HKAC property.</span>
             </label>
           </section>
@@ -785,38 +782,36 @@
           <div class="actions-bar">
             <button class="btn" type="button" id="saveBtn">Save draft</button>
             <button class="btn accent" type="button" id="emailStaffBtn" ${canEmail ? "" : "disabled"}>${rec.invite && rec.invite.status === "pending" ? "Resend one-time email" : "Email staff to sign"}</button>
-            <button class="btn" type="button" id="staffSignBtn" ${staffLocked ? "disabled" : ""}>Sign as staff (in person)</button>
-            <button class="btn primary" type="button" id="hrSignBtn" ${rec.status === "draft" || rec.status === "awaiting_staff" || locked ? "disabled" : ""}>Confirm as HR</button>
+            <button class="btn" type="button" id="staffSignBtn">Sign as staff (in person)</button>
+            <button class="btn primary" type="button" id="hrSignBtn">Confirm as HR</button>
             <button class="btn" type="button" id="printBtn">Print / save PDF</button>
           </div>
         </article>
       `;
     }
 
-    function field(label, path, value, locked, type = "text") {
-      return `<label class="field">${label}<input data-path="${path}" type="${type}" value="${escapeAttr(value || "")}" ${locked ? "disabled" : ""} /></label>`;
+    function field(label, path, value, type = "text") {
+      return `<label class="field">${label}<input data-path="${path}" type="${type}" value="${escapeAttr(value || "")}" /></label>`;
     }
 
-    function cols(rec, item, pathPrefix, lockedIssue) {
-      const issuedLocked = rec.status !== "draft";
-      const dis = rec.status === "returned" ? "disabled" : "";
+    function cols(rec, item, pathPrefix) {
       return `
         <td>
-          <label><input type="checkbox" data-path="${pathPrefix}.received" ${item.received ? "checked" : ""} ${issuedLocked ? "disabled" : ""} /> Received</label>
-          <div class="detail-row"><input type="date" data-path="${pathPrefix}.receivedAt" value="${escapeAttr(item.receivedAt || "")}" ${issuedLocked ? "disabled" : ""} /></div>
+          <label><input type="checkbox" data-path="${pathPrefix}.received" ${item.received ? "checked" : ""} /> Received</label>
+          <div class="detail-row"><input type="date" data-path="${pathPrefix}.receivedAt" value="${escapeAttr(item.receivedAt || "")}" /></div>
         </td>
         <td>
-          <input type="date" data-path="${pathPrefix}.returnedAt" value="${escapeAttr(item.returnedAt || "")}" ${dis} />
+          <input type="date" data-path="${pathPrefix}.returnedAt" value="${escapeAttr(item.returnedAt || "")}" />
         </td>
         <td>
-          <label><input type="checkbox" data-path="${pathPrefix}.hrConfirmed" ${item.hrConfirmed ? "checked" : ""} ${rec.status === "draft" || rec.status === "awaiting_staff" ? "disabled" : dis} /> Confirmed</label>
+          <label><input type="checkbox" data-path="${pathPrefix}.hrConfirmed" ${item.hrConfirmed ? "checked" : ""} /> Confirmed</label>
         </td>
       `;
     }
 
     function assetRow(rec, key, label, opts = {}) {
       const item = rec.assets[key];
-      const lockedIssue = rec.status !== "draft";
+      const lockedIssue = false;
       return `<tr>
         <td>
           <label class="asset-name"><input type="checkbox" data-path="assets.${key}.assigned" ${item.assigned ? "checked" : ""} ${lockedIssue ? "disabled" : ""} /> ${label}</label>
@@ -830,7 +825,7 @@
 
     function accessoriesRow(rec) {
       const item = rec.assets.accessories;
-      const lockedIssue = rec.status !== "draft";
+      const lockedIssue = false;
       return `<tr>
         <td>
           <label class="asset-name"><input type="checkbox" data-path="assets.accessories.assigned" ${item.assigned ? "checked" : ""} ${lockedIssue ? "disabled" : ""} /> Computer accessories</label>
@@ -847,7 +842,7 @@
 
     function chopRow(rec) {
       const item = rec.assets.companyChop;
-      const lockedIssue = rec.status !== "draft";
+      const lockedIssue = false;
       return `<tr>
         <td>
           <label class="asset-name"><input type="checkbox" data-path="assets.companyChop.assigned" ${item.assigned ? "checked" : ""} ${lockedIssue ? "disabled" : ""} /> Company Chop</label>
@@ -859,7 +854,7 @@
 
     function mobileRow(rec) {
       const item = rec.assets.mobile;
-      const lockedIssue = rec.status !== "draft";
+      const lockedIssue = false;
       return `<tr>
         <td>
           <label class="asset-name"><input type="checkbox" data-path="assets.mobile.assigned" ${item.assigned ? "checked" : ""} ${lockedIssue ? "disabled" : ""} /> Company mobile phone</label>
@@ -883,7 +878,7 @@
     }
 
     function otherRow(rec, item, i) {
-      const lockedIssue = rec.status !== "draft";
+      const lockedIssue = false;
       return `<tr>
         <td>
           <label class="asset-name"><input type="checkbox" data-path="others.${i}.assigned" ${item.assigned ? "checked" : ""} ${lockedIssue ? "disabled" : ""} /> Others (please specify)</label>
