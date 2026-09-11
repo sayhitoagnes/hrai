@@ -37,10 +37,11 @@
     .split { border-top: 1px solid var(--line); margin: 28px 0; }
     .foot { font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; margin-top: 8px; }
     .actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
-    .actions button {
+    .actions button, .actions a.btn {
       border: 1px solid #1a1714; background: #1a1714; color: #fff; padding: 8px 14px; font-weight: 700; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; font-size: 13px;
     }
-    .actions button.ghost { background: transparent; color: #1a1714; }
+    .actions button.ghost, .actions a.ghost { background: transparent; color: #1a1714; }
     @media print { .note, .actions { display: none; } body { background: #fff; } .desk { padding: 0; } }
   </style>
 </head>
@@ -48,12 +49,14 @@
   <div class="desk">
     <div class="note">
       <strong>HR preview · 人事預覽。</strong>
-      This is the staff invitation as it should appear in email. Copy the body below, or use <a href="staff-invitation-plain.txt">staff-invitation-plain.txt</a> for Outlook / Teams. Replace the play link if the file is hosted elsewhere.
-      此為員工邀請電郵預覽。可貼上電郵正文，或使用純文字稿。活動連結可按實際托管位置更換。
+      This is the staff invitation as it should appear in email. Use <strong>Download email text</strong> to save a .txt file for Outlook or Teams. Replace the play link if the file is hosted elsewhere.
+      此為員工邀請電郵預覽。請按「下載電郵正文」儲存純文字檔，可貼上 Outlook 或 Teams。
       · <a href="game-rules.html">Game rules 活動規則</a>
       · <a href="index.html">Open activity 開啟活動</a>
       <div class="actions">
-        <button type="button" onclick="copyPlain()">Copy plain-text email</button>
+        <button type="button" onclick="downloadPlain()">Download email text · 下載電郵正文</button>
+        <a class="btn ghost" href="staff-invitation-plain.txt" download="HKAC-Mid-Autumn-Staff-Invitation.txt">Save .txt file</a>
+        <button type="button" class="ghost" onclick="copyPlain()">Copy text</button>
         <button type="button" class="ghost" onclick="window.print()">Print / PDF</button>
       </div>
     </div>
@@ -238,6 +241,19 @@ Hong Kong Arts Centre
       const text = document.getElementById("plain").value;
       try { await navigator.clipboard.writeText(text); alert("Copied. 已複製純文字電郵。"); }
       catch (e) { document.getElementById("plain").hidden = false; document.getElementById("plain").select(); }
+    }
+
+    function downloadPlain() {
+      const text = document.getElementById("plain").value;
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "HKAC-Mid-Autumn-Staff-Invitation.txt";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
     }
   </script>
 </body>
