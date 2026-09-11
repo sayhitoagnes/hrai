@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staff invitation email · 員工邀請電郵 | Hong Kong Arts Centre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --night:#10141c; --gold:#b0893a; --ink:#1a1714; --muted:#5c5348; --line:#d9d0c0; --cream:#fbf7ef; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e8e2d6; color: var(--ink); font-family: "Source Sans 3", "Noto Sans TC", sans-serif; }
+    .desk { max-width: 920px; margin: 0 auto; padding: 28px 16px 64px; }
+    .note { background: #fff; border: 1px solid var(--line); padding: 14px 16px; font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+    .note strong { color: var(--ink); }
+    .chrome { background: #fff; border: 1px solid var(--line); box-shadow: 0 18px 40px rgba(16,20,28,.08); }
+    .meta { padding: 16px 20px; border-bottom: 1px solid var(--line); font-size: 13px; }
+    .meta div { display: grid; grid-template-columns: 72px 1fr; gap: 8px; margin: 4px 0; }
+    .meta b { color: #8a7f70; font-weight: 600; }
+    .subject { font-size: 16px; font-weight: 700; margin-top: 8px; }
+    .mail { width: 100%; background: #f7f3ea; }
+    .inner { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    img.banner { display: block; width: 100%; height: auto; border: 0; }
+    .pad { padding: 28px 28px 36px; }
+    .org { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin: 0 0 6px; }
+    h1 { font-size: 22px; line-height: 1.35; margin: 0 0 6px; font-weight: 700; }
+    .sub { color: var(--muted); font-size: 14px; margin: 0 0 22px; }
+    p { font-size: 15px; line-height: 1.7; margin: 0 0 14px; }
+    h2 { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #7a5a28; margin: 22px 0 8px; }
+    ol, ul { margin: 0 0 14px; padding-left: 20px; }
+    li { font-size: 15px; line-height: 1.65; margin: 0 0 6px; }
+    .cta {
+      display: inline-block; background: #1a1714; color: #fbf7ef !important; text-decoration: none;
+      font-weight: 700; font-size: 14px; letter-spacing: .06em; padding: 12px 22px; margin: 8px 0 18px;
+    }
+    .split { border-top: 1px solid var(--line); margin: 28px 0; }
+    .foot { font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; margin-top: 8px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+    .actions button {
+      border: 1px solid #1a1714; background: #1a1714; color: #fff; padding: 8px 14px; font-weight: 700; cursor: pointer;
+    }
+    .actions button.ghost { background: transparent; color: #1a1714; }
+    @media print { .note, .actions { display: none; } body { background: #fff; } .desk { padding: 0; } }
+  </style>
+</head>
+<body>
+  <div class="desk">
+    <div class="note">
+      <strong>HR preview · 人事預覽。</strong>
+      This is the staff invitation as it should appear in email. Copy the body below, or use <a href="staff-invitation-plain.txt">staff-invitation-plain.txt</a> for Outlook / Teams. Replace the play link if the file is hosted elsewhere.
+      此為員工邀請電郵預覽。可貼上電郵正文，或使用純文字稿。活動連結可按實際托管位置更換。
+      · <a href="game-rules.html">Game rules 活動規則</a>
+      · <a href="index.html">Open activity 開啟活動</a>
+      <div class="actions">
+        <button type="button" onclick="copyPlain()">Copy plain-text email</button>
+        <button type="button" class="ghost" onclick="window.print()">Print / PDF</button>
+      </div>
+    </div>
+
+    <article class="chrome" aria-label="Email preview">
+      <div class="meta">
+        <div><b>From</b><span>Human Resources &lt;hr@hkac.org.hk&gt;</span></div>
+        <div><b>To</b><span>All staff · 全體同事</span></div>
+        <div><b>Date</b><span>September 2026</span></div>
+        <div class="subject" style="grid-column:1/-1">【內部活動 Internal Activity】2026中秋員工活動｜The Mooncake Puzzle · 月餅謎局 · 燈謎</div>
+      </div>
+
+      <table class="mail" role="presentation" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td align="center">
+            <table class="inner" role="presentation" cellpadding="0" cellspacing="0" width="600">
+              <tr>
+                <td>
+                  <img class="banner" src="assets/email-banner.jpg" width="600" alt="Mid-Autumn harbour scene with mooncakes and lanterns — Hong Kong Arts Centre staff activity">
+                </td>
+              </tr>
+              <tr>
+                <td class="pad">
+                  <p class="org">Hong Kong Arts Centre · 香港藝術中心</p>
+                  <h1>2026 中秋員工活動<br>Staff Mid-Autumn Activity</h1>
+                  <p class="sub">月餅謎局 · 燈謎 &nbsp;|&nbsp; The Mooncake Puzzle &nbsp;|&nbsp; 約 10 分鐘 · 無須登入</p>
+
+                  <p>各位同事：</p>
+                  <p>中秋將至。因同事未能齊集一堂，人事部誠邀全體同事參加一項網上中秋活動「月餅謎局 · 燈謎」。活動以月餅配對、團圓桌與燈謎組成，讓大家在各自的位置，仍可共享同一輪月。</p>
+                  <p>活動約需 <strong>10 分鐘</strong>，可在電腦或手機瀏覽器完成，<strong>無須登入</strong>。</p>
+
+                  <h2>活動內容</h2>
+                  <ol>
+                    <li>點亮一盞花燈。</li>
+                    <li>配對八對月餅（記憶遊戲）。</li>
+                    <li>從十二件節慶物品中，選出四件屬於中秋的物品，擺好團圓桌。</li>
+                    <li>回答六題燈謎（詩詞、成語及香港掌故）。</li>
+                    <li>為未能同聚的同事題寫一句（最多 40 字）。</li>
+                    <li>收取個人結語卡。滿分 180 分。</li>
+                  </ol>
+
+                  <h2>參加方法</h2>
+                  <ol>
+                    <li>按下方按鈕開啟活動。</li>
+                    <li>輸入姓名（只顯示於結語卡，不會被收集）。</li>
+                    <li>依畫面指示完成四個關卡。建議一次完成；重新整理頁面須從頭開始。</li>
+                  </ol>
+
+                  <p>
+                    <a class="cta" href="index.html">開啟活動 Open the activity</a>
+                  </p>
+                  <p style="font-size:13px;color:#5c5348">建議完成期間：2026 年 9 月 18 日至 9 月 25 日（中秋）。請於方便時參加。</p>
+
+                  <h2>請注意</h2>
+                  <ul>
+                    <li>本次活動<strong>沒有抽獎、獎品或公開排名</strong>。分數只顯示在閣下的結語卡上。</li>
+                    <li>作答資料只留在閣下的裝置。活動頁面不會傳送電郵，亦不會儲存個人資料。</li>
+                    <li>詳細玩法與計分見隨附規則，或活動頁面內的說明。</li>
+                  </ul>
+
+                  <p>如有查詢，請聯絡人事部。祝中秋安好。</p>
+                  <p>人事部<br>香港藝術中心<br>灣仔港灣道 2 號</p>
+
+                  <div class="split"></div>
+
+                  <p>Dear colleagues,</p>
+                  <p>Mid-Autumn Festival is approaching. As we cannot gather at one table, Human Resources invites all staff to a short online activity, <strong>The Mooncake Puzzle / 月餅謎局 · 燈謎</strong>. It is a quiet way to share the festival: matching mooncakes, setting a reunion table, and answering lantern riddles from wherever you are.</p>
+                  <p>The activity takes about <strong>10 minutes</strong> in a desktop or phone browser. <strong>No login is required.</strong></p>
+
+                  <h2>What to expect</h2>
+                  <ol>
+                    <li>Light one lantern.</li>
+                    <li>Match eight pairs of mooncakes (memory game).</li>
+                    <li>From twelve festival items, seat the four that belong at a Mid-Autumn table.</li>
+                    <li>Answer six lantern riddles (verse, idioms, and Hong Kong folklore).</li>
+                    <li>Write one line (up to 40 characters) for colleagues who cannot gather tonight.</li>
+                    <li>Receive a personal closing card. Maximum score: 180.</li>
+                  </ol>
+
+                  <h2>How to take part</h2>
+                  <ol>
+                    <li>Open the activity with the button above.</li>
+                    <li>Enter your name (it appears only on your closing card and is not collected).</li>
+                    <li>Follow the on-screen instructions. Please finish in one sitting; refreshing the page starts again.</li>
+                  </ol>
+
+                  <p style="font-size:13px;color:#5c5348">Suggested window: 18–25 September 2026 (Mid-Autumn Festival). Please join at a convenient time.</p>
+
+                  <h2>Please note</h2>
+                  <ul>
+                    <li>This is a goodwill activity only. There is <strong>no lucky draw, prize, or published ranking</strong>. Your score appears only on your closing card.</li>
+                    <li>Your answers stay on your device. The page does not send email and does not store personal data.</li>
+                    <li>Full playing rules and scoring are in the attached rules document, and on the activity page.</li>
+                  </ul>
+
+                  <p>Please contact Human Resources with any questions. We wish you a peaceful Mid-Autumn.</p>
+                  <p>Human Resources<br>Hong Kong Arts Centre<br>2 Harbour Road, Wan Chai</p>
+
+                  <p class="foot">Internal staff activity · 內部員工活動 · This message is intended for HKAC colleagues.</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </article>
+  </div>
+
+  <textarea id="plain" hidden></textarea>
+  <script>
+    const PLAY = "https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html";
+    const RULES = "game-rules.html";
+    document.getElementById("plain").value = `Subject: 【內部活動 Internal Activity】2026中秋員工活動｜The Mooncake Puzzle · 月餅謎局 · 燈謎
+
+各位同事：
+
+中秋將至。因同事未能齊集一堂，人事部誠邀全體同事參加一項網上中秋活動「月餅謎局 · 燈謎」。活動以月餅配對、團圓桌與燈謎組成，讓大家在各自的位置，仍可共享同一輪月。
+
+活動約需 10 分鐘，可在電腦或手機瀏覽器完成，無須登入。
+
+活動內容
+1. 點亮一盞花燈。
+2. 配對八對月餅（記憶遊戲）。
+3. 從十二件節慶物品中，選出四件屬於中秋的物品，擺好團圓桌。
+4. 回答六題燈謎（詩詞、成語及香港掌故）。
+5. 為未能同聚的同事題寫一句（最多 40 字）。
+6. 收取個人結語卡。滿分 180 分。
+
+參加方法
+1. 開啟活動：${PLAY}
+2. 輸入姓名（只顯示於結語卡，不會被收集）。
+3. 依畫面指示完成四個關卡。建議一次完成；重新整理頁面須從頭開始。
+
+建議完成期間：2026 年 9 月 18 日至 9 月 25 日（中秋）。請於方便時參加。
+
+請注意
+- 本次活動沒有抽獎、獎品或公開排名。分數只顯示在閣下的結語卡上。
+- 作答資料只留在閣下的裝置。活動頁面不會傳送電郵，亦不會儲存個人資料。
+- 詳細玩法與計分見活動規則。
+
+如有查詢，請聯絡人事部。祝中秋安好。
+
+人事部
+香港藝術中心
+灣仔港灣道 2 號
+
+────────────────
+
+Dear colleagues,
+
+Mid-Autumn Festival is approaching. As we cannot gather at one table, Human Resources invites all staff to a short online activity, The Mooncake Puzzle / 月餅謎局 · 燈謎. It is a quiet way to share the festival: matching mooncakes, setting a reunion table, and answering lantern riddles from wherever you are.
+
+The activity takes about 10 minutes in a desktop or phone browser. No login is required.
+
+What to expect
+1. Light one lantern.
+2. Match eight pairs of mooncakes (memory game).
+3. From twelve festival items, seat the four that belong at a Mid-Autumn table.
+4. Answer six lantern riddles (verse, idioms, and Hong Kong folklore).
+5. Write one line (up to 40 characters) for colleagues who cannot gather tonight.
+6. Receive a personal closing card. Maximum score: 180.
+
+How to take part
+1. Open the activity: ${PLAY}
+2. Enter your name (it appears only on your closing card and is not collected).
+3. Follow the on-screen instructions. Please finish in one sitting; refreshing the page starts again.
+
+Suggested window: 18–25 September 2026 (Mid-Autumn Festival). Please join at a convenient time.
+
+Please note
+- This is a goodwill activity only. There is no lucky draw, prize, or published ranking. Your score appears only on your closing card.
+- Your answers stay on your device. The page does not send email and does not store personal data.
+- Full playing rules and scoring are in the attached rules document.
+
+Please contact Human Resources with any questions. We wish you a peaceful Mid-Autumn.
+
+Human Resources
+Hong Kong Arts Centre
+2 Harbour Road, Wan Chai`;
+
+    async function copyPlain() {
+      const text = document.getElementById("plain").value;
+      try { await navigator.clipboard.writeText(text); alert("Copied. 已複製純文字電郵。"); }
+      catch (e) { document.getElementById("plain").hidden = false; document.getElementById("plain").select(); }
+    }
+  </script>
+</body>
+</html>

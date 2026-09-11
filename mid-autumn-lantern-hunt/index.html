@@ -199,6 +199,17 @@
     .feedback.ok { font-weight: 700; }
     footer.legal { margin-top: 36px; color: #7a7166; font-size: 12px; text-align: center; line-height: 1.55; }
     footer.legal a { color: #d4c08a; }
+    .howto { list-style: none; padding: 0; margin: 0 0 18px; }
+    .howto li {
+      display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start;
+      padding: 10px 0; border-top: 1px solid rgba(176,137,58,.25); color: #cfc3ae; font-size: 14px; line-height: 1.5;
+    }
+    .howto li:last-child { border-bottom: 1px solid rgba(176,137,58,.25); }
+    .howto b {
+      width: 28px; height: 28px; display: grid; place-items: center;
+      border: 1px solid rgba(176,137,58,.5); color: #d4c08a; font-size: 12px;
+    }
+    .rules-link { color: #d4c08a; font-size: 13px; }
     @media (min-width: 680px) {
       .card, .blessing-card { padding: 32px; }
     }
@@ -221,12 +232,19 @@
     <section id="screen-welcome" class="screen on">
       <p class="kicker" data-i18n="kicker">2026 中秋 · 同事月餅謎局</p>
       <h1 id="mainTitle">月餅謎局 · 燈謎<span>The Mooncake Puzzle</span></h1>
-      <p class="lead" data-i18n="welcomeLead">香港藝術中心同事的中秋：先配對八對月餅，再擺團圓桌，然後六題燈謎，最後自題一句。結語卡會顯示分數。</p>
+      <p class="lead" data-i18n="welcomeLead">香港藝術中心誠邀全體同事參加一項約十分鐘的網上中秋活動。完成四個關卡：配對八對月餅、擺好四座位的團圓桌、回答六題燈謎，以及題寫一句。結語卡會顯示個人分數。本次活動沒有抽獎或獎品。</p>
       <div class="meta">
         <span class="chip" data-i18n="chip1">約十分鐘</span>
-        <span class="chip" data-i18n="chip2">兩局 · 六題燈謎</span>
-        <span class="chip" data-i18n="chip3">一句燈語 · 分數</span>
+        <span class="chip" data-i18n="chip2">四個關卡 · 無須登入</span>
+        <span class="chip" data-i18n="chip3">個人分數 · 沒有抽獎</span>
       </div>
+      <ol class="howto">
+        <li><b>1</b><span data-i18n="guide1">點亮花燈，然後開始第一局。</span></li>
+        <li><b>2</b><span data-i18n="guide2">配對八對月餅：每次翻兩枚，成對即留。</span></li>
+        <li><b>3</b><span data-i18n="guide3">十二件節慶物品中，選出四件屬於中秋的，擺好團圓桌。</span></li>
+        <li><b>4</b><span data-i18n="guide4">回答六題燈謎，再題寫一句。滿分 180 分。</span></li>
+      </ol>
+      <p style="margin:0 0 22px"><a class="rules-link" href="game-rules.html" data-i18n="rulesLink">完整規則與計分</a></p>
       <div class="card">
         <label class="field" for="staffName" data-i18n="nameLabel">你的姓名</label>
         <input id="staffName" type="text" maxlength="60" autocomplete="name" placeholder="例如：陳美玲" oninput="document.getElementById('nameErr').textContent=''">
@@ -239,7 +257,7 @@
     <section id="screen-lantern" class="screen">
       <p class="kicker" data-i18n="lanternKicker">Prologue</p>
       <h1 data-i18n="lanternTitle">Light one lantern<span>點一盞燈</span></h1>
-      <p class="lead" data-i18n="lanternLead">A single lantern is enough. Then the board is laid.</p>
+      <p class="lead" data-i18n="lanternLead">輕觸花燈，待燈亮後進入第一局。</p>
       <div class="lantern-stage">
         <svg class="lantern-svg" id="lanternSvg" viewBox="0 0 200 260" role="button" tabindex="0" aria-label="Light the lantern" onclick="lightLantern()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();lightLantern();}">
           <line x1="100" y1="10" x2="100" y2="32" stroke="#b0893a" stroke-width="2"/>
@@ -259,7 +277,7 @@
     <section id="screen-play" class="screen">
       <p class="kicker" data-i18n="playKicker">The board</p>
       <h1 data-i18n="playTitle">Find the eight pairs<span>八對月餅</span></h1>
-      <p class="lead" data-i18n="playLead">Tap one cake, then another. A pair stays open. Eight pairs finish the board.</p>
+      <p class="lead" data-i18n="playLead">先點一枚月餅，再點另一枚。成對則留在面上；不成對則翻回。找齊八對後進入團圓桌。</p>
       <div class="hud">
         <span>Pairs <b id="hudPairs">0</b> / 8</span>
         <span>Turns <b id="hudTurns">0</b></span>
@@ -277,7 +295,7 @@
     <section id="screen-table" class="screen">
       <p class="kicker" data-i18n="tableKicker">The table</p>
       <h1 data-i18n="tableTitle">Set the reunion table<span>團圓桌</span></h1>
-      <p class="lead" data-i18n="tableLead">Twelve guests. Four seats under tonight’s moon. Choose four, then seat them. No tasting until the places are full.</p>
+      <p class="lead" data-i18n="tableLead">十二件節慶物品，只有四件屬於中秋。先選滿空位，再按「請入席」。正確的留下，其餘撤下，直至四席坐滿。</p>
       <div class="hud">
         <span>Seated <b id="hudTable">0</b> / 4</span>
         <span>Score <b id="hudTableScore">0</b></span>
@@ -326,18 +344,24 @@
       <div class="hr-nav">
         <button type="button" class="on" data-tab="howto" onclick="hrTab('howto')">How to run</button>
         <button type="button" data-tab="email" onclick="hrTab('email')">Invitation</button>
+        <button type="button" data-tab="rules" onclick="hrTab('rules')">Rules</button>
       </div>
       <div id="hr-howto" class="card">
         <ol class="steps">
-          <li data-i18n="how1">Place this file on a shared drive and copy the link. No login is required.</li>
-          <li data-i18n="how2">Copy the invitation and share it once with all staff (~70).</li>
-          <li data-i18n="how3">There is no lucky draw. The closing card is a score and a blessing only.</li>
+          <li data-i18n="how1">Share the play link with all staff. No login is required. Answers remain on each person’s device.</li>
+          <li data-i18n="how2">Send the designed staff email (staff-invitation-email.html) or copy the invitation below. Attach game-rules.html if needed.</li>
+          <li data-i18n="how3">This is a goodwill activity only. There is no lucky draw, prize, or published ranking.</li>
+          <li data-i18n="how4">Do not circulate the four table answers or riddle answers with the invitation.</li>
         </ol>
       </div>
       <div id="hr-email" class="card" hidden>
-        <p style="margin:0 0 10px;color:#3e3558">Copy into Teams, WhatsApp, or a notice, then paste the play link.</p>
+        <p style="margin:0 0 10px;color:#3e3558">Plain-text copy for Teams, WhatsApp, or Outlook. Designed email with graphic: <a href="staff-invitation-email.html">staff-invitation-email.html</a>.</p>
         <textarea id="inviteText" readonly></textarea>
         <div class="row"><button class="btn" type="button" onclick="copyInvite()">Copy invitation</button></div>
+      </div>
+      <div id="hr-rules" class="card" hidden>
+        <p style="margin:0 0 12px;color:#3e3558" data-i18n="hrRulesLead">Staff-facing rules (no spoilers) are in game-rules.html. Facilitator answers stay on this desk only.</p>
+        <p style="margin:0"><a href="game-rules.html">Open game-rules.html</a></p>
       </div>
     </section>
 
@@ -356,18 +380,18 @@
     const TABLE_NEED = 4;
     const PTS = 10;
     const TABLE_ITEMS = [
-      { id: "cake", mark: "月餅", zh: "月餅", en: "Yuebing", ok: true },
-      { id: "pomelo", mark: "柚子", zh: "柚子", en: "Youzi", ok: true },
-      { id: "lantern", mark: "花燈", zh: "花燈", en: "Huadeng", ok: true },
-      { id: "tea", mark: "清茶", zh: "清茶", en: "Qingcha", ok: true },
-      { id: "zongzi", mark: "粽子", zh: "粽子", en: "Zongzi", ok: false },
-      { id: "niangao", mark: "年糕", zh: "年糕", en: "Niangao", ok: false },
-      { id: "jiaozi", mark: "餃子", zh: "餃子", en: "Jiaozi", ok: false },
-      { id: "tangyuan", mark: "湯圓", zh: "湯圓", en: "Tangyuan", ok: false },
+      { id: "cake", mark: "月餅", zh: "月餅", en: "Mooncake", ok: true },
+      { id: "pomelo", mark: "柚子", zh: "柚子", en: "Pomelo", ok: true },
+      { id: "lantern", mark: "花燈", zh: "花燈", en: "Lantern", ok: true },
+      { id: "tea", mark: "清茶", zh: "清茶", en: "Tea", ok: true },
+      { id: "zongzi", mark: "粽子", zh: "粽子", en: "Rice dumpling", ok: false },
+      { id: "niangao", mark: "年糕", zh: "年糕", en: "New year cake", ok: false },
+      { id: "jiaozi", mark: "餃子", zh: "餃子", en: "Dumpling", ok: false },
+      { id: "tangyuan", mark: "湯圓", zh: "湯圓", en: "Glutinous balls", ok: false },
       { id: "yuanxiao", mark: "元宵", zh: "元宵", en: "Yuanxiao", ok: false },
-      { id: "luobo", mark: "蘿蔔糕", zh: "蘿蔔糕", en: "Luobogao", ok: false },
-      { id: "yolk", mark: "蛋黃酥", zh: "蛋黃酥", en: "Danhuangsu", ok: false },
-      { id: "peach", mark: "桃花", zh: "桃花", en: "Taohua", ok: false }
+      { id: "luobo", mark: "蘿蔔糕", zh: "蘿蔔糕", en: "Turnip cake", ok: false },
+      { id: "yolk", mark: "蛋黃酥", zh: "蛋黃酥", en: "Yolk pastry", ok: false },
+      { id: "peach", mark: "桃花", zh: "桃花", en: "Peach blossom", ok: false }
     ];
     const ROOMS = [
       {
@@ -471,29 +495,34 @@
 
     const I18N = {
       en: {
-        kicker: "Mid-Autumn 2026 · Staff evening",
-        welcomeLead: "A Mid-Autumn evening for Hong Kong Arts Centre staff. Match eight mooncake pairs, set the reunion table, then six lantern riddles. Write one line. The last card shows your score.",
-        chip1: "About 10 minutes", chip2: "Two games · six 燈謎", chip3: "One line · a score",
-        nameLabel: "Your name", startBtn: "Open the evening",
-        privacy: "Your answers stay on this device. Nothing is emailed from this page.",
+        kicker: "Mid-Autumn 2026 · Staff activity",
+        welcomeLead: "Hong Kong Arts Centre invites all colleagues to a short online Mid-Autumn activity. Complete four stages: match eight mooncake pairs, set a four-seat reunion table, answer six lantern riddles, and write one line. Your closing card shows a personal score. There is no prize draw.",
+        chip1: "About 10 minutes", chip2: "Four stages · no login", chip3: "Personal score · no draw",
+        guide1: "Light the lantern, then begin the first game.",
+        guide2: "Match eight pairs of mooncakes: tap two tiles; a pair stays face up.",
+        guide3: "From twelve festival items, seat the four that belong at Mid-Autumn.",
+        guide4: "Answer six lantern riddles, then write one line. Maximum score: 180.",
+        rulesLink: "Full rules and scoring",
+        nameLabel: "Your name", startBtn: "Begin",
+        privacy: "Your name and answers stay on this device. Nothing is emailed or stored by this page.",
         lanternKicker: "Prologue", lanternTitle: "Light one lantern",
-        lanternLead: "A single lantern is enough. Then the board is laid.",
+        lanternLead: "Tap the lantern. When it is lit, continue to the first game.",
         lanternHint: "Touch the lantern", beginRiddles: "To the puzzle",
         playKicker: "The board", playTitle: "Find the eight pairs",
-        playLead: "Tap one cake, then another. A pair stays open. Eight pairs open the reunion table.",
-        playReset: "Clear the table",
-        playMiss: "Those two will not sit. Try again.",
-        playDone: "The table is quiet. Next: set the reunion table.",
+        playLead: "Tap one mooncake, then another. A match stays face up; a miss turns back. Find all eight pairs to continue.",
+        playReset: "Reset the board",
+        playMiss: "Those two do not match. Try again.",
+        playDone: "All eight pairs found. Next: the reunion table.",
         playContinue: "To the reunion table",
         tableKicker: "The table", tableTitle: "Set the reunion table",
-        tableLead: "Twelve guests. Four seats under tonight’s moon. Choose four, then seat them. No tasting until the places are full.",
-        tableNeed: "Choose four guests, then seat them. The house will not say who belongs until the places are full.",
-        tableMiss: "None of these four were invited. Clear them and try another set.",
-        tablePartial: "Some of these may stay. The others were not invited. Fill the empty seats.",
-        tableFull: "Four seats only. Unseat one first.",
+        tableLead: "Twelve festival items appear. Only four belong at a Mid-Autumn table. Select a full set, then tap Seat them. Correct items stay; the others are cleared. Continue until four seats are filled.",
+        tableNeed: "Select as many items as there are empty seats, then tap Seat them. Feedback is given only after you confirm.",
+        tableMiss: "None of these four belong at the Mid-Autumn table. Please try another set.",
+        tablePartial: "The correct items stay seated. Please fill the remaining seats.",
+        tableFull: "Please unselect one item first. You may only confirm as many items as there are empty seats.",
         tableOk: "This one may stay.",
-        tableDone: "The table is set. Six lantern riddles wait.",
-        tableReset: "Clear the table",
+        tableDone: "The table is complete. Next: six lantern riddles.",
+        tableReset: "Reset the table",
         tableSeat: "Seat them",
         tableContinue: "To the lantern riddles",
         ansOk: "Correct.",
@@ -505,46 +534,53 @@
         nextBtn: "Continue", lastBtn: "Receive the closing card",
         blessKicker: "Closing card",
         fromHkac: "Hong Kong Arts Centre · 香港藝術中心",
-        how1: "Place this file on a shared drive and copy the link. No login is required.",
-        how2: "Copy the invitation and share it once with all staff (~70).",
-        how3: "There is no lucky draw. The closing card is a score and a blessing only.",
+        how1: "Share the play link with all staff. No login is required. Answers remain on each person’s device.",
+        how2: "Send the designed staff email (staff-invitation-email.html) or copy the invitation below. Attach game-rules.html if needed.",
+        how3: "This is a goodwill activity only. There is no lucky draw, prize, or published ranking.",
+        how4: "Do not circulate the four table answers or riddle answers with the invitation.",
+        hrRulesLead: "Staff-facing rules (no spoilers) are in game-rules.html. Facilitator answers stay on this desk only.",
         hrLink: "HR organiser desk", staffLink: "Staff evening",
         footer: "Hong Kong Arts Centre · 2 Harbour Road, Wan Chai · Internal staff activity.",
         needName: "Please enter your name for the closing card.",
-        litHint: "It is lit. You may go in.",
+        litHint: "The lantern is lit. You may continue.",
         copied: "Copied.",
         chosen: "The lantern chooses",
         insLabel: "第七盞 · 題燈",
         insZh: "題燈",
-        insEn: "Write one line for colleagues who are not in the same room tonight. It will appear on your closing card.",
-        insHint: "At most 40 characters. A prompt below may be used, or your own line.",
+        insEn: "Write one line for colleagues who are not in the same room tonight. It will appear on your closing card and is not scored.",
+        insHint: "At most 40 characters. You may use a prompt below, or write your own line.",
         insNeed: "A line is required — even a short one.",
         insCount: "characters"
       },
       zh: {
-        kicker: "2026 中秋 · 同事月餅謎局",
-        welcomeLead: "香港藝術中心同事的中秋：先配對八對月餅，再擺團圓桌，然後六題燈謎，最後自題一句。結語卡會顯示分數。",
-        chip1: "約十分鐘", chip2: "兩局 · 六題燈謎", chip3: "一句燈語 · 分數",
-        nameLabel: "你的姓名", startBtn: "打開今晚",
-        privacy: "作答只留在此裝置。本頁不會寄出任何電郵。",
+        kicker: "2026 中秋 · 員工活動",
+        welcomeLead: "香港藝術中心誠邀全體同事參加一項約十分鐘的網上中秋活動。完成四個關卡：配對八對月餅、擺好四座位的團圓桌、回答六題燈謎，以及題寫一句。結語卡會顯示個人分數。本次活動沒有抽獎或獎品。",
+        chip1: "約十分鐘", chip2: "四個關卡 · 無須登入", chip3: "個人分數 · 沒有抽獎",
+        guide1: "點亮花燈，然後開始第一局。",
+        guide2: "配對八對月餅：每次翻兩枚，成對即留。",
+        guide3: "十二件節慶物品中，選出四件屬於中秋的，擺好團圓桌。",
+        guide4: "回答六題燈謎，再題寫一句。滿分 180 分。",
+        rulesLink: "完整規則與計分",
+        nameLabel: "你的姓名", startBtn: "開始活動",
+        privacy: "姓名與作答只留在此裝置。本頁不會寄出電郵，亦不會儲存資料。",
         lanternKicker: "序", lanternTitle: "點一盞燈",
-        lanternLead: "一盞即夠。然後擺盤。",
+        lanternLead: "輕觸花燈，待燈亮後進入第一局。",
         lanternHint: "輕觸花燈", beginRiddles: "到謎局",
         playKicker: "棋盤", playTitle: "八對月餅",
-        playLead: "先點一枚，再點另一枚。成對即留。八對齊後擺團圓桌。",
-        playReset: "重開",
-        playMiss: "這兩枚不成對。再試。",
-        playDone: "月餅收齊。下一局：團圓桌。",
+        playLead: "先點一枚月餅，再點另一枚。成對則留在面上；不成對則翻回。找齊八對後進入團圓桌。",
+        playReset: "重開棋盤",
+        playMiss: "這兩枚不成對。請再試。",
+        playDone: "八對已齊。下一局：團圓桌。",
         playContinue: "去團圓桌",
         tableKicker: "團圓桌", tableTitle: "擺一桌中秋",
-        tableLead: "十二位客人，四個座位。先點四位，再請入席。未坐滿，不試菜。",
-        tableNeed: "先選四位，再請入席。未坐滿，不會告訴你誰該留下。",
-        tableMiss: "這四位都不請。請撤下，另選一組。",
-        tablePartial: "有人可以留下。其餘不是今晚的客人。請補上空位。",
-        tableFull: "只有四席。請先撤一位。",
+        tableLead: "十二件節慶物品，只有四件屬於中秋。先選滿空位，再按「請入席」。正確的留下，其餘撤下，直至四席坐滿。",
+        tableNeed: "請選滿目前空位的件數，再按「請入席」。確認前不會提示哪些正確。",
+        tableMiss: "這四件都不屬於中秋團圓桌。請另選一組。",
+        tablePartial: "正確的已留下。請補上空位。",
+        tableFull: "請先取消一件。每次確認的件數須等於空位數。",
         tableOk: "可以入座。",
-        tableDone: "桌子擺好了。六題燈謎在後。",
-        tableReset: "重開",
+        tableDone: "桌子已擺好。下一關：六題燈謎。",
+        tableReset: "重開桌子",
         tableSeat: "請入席",
         tableContinue: "去燈謎",
         ansOk: "正確。",
@@ -556,18 +592,20 @@
         nextBtn: "繼續", lastBtn: "收取結語卡",
         blessKicker: "結語卡",
         fromHkac: "香港藝術中心 · Hong Kong Arts Centre",
-        how1: "把本檔放到共用雲端並複製連結。不必登入。",
-        how2: "複製邀請，一次分享給約 70 位同事。",
-        how3: "沒有抽獎。結語卡只有分數與祝福。",
+        how1: "把活動連結一次分享給全體同事。不必登入。作答留在各人裝置。",
+        how2: "發送設計電郵（staff-invitation-email.html），或複製下方邀請。需要時夾附 game-rules.html。",
+        how3: "這是善意活動。沒有抽獎、獎品或公開排名。",
+        how4: "請勿在邀請中披露團圓桌四件正解或燈謎答案。",
+        hrRulesLead: "員工可見的規則（不含謎底）見 game-rules.html。主持用答案只留在此桌。",
         hrLink: "人事統籌台", staffLink: "同事今晚",
         footer: "香港藝術中心 · 灣仔港灣道 2 號 · 內部員工活動。",
         needName: "請先填寫姓名，結語卡上會用到。",
-        litHint: "燈已亮。可以進去。",
+        litHint: "燈已亮。可以繼續。",
         copied: "已複製。",
         chosen: "花燈選中了",
         insLabel: "第七盞 · 題燈",
         insZh: "題燈",
-        insEn: "為今晚未能同室的同事寫一句。它會出現在結語卡上。",
+        insEn: "為今晚未能同室的同事寫一句。它會出現在結語卡上，不計分。",
         insHint: "不多於 40 字。可用下列成句，也可自撰。",
         insNeed: "請寫一句，短亦可。",
         insCount: "字"
@@ -1115,26 +1153,40 @@
     }
 
     function hrTab(id) {
-      ["howto", "email"].forEach(k => { document.getElementById("hr-" + k).hidden = k !== id; });
+      ["howto", "email", "rules"].forEach(k => { document.getElementById("hr-" + k).hidden = k !== id; });
       document.querySelectorAll(".hr-nav button").forEach(b => b.classList.toggle("on", b.getAttribute("data-tab") === id));
       if (id === "email") refreshInvite();
     }
 
     function refreshInvite() {
-      const playLink = "[PASTE THE SHARED LINK TO index.html HERE]";
+      const playLink = "https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html";
       document.getElementById("inviteText").value =
-`Hong Kong Arts Centre · Mid-Autumn 2026
-
-Dear colleagues,
-
-You are invited to The Mooncake Puzzle / 月餅謎局 · 燈謎: match eight pairs of cakes, set a reunion table, then six lantern riddles, then write one line. The last card shows your score. There is no lucky draw.
-
-1. Open: ${playLink}
-2. Enter your name, light the lantern, play both games, then the 燈謎.
+`Subject: 【內部活動 Internal Activity】2026中秋員工活動｜The Mooncake Puzzle · 月餅謎局 · 燈謎
 
 各位同事：
 
-香港藝術中心誠邀參加「月餅謎局 · 燈謎」：先配對八對月餅，再擺團圓桌，然後六題燈謎，最後自題一句。結語卡會顯示分數。沒有抽獎。
+中秋將至。人事部誠邀全體同事參加網上中秋活動「月餅謎局 · 燈謎」（約 10 分鐘，無須登入）。
+
+1. 開啟：${playLink}
+2. 輸入姓名（只顯示於結語卡）。
+3. 完成四個關卡：點燈 → 八對月餅 → 團圓桌 → 六題燈謎與題句。
+
+沒有抽獎、獎品或公開排名。分數只顯示在閣下的結語卡。作答留在此裝置。
+
+建議完成期間：2026 年 9 月 18 日至 9 月 25 日（中秋）。
+
+人事部
+香港藝術中心
+
+Dear colleagues,
+
+Human Resources invites all staff to The Mooncake Puzzle / 月餅謎局 · 燈謎, a 10-minute online Mid-Autumn activity. No login is required.
+
+Open: ${playLink}
+
+Enter your name, light the lantern, match eight mooncake pairs, set the reunion table, answer six riddles, and write one line. There is no lucky draw. Your score appears only on your closing card.
+
+Suggested window: 18–25 September 2026.
 
 Hong Kong Arts Centre
 2 Harbour Road, Wan Chai

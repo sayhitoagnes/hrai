@@ -1,44 +1,53 @@
 # HKAC · 月餅謎局 · 燈謎 / The Mooncake Puzzle
 
-Async Mid-Autumn activity for about **70 remote staff** of **Hong Kong Arts Centre**. Average age ~**30**. Gender mixed. People do not meet in person.
-
-The evening is two games — a **mooncake pair puzzle** and a **reunion table** — plus **six 燈謎**, then one inscribed line. There is **no lucky draw**. The closing card shows an accumulated score.
+Async Mid-Autumn activity for **Hong Kong Arts Centre** staff who cannot gather in person. About **10 minutes**. **No login. No lucky draw.** The closing card shows a personal score out of **180**.
 
 **Play (staff):** [Open the evening](https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html)
 
 GitHub’s file page shows source code. Always use the htmlpreview link, or open `index.html` locally.
 
-**HR desk:** footer → *HR organiser desk*, or add `#hr` to the same URL. Use it only to copy the invitation.
+**Staff invitation email (with graphic):** [staff-invitation-email.html](staff-invitation-email.html) · plain text: [staff-invitation-plain.txt](staff-invitation-plain.txt)
+
+**Game rules (bilingual, no spoilers):** [game-rules.html](game-rules.html)
+
+**HR desk:** footer → *HR organiser desk*, or add `#hr` to the same URL.
 
 ---
 
 ## How this plays
 
-1. Sixteen cakes, eight pairs — tap two tiles
-2. Reunion table — tap four Mid-Autumn things among eight
-3. Six lantern riddles (a correct choice is marked **Correct.**)
-4. **題燈** — one line of your own
-5. Closing card: **accumulated score / 180**, HKAC blessing, inscription
+1. Light one lantern
+2. Sixteen cakes, eight pairs — tap two tiles (memory match)
+3. Reunion table — twelve festival items; seat the four that belong at Mid-Autumn
+4. Six lantern riddles (a miss still continues)
+5. **題燈** — one line of your own (not scored)
+6. Closing card: **score / 180**, HKAC blessing, inscription
 
-Score: 10 points per pair (80), 10 per table find (40), 10 per correct riddle (60).
+**Score:** 10 points per pair (80) + 10 per table seat (40) + 10 per correct riddle (60). Turns on the mooncake board are recorded and do not affect the score. Completing the first two games awards 120; riddles add 0–60.
 
 ---
 
 ## What staff do (about 10 minutes)
 
-1. Name → **Open the evening**.
+1. Name → **Begin**.
 2. Light **one** lantern.
 3. Find the **eight pairs**.
-4. Set the **reunion table** (mooncake, pomelo, lantern, tea).
-5. Answer six 燈謎 (a miss still continues; **Correct.** is shown when right).
-6. Write ≤ 40 characters (prompts: 但願人長久 / 千里共嬋娟 / 燈火未闌人未散).
+4. Set the **reunion table** (select a full set, then Seat them).
+5. Answer six 燈謎.
+6. Write ≤ 40 characters.
 7. Closing card: score, blessing, inscription.
+
+Answers stay on the device. Refreshing the page starts again.
 
 ---
 
 ## What you (HR) do
 
-Open **HR desk**. **Copy invitation** into Teams, WhatsApp, or a notice. There is no prize, ticket, or draw.
+1. Open **staff-invitation-email.html**, copy the plain-text email or send the designed body with the banner (`assets/email-banner.jpg`).
+2. Share the play link once with all staff.
+3. If asked how to play, send **game-rules.html**. Do not circulate the HR note at the bottom of that page (it names the four table items).
+
+There is no prize, ticket, or draw.
 
 ---
 
@@ -50,4 +59,6 @@ python3 -m http.server 8765
 ```
 
 Staff: `http://127.0.0.1:8765/`  
+Rules: `http://127.0.0.1:8765/game-rules.html`  
+Email: `http://127.0.0.1:8765/staff-invitation-email.html`  
 HR: `http://127.0.0.1:8765/#hr`
