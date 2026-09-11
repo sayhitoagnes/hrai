@@ -8,6 +8,8 @@ GitHub’s file page shows source code. Always use the htmlpreview link, or open
 
 **Staff invitation email:** [staff-invitation-email.html](staff-invitation-email.html) · [HKAC-Mid-Autumn-Staff-Invitation.txt](HKAC-Mid-Autumn-Staff-Invitation.txt) · [HKAC-Mid-Autumn-Staff-Invitation.docx](HKAC-Mid-Autumn-Staff-Invitation.docx)
 
+**Email banner (rectangle for Outlook):** [HKAC-Mid-Autumn-Email-Banner.jpg](HKAC-Mid-Autumn-Email-Banner.jpg) — 1200×400. Insert at 600px wide. Smaller file: [HKAC-Mid-Autumn-Email-Banner-600.jpg](HKAC-Mid-Autumn-Email-Banner-600.jpg)
+
 **Game rules (bilingual, no spoilers):** [game-rules.html](game-rules.html)
 
 **HR desk:** footer → *HR organiser desk*, or add `#hr` to the same URL.
