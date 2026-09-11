@@ -1,12 +1,12 @@
 # HKAC · 月餅謎局 · 燈謎 / The Mooncake Puzzle
 
-Async Mid-Autumn activity for **Hong Kong Arts Centre** staff who cannot gather in person. About **10 minutes**. **No login. No lucky draw.** The closing card shows a personal score out of **180**.
+Voluntary Mid-Autumn **team game** for Hong Kong Arts Centre staff. About **10 minutes**. Teams of **3–5**. Register with Agnes by **22 September**; game link to representatives on **23 September**; score screenshot due **24 September**. Highest score (faster finish if tied) wins a **$500 cash coupon**.
 
-**Play (staff):** [Open the evening](https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html)
+**Play (for team representatives, from 23 Sep):** [Open the game](https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-lantern-rules-email-7d8a/mid-autumn-lantern-hunt/index.html)
 
 GitHub’s file page shows source code. Always use the htmlpreview link, or open `index.html` locally.
 
-**Staff invitation email (with graphic):** [staff-invitation-email.html](staff-invitation-email.html) — use **Download email text** to save `HKAC-Mid-Autumn-Staff-Invitation.txt`. Plain text: [HKAC-Mid-Autumn-Staff-Invitation.txt](HKAC-Mid-Autumn-Staff-Invitation.txt)
+**Staff invitation email:** [staff-invitation-email.html](staff-invitation-email.html) · [HKAC-Mid-Autumn-Staff-Invitation.txt](HKAC-Mid-Autumn-Staff-Invitation.txt) · [HKAC-Mid-Autumn-Staff-Invitation.docx](HKAC-Mid-Autumn-Staff-Invitation.docx)
 
 **Game rules (bilingual, no spoilers):** [game-rules.html](game-rules.html)
 
@@ -37,17 +37,17 @@ GitHub’s file page shows source code. Always use the htmlpreview link, or open
 6. Write ≤ 40 characters.
 7. Closing card: score, blessing, inscription.
 
-Answers stay on the device. Refreshing the page starts again.
+Refreshing the page starts again. Competing teams email a closing-card screenshot to HR.
 
 ---
 
 ## What you (HR) do
 
-1. Open **staff-invitation-email.html**, copy the plain-text email or send the designed body with the banner (`assets/email-banner.jpg`).
-2. Share the play link once with all staff.
-3. If asked how to play, send **game-rules.html**. Do not circulate the HR note at the bottom of that page (it names the four table items).
-
-There is no prize, ticket, or draw.
+1. Send **staff-invitation-email.html** (or the Word/txt file). Do not include the game link in this announcement.
+2. Collect team lists by **22 September** at agnwong@hkac.org.hk.
+3. On **23 September**, send the play link only to team representatives.
+4. On **24 September**, collect one screenshot per team. Highest score wins $500; a tie is decided by the shorter finish.
+5. If asked how to play, send **game-rules.html**. Do not circulate the HR note at the bottom of that page.
 
 ---
 

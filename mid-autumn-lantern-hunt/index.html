@@ -232,11 +232,11 @@
     <section id="screen-welcome" class="screen on">
       <p class="kicker" data-i18n="kicker">2026 中秋 · 同事月餅謎局</p>
       <h1 id="mainTitle">月餅謎局 · 燈謎<span>The Mooncake Puzzle</span></h1>
-      <p class="lead" data-i18n="welcomeLead">香港藝術中心誠邀全體同事參加一項約十分鐘的網上中秋活動。完成四個關卡：配對八對月餅、擺好四座位的團圓桌、回答六題燈謎，以及題寫一句。結語卡會顯示個人分數。本次活動沒有抽獎或獎品。</p>
+      <p class="lead" data-i18n="welcomeLead">中秋快樂。歡迎與同事組隊，用約十分鐘完成四個關卡：配對月餅、擺團圓桌、猜燈謎，再題寫一句。結語卡會顯示分數。</p>
       <div class="meta">
         <span class="chip" data-i18n="chip1">約十分鐘</span>
-        <span class="chip" data-i18n="chip2">四個關卡 · 無須登入</span>
-        <span class="chip" data-i18n="chip3">個人分數 · 沒有抽獎</span>
+        <span class="chip" data-i18n="chip2">每隊 3 至 5 人</span>
+        <span class="chip" data-i18n="chip3">自願參加 · 歡迎組隊</span>
       </div>
       <ol class="howto">
         <li><b>1</b><span data-i18n="guide1">點亮花燈，然後開始第一局。</span></li>
@@ -250,7 +250,7 @@
         <input id="staffName" type="text" maxlength="60" autocomplete="name" placeholder="例如：陳美玲" oninput="document.getElementById('nameErr').textContent=''">
         <p class="tiny" id="nameErr" style="color:#8a3b32;margin:8px 0 0;min-height:1.2em"></p>
         <div class="row"><button class="btn gold wide" type="button" onclick="startHunt()" data-i18n="startBtn">打開今晚</button></div>
-        <p class="tiny" style="margin:14px 0 0" data-i18n="privacy">作答只留在此裝置。本頁不會寄出任何電郵。</p>
+        <p class="tiny" style="margin:14px 0 0" data-i18n="privacy">請輸入姓名，結語卡上會用到。若隊伍參賽，請由隊長把結語卡截圖電郵至人事部。</p>
       </div>
     </section>
 
@@ -348,9 +348,9 @@
       </div>
       <div id="hr-howto" class="card">
         <ol class="steps">
-          <li data-i18n="how1">Share the play link with all staff. No login is required. Answers remain on each person’s device.</li>
-          <li data-i18n="how2">Send the designed staff email (staff-invitation-email.html) or copy the invitation below. Attach game-rules.html if needed.</li>
-          <li data-i18n="how3">This is a goodwill activity only. There is no lucky draw, prize, or published ranking.</li>
+          <li data-i18n="how1">請 3 至 5 人隊伍於 9 月 22 日前，把隊員名單及隊長姓名電郵至 Agnes（agnwong@hkac.org.hk）。</li>
+          <li data-i18n="how2">9 月 23 日只把遊戲連結發給隊長。9 月 24 日以電郵收取每隊一張結語卡截圖。</li>
+          <li data-i18n="how3">分數最高者獲 $500 現金券；同分則以較快完成者勝出。活動為自願參加。</li>
           <li data-i18n="how4">Do not circulate the four table answers or riddle answers with the invitation.</li>
         </ol>
       </div>
@@ -496,15 +496,15 @@
     const I18N = {
       en: {
         kicker: "Mid-Autumn 2026 · Staff activity",
-        welcomeLead: "Hong Kong Arts Centre invites all colleagues to a short online Mid-Autumn activity. Complete four stages: match eight mooncake pairs, set a four-seat reunion table, answer six lantern riddles, and write one line. Your closing card shows a personal score. There is no prize draw.",
-        chip1: "About 10 minutes", chip2: "Four stages · no login", chip3: "Personal score · no draw",
+        welcomeLead: "Happy Mid-Autumn. Form a team with colleagues and complete four short stages: match mooncakes, set a reunion table, answer lantern riddles, and write one line. Your closing card shows the score.",
+        chip1: "About 10 minutes", chip2: "Teams of 3 to 5", chip3: "Voluntary · play together",
         guide1: "Light the lantern, then begin the first game.",
         guide2: "Match eight pairs of mooncakes: tap two tiles; a pair stays face up.",
         guide3: "From twelve festival items, seat the four that belong at Mid-Autumn.",
         guide4: "Answer six lantern riddles, then write one line. Maximum score: 180.",
         rulesLink: "Full rules and scoring",
         nameLabel: "Your name", startBtn: "Begin",
-        privacy: "Your name and answers stay on this device. Nothing is emailed or stored by this page.",
+        privacy: "Enter a name for the closing card. If your team is joining the contest, your representative will email a screenshot of that card to HR.",
         lanternKicker: "Prologue", lanternTitle: "Light one lantern",
         lanternLead: "Tap the lantern. When it is lit, continue to the first game.",
         lanternHint: "Touch the lantern", beginRiddles: "To the puzzle",
@@ -534,9 +534,9 @@
         nextBtn: "Continue", lastBtn: "Receive the closing card",
         blessKicker: "Closing card",
         fromHkac: "Hong Kong Arts Centre · 香港藝術中心",
-        how1: "Share the play link with all staff. No login is required. Answers remain on each person’s device.",
-        how2: "Send the designed staff email (staff-invitation-email.html) or copy the invitation below. Attach game-rules.html if needed.",
-        how3: "This is a goodwill activity only. There is no lucky draw, prize, or published ranking.",
+        how1: "Ask teams of 3–5 to email Agnes (agnwong@hkac.org.hk) by 22 September with the member list and representative’s name.",
+        how2: "On 23 September, send the play link only to team representatives. On 24 September, collect one closing-card screenshot per team by email.",
+        how3: "The highest score wins a $500 cash coupon. If scores are tied, the shorter finish time wins. The activity is voluntary.",
         how4: "Do not circulate the four table answers or riddle answers with the invitation.",
         hrRulesLead: "Staff-facing rules (no spoilers) are in game-rules.html. Facilitator answers stay on this desk only.",
         hrLink: "HR organiser desk", staffLink: "Staff evening",
@@ -554,15 +554,15 @@
       },
       zh: {
         kicker: "2026 中秋 · 員工活動",
-        welcomeLead: "香港藝術中心誠邀全體同事參加一項約十分鐘的網上中秋活動。完成四個關卡：配對八對月餅、擺好四座位的團圓桌、回答六題燈謎，以及題寫一句。結語卡會顯示個人分數。本次活動沒有抽獎或獎品。",
-        chip1: "約十分鐘", chip2: "四個關卡 · 無須登入", chip3: "個人分數 · 沒有抽獎",
+        welcomeLead: "中秋快樂。歡迎與同事組隊，用約十分鐘完成四個關卡：配對月餅、擺團圓桌、猜燈謎，再題寫一句。結語卡會顯示分數。",
+        chip1: "約十分鐘", chip2: "每隊 3 至 5 人", chip3: "自願參加 · 歡迎組隊",
         guide1: "點亮花燈，然後開始第一局。",
         guide2: "配對八對月餅：每次翻兩枚，成對即留。",
         guide3: "十二件節慶物品中，選出四件屬於中秋的，擺好團圓桌。",
         guide4: "回答六題燈謎，再題寫一句。滿分 180 分。",
         rulesLink: "完整規則與計分",
         nameLabel: "你的姓名", startBtn: "開始活動",
-        privacy: "姓名與作答只留在此裝置。本頁不會寄出電郵，亦不會儲存資料。",
+        privacy: "請輸入姓名，結語卡上會用到。若隊伍參賽，請由隊長把結語卡截圖電郵至人事部。",
         lanternKicker: "序", lanternTitle: "點一盞燈",
         lanternLead: "輕觸花燈，待燈亮後進入第一局。",
         lanternHint: "輕觸花燈", beginRiddles: "到謎局",
@@ -592,9 +592,9 @@
         nextBtn: "繼續", lastBtn: "收取結語卡",
         blessKicker: "結語卡",
         fromHkac: "香港藝術中心 · Hong Kong Arts Centre",
-        how1: "把活動連結一次分享給全體同事。不必登入。作答留在各人裝置。",
-        how2: "發送設計電郵（staff-invitation-email.html），或複製下方邀請。需要時夾附 game-rules.html。",
-        how3: "這是善意活動。沒有抽獎、獎品或公開排名。",
+        how1: "請 3 至 5 人隊伍於 9 月 22 日前，把隊員名單及隊長姓名電郵至 Agnes（agnwong@hkac.org.hk）。",
+        how2: "9 月 23 日只把遊戲連結發給隊長。9 月 24 日以電郵收取每隊一張結語卡截圖。",
+        how3: "分數最高者獲 $500 現金券；同分則以較快完成者勝出。活動為自願參加。",
         how4: "請勿在邀請中披露團圓桌四件正解或燈謎答案。",
         hrRulesLead: "員工可見的規則（不含謎底）見 game-rules.html。主持用答案只留在此桌。",
         hrLink: "人事統籌台", staffLink: "同事今晚",
@@ -1159,35 +1159,57 @@
     }
 
     function refreshInvite() {
-      const playLink = "https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-mid-autumn-lantern-hunt-1baf/mid-autumn-lantern-hunt/index.html";
       document.getElementById("inviteText").value =
-`Subject: 【內部活動 Internal Activity】2026中秋員工活動｜The Mooncake Puzzle · 月餅謎局 · 燈謎
+`Subject: You’re invited: Mid-Autumn team game · 誠邀組隊｜月餅謎局 · 燈謎
 
 各位同事：
 
-中秋將至。人事部誠邀全體同事參加網上中秋活動「月餅謎局 · 燈謎」（約 10 分鐘，無須登入）。
+中秋快樂！雖然今年未能圍坐一桌，我們仍很想與你一起過節。
 
-1. 開啟：${playLink}
-2. 輸入姓名（只顯示於結語卡）。
-3. 完成四個關卡：點燈 → 八對月餅 → 團圓桌 → 六題燈謎與題句。
+人事部誠邀大家參加自願網上小遊戲「月餅謎局 · 燈謎」。只需約 10 分鐘，用電腦或手機瀏覽器即可，無須登入。歡迎找身邊同事組成一隊，一起配月餅、擺團圓桌、猜燈謎，為這個中秋添一點歡笑。
 
-沒有抽獎、獎品或公開排名。分數只顯示在閣下的結語卡。作答留在此裝置。
+如何參加
+1. 組成 3 至 5 人一隊，並推選一位隊長。
+2. 請隊長於 2026 年 9 月 22 日或之前，把隊員名單及隊長姓名電郵至人事部 Agnes（agnwong@hkac.org.hk）。
+3. 9 月 23 日，遊戲連結會發送給各隊隊長。請由隊長開啟遊戲，與隊員一起完成。
+4. 請於 9 月 24 日，把遊戲最後一頁（結語卡）的分數截圖，由隊長電郵交回 Agnes。每隊只可提交一次，並只接受電郵提交。
 
-建議完成期間：2026 年 9 月 18 日至 9 月 25 日（中秋）。
+獎項
+分數最高的隊伍將獲 $500 現金券。如多於一隊同得最高分，以完成時間較短的隊伍勝出。
+
+這是自願活動。無論是否參賽，都祝你中秋愉快。
+
+如有查詢，歡迎聯絡人事部或 Agnes。
+
+祝中秋快樂。
 
 人事部
 香港藝術中心
+灣仔港灣道 2 號
+
+────────────────
 
 Dear colleagues,
 
-Human Resources invites all staff to The Mooncake Puzzle / 月餅謎局 · 燈謎, a 10-minute online Mid-Autumn activity. No login is required.
+Happy Mid-Autumn! We may not sit at the same table this year, and we would still love to celebrate with you.
 
-Open: ${playLink}
+Human Resources invites you to a voluntary online game, The Mooncake Puzzle / 月餅謎局 · 燈謎. It takes about 10 minutes on a computer or phone browser, with no login. Form a small team with colleagues, match mooncakes, set a reunion table, and solve lantern riddles — a short, festive break together.
 
-Enter your name, light the lantern, match eight mooncake pairs, set the reunion table, answer six riddles, and write one line. There is no lucky draw. Your score appears only on your closing card.
+How to take part
+1. Form a team of 3 to 5 colleagues and choose one team representative.
+2. By 22 September 2026, the representative emails the member list and the representative’s name to Agnes in Human Resources (agnwong@hkac.org.hk).
+3. On 23 September, the game link will be sent to each team representative. Please open it together and complete the game as a team.
+4. On 24 September, the representative emails a screenshot of the final score page (the closing card) to Agnes. Each team may submit only once, and only by email.
 
-Suggested window: 18–25 September 2026.
+Prize
+The team with the highest score wins a $500 cash coupon. If more than one team shares the highest score, the team that finished in the shorter time wins.
 
+This activity is voluntary. Whether you join the game or not, we wish you a joyful Mid-Autumn.
+
+Please contact Human Resources or Agnes with any questions.
+
+Warm regards,
+Human Resources
 Hong Kong Arts Centre
 2 Harbour Road, Wan Chai
 `;
