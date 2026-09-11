@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Mooncake Puzzle · 燈謎 | Hong Kong Arts Centre</title>
+  <title>月餅謎局 · 燈謎 | 香港藝術中心</title>
   <meta name="description" content="A staff Mid-Autumn evening for Hong Kong Arts Centre: mooncake pairs, a reunion table, six lantern riddles, and one inscribed line.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -212,27 +212,27 @@
         <strong>Hong Kong Arts Centre</strong>
         <em>香港藝術中心</em>
       </div>
-      <div class="lang" role="group" aria-label="Language">
-        <button type="button" id="btn-en" class="on" onclick="setLang('en')">EN</button>
-        <button type="button" id="btn-zh" onclick="setLang('zh')">繁</button>
+      <div class="lang" role="group" aria-label="語言">
+        <button type="button" id="btn-zh" class="on" onclick="setLang('zh')">繁</button>
+        <button type="button" id="btn-en" onclick="setLang('en')">EN</button>
       </div>
     </header>
 
     <section id="screen-welcome" class="screen on">
-      <p class="kicker" data-i18n="kicker">Mid-Autumn 2026 · Staff evening</p>
-      <h1 id="mainTitle">The Mooncake Puzzle<span>月餅謎局 · 燈謎</span></h1>
-      <p class="lead" data-i18n="welcomeLead">A Mid-Autumn evening for Hong Kong Arts Centre staff. Match eight mooncake pairs, set the reunion table, then six lantern riddles. Write one line. The last card shows your score.</p>
+      <p class="kicker" data-i18n="kicker">2026 中秋 · 同事月餅謎局</p>
+      <h1 id="mainTitle">月餅謎局 · 燈謎<span>The Mooncake Puzzle</span></h1>
+      <p class="lead" data-i18n="welcomeLead">香港藝術中心同事的中秋：先配對八對月餅，再擺團圓桌，然後六題燈謎，最後自題一句。結語卡會顯示分數。</p>
       <div class="meta">
-        <span class="chip" data-i18n="chip1">About 10 minutes</span>
-        <span class="chip" data-i18n="chip2">Two games · six 燈謎</span>
-        <span class="chip" data-i18n="chip3">One line · a score</span>
+        <span class="chip" data-i18n="chip1">約十分鐘</span>
+        <span class="chip" data-i18n="chip2">兩局 · 六題燈謎</span>
+        <span class="chip" data-i18n="chip3">一句燈語 · 分數</span>
       </div>
       <div class="card">
-        <label class="field" for="staffName" data-i18n="nameLabel">Your name</label>
-        <input id="staffName" type="text" maxlength="60" autocomplete="name" placeholder="e.g. Chan Mei Ling" oninput="document.getElementById('nameErr').textContent=''">
+        <label class="field" for="staffName" data-i18n="nameLabel">你的姓名</label>
+        <input id="staffName" type="text" maxlength="60" autocomplete="name" placeholder="例如：陳美玲" oninput="document.getElementById('nameErr').textContent=''">
         <p class="tiny" id="nameErr" style="color:#8a3b32;margin:8px 0 0;min-height:1.2em"></p>
-        <div class="row"><button class="btn gold wide" type="button" onclick="startHunt()" data-i18n="startBtn">Open the evening</button></div>
-        <p class="tiny" style="margin:14px 0 0" data-i18n="privacy">Your answers stay on this device. Nothing is emailed from this page.</p>
+        <div class="row"><button class="btn gold wide" type="button" onclick="startHunt()" data-i18n="startBtn">打開今晚</button></div>
+        <p class="tiny" style="margin:14px 0 0" data-i18n="privacy">作答只留在此裝置。本頁不會寄出任何電郵。</p>
       </div>
     </section>
 
@@ -343,11 +343,11 @@
 
     <footer class="legal">
       <p>
-        <a href="#" onclick="showHr();return false;" data-i18n="hrLink">HR organiser desk</a>
+        <a href="#" onclick="showHr();return false;" data-i18n="hrLink">人事統籌台</a>
         ·
-        <a href="#" onclick="showWelcome();return false;" data-i18n="staffLink">Staff viewing</a>
+        <a href="#" onclick="showWelcome();return false;" data-i18n="staffLink">同事今晚</a>
       </p>
-      <p data-i18n="footer">Hong Kong Arts Centre · 2 Harbour Road, Wan Chai · Internal staff activity.</p>
+      <p data-i18n="footer">香港藝術中心 · 灣仔港灣道 2 號 · 內部員工活動。</p>
     </footer>
   </div>
 
@@ -575,7 +575,7 @@
     };
 
     const state = {
-      lang: "en", name: "", i: 0, correct: 0, locked: false, lit: false, inscription: "", score: 0, turns: 0
+      lang: "zh", name: "", i: 0, correct: 0, locked: false, lit: false, inscription: "", score: 0, turns: 0
     };
 
     const game = {
@@ -603,6 +603,7 @@
       document.getElementById("btn-en").classList.toggle("on", lang === "en");
       document.getElementById("btn-zh").classList.toggle("on", lang === "zh");
       document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
+      document.title = lang === "zh" ? "月餅謎局 · 燈謎 | 香港藝術中心" : "Mooncake Puzzle · 燈謎 | Hong Kong Arts Centre";
       const mainTitle = document.getElementById("mainTitle");
       if (mainTitle) {
         mainTitle.innerHTML = lang === "zh" ? "月餅謎局 · 燈謎<span>The Mooncake Puzzle</span>" : "The Mooncake Puzzle<span>月餅謎局 · 燈謎</span>";
@@ -1145,7 +1146,7 @@ Hong Kong Arts Centre
       catch (e) { document.getElementById("inviteText").select(); document.execCommand("copy"); }
     }
 
-    refreshInvite();
+    setLang("zh");
     if (location.hash === "#hr") showHr();
   </script>
 </body>
