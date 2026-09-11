@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game rules · 活動規則 | 月餅謎局 · 燈謎 | Hong Kong Arts Centre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --night: #10141c;
+      --ink: #1a1714;
+      --muted: #5c5348;
+      --gold: #b0893a;
+      --line: #d9d0c0;
+      --paper: #f4efe4;
+      --cream: #fbf7ef;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--cream); color: var(--ink); }
+    body { font-family: "Source Sans 3", "Noto Sans TC", sans-serif; line-height: 1.6; }
+    .hero { background: #10141c; color: #fbf7ef; }
+    .hero img { display: block; width: 100%; max-width: 960px; margin: 0 auto; height: auto; }
+    .bar {
+      max-width: 960px; margin: 0 auto; padding: 18px 24px 22px;
+      display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap;
+    }
+    .bar strong { display: block; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; }
+    .bar em { font-style: normal; color: #d4c08a; font-size: 13px; }
+    .lang { display: flex; border: 1px solid rgba(255,255,255,.2); }
+    .lang button { background: transparent; color: #c4b49a; border: 0; padding: 7px 12px; font-weight: 700; cursor: pointer; }
+    .lang button.on { background: rgba(176,137,58,.28); color: #fbf7ef; }
+    .wrap { max-width: 800px; margin: 0 auto; padding: 36px 24px 80px; }
+    .kicker { letter-spacing: .22em; text-transform: uppercase; font-size: 11px; color: var(--gold); font-weight: 700; margin: 0 0 8px; }
+    h1 { font-family: "Cormorant Garamond", "Noto Serif TC", serif; font-weight: 500; font-size: clamp(32px, 5vw, 46px); line-height: 1.15; margin: 0 0 12px; }
+    h1 span { display: block; font-size: .48em; color: #7a5a28; margin-top: 6px; }
+    .lead { color: var(--muted); font-size: 17px; max-width: 40rem; }
+    h2 { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: #7a5a28; margin: 36px 0 10px; }
+    h2 .zh { display: block; font-family: "Noto Sans TC", sans-serif; letter-spacing: 0; text-transform: none; font-size: 18px; color: var(--ink); margin-bottom: 2px; font-weight: 700; }
+    p, li { font-size: 16px; }
+    .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin: 22px 0 8px; }
+    .fact { border: 1px solid var(--line); background: #fff; padding: 14px 16px; }
+    .fact b { display: block; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #8a7f70; margin-bottom: 4px; }
+    ol.stages { padding-left: 0; list-style: none; counter-reset: st; }
+    ol.stages li {
+      counter-increment: st; border-top: 1px solid var(--line); padding: 16px 0 16px 52px; position: relative;
+    }
+    ol.stages li:before {
+      content: counter(st); position: absolute; left: 0; top: 16px;
+      width: 32px; height: 32px; border: 1px solid var(--gold); color: #7a5a28;
+      display: grid; place-items: center; font-weight: 700; font-size: 13px;
+    }
+    ol.stages strong { display: block; margin-bottom: 4px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; font-size: 15px; }
+    th, td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+    th { background: #1a1714; color: #fbf7ef; font-weight: 600; font-size: 13px; letter-spacing: .04em; }
+    .note { font-size: 14px; color: var(--muted); }
+    .box { border-left: 3px solid var(--gold); background: #fff; padding: 14px 16px; margin: 16px 0; }
+    a { color: #7a5a28; }
+    footer { margin-top: 48px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+    .hr-only { margin-top: 48px; border: 1px dashed #c4b49a; padding: 18px; background: #fff; }
+    .hr-only h3 { margin: 0 0 8px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+    [data-lang] { display: none; }
+    html[lang="zh-Hant"] [data-lang="zh"], html[lang="en"] [data-lang="en"] { display: block; }
+    html[lang="zh-Hant"] span[data-lang="zh"], html[lang="en"] span[data-lang="en"] { display: inline; }
+    @media print {
+      .lang, .no-print { display: none !important; }
+      body { background: #fff; }
+      .hero { background: #fff; color: #000; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <img src="assets/email-banner.jpg" alt="Hong Kong Arts Centre — Mid-Autumn Festival Online Game">
+    <div class="bar">
+      <div>
+        <strong>Hong Kong Arts Centre</strong>
+        <em>香港藝術中心 · Internal staff activity</em>
+      </div>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" id="btn-zh" class="on" onclick="setLang('zh')">繁</button>
+        <button type="button" id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="kicker" data-lang="zh">2026 中秋 · 員工活動規則</p>
+    <p class="kicker" data-lang="en">Mid-Autumn 2026 · Staff activity rules</p>
+    <h1 data-lang="zh">月餅謎局 · 燈謎<span>The Mooncake Puzzle · How to take part</span></h1>
+    <h1 data-lang="en">The Mooncake Puzzle<span>月餅謎局 · 燈謎 · How to take part</span></h1>
+    <p class="lead" data-lang="zh">這是一項約十分鐘、自願參加的網上中秋小遊戲。歡迎 3 至 5 位同事組隊，一起配月餅、擺團圓桌、猜燈謎。分數最高（同分則較快完成）的隊伍可獲 $500 現金券。</p>
+    <p class="lead" data-lang="en">This is a voluntary online Mid-Autumn game of about ten minutes. Form a team of 3 to 5 colleagues, match mooncakes, set a reunion table, and solve lantern riddles. The team with the highest score — or, if tied, the faster finish — wins a $500 cash coupon.</p>
+
+    <div class="facts">
+      <div class="fact"><b data-lang="zh">對象</b><b data-lang="en">Who</b><span data-lang="zh">全體同事 · 自願參加</span><span data-lang="en">All staff · voluntary</span></div>
+      <div class="fact"><b data-lang="zh">組隊</b><b data-lang="en">Teams</b><span data-lang="zh">每隊 3 至 5 人</span><span data-lang="en">3 to 5 colleagues</span></div>
+      <div class="fact"><b data-lang="zh">時間</b><b data-lang="en">Time</b><span data-lang="zh">約 10 分鐘</span><span data-lang="en">About 10 minutes</span></div>
+      <div class="fact"><b data-lang="zh">獎項</b><b data-lang="en">Prize</b>$500</div>
+    </div>
+
+    <h2><span class="zh" data-lang="zh">活動目的</span><span data-lang="en">Purpose</span></h2>
+    <p data-lang="zh">中秋講求團圓。未能同桌時，我們仍可以一小隊同事、十來分鐘，一起過節：配月餅、擺團圓桌、猜燈謎，為未能同聚的同事題一句話。</p>
+    <p data-lang="en">Mid-Autumn is a festival of reunion. When we cannot sit at one table, a small team and ten minutes are still enough to celebrate: matching mooncakes, setting a reunion table, answering lantern riddles, and writing one line for colleagues who are not in the same room.</p>
+
+    <h2><span class="zh" data-lang="zh">參加步驟</span><span data-lang="en">How to join</span></h2>
+    <ol class="stages">
+      <li>
+        <strong data-lang="zh">組隊並報名（9 月 22 日或之前）</strong>
+        <strong data-lang="en">Form a team and register (by 22 September)</strong>
+        <span data-lang="zh">每隊 3 至 5 人，推選一位隊長。請隊長把隊員名單及隊長姓名電郵至 Agnes（agnwong@hkac.org.hk）。</span>
+        <span data-lang="en">Teams of 3 to 5, with one representative. The representative emails the member list and their name to Agnes (agnwong@hkac.org.hk).</span>
+      </li>
+      <li>
+        <strong data-lang="zh">收取遊戲連結（9 月 23 日）</strong>
+        <strong data-lang="en">Receive the game link (23 September)</strong>
+        <span data-lang="zh">連結只發送給隊長。無須登入。可用頁面右上角切換「繁／EN」。請與隊員一起完成。</span>
+        <span data-lang="en">The link is sent to the team representative only. No login is required. Use 繁 / EN at the top right. Please play together.</span>
+      </li>
+      <li>
+        <strong data-lang="zh">提交分數截圖（9 月 24 日）</strong>
+        <strong data-lang="en">Submit a score screenshot (24 September)</strong>
+        <span data-lang="zh">把遊戲最後一頁（結語卡）截圖，由隊長電郵交回 Agnes。每隊只可提交一次，並只接受電郵。</span>
+        <span data-lang="en">Screenshot the closing card and email it to Agnes. One submission per team, by email only.</span>
+      </li>
+    </ol>
+
+    <h2><span class="zh" data-lang="zh">四個關卡怎麼玩</span><span data-lang="en">How each stage works</span></h2>
+    <ol class="stages">
+      <li>
+        <strong data-lang="zh">序：點一盞燈</strong>
+        <strong data-lang="en">Prologue: light one lantern</strong>
+        <span data-lang="zh">輕觸畫面中的花燈，待燈亮後按「到謎局」。</span>
+        <span data-lang="en">Tap the lantern on screen. When it is lit, continue to the first game.</span>
+      </li>
+      <li>
+        <strong data-lang="zh">第一局：八對月餅（記憶配對）</strong>
+        <strong data-lang="en">Stage 1: eight mooncake pairs (memory match)</strong>
+        <span data-lang="zh">棋盤有 16 枚月餅，共八對。先點一枚，再點另一枚。成對則留在面上；不成對則翻回。找齊八對後，進入團圓桌。翻次會記錄在結語卡，但不計入分數。</span>
+        <span data-lang="en">There are 16 cakes and eight pairs. Tap one cake, then another. A match stays face up; a miss turns back. Find all eight pairs to continue. Your number of turns is shown on the closing card and does not affect the score.</span>
+      </li>
+      <li>
+        <strong data-lang="zh">第二局：團圓桌</strong>
+        <strong data-lang="en">Stage 2: the reunion table</strong>
+        <span data-lang="zh">畫面出現十二件節慶物品，只有四件屬於中秋團圓桌。請先選滿當前空位的件數（開始時為四件），再按「請入席」。正確的會留在桌上；不屬於中秋的會被撤下。請補上空位，直至四席坐滿。活動不會在確認前透露哪些物品正確。</span>
+        <span data-lang="en">Twelve festival items appear. Only four belong at a Mid-Autumn table. Select as many items as there are empty seats (four at the start), then tap Seat them. Correct items stay; the others are cleared. Fill the remaining seats until four are seated. The activity does not reveal the correct items until you confirm a set.</span>
+      </li>
+      <li>
+        <strong data-lang="zh">第三局：六題燈謎</strong>
+        <strong data-lang="en">Stage 3: six lantern riddles</strong>
+        <span data-lang="zh">每題四選一，另有提示。選錯仍可繼續，該題不得分。題目涵蓋詩詞、成語燈謎及香港掌故。</span>
+        <span data-lang="en">Each question has four choices and a hint. A miss still continues; that question scores zero. Topics include verse, idiom riddles, and Hong Kong folklore.</span>
+      </li>
+      <li>
+        <strong data-lang="zh">題燈：寫一句</strong>
+        <strong data-lang="en">Inscription: write one line</strong>
+        <span data-lang="zh">為未能同室的同事寫一句，最多 40 字。可用畫面提供的成句，也可自撰。此句會出現在結語卡，不計分。</span>
+        <span data-lang="en">Write one line for colleagues who cannot gather tonight, up to 40 characters. You may use a prompt on screen or your own words. The line appears on your closing card and is not scored.</span>
+      </li>
+    </ol>
+
+    <h2><span class="zh" data-lang="zh">計分</span><span data-lang="en">Scoring</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span data-lang="zh">關卡</span><span data-lang="en">Stage</span></th>
+          <th><span data-lang="zh">得分方式</span><span data-lang="en">How points are earned</span></th>
+          <th><span data-lang="zh">最高分</span><span data-lang="en">Maximum</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span data-lang="zh">八對月餅</span><span data-lang="en">Mooncake pairs</span></td>
+          <td><span data-lang="zh">每對 10 分。須找齊八對才可繼續。</span><span data-lang="en">10 points per pair. All eight pairs are required to continue.</span></td>
+          <td>80</td>
+        </tr>
+        <tr>
+          <td><span data-lang="zh">團圓桌</span><span data-lang="en">Reunion table</span></td>
+          <td><span data-lang="zh">每正確入席 10 分。須坐滿四席才可繼續。</span><span data-lang="en">10 points per correct seat. All four seats are required to continue.</span></td>
+          <td>40</td>
+        </tr>
+        <tr>
+          <td><span data-lang="zh">燈謎</span><span data-lang="en">Lantern riddles</span></td>
+          <td><span data-lang="zh">每題答對 10 分。答錯不得分，但仍進入下一題。</span><span data-lang="en">10 points per correct answer. A miss scores zero and still continues.</span></td>
+          <td>60</td>
+        </tr>
+        <tr>
+          <td><span data-lang="zh">題燈</span><span data-lang="en">Inscription</span></td>
+          <td><span data-lang="zh">不計分。</span><span data-lang="en">Not scored.</span></td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td><span data-lang="zh">合計</span><span data-lang="en">Total</span></td>
+          <td><span data-lang="zh">完成前兩局後為 120 分，再加上燈謎 0–60 分。</span><span data-lang="en">120 points after the first two games, plus 0–60 from the riddles.</span></td>
+          <td>180</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note" data-lang="zh">滿分 180 分。分數顯示在結語卡。參賽隊伍請由隊長把該頁截圖電郵至人事部，以作評獎。</p>
+    <p class="note" data-lang="en">Maximum score: 180. Your score appears on the closing card. Competing teams should have the representative email a screenshot of that page to Human Resources.</p>
+
+    <h2><span class="zh" data-lang="zh">請注意</span><span data-lang="en">Please note</span></h2>
+    <div class="box">
+      <p data-lang="zh" style="margin:0">這是自願活動。分數最高的隊伍獲 $500 現金券；同分則以完成時間較短者勝出。每隊只可提交一次，並只接受電郵。遊戲本身不會儲存紀錄；請截圖保留分數。建議一次完成，重新整理頁面須從頭開始。</p>
+      <p data-lang="en" style="margin:0">This activity is voluntary. The highest-scoring team wins a $500 cash coupon; a tied score is decided by the shorter finish time. One email submission per team. The game page does not store a record, so please screenshot your score. Finish in one sitting; refreshing starts again.</p>
+    </div>
+
+    <p class="no-print"><a href="index.html" data-lang="zh">開啟活動 →</a><a href="index.html" data-lang="en">Open the activity →</a>
+      · <a href="staff-invitation-email.html" data-lang="zh">員工邀請電郵</a><a href="staff-invitation-email.html" data-lang="en">Staff invitation email</a></p>
+
+    <footer>
+      <p data-lang="zh">香港藝術中心 · 人事部 · 灣仔港灣道 2 號 · 內部員工活動。</p>
+      <p data-lang="en">Hong Kong Arts Centre · Human Resources · 2 Harbour Road, Wan Chai · Internal staff activity.</p>
+    </footer>
+
+    <aside class="hr-only">
+      <h3 data-lang="zh">人事備註（請勿隨邀請傳閱）</h3>
+      <h3 data-lang="en">HR note (do not circulate with the invitation)</h3>
+      <p data-lang="zh">團圓桌正解為四件中秋物品：月餅、柚子、花燈、清茶。其餘八件屬其他節日或場合。燈謎答案見活動檔案；請勿在邀請中披露。9 月 23 日才把遊戲連結發給已報名的隊長。</p>
+      <p data-lang="en">The four Mid-Autumn table items are mooncake, pomelo, lantern, and tea. The other eight belong to other festivals or occasions. Riddle answers remain in the activity file. Please do not disclose them in the invitation. Send the game link to registered team representatives on 23 September only.</p>
+    </aside>
+  </main>
+  <script>
+    function setLang(lang) {
+      document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
+      document.getElementById("btn-zh").classList.toggle("on", lang === "zh");
+      document.getElementById("btn-en").classList.toggle("on", lang === "en");
+    }
+  </script>
+</body>
+</html>

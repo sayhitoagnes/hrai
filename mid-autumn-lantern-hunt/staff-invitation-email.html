@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staff invitation email · 員工邀請電郵 | Hong Kong Arts Centre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --night:#10141c; --gold:#b0893a; --ink:#1a1714; --muted:#5c5348; --line:#d9d0c0; --cream:#fbf7ef; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e8e2d6; color: var(--ink); font-family: "Source Sans 3", "Noto Sans TC", sans-serif; }
+    .desk { max-width: 920px; margin: 0 auto; padding: 28px 16px 64px; }
+    .note { background: #fff; border: 1px solid var(--line); padding: 14px 16px; font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+    .note strong { color: var(--ink); }
+    .chrome { background: #fff; border: 1px solid var(--line); box-shadow: 0 18px 40px rgba(16,20,28,.08); max-width: 100%; overflow-x: hidden; }
+    .meta { padding: 16px 20px; border-bottom: 1px solid var(--line); font-size: 13px; }
+    .meta .row { display: grid; grid-template-columns: 72px 1fr; gap: 8px; margin: 4px 0; align-items: start; }
+    .meta b { color: #8a7f70; font-weight: 600; }
+    .subject { display: block; font-size: 16px; font-weight: 700; margin-top: 10px; line-height: 1.45; }
+    .mail { width: 100%; background: #f7f3ea; }
+    .inner { width: 100% !important; max-width: 600px; margin: 0 auto; background: #ffffff; }
+    img.banner { display: block; width: 600px !important; max-width: 100%; height: auto; border: 0; }
+    .pad { padding: 28px 28px 36px; }
+    .org { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin: 0 0 6px; }
+    h1 { font-size: 22px; line-height: 1.35; margin: 0 0 6px; font-weight: 700; }
+    .sub { color: var(--muted); font-size: 14px; margin: 0 0 22px; }
+    p { font-size: 15px; line-height: 1.7; margin: 0 0 14px; }
+    h2 { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #7a5a28; margin: 22px 0 8px; }
+    ol, ul { margin: 0 0 14px; padding-left: 20px; }
+    li { font-size: 15px; line-height: 1.65; margin: 0 0 6px; }
+    .cta {
+      display: inline-block; background: #1a1714; color: #fbf7ef !important; text-decoration: none;
+      font-weight: 700; font-size: 14px; letter-spacing: .06em; padding: 12px 22px; margin: 8px 0 18px;
+    }
+    .split { border-top: 1px solid var(--line); margin: 28px 0; }
+    .foot { font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; margin-top: 8px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+    .actions button, .actions a.btn {
+      border: 1px solid #1a1714; background: #1a1714; color: #fff; padding: 8px 14px; font-weight: 700; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; font-size: 13px;
+    }
+    .actions button.ghost, .actions a.ghost { background: transparent; color: #1a1714; }
+    @media print { .note, .actions { display: none; } body { background: #fff; } .desk { padding: 0; } }
+  </style>
+</head>
+<body>
+  <div class="desk">
+    <div class="note">
+      <strong>HR preview · 人事預覽。</strong>
+      This is the staff invitation as it should appear in email. Use <strong>Download email text</strong> or <strong>Save Word file</strong> for Outlook. The game link is sent to team representatives on 23 September, not in this announcement.
+      此為員工邀請電郵預覽。請下載純文字或 Word 檔。遊戲連結於 9 月 23 日發給隊長，不放在本邀請內。
+      · <a href="game-rules.html">Game rules 活動規則</a>
+      · <a href="index.html">Open activity 開啟活動</a>
+      <div class="actions">
+        <button type="button" onclick="downloadPlain()">Download email text · 下載電郵正文</button>
+        <a class="btn ghost" href="staff-invitation-plain.txt" download="HKAC-Mid-Autumn-Staff-Invitation.txt">Save .txt file</a>
+        <a class="btn ghost" href="HKAC-Mid-Autumn-Email-Banner.jpeg" download="HKAC-Mid-Autumn-Email-Banner.jpeg">Download JPEG for Outlook (600×200)</a>
+        <button type="button" class="ghost" onclick="copyPlain()">Copy text</button>
+        <button type="button" class="ghost" onclick="window.print()">Print / PDF</button>
+      </div>
+    </div>
+
+    <article class="chrome" aria-label="Email preview">
+      <div class="meta">
+        <div class="row"><b>From</b><span>Human Resources · 人事部, Hong Kong Arts Centre</span></div>
+        <div class="row"><b>To</b><span>All staff · 全體同事</span></div>
+        <div class="row"><b>Date</b><span>September 2026</span></div>
+        <p class="subject">You’re invited: Mid-Autumn team game · 誠邀組隊｜月餅謎局 · 燈謎</p>
+      </div>
+
+      <table class="mail" role="presentation" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td align="center">
+            <table class="inner" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px">
+              <tr>
+                <td>
+                  <img class="banner" src="assets/email-banner.jpg" width="600" height="200" style="width:600px;max-width:100%;height:auto;display:block;border:0;" alt="Hong Kong Arts Centre — Mid-Autumn Festival Online Game">
+                </td>
+              </tr>
+              <tr>
+                <td class="pad">
+                  <p class="org">Hong Kong Arts Centre · 香港藝術中心</p>
+                  <h1>一起過中秋，歡迎組隊來玩<br>A short team game for Mid-Autumn</h1>
+                  <p class="sub">月餅謎局 · 燈謎 &nbsp;|&nbsp; The Mooncake Puzzle &nbsp;|&nbsp; 約 10 分鐘 · 自願參加</p>
+
+                  <p>各位同事：</p>
+                  <p>中秋快樂！雖然今年未能圍坐一桌，我們仍很想與你一起過節。</p>
+                  <p>人事部誠邀大家參加自願網上小遊戲「月餅謎局 · 燈謎」。只需約 <strong>10 分鐘</strong>，用電腦或手機瀏覽器即可，<strong>無須登入</strong>。歡迎找身邊同事組成一隊，一起配月餅、擺團圓桌、猜燈謎，為這個中秋添一點歡笑。</p>
+
+                  <h2>如何參加</h2>
+                  <ol>
+                    <li>組成 <strong>3 至 5 人</strong>一隊，並推選一位隊長。</li>
+                    <li>請隊長於 <strong>2026 年 9 月 22 日或之前</strong>，把隊員名單及隊長姓名電郵至人事部 Agnes（<a href="mailto:agnwong@hkac.org.hk">agnwong@hkac.org.hk</a>）。</li>
+                    <li><strong>9 月 23 日</strong>，遊戲連結會發送給各隊隊長。請由隊長開啟遊戲，與隊員一起完成。</li>
+                    <li>請於 <strong>9 月 24 日</strong>，把遊戲最後一頁（結語卡）的分數截圖，由隊長電郵交回 Agnes。每隊只可提交一次，並只接受電郵提交。</li>
+                  </ol>
+
+                  <p>
+                    <a class="cta" href="mailto:agnwong@hkac.org.hk?subject=%E4%B8%AD%E7%A7%8B%E7%B5%84%E9%9A%8A%E5%A0%B1%E5%90%8D%20Mid-Autumn%20team%20registration">報名組隊 Email your team list</a>
+                  </p>
+
+                  <h2>獎項</h2>
+                  <p>分數最高的隊伍將獲 <strong>$500 現金券</strong>。如多於一隊同得最高分，以完成時間較短的隊伍勝出。</p>
+                  <p>這是自願活動。無論是否參賽，都祝你中秋愉快。</p>
+                  <p>如有查詢，歡迎聯絡人事部或 Agnes。</p>
+                  <p>祝中秋快樂。</p>
+                  <p>人事部<br>香港藝術中心<br>灣仔港灣道 2 號</p>
+
+                  <div class="split"></div>
+
+                  <p>Dear colleagues,</p>
+                  <p>Happy Mid-Autumn! We may not sit at the same table this year, and we would still love to celebrate with you.</p>
+                  <p>Human Resources invites you to a voluntary online game, <strong>The Mooncake Puzzle / 月餅謎局 · 燈謎</strong>. It takes about <strong>10 minutes</strong> on a computer or phone browser, with <strong>no login</strong>. Form a small team with colleagues, match mooncakes, set a reunion table, and solve lantern riddles — a short, festive break together.</p>
+
+                  <h2>How to take part</h2>
+                  <ol>
+                    <li>Form a team of <strong>3 to 5</strong> colleagues and choose one team representative.</li>
+                    <li>By <strong>22 September 2026</strong>, the representative emails the member list and the representative’s name to Agnes in Human Resources (<a href="mailto:agnwong@hkac.org.hk">agnwong@hkac.org.hk</a>).</li>
+                    <li>On <strong>23 September</strong>, the game link will be sent to each team representative. Please open it together and complete the game as a team.</li>
+                    <li>On <strong>24 September</strong>, the representative emails a screenshot of the final score page (the closing card) to Agnes. Each team may submit only once, and only by email.</li>
+                  </ol>
+
+                  <h2>Prize</h2>
+                  <p>The team with the highest score wins a <strong>$500 cash coupon</strong>. If more than one team shares the highest score, the team that finished in the shorter time wins.</p>
+                  <p>This activity is voluntary. Whether you join the game or not, we wish you a joyful Mid-Autumn.</p>
+                  <p>Please contact Human Resources or Agnes with any questions.</p>
+                  <p>Warm regards,<br>Human Resources<br>Hong Kong Arts Centre<br>2 Harbour Road, Wan Chai</p>
+
+                  <p class="foot">Internal staff activity · 內部員工活動 · This message is intended for HKAC colleagues.</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </article>
+  </div>
+
+  <textarea id="plain" hidden></textarea>
+  <script>
+    document.getElementById("plain").value = `Subject: You’re invited: Mid-Autumn team game · 誠邀組隊｜月餅謎局 · 燈謎
+
+各位同事：
+
+中秋快樂！雖然今年未能圍坐一桌，我們仍很想與你一起過節。
+
+人事部誠邀大家參加自願網上小遊戲「月餅謎局 · 燈謎」。只需約 10 分鐘，用電腦或手機瀏覽器即可，無須登入。歡迎找身邊同事組成一隊，一起配月餅、擺團圓桌、猜燈謎，為這個中秋添一點歡笑。
+
+如何參加
+1. 組成 3 至 5 人一隊，並推選一位隊長。
+2. 請隊長於 2026 年 9 月 22 日或之前，把隊員名單及隊長姓名電郵至人事部 Agnes（agnwong@hkac.org.hk）。
+3. 9 月 23 日，遊戲連結會發送給各隊隊長。請由隊長開啟遊戲，與隊員一起完成。
+4. 請於 9 月 24 日，把遊戲最後一頁（結語卡）的分數截圖，由隊長電郵交回 Agnes。每隊只可提交一次，並只接受電郵提交。
+
+獎項
+分數最高的隊伍將獲 $500 現金券。如多於一隊同得最高分，以完成時間較短的隊伍勝出。
+
+這是自願活動。無論是否參賽，都祝你中秋愉快。
+
+如有查詢，歡迎聯絡人事部或 Agnes。
+
+祝中秋快樂。
+
+人事部
+香港藝術中心
+灣仔港灣道 2 號
+
+────────────────
+
+Dear colleagues,
+
+Happy Mid-Autumn! We may not sit at the same table this year, and we would still love to celebrate with you.
+
+Human Resources invites you to a voluntary online game, The Mooncake Puzzle / 月餅謎局 · 燈謎. It takes about 10 minutes on a computer or phone browser, with no login. Form a small team with colleagues, match mooncakes, set a reunion table, and solve lantern riddles — a short, festive break together.
+
+How to take part
+1. Form a team of 3 to 5 colleagues and choose one team representative.
+2. By 22 September 2026, the representative emails the member list and the representative’s name to Agnes in Human Resources (agnwong@hkac.org.hk).
+3. On 23 September, the game link will be sent to each team representative. Please open it together and complete the game as a team.
+4. On 24 September, the representative emails a screenshot of the final score page (the closing card) to Agnes. Each team may submit only once, and only by email.
+
+Prize
+The team with the highest score wins a $500 cash coupon. If more than one team shares the highest score, the team that finished in the shorter time wins.
+
+This activity is voluntary. Whether you join the game or not, we wish you a joyful Mid-Autumn.
+
+Please contact Human Resources or Agnes with any questions.
+
+Warm regards,
+Human Resources
+Hong Kong Arts Centre
+2 Harbour Road, Wan Chai
+`;
+
+    async function copyPlain() {
+      const text = document.getElementById("plain").value;
+      try { await navigator.clipboard.writeText(text); alert("Copied. 已複製純文字電郵。"); }
+      catch (e) { document.getElementById("plain").hidden = false; document.getElementById("plain").select(); }
+    }
+
+    function downloadPlain() {
+      const text = document.getElementById("plain").value;
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "HKAC-Mid-Autumn-Staff-Invitation.txt";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
