@@ -8,7 +8,7 @@ GitHub’s file page shows source code. Always use the htmlpreview link, or open
 
 **Staff invitation email:** [staff-invitation-email.html](staff-invitation-email.html) · [HKAC-Mid-Autumn-Staff-Invitation.txt](HKAC-Mid-Autumn-Staff-Invitation.txt) · [HKAC-Mid-Autumn-Staff-Invitation.docx](HKAC-Mid-Autumn-Staff-Invitation.docx)
 
-**Email banner (JPEG for Outlook):** [HKAC-Mid-Autumn-Email-Banner.jpeg](HKAC-Mid-Autumn-Email-Banner.jpeg) — 1200×500. Insert at 600px wide. Smaller file: [HKAC-Mid-Autumn-Email-Banner-600.jpeg](HKAC-Mid-Autumn-Email-Banner-600.jpeg)
+**Email banner (JPEG, Outlook width):** [HKAC-Mid-Autumn-Email-Banner.jpeg](HKAC-Mid-Autumn-Email-Banner.jpeg) — **600×200**. Insert as-is; do not enlarge.
 
 **Game rules (bilingual, no spoilers):** [game-rules.html](game-rules.html)
 

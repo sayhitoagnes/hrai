@@ -21,7 +21,7 @@
     .subject { display: block; font-size: 16px; font-weight: 700; margin-top: 10px; line-height: 1.45; }
     .mail { width: 100%; background: #f7f3ea; }
     .inner { width: 100% !important; max-width: 600px; margin: 0 auto; background: #ffffff; }
-    img.banner { display: block; width: 100% !important; max-width: 100%; height: auto; border: 0; }
+    img.banner { display: block; width: 600px !important; max-width: 100%; height: auto; border: 0; }
     .pad { padding: 28px 28px 36px; }
     .org { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin: 0 0 6px; }
     h1 { font-size: 22px; line-height: 1.35; margin: 0 0 6px; font-weight: 700; }
@@ -56,8 +56,7 @@
       <div class="actions">
         <button type="button" onclick="downloadPlain()">Download email text · 下載電郵正文</button>
         <a class="btn ghost" href="staff-invitation-plain.txt" download="HKAC-Mid-Autumn-Staff-Invitation.txt">Save .txt file</a>
-        <a class="btn ghost" href="HKAC-Mid-Autumn-Email-Banner.jpg" download>Download banner (1200×500)</a>
-        <a class="btn ghost" href="HKAC-Mid-Autumn-Email-Banner-600.jpg" download>Download banner (600×250)</a>
+        <a class="btn ghost" href="HKAC-Mid-Autumn-Email-Banner.jpeg" download="HKAC-Mid-Autumn-Email-Banner.jpeg">Download JPEG for Outlook (600×200)</a>
         <button type="button" class="ghost" onclick="copyPlain()">Copy text</button>
         <button type="button" class="ghost" onclick="window.print()">Print / PDF</button>
       </div>
@@ -77,7 +76,7 @@
             <table class="inner" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px">
               <tr>
                 <td>
-                  <img class="banner" src="assets/email-banner.jpg" width="600" height="250" alt="Hong Kong Arts Centre — Mid-Autumn Festival Online Game">
+                  <img class="banner" src="assets/email-banner.jpg" width="600" height="200" style="width:600px;max-width:100%;height:auto;display:block;border:0;" alt="Hong Kong Arts Centre — Mid-Autumn Festival Online Game">
                 </td>
               </tr>
               <tr>
