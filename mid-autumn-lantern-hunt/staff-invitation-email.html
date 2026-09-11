@@ -16,9 +16,9 @@
     .note strong { color: var(--ink); }
     .chrome { background: #fff; border: 1px solid var(--line); box-shadow: 0 18px 40px rgba(16,20,28,.08); }
     .meta { padding: 16px 20px; border-bottom: 1px solid var(--line); font-size: 13px; }
-    .meta div { display: grid; grid-template-columns: 72px 1fr; gap: 8px; margin: 4px 0; }
+    .meta .row { display: grid; grid-template-columns: 72px 1fr; gap: 8px; margin: 4px 0; align-items: start; }
     .meta b { color: #8a7f70; font-weight: 600; }
-    .subject { font-size: 16px; font-weight: 700; margin-top: 8px; }
+    .subject { display: block; font-size: 16px; font-weight: 700; margin-top: 10px; line-height: 1.45; }
     .mail { width: 100%; background: #f7f3ea; }
     .inner { max-width: 600px; margin: 0 auto; background: #ffffff; }
     img.banner { display: block; width: 100%; height: auto; border: 0; }
@@ -60,10 +60,10 @@
 
     <article class="chrome" aria-label="Email preview">
       <div class="meta">
-        <div><b>From</b><span>Human Resources &lt;hr@hkac.org.hk&gt;</span></div>
-        <div><b>To</b><span>All staff · 全體同事</span></div>
-        <div><b>Date</b><span>September 2026</span></div>
-        <div class="subject" style="grid-column:1/-1">【內部活動 Internal Activity】2026中秋員工活動｜The Mooncake Puzzle · 月餅謎局 · 燈謎</div>
+        <div class="row"><b>From</b><span>Human Resources · 人事部, Hong Kong Arts Centre</span></div>
+        <div class="row"><b>To</b><span>All staff · 全體同事</span></div>
+        <div class="row"><b>Date</b><span>September 2026</span></div>
+        <p class="subject">【內部活動 Internal Activity】2026中秋員工活動｜The Mooncake Puzzle · 月餅謎局 · 燈謎</p>
       </div>
 
       <table class="mail" role="presentation" cellpadding="0" cellspacing="0" width="100%">
