@@ -6,7 +6,7 @@ Async Mid-Autumn activity for **Hong Kong Arts Centre** staff who cannot gather 
 
 GitHub’s file page shows source code. Always use the htmlpreview link, or open `index.html` locally.
 
-**Staff invitation email (with graphic):** [staff-invitation-email.html](staff-invitation-email.html) · plain text: [staff-invitation-plain.txt](staff-invitation-plain.txt)
+**Staff invitation email (with graphic):** [staff-invitation-email.html](staff-invitation-email.html) — use **Download email text** to save `HKAC-Mid-Autumn-Staff-Invitation.txt`. Plain text: [HKAC-Mid-Autumn-Staff-Invitation.txt](HKAC-Mid-Autumn-Staff-Invitation.txt)
 
 **Game rules (bilingual, no spoilers):** [game-rules.html](game-rules.html)
 
