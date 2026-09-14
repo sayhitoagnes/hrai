@@ -25,7 +25,7 @@ GitHub’s file page shows source code. Always use the htmlpreview link, or open
 5. **題燈** — one line of your own (not scored)
 6. Closing card: **score / 180**, HKAC blessing, inscription
 
-**Score:** 10 points per pair (80) + 10 per table seat (40) + 10 per correct riddle (60). Turns on the mooncake board are recorded and do not affect the score. Completing the first two games awards 120; riddles add 0–60.
+**Score:** Pair matching starts at 80 for a perfect board (8 turns). Each extra turn after 8 subtracts 5 from this stage (floor 0). Reunion table: 10 per seat (40). Riddles: 10 per correct answer (60). A perfect run is 180. More matching turns mean a lower pair-game score.
 
 ---
 

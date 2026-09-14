@@ -240,7 +240,7 @@
       </div>
       <ol class="howto">
         <li><b>1</b><span data-i18n="guide1">點亮花燈，然後開始第一局。</span></li>
-        <li><b>2</b><span data-i18n="guide2">配對八對月餅：每次翻兩枚，成對即留。</span></li>
+        <li><b>2</b><span data-i18n="guide2">配對八對月餅。完美盤 8 次翻牌得 80 分；滿 8 次後每多翻一次本關扣 5 分。</span></li>
         <li><b>3</b><span data-i18n="guide3">十二件節慶物品中，選出四件屬於中秋的，擺好團圓桌。</span></li>
         <li><b>4</b><span data-i18n="guide4">回答六題燈謎，再題寫一句。滿分 180 分。</span></li>
       </ol>
@@ -277,10 +277,11 @@
     <section id="screen-play" class="screen">
       <p class="kicker" data-i18n="playKicker">The board</p>
       <h1 data-i18n="playTitle">Find the eight pairs<span>八對月餅</span></h1>
-      <p class="lead" data-i18n="playLead">先點一枚月餅，再點另一枚。成對則留在面上；不成對則翻回。找齊八對後進入團圓桌。</p>
+      <p class="lead" data-i18n="playLead">先點一枚月餅，再點另一枚。成對則留在面上；不成對則翻回。找齊八對。完美盤為 8 次翻牌、80 分。滿 8 次後每多翻一次，本關扣 5 分。</p>
       <div class="hud">
         <span>Pairs <b id="hudPairs">0</b> / 8</span>
         <span>Turns <b id="hudTurns">0</b></span>
+        <span>Pair score <b id="hudPairScore">80</b></span>
       </div>
       <div class="play-stage">
         <div class="board" id="puzzleBoard" role="grid" aria-label="Mooncake pairs"></div>
@@ -379,6 +380,7 @@
     const PAIRS = 8;
     const TABLE_NEED = 4;
     const PTS = 10;
+    const PAIR_PENALTY = 5;
     const TABLE_ITEMS = [
       { id: "cake", mark: "月餅", zh: "月餅", en: "Mooncake", ok: true },
       { id: "pomelo", mark: "柚子", zh: "柚子", en: "Pomelo", ok: true },
@@ -499,7 +501,7 @@
         welcomeLead: "Happy Mid-Autumn. Form a team with colleagues and complete four short stages: match mooncakes, set a reunion table, answer lantern riddles, and write one line. Your closing card shows the score.",
         chip1: "About 10 minutes", chip2: "Teams of 3 to 5", chip3: "Voluntary · play together",
         guide1: "Light the lantern, then begin the first game.",
-        guide2: "Match eight pairs of mooncakes: tap two tiles; a pair stays face up.",
+        guide2: "Match eight pairs of mooncakes. A perfect board is 8 turns and 80 points; each extra turn after 8 subtracts 5 from this stage.",
         guide3: "From twelve festival items, seat the four that belong at Mid-Autumn.",
         guide4: "Answer six lantern riddles, then write one line. Maximum score: 180.",
         rulesLink: "Full rules and scoring",
@@ -509,10 +511,11 @@
         lanternLead: "Tap the lantern. When it is lit, continue to the first game.",
         lanternHint: "Touch the lantern", beginRiddles: "To the puzzle",
         playKicker: "The board", playTitle: "Find the eight pairs",
-        playLead: "Tap one mooncake, then another. A match stays face up; a miss turns back. Find all eight pairs to continue.",
+        playLead: "Tap one mooncake, then another. A match stays face up; a miss turns back. Find all eight pairs. A perfect board is 8 turns and 80 points. Each extra turn after 8 lowers this stage by 5 points.",
         playReset: "Reset the board",
         playMiss: "Those two do not match. Try again.",
         playDone: "All eight pairs found. Next: the reunion table.",
+        playDonePenalty: "All eight pairs found. Extra turns after 8 have reduced this stage’s score. Next: the reunion table.",
         playContinue: "To the reunion table",
         tableKicker: "The table", tableTitle: "Set the reunion table",
         tableLead: "Twelve festival items appear. Only four belong at a Mid-Autumn table. Select a full set, then tap Seat them. Correct items stay; the others are cleared. Continue until four seats are filled.",
@@ -529,6 +532,7 @@
         ansNo: "Not this one.",
         scoreLabel: "Score",
         scorePairs: "Pairs",
+        scoreTurns: "Turns",
         scoreTable: "Table",
         scoreRiddles: "Riddles",
         nextBtn: "Continue", lastBtn: "Receive the closing card",
@@ -557,7 +561,7 @@
         welcomeLead: "中秋快樂。歡迎與同事組隊，用約十分鐘完成四個關卡：配對月餅、擺團圓桌、猜燈謎，再題寫一句。結語卡會顯示分數。",
         chip1: "約十分鐘", chip2: "每隊 3 至 5 人", chip3: "自願參加 · 歡迎組隊",
         guide1: "點亮花燈，然後開始第一局。",
-        guide2: "配對八對月餅：每次翻兩枚，成對即留。",
+        guide2: "配對八對月餅。完美盤 8 次翻牌得 80 分；滿 8 次後每多翻一次本關扣 5 分。",
         guide3: "十二件節慶物品中，選出四件屬於中秋的，擺好團圓桌。",
         guide4: "回答六題燈謎，再題寫一句。滿分 180 分。",
         rulesLink: "完整規則與計分",
@@ -567,10 +571,11 @@
         lanternLead: "輕觸花燈，待燈亮後進入第一局。",
         lanternHint: "輕觸花燈", beginRiddles: "到謎局",
         playKicker: "棋盤", playTitle: "八對月餅",
-        playLead: "先點一枚月餅，再點另一枚。成對則留在面上；不成對則翻回。找齊八對後進入團圓桌。",
+        playLead: "先點一枚月餅，再點另一枚。成對則留在面上；不成對則翻回。找齊八對。完美盤為 8 次翻牌、80 分。滿 8 次後每多翻一次，本關扣 5 分。",
         playReset: "重開棋盤",
         playMiss: "這兩枚不成對。請再試。",
         playDone: "八對已齊。下一局：團圓桌。",
+        playDonePenalty: "八對已齊。8 次以外的翻牌已從本關扣分。下一局：團圓桌。",
         playContinue: "去團圓桌",
         tableKicker: "團圓桌", tableTitle: "擺一桌中秋",
         tableLead: "十二件節慶物品，只有四件屬於中秋。先選滿空位，再按「請入席」。正確的留下，其餘撤下，直至四席坐滿。",
@@ -587,6 +592,7 @@
         ansNo: "不是這句。",
         scoreLabel: "分數",
         scorePairs: "配對",
+        scoreTurns: "翻次",
         scoreTable: "團圓桌",
         scoreRiddles: "燈謎",
         nextBtn: "繼續", lastBtn: "收取結語卡",
@@ -627,11 +633,17 @@
     function riddleCount() {
       return ROOMS.filter(r => r.kind === "choice").length;
     }
+    function extraPairTurns() {
+      return Math.max(0, game.turns - PAIRS);
+    }
+    function pairsScore() {
+      return Math.max(0, PAIRS * PTS - extraPairTurns() * PAIR_PENALTY);
+    }
     function maxScore() {
       return PAIRS * PTS + TABLE_NEED * PTS + riddleCount() * PTS;
     }
     function totalScore() {
-      return game.pairs * PTS + table.found * PTS + state.correct * PTS;
+      return pairsScore() + table.found * PTS + state.correct * PTS;
     }
 
     function t(key) { return I18N[state.lang][key]; }
@@ -756,6 +768,7 @@
     function paintHud() {
       const pairsEl = document.getElementById("hudPairs");
       const turnsEl = document.getElementById("hudTurns");
+      const scoreEl = document.getElementById("hudPairScore");
       if (pairsEl) {
         pairsEl.textContent = game.pairs;
         const wrap = pairsEl.parentElement;
@@ -766,6 +779,11 @@
         turnsEl.textContent = game.turns;
         const wrap = turnsEl.parentElement;
         if (wrap && wrap.firstChild) wrap.firstChild.textContent = (state.lang === "zh" ? "翻次 " : "Turns ");
+      }
+      if (scoreEl) {
+        scoreEl.textContent = pairsScore();
+        const wrap = scoreEl.parentElement;
+        if (wrap && wrap.firstChild) wrap.firstChild.textContent = (state.lang === "zh" ? "配對分 " : "Pair score ");
       }
     }
 
@@ -1039,7 +1057,7 @@
           state.score = game.pairs;
           state.turns = game.turns;
           const hint = document.getElementById("playHint");
-          if (hint) hint.textContent = t("playDone");
+          if (hint) hint.textContent = extraPairTurns() > 0 ? t("playDonePenalty") : t("playDone");
           const winBtn = document.getElementById("playWinBtn");
           if (winBtn) winBtn.style.display = "inline-flex";
           chime(880);
@@ -1128,7 +1146,7 @@
     function renderBlessing() {
       const total = totalScore();
       const cap = maxScore();
-      const pairsPts = game.pairs * PTS;
+      const pairsPts = pairsScore();
       const tablePts = table.found * PTS;
       const riddlePts = state.correct * PTS;
       const riddleCap = riddleCount() * PTS;
@@ -1143,6 +1161,7 @@
       if (br) {
         br.textContent =
           t("scorePairs") + " " + pairsPts +
+          " (" + t("scoreTurns") + " " + (state.turns || game.turns || 0) + ")" +
           " · " + t("scoreTable") + " " + tablePts +
           " · " + t("scoreRiddles") + " " + riddlePts + " / " + riddleCap;
       }
