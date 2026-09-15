@@ -25,7 +25,7 @@ GitHub’s file page shows source code. Always use the htmlpreview link, or open
 5. **題燈** — one line of your own (not scored)
 6. Closing card: **score / 180**, HKAC blessing, inscription
 
-**Score:** Pair matching starts at 80 for a perfect board (8 turns). Each extra turn after 8 subtracts 5 from this stage (floor 0). Reunion table: 10 per seat (40). Riddles: 10 per correct answer (60). A perfect run is 180. More matching turns mean a lower pair-game score.
+**Score:** Pair matching starts at 80. After 5 turns, each extra turn subtracts 10 from this stage (floor 0). Reunion table: 10 per seat (40). Riddles: 10 per correct answer (60). A perfect run is 180. More matching turns mean a lower pair-game score.
 
 ---
 
