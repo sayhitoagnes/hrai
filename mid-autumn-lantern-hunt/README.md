@@ -21,11 +21,10 @@ GitHub’s file page shows source code. Always use the htmlpreview link, or open
 1. Light one lantern
 2. Sixteen cakes, eight pairs — tap two tiles (memory match)
 3. Reunion table — twelve festival items; seat the four that belong at Mid-Autumn
-4. Six lantern riddles (a miss still continues)
-5. **題燈** — one line of your own (not scored)
-6. Closing card: **score / 180**, HKAC blessing, inscription
+4. Seven lantern riddles (a miss still continues)
+5. Closing card: **score / 190**, HKAC blessing
 
-**Score:** Pair matching starts at 80. After 5 turns, each extra turn subtracts 10 from this stage (floor 0). Reunion table: 10 per seat (40). Riddles: 10 per correct answer (60). A perfect run is 180. More matching turns mean a lower pair-game score.
+**Score:** Pair matching starts at 80. After 5 turns, each extra turn subtracts 10 from this stage (floor 0). Reunion table: 10 per seat (40). Riddles: 10 per correct answer (70). A perfect run is 190. More matching turns mean a lower pair-game score.
 
 ---
 
@@ -35,9 +34,8 @@ GitHub’s file page shows source code. Always use the htmlpreview link, or open
 2. Light **one** lantern.
 3. Find the **eight pairs**.
 4. Set the **reunion table** (select a full set, then Seat them).
-5. Answer six 燈謎.
-6. Write ≤ 40 characters.
-7. Closing card: score, blessing, inscription.
+5. Answer seven 燈謎.
+6. Closing card: score, blessing.
 
 Refreshing the page starts again. Competing teams email a closing-card screenshot to HR.
 

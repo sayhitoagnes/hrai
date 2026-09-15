@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>月餅謎局 · 燈謎 | 香港藝術中心</title>
-  <meta name="description" content="A staff Mid-Autumn evening for Hong Kong Arts Centre: mooncake pairs, a reunion table, six lantern riddles, and one inscribed line.">
+  <meta name="description" content="A staff Mid-Autumn evening for Hong Kong Arts Centre: mooncake pairs, a reunion table, and seven lantern riddles.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -238,9 +238,6 @@
         <span class="chip" data-i18n="chip2">每隊 3 至 5 人</span>
         <span class="chip" data-i18n="chip3">自願參加 · 歡迎組隊</span>
       </div>
-      <ol class="howto">
-        <li><b>1</b><span data-i18n="guide2">配對八對月餅。滿 5 次翻牌後，每多翻一次本關扣 10 分。</span></li>
-      </ol>
       <p hidden style="margin:0 0 22px"><a class="rules-link" href="game-rules.html" data-i18n="rulesLink">完整規則與計分</a></p>
       <div class="card">
         <label class="field" for="staffName" data-i18n="nameLabel">你的姓名</label>
@@ -330,7 +327,6 @@
         <p class="score-break" id="scoreBreak"></p>
         <h2 class="serif" id="helloName" style="margin:16px 0 0;font-size:28px"></h2>
         <p class="poem" id="blessingText"></p>
-        <div class="inscription" id="shownInscription"></div>
         <p style="margin:18px 0 0;font-size:13px;color:#6a6258" data-i18n="fromHkac">Hong Kong Arts Centre · 香港藝術中心</p>
       </div>
     </section>
@@ -483,13 +479,21 @@
         noteOk: { zh: "吳剛伐桂：月中桂樹，香在秋。", en: "Wu Gang chops osmanthus. The moon’s tree is a tree of autumn." },
         noteNo: { zh: "正解是桂樹。蟠桃屬西王母；柳與榕不是這個故事。", en: "The tree is osmanthus. Peaches belong to the Queen Mother; willow and banyan are other stories." }
       },
-      { kind: "inscribe" }
-    ];
-
-    const PROMPTS = [
-      { zh: "但願人長久", en: "May we last, as the moon does" },
-      { zh: "千里共嬋娟", en: "Share the fair moon across the miles" },
-      { zh: "燈火未闌人未散", en: "While the lanterns are still alight" }
+      {
+        kind: "choice",
+        label: { zh: "第七題", en: "Question 7" },
+        zh: "傳說月宮裡，玉兔終年在做什麼？",
+        en: "In the usual telling, what does the jade rabbit do all year on the moon?",
+        hint: { zh: "杵臼之間。不是伐桂的那位樵夫。", en: "A pestle and mortar. Not the woodcutter who chops the tree." },
+        options: [
+          { zh: "伐桂", en: "chop the osmanthus tree", ok: false },
+          { zh: "搗藥", en: "pound medicine", ok: true },
+          { zh: "牧羊", en: "tend sheep", ok: false },
+          { zh: "織錦", en: "weave brocade", ok: false }
+        ],
+        noteOk: { zh: "玉兔搗藥，吳剛伐桂，各司其職。", en: "The rabbit pounds medicine; Wu Gang chops the tree." },
+        noteNo: { zh: "正解是搗藥。伐桂是吳剛的事。", en: "The answer is pounding medicine. Chopping the osmanthus is Wu Gang’s labour." }
+      }
     ];
 
     const I18N = {
@@ -500,7 +504,7 @@
         guide1: "Light the lantern, then begin the first game.",
         guide2: "Match eight pairs of mooncakes. After 5 turns, each extra turn subtracts 10 from this stage.",
         guide3: "From twelve festival items, seat the four that belong at Mid-Autumn.",
-        guide4: "Answer six lantern riddles, then write one line. Maximum score: 180.",
+        guide4: "Answer seven lantern riddles. Maximum score: 190.",
         rulesLink: "Full rules and scoring",
         nameLabel: "Your name", startBtn: "Begin",
         privacy: "Enter a name for the closing card. If your team is joining the contest, your representative will email a screenshot of that card to HR.",
@@ -521,7 +525,7 @@
         tablePartial: "The correct items stay seated. Please fill the remaining seats.",
         tableFull: "Please unselect one item first. You may only confirm as many items as there are empty seats.",
         tableOk: "This one may stay.",
-        tableDone: "The table is complete. Next: six lantern riddles.",
+        tableDone: "The table is complete. Next: seven lantern riddles.",
         tableReset: "Reset the table",
         tableSeat: "Seat them",
         tableContinue: "To the lantern riddles",
@@ -560,7 +564,7 @@
         guide1: "點亮花燈，然後開始第一局。",
         guide2: "配對八對月餅。滿 5 次翻牌後，每多翻一次本關扣 10 分。",
         guide3: "十二件節慶物品中，選出四件屬於中秋的，擺好團圓桌。",
-        guide4: "回答六題燈謎，再題寫一句。滿分 180 分。",
+        guide4: "回答七題燈謎。滿分 190 分。",
         rulesLink: "完整規則與計分",
         nameLabel: "你的姓名", startBtn: "開始活動",
         privacy: "請輸入姓名，結語卡上會用到。若隊伍參賽，請由隊長把結語卡截圖電郵至人事部。",
@@ -581,7 +585,7 @@
         tablePartial: "正確的已留下。請補上空位。",
         tableFull: "請先取消一件。每次確認的件數須等於空位數。",
         tableOk: "可以入座。",
-        tableDone: "桌子已擺好。下一關：六題燈謎。",
+        tableDone: "桌子已擺好。下一關：七題燈謎。",
         tableReset: "重開桌子",
         tableSeat: "請入席",
         tableContinue: "去燈謎",
@@ -966,7 +970,6 @@
       document.getElementById("stBody").innerHTML = "";
       state.locked = false;
       const room = ROOMS[state.i];
-      if (room.kind === "inscribe") return renderInscribe();
       document.getElementById("roomLabel").textContent = room.label[state.lang];
       document.getElementById("qZh").textContent = room.zh;
       document.getElementById("qEn").textContent = room.en;
@@ -1077,59 +1080,6 @@
       }
     }
 
-    function renderInscribe() {
-      document.getElementById("feedback").textContent = "";
-      document.getElementById("nextBtn").style.display = "none";
-      document.getElementById("nextBtn").textContent = t("lastBtn");
-      document.getElementById("stBody").innerHTML = "";
-      document.getElementById("roomLabel").textContent = t("insLabel");
-      document.getElementById("qZh").textContent = t("insZh");
-      document.getElementById("qEn").textContent = t("insEn");
-      const hintEl = document.getElementById("qHint");
-      hintEl.hidden = false;
-      hintEl.textContent = t("insHint");
-      const chips = document.createElement("div");
-      chips.className = "chips";
-      const area = document.createElement("textarea");
-      area.maxLength = 40;
-      area.rows = 3;
-      area.value = state.inscription;
-      const count = document.createElement("div");
-      count.className = "count";
-      const paintCount = () => { count.textContent = area.value.length + " / 40 " + t("insCount"); };
-      paintCount();
-      PROMPTS.forEach(p => {
-        const b = document.createElement("button");
-        b.type = "button";
-        b.textContent = p[state.lang];
-        b.onclick = () => {
-          area.value = p[state.lang];
-          state.inscription = area.value.trim();
-          [...chips.children].forEach(c => c.classList.toggle("on", c === b));
-          paintCount();
-          readyInscribe();
-        };
-        chips.appendChild(b);
-      });
-      area.oninput = () => {
-        state.inscription = area.value.trim();
-        [...chips.children].forEach(c => c.classList.remove("on"));
-        paintCount();
-        readyInscribe();
-      };
-      document.getElementById("stBody").appendChild(chips);
-      document.getElementById("stBody").appendChild(area);
-      document.getElementById("stBody").appendChild(count);
-      readyInscribe();
-    }
-
-    function readyInscribe() {
-      const ok = state.inscription.length > 0;
-      document.getElementById("feedback").textContent = ok ? "" : t("insNeed");
-      document.getElementById("feedback").style.color = "#8a7f70";
-      document.getElementById("nextBtn").style.display = ok ? "inline-flex" : "none";
-    }
-
     function advanceStation() {
       if (state.i < ROOMS.length - 1) { state.i += 1; renderRoom(); }
       else finishHunt();
@@ -1167,7 +1117,6 @@
       document.getElementById("blessingText").textContent = state.lang === "zh"
         ? "香港藝術中心祝你中秋安好。未能同桌，仍共這一輪月。"
         : "Hong Kong Arts Centre wishes you a settled Mid-Autumn. We are not at one table, and still under one moon.";
-      document.getElementById("shownInscription").textContent = state.inscription;
     }
 
     function hrTab(id) {
