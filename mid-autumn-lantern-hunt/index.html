@@ -309,7 +309,7 @@
     </section>
 
     <section id="screen-station" class="screen">
-      <p class="kicker" id="stKicker">Lantern I of IV</p>
+      <p class="kicker" id="stKicker">第 1 題，共 7 題</p>
       <div class="progress" id="progress" aria-hidden="true"></div>
       <div class="card">
         <p class="label" id="roomLabel"></p>
@@ -395,7 +395,7 @@
     const ROOMS = [
       {
         kind: "choice",
-        label: { zh: "第一盞 · 詩", en: "Lantern I · Verse" },
+        label: { zh: "第一題", en: "Question 1" },
         zh: "「嫦娥應悔偷靈藥，________。」",
         en: "“Chang’e must regret stealing the elixir, ________.”",
         hint: { zh: "李商隱《嫦娥》。不是蘇軾，也不是張九齡。", en: "Li Shangyin, Chang’e. Not Su Shi, and not Zhang Jiuling." },
@@ -410,7 +410,7 @@
       },
       {
         kind: "choice",
-        label: { zh: "第二盞 · 成語", en: "Lantern II · Idiom" },
+        label: { zh: "第二題", en: "Question 2" },
         zh: "謎面：八月十五的月亮。打一成語。",
         en: "Riddle: the moon on the fifteenth of the eighth month. Guess a four-character idiom.",
         hint: { zh: "十五即「正」，月即「明」。不是最常見的「花好月圓」。", en: "The fifteenth is 正; the moon is 明. Not the usual 花好月圓." },
@@ -425,7 +425,7 @@
       },
       {
         kind: "choice",
-        label: { zh: "第三盞 · 燈謎", en: "Lantern III · Cryptic" },
+        label: { zh: "第三題", en: "Question 3" },
         zh: "謎面：吳剛伐桂。打一成語。",
         en: "Riddle: Wu Gang chopping the osmanthus tree. Guess a four-character idiom.",
         hint: { zh: "斧落枝生，永無了時。不是堅持就會成功。", en: "The wound closes as fast as the axe falls. This is not perseverance rewarded." },
@@ -440,7 +440,7 @@
       },
       {
         kind: "choice",
-        label: { zh: "第四盞 · 仙藥", en: "Lantern IV · The elixir" },
+        label: { zh: "第四題", en: "Question 4" },
         zh: "較通行的說法裡，后羿從誰處得到本應夫妻共享的不死藥？",
         en: "In the usual telling, from whom did Hou Yi receive the elixir that was meant to be shared?",
         hint: { zh: "西王母的蟠桃宴一系。不是月宮裡的人給的。", en: "The Queen Mother’s line of myth. Not someone already on the moon." },
@@ -455,7 +455,7 @@
       },
       {
         kind: "choice",
-        label: { zh: "第五盞 · 大坑", en: "Lantern V · Tai Hang" },
+        label: { zh: "第五題", en: "Question 5" },
         zh: "銅鑼灣大坑舞火龍，相傳最初是為了什麼？",
         en: "The Tai Hang fire-dragon dance in Causeway Bay: in the folk origin, what was it first for?",
         hint: { zh: "清末街坊，香火走瘟。不是祭月，也不是慶豐收。", en: "Late-Qing neighbours, incense against a plague. Not an offering to the moon, and not a harvest rite." },
@@ -470,7 +470,7 @@
       },
       {
         kind: "choice",
-        label: { zh: "第六盞 · 月中之樹", en: "Lantern VI · The tree" },
+        label: { zh: "第六題", en: "Question 6" },
         zh: "月中那位樵夫永在砍一棵隨砍隨合的樹。那是什麼樹？",
         en: "The woodcutter on the moon chops a tree that heals as fast as the axe falls. What tree is it?",
         hint: { zh: "花香如桂。不是蟠桃，也不是柳。", en: "The scent is osmanthus. Not the peaches of immortality, and not a willow." },
@@ -546,7 +546,7 @@
         litHint: "The lantern is lit. You may continue.",
         copied: "Copied.",
         chosen: "The lantern chooses",
-        insLabel: "第七盞 · 題燈",
+        insLabel: "Question 7",
         insZh: "題燈",
         insEn: "Write one line for colleagues who are not in the same room tonight. It will appear on your closing card and is not scored.",
         insHint: "At most 40 characters. You may use a prompt below, or write your own line.",
@@ -606,7 +606,7 @@
         litHint: "燈已亮。可以繼續。",
         copied: "已複製。",
         chosen: "花燈選中了",
-        insLabel: "第七盞 · 題燈",
+        insLabel: "第七題",
         insZh: "題燈",
         insEn: "為今晚未能同室的同事寫一句。它會出現在結語卡上，不計分。",
         insHint: "不多於 40 字。可用下列成句，也可自撰。",
@@ -950,7 +950,7 @@
     function renderRoom() {
       const total = ROOMS.length;
       document.getElementById("stKicker").textContent =
-        (state.lang === "zh" ? "第 " + (state.i + 1) + " 盞，共 " + total + " 盞" : "Lantern " + (state.i + 1) + " of " + total);
+        (state.lang === "zh" ? "第 " + (state.i + 1) + " 題，共 " + total + " 題" : "Question " + (state.i + 1) + " of " + total);
       const prog = document.getElementById("progress");
       prog.innerHTML = "";
       for (let n = 0; n < total; n++) {
