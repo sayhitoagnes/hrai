@@ -12,7 +12,7 @@ GitHub’s file page shows source code. Always use the htmlpreview link, or open
 
 **Game rules (bilingual, no spoilers):** [game-rules.html](game-rules.html)
 
-**HR desk:** footer → *HR organiser desk*, or add `#hr` to the same URL.
+**HR desk:** add `#hr` to the game URL (the staff welcome page no longer shows this link).
 
 ---
 

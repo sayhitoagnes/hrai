@@ -232,25 +232,21 @@
     <section id="screen-welcome" class="screen on">
       <p class="kicker" data-i18n="kicker">2026 中秋 · 同事月餅謎局</p>
       <h1 id="mainTitle">月餅謎局 · 燈謎<span>The Mooncake Puzzle</span></h1>
-      <p class="lead" data-i18n="welcomeLead">中秋快樂。歡迎與同事組隊，用約十分鐘完成四個關卡：配對月餅、擺團圓桌、猜燈謎，再題寫一句。結語卡會顯示分數。</p>
+      <p class="lead" data-i18n="welcomeLead">中秋快樂。歡迎與同事組隊，用約十分鐘完成四個關卡。結語卡會顯示分數。</p>
       <div class="meta">
         <span class="chip" data-i18n="chip1">約十分鐘</span>
         <span class="chip" data-i18n="chip2">每隊 3 至 5 人</span>
         <span class="chip" data-i18n="chip3">自願參加 · 歡迎組隊</span>
       </div>
       <ol class="howto">
-        <li><b>1</b><span data-i18n="guide1">點亮花燈，然後開始第一局。</span></li>
-        <li><b>2</b><span data-i18n="guide2">配對八對月餅。滿 5 次翻牌後，每多翻一次本關扣 10 分。</span></li>
-        <li><b>3</b><span data-i18n="guide3">十二件節慶物品中，選出四件屬於中秋的，擺好團圓桌。</span></li>
-        <li><b>4</b><span data-i18n="guide4">回答六題燈謎，再題寫一句。滿分 180 分。</span></li>
+        <li><b>1</b><span data-i18n="guide2">配對八對月餅。滿 5 次翻牌後，每多翻一次本關扣 10 分。</span></li>
       </ol>
-      <p style="margin:0 0 22px"><a class="rules-link" href="game-rules.html" data-i18n="rulesLink">完整規則與計分</a></p>
+      <p hidden style="margin:0 0 22px"><a class="rules-link" href="game-rules.html" data-i18n="rulesLink">完整規則與計分</a></p>
       <div class="card">
         <label class="field" for="staffName" data-i18n="nameLabel">你的姓名</label>
         <input id="staffName" type="text" maxlength="60" autocomplete="name" placeholder="例如：陳美玲" oninput="document.getElementById('nameErr').textContent=''">
         <p class="tiny" id="nameErr" style="color:#8a3b32;margin:8px 0 0;min-height:1.2em"></p>
         <div class="row"><button class="btn gold wide" type="button" onclick="startHunt()" data-i18n="startBtn">打開今晚</button></div>
-        <p class="tiny" style="margin:14px 0 0" data-i18n="privacy">請輸入姓名，結語卡上會用到。若隊伍參賽，請由隊長把結語卡截圖電郵至人事部。</p>
       </div>
     </section>
 
@@ -367,7 +363,7 @@
     </section>
 
     <footer class="legal">
-      <p>
+      <p hidden>
         <a href="#" onclick="showHr();return false;" data-i18n="hrLink">人事統籌台</a>
         ·
         <a href="#" onclick="showWelcome();return false;" data-i18n="staffLink">同事今晚</a>
@@ -499,7 +495,7 @@
     const I18N = {
       en: {
         kicker: "Mid-Autumn 2026 · Staff activity",
-        welcomeLead: "Happy Mid-Autumn. Form a team with colleagues and complete four short stages: match mooncakes, set a reunion table, answer lantern riddles, and write one line. Your closing card shows the score.",
+        welcomeLead: "Happy Mid-Autumn. Form a team with colleagues and complete four short stages. Your closing card shows the score.",
         chip1: "About 10 minutes", chip2: "Teams of 3 to 5", chip3: "Voluntary · play together",
         guide1: "Light the lantern, then begin the first game.",
         guide2: "Match eight pairs of mooncakes. After 5 turns, each extra turn subtracts 10 from this stage.",
@@ -559,7 +555,7 @@
       },
       zh: {
         kicker: "2026 中秋 · 員工活動",
-        welcomeLead: "中秋快樂。歡迎與同事組隊，用約十分鐘完成四個關卡：配對月餅、擺團圓桌、猜燈謎，再題寫一句。結語卡會顯示分數。",
+        welcomeLead: "中秋快樂。歡迎與同事組隊，用約十分鐘完成四個關卡。結語卡會顯示分數。",
         chip1: "約十分鐘", chip2: "每隊 3 至 5 人", chip3: "自願參加 · 歡迎組隊",
         guide1: "點亮花燈，然後開始第一局。",
         guide2: "配對八對月餅。滿 5 次翻牌後，每多翻一次本關扣 10 分。",
