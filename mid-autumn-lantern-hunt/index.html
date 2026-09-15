@@ -526,7 +526,7 @@
         tableSeat: "Seat them",
         tableContinue: "To the lantern riddles",
         ansOk: "Correct.",
-        ansNo: "Not this one.",
+        ansNo: "Incorrect.",
         scoreLabel: "Score",
         scorePairs: "Pairs",
         scoreTurns: "Turns",
@@ -586,7 +586,7 @@
         tableSeat: "請入席",
         tableContinue: "去燈謎",
         ansOk: "正確。",
-        ansNo: "不是這句。",
+        ansNo: "不正確。",
         scoreLabel: "分數",
         scorePairs: "配對",
         scoreTurns: "翻次",
@@ -989,18 +989,18 @@
       if (state.locked) return;
       state.locked = true;
       const room = ROOMS[state.i];
-      const correctIdx = room.options.findIndex(o => o.ok);
+      const ok = room.options[idx].ok;
       [...box.children].forEach((b, i) => {
         b.disabled = true;
-        if (i === correctIdx) b.classList.add("correct");
-        if (i === idx && !room.options[i].ok) b.classList.add("wrong");
+        if (i === idx) b.classList.add(ok ? "correct" : "wrong");
       });
-      const ok = room.options[idx].ok;
       if (ok) { state.correct += 1; chime(659.25); }
+      else chime(196);
       const fb = document.getElementById("feedback");
-      fb.textContent = "";
-      fb.className = "feedback";
-      fb.style.display = "none";
+      fb.textContent = ok ? t("ansOk") : t("ansNo");
+      fb.className = "feedback" + (ok ? " ok" : "");
+      fb.style.display = "";
+      fb.style.color = ok ? "#2f6b45" : "#6a3b32";
       document.getElementById("nextBtn").style.display = "inline-flex";
     }
 
