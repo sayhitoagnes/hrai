@@ -292,7 +292,7 @@
     <section id="screen-table" class="screen">
       <p class="kicker" data-i18n="tableKicker">The table</p>
       <h1 data-i18n="tableTitle">Set the reunion table<span>團圓桌</span></h1>
-      <p class="lead" data-i18n="tableLead">十二件節慶物品，只有四件屬於中秋。先選滿空位，再按「請入席」。正確的留下，其餘撤下，直至四席坐滿。</p>
+      <p class="lead" data-i18n="tableLead">十二件節慶物品，只有四件屬於中秋。選擇完成後，請按「請入席」。</p>
       <div class="hud">
         <span>Seated <b id="hudTable">0</b> / 4</span>
         <span>Score <b id="hudTableScore">0</b></span>
@@ -515,7 +515,7 @@
         playDonePenalty: "All eight pairs found. Extra turns after 5 have reduced this stage’s score. Next: the reunion table.",
         playContinue: "To the reunion table",
         tableKicker: "The table", tableTitle: "Set the reunion table",
-        tableLead: "Twelve festival items appear. Only four belong at a Mid-Autumn table. Select a full set, then tap Seat them. Correct items stay; the others are cleared. Continue until four seats are filled.",
+        tableLead: "Twelve festival items appear. Only four belong at Mid-Autumn. When you have finished choosing, tap Seat them.",
         tableNeed: "Select as many items as there are empty seats, then tap Seat them. Feedback is given only after you confirm.",
         tableMiss: "None of these four belong at the Mid-Autumn table. Please try another set.",
         tablePartial: "The correct items stay seated. Please fill the remaining seats.",
@@ -575,7 +575,7 @@
         playDonePenalty: "八對已齊。5 次以外的翻牌已從本關扣分。下一局：團圓桌。",
         playContinue: "去團圓桌",
         tableKicker: "團圓桌", tableTitle: "擺一桌中秋",
-        tableLead: "十二件節慶物品，只有四件屬於中秋。先選滿空位，再按「請入席」。正確的留下，其餘撤下，直至四席坐滿。",
+        tableLead: "十二件節慶物品，只有四件屬於中秋。選擇完成後，請按「請入席」。",
         tableNeed: "請選滿目前空位的件數，再按「請入席」。確認前不會提示哪些正確。",
         tableMiss: "這四件都不屬於中秋團圓桌。請另選一組。",
         tablePartial: "正確的已留下。請補上空位。",
@@ -808,7 +808,7 @@
       const seatBtn = document.getElementById("tableSeatBtn");
       if (seatBtn) seatBtn.style.display = "inline-flex";
       const hint = document.getElementById("tableHint");
-      if (hint) hint.textContent = t("tableNeed");
+      if (hint) hint.textContent = "";
       paintTable();
       paintTableHud();
     }
@@ -882,7 +882,7 @@
       const hint = document.getElementById("tableHint");
       if (item.chosen) {
         item.chosen = false;
-        if (hint) hint.textContent = t("tableNeed");
+        if (hint) hint.textContent = "";
         paintTable();
         return;
       }
