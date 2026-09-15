@@ -960,7 +960,7 @@
         prog.appendChild(b);
       }
       document.getElementById("feedback").textContent = "";
-      document.getElementById("feedback").className = "feedback";
+      document.getElementById("feedback").style.display = "";
       document.getElementById("nextBtn").style.display = "none";
       document.getElementById("nextBtn").textContent = state.i === total - 1 ? t("lastBtn") : t("nextBtn");
       document.getElementById("stBody").innerHTML = "";
@@ -970,7 +970,9 @@
       document.getElementById("roomLabel").textContent = room.label[state.lang];
       document.getElementById("qZh").textContent = room.zh;
       document.getElementById("qEn").textContent = room.en;
-      document.getElementById("qHint").textContent = room.hint[state.lang];
+      const hintEl = document.getElementById("qHint");
+      hintEl.textContent = "";
+      hintEl.hidden = true;
       const box = document.createElement("div");
       box.className = "opts";
       room.options.forEach((opt, idx) => {
@@ -995,12 +997,10 @@
       });
       const ok = room.options[idx].ok;
       if (ok) { state.correct += 1; chime(659.25); }
-      const mark = ok ? t("ansOk") : t("ansNo");
-      const note = ok ? room.noteOk[state.lang] : room.noteNo[state.lang];
       const fb = document.getElementById("feedback");
-      fb.textContent = mark + " " + note;
-      fb.className = "feedback" + (ok ? " ok" : "");
-      fb.style.color = ok ? "#2f6b45" : "#6a3b32";
+      fb.textContent = "";
+      fb.className = "feedback";
+      fb.style.display = "none";
       document.getElementById("nextBtn").style.display = "inline-flex";
     }
 
@@ -1085,7 +1085,9 @@
       document.getElementById("roomLabel").textContent = t("insLabel");
       document.getElementById("qZh").textContent = t("insZh");
       document.getElementById("qEn").textContent = t("insEn");
-      document.getElementById("qHint").textContent = t("insHint");
+      const hintEl = document.getElementById("qHint");
+      hintEl.hidden = false;
+      hintEl.textContent = t("insHint");
       const chips = document.createElement("div");
       chips.className = "chips";
       const area = document.createElement("textarea");
