@@ -312,7 +312,7 @@
       <div class="card">
         <p class="label" id="roomLabel"></p>
         <p class="q-zh" id="qZh"></p>
-        <p class="q-en" id="qEn"></p>
+        <p class="q-en" id="qEn" hidden></p>
         <p class="hint" id="qHint"></p>
         <div id="stBody"></div>
         <p class="feedback" id="feedback"></p>
@@ -323,7 +323,6 @@
     <section id="screen-blessing" class="screen">
       <p class="kicker" data-i18n="blessKicker">Closing card</p>
       <div class="blessing-card">
-        <span class="score-pill" id="scorePill"></span>
         <p class="score-hero" id="scoreHero"></p>
         <p class="score-break" id="scoreBreak"></p>
         <h2 class="serif" id="helloName" style="margin:16px 0 0;font-size:28px"></h2>
@@ -976,7 +975,9 @@
       const room = ROOMS[state.i];
       document.getElementById("roomLabel").textContent = room.label[state.lang];
       document.getElementById("qZh").textContent = room.zh;
-      document.getElementById("qEn").textContent = room.en;
+      const qEn = document.getElementById("qEn");
+      qEn.textContent = "";
+      qEn.hidden = true;
       const hintEl = document.getElementById("qHint");
       hintEl.textContent = "";
       hintEl.hidden = true;
@@ -985,7 +986,7 @@
       room.options.forEach((opt, idx) => {
         const btn = document.createElement("button");
         btn.type = "button"; btn.className = "opt";
-        btn.textContent = state.lang === "zh" ? opt.zh + "  ·  " + opt.en : opt.en + "  ·  " + opt.zh;
+        btn.textContent = opt.zh;
         btn.onclick = () => choose(idx, box);
         box.appendChild(btn);
       });
@@ -1104,8 +1105,6 @@
       const riddlePts = state.correct * PTS;
       const riddleCap = riddleCount() * PTS;
       document.getElementById("helloName").textContent = (state.lang === "zh" ? "" : "Dear ") + state.name;
-      document.getElementById("scorePill").textContent =
-        (state.lang === "zh" ? "翻次 " : "Turns ") + (state.turns || 0);
       const hero = document.getElementById("scoreHero");
       if (hero) {
         hero.innerHTML = "<span>" + t("scoreLabel") + "</span>" + total + " / " + cap;
@@ -1119,8 +1118,8 @@
           " · " + t("scoreRiddles") + " " + riddlePts + " / " + riddleCap;
       }
       document.getElementById("blessingText").textContent = state.lang === "zh"
-        ? "香港藝術中心祝你中秋安好。未能同桌，仍共這一輪月。"
-        : "Hong Kong Arts Centre wishes you a settled Mid-Autumn. We are not at one table, and still under one moon.";
+        ? "香港藝術中心祝你中秋安好，人月兩團圓。"
+        : "Hong Kong Arts Centre wishes you a settled Mid-Autumn — people and moon both reunited.";
     }
 
     function hrTab(id) {
