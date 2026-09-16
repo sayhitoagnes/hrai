@@ -250,7 +250,7 @@
 
     <section id="screen-lantern" class="screen">
       <p class="kicker" data-i18n="lanternKicker">Prologue</p>
-      <h1 data-i18n="lanternTitle">Light one lantern<span>點一盞燈</span></h1>
+      <h1 data-i18n="lanternTitle">Light the lantern<span>點一盞燈</span></h1>
       <p class="lead" data-i18n="lanternLead">輕觸花燈，待燈亮後進入第一局。</p>
       <div class="lantern-stage">
         <svg class="lantern-svg" id="lanternSvg" viewBox="0 0 200 260" role="button" tabindex="0" aria-label="Light the lantern" onclick="lightLantern()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();lightLantern();}">
@@ -509,7 +509,7 @@
         rulesLink: "Full rules and scoring",
         nameLabel: "Your name", startBtn: "Begin",
         privacy: "Enter a name for the closing card. If your team is joining the contest, your representative will email a screenshot of that card to HR.",
-        lanternKicker: "Prologue", lanternTitle: "Light one lantern",
+        lanternKicker: "Prologue", lanternTitle: "Light the lantern",
         lanternLead: "Tap the lantern. When it is lit, continue to the first game.",
         lanternHint: "Touch the lantern", beginRiddles: "To the puzzle",
         playKicker: "The board", playTitle: "Find the eight pairs",
@@ -667,7 +667,7 @@
         const key = el.getAttribute("data-i18n");
         if (I18N.en[key] === undefined) return;
         if (key === "lanternTitle") {
-          el.innerHTML = lang === "zh" ? "點一盞燈<span>Light one lantern</span>" : "Light one lantern<span>點一盞燈</span>";
+          el.innerHTML = lang === "zh" ? "點一盞燈<span>Light the lantern</span>" : "Light the lantern<span>點一盞燈</span>";
         } else if (key === "playTitle") {
           el.innerHTML = lang === "zh" ? "八對月餅<span>Find the eight pairs</span>" : "Find the eight pairs<span>八對月餅</span>";
         } else if (key === "tableTitle") {

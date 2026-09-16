@@ -18,7 +18,7 @@ GitHub’s file page shows source code. Always use the htmlpreview link, or open
 
 ## How this plays
 
-1. Light one lantern
+1. Light the lantern
 2. Sixteen cakes, eight pairs — tap two tiles (memory match)
 3. Reunion table — twelve festival items; seat the four that belong at Mid-Autumn
 4. Seven lantern riddles (a miss still continues)
