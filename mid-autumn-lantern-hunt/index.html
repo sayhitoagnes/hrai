@@ -85,7 +85,7 @@
     .q-zh { font-family: "Noto Serif TC", serif; font-size: 22px; line-height: 1.55; margin: 0 0 8px; }
     .q-en { color: var(--muted); font-size: 15px; line-height: 1.55; margin: 0 0 6px; font-style: italic; }
     .hint { font-size: 13px; color: #8a7f70; margin: 0 0 16px; }
-    .riddle-once { font-size: 14px; color: #5c5348; line-height: 1.55; margin: 0 0 16px; }
+    .riddle-once { font-size: 15px; color: var(--ink); line-height: 1.55; margin: 0 0 16px; font-weight: 700; }
     .opts { display: grid; gap: 8px; }
     .opt {
       text-align: left; border: 1px solid var(--line); background: var(--cream); color: var(--ink);
@@ -320,7 +320,7 @@
         <p class="q-zh" id="qZh"></p>
         <p class="q-en" id="qEn" hidden></p>
         <p class="hint" id="qHint"></p>
-        <p class="riddle-once" id="riddleOnce">只可選擇答案一次，無論答案正確與否，也需按「繼續」以繼續完成遊戲。</p>
+        <p class="riddle-once" id="riddleOnce">小Tips：由於答案只可以選擇一次，請小心選擇你的答案。</p>
         <div id="stBody"></div>
         <p class="feedback" id="feedback"></p>
         <button class="btn gold wide" id="nextBtn" type="button" style="display:none;margin-top:12px" onclick="advanceStation()" data-i18n="nextBtn">Continue</button>
