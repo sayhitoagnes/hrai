@@ -2,9 +2,11 @@
 
 Voluntary Mid-Autumn **team game** for Hong Kong Arts Centre staff. About **10 minutes**. Teams of **3–5**. Register with Agnes by **22 September**; game link to representatives on **23 September**; score screenshot due **24 September**. Highest score (faster finish if tied) wins a **$500 cash coupon**.
 
-**Play (for team representatives, from 23 Sep):** [Open the game](https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-lantern-rules-email-7d8a/mid-autumn-lantern-hunt/index.html)
+**Play (no GitHub login):** [Open the game](https://htmlpreview.github.io/?https://github.com/sayhitoagnes/hrai/blob/cursor/hkac-lantern-rules-email-7d8a/mid-autumn-lantern-hunt/index.html)
 
-GitHub’s file page shows source code. Always use the htmlpreview link, or open `index.html` locally.
+Send colleagues that htmlpreview link only. GitHub’s file page shows source code and is not the game.
+
+**Owner:** Agnes Wong, Human Resources. Do not edit this folder unless Agnes asks. Workshop student projects must use a different folder.
 
 **Staff invitation email:** [staff-invitation-email.html](staff-invitation-email.html) · [HKAC-Mid-Autumn-Staff-Invitation.txt](HKAC-Mid-Autumn-Staff-Invitation.txt) · [HKAC-Mid-Autumn-Staff-Invitation.docx](HKAC-Mid-Autumn-Staff-Invitation.docx)
 

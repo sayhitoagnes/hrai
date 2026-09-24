@@ -25,6 +25,7 @@ Use this skill when the user mentions:
 ## Core Rules
 
 - This skill is enough. Students do not need `grp6-talent-mapping-mvp-flow` or another group wrapper.
+- Never edit `mid-autumn-lantern-hunt/`. That folder is Agnes’s published HKAC staff Mid-Autumn game, not a workshop template. Build student prototypes in a new folder.
 - Follow the student's idea document or filled worksheet. Do not steer them into a standard Talent Mapping / Pulse Survey / Attendance MVP if their document is a different tool.
 - Filename does not matter. Read whatever they attach or paste. Do not require `prd_brainstorm_sheet.md` or `day3 teaching materials/`.
 - If the student already uploaded a filled brainstorm sheet, extract and confirm it. Do not refill it from scratch or re-ask questions they already answered.

@@ -1,0 +1,14 @@
+---
+description: Protect the HKAC Mid-Autumn lantern game from edits unless Agnes asks
+alwaysApply: true
+---
+
+# HKAC lantern game lock
+
+`mid-autumn-lantern-hunt/` is the published Hong Kong Arts Centre staff Mid-Autumn game. It is owned by Agnes (HR).
+
+- Do not treat this folder as a workshop template, sample app, or place to build a student prototype.
+- Do not modify, move, delete, restyle, or “improve” anything under `mid-autumn-lantern-hunt/` unless the user **explicitly asked in this conversation** to change this lantern game.
+- Do not merge other groups’ work into this folder.
+- If a workshop student wants a game or prototype, create new files **outside** this folder.
+- Colleagues play via the no-login htmlpreview link. Never send them a `github.com/.../blob/...` source page as the play URL.

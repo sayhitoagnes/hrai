@@ -7,7 +7,7 @@ description: Use when an HR workshop student cannot open a local HTML or Next.js
 
 Open the student's local HTML or Next.js prototype in a browser. The student does not use the terminal.
 
-This skill does not write PRDs, change MVP functions, edit product code, or deploy (no GitHub / Vercel / Supabase).
+This skill does not write PRDs, change MVP functions, edit product code, or deploy (no GitHub / Vercel / Supabase). Never treat `mid-autumn-lantern-hunt/` as the student’s prototype folder.
 
 When a product skill is already running, keep that product skill in charge of stages. This skill only checks and starts the local prototype.
 
