@@ -50,6 +50,7 @@
     h1 { font-size: clamp(36px, 7vw, 58px); line-height: 1.08; font-weight: 500; margin: 0 0 12px; }
     h1 span { display: block; font-size: .48em; color: #d4c08a; margin-top: 8px; font-weight: 500; }
     .lead { color: #cfc3ae; font-size: 17px; line-height: 1.65; max-width: 38rem; }
+    .play-tip { color: #f3ead2; font-size: 16px; line-height: 1.65; font-weight: 700; max-width: 38rem; margin: 8px 0 18px; }
     .meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 28px; }
     .chip { border: 1px solid rgba(176,137,58,.4); color: #d4c08a; padding: 6px 12px; font-size: 12px; letter-spacing: .04em; }
     .card {
@@ -275,6 +276,7 @@
       <h1 data-i18n="playTitle">Find the eight pairs<span>八對月餅</span></h1>
       <p class="lead" data-i18n="playLead">先點一枚月餅，再點另一枚，以配對相同顏色月餅；不成對則翻回。請找齊八對，努力。</p>
       <p class="lead" data-i18n="playScore">計分：本關由 80 分起計。滿 5 次翻牌後，每翻錯一次扣 10 分。</p>
+      <p class="play-tip" id="playTip">小Tips：要減少翻錯次數以保留底分，底分可帶入下一個環節。</p>
       <div class="hud">
         <span>Pairs <b id="hudPairs">0</b> / 8</span>
         <span>Turns <b id="hudTurns">0</b></span>
