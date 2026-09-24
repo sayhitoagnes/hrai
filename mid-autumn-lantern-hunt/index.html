@@ -1029,7 +1029,7 @@
         btn.className = "tile" + (show ? " face" : "") + (cell.matched ? " matched" : "") + (game.open.indexOf(i) >= 0 ? " on" : "");
         btn.disabled = !game.running || game.busy || cell.matched;
         btn.dataset.kind = String(cell.k);
-        btn.setAttribute("aria-label", show ? ("mooncake " + (cell.k + 1)) : "face down");
+        btn.setAttribute("aria-label", show ? ("月餅 " + (cell.k + 1)) : "未翻開");
         if (show) {
           const cake = document.createElement("span");
           cake.className = "cake k" + cell.k;
