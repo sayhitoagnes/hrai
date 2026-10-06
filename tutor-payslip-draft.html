@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tutor Payslip Drafts</title>
+  <style>
+    :root {
+      --ink: #1c2430;
+      --muted: #5e6874;
+      --desk: #efe8dc;
+      --paper: #fffcf7;
+      --line: #e3dacb;
+      --green: #1e3d36;
+      --green-press: #16312b;
+      --note: #f4ead4;
+      --note-ink: #5c4314;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--desk);
+      color: var(--ink);
+      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 64px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Iowan Old Style", Palatino, serif;
+      font-size: 36px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .period {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .actions { margin-top: 20px; }
+
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 6px;
+      background: var(--green);
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 650;
+      padding: 12px 18px;
+    }
+
+    button:hover:not(:disabled) { background: var(--green-press); }
+
+    button:focus-visible {
+      outline: 3px solid #c4a15a;
+      outline-offset: 3px;
+    }
+
+    button:disabled {
+      background: #8d978f;
+      cursor: default;
+    }
+
+    #draft-panel { margin-top: 28px; }
+
+    .empty {
+      margin: 0;
+      padding: 48px 24px;
+      border: 1px dashed #cfc4b2;
+      border-radius: 12px;
+      background: rgba(255, 252, 247, 0.55);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .email {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: 0 16px 40px rgba(48, 38, 22, 0.06);
+      overflow: hidden;
+    }
+
+    .subject {
+      margin: 0;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--line);
+      background: #f7f3eb;
+      font-size: 15px;
+    }
+
+    .subject span {
+      display: inline-block;
+      margin-right: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .letter { padding: 28px 24px 32px; }
+
+    .letter p { margin: 0 0 16px; }
+
+    .letter a { color: #1a4f86; }
+
+    .table-wrap { margin: 8px 0 20px; overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    caption {
+      caption-side: bottom;
+      padding-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    td.num, th.num { text-align: right; white-space: nowrap; }
+
+    .signoff {
+      margin-top: 8px;
+      color: var(--ink);
+    }
+
+    .signoff a { color: inherit; }
+
+    .left-off {
+      margin: 16px 0 0;
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: var(--note);
+      color: var(--note-ink);
+    }
+
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Compensation and Benefits</p>
+    <h1>Tutor Payslip Drafts</h1>
+    <p class="period">September 2026 · 19 Aug 2026 to 18 Sep 2026</p>
+    <div class="actions">
+      <button id="show-draft" type="button">Show September draft</button>
+    </div>
+
+    <section id="draft-panel" aria-live="polite">
+      <p id="empty-state" class="empty">The September draft will appear here.</p>
+
+      <article id="email" class="email" hidden>
+        <p class="subject"><span>Subject</span> <strong id="subject-line"></strong></p>
+        <div class="letter">
+          <p id="greeting"></p>
+          <p>The current month’s payslip is ready for download now. To access your e-payslip, please click <a href="https://hrms12.bipocloud.com/HKAC/Login">https://hrms12.bipocloud.com/HKAC/Login</a> and log onto the system with your username and password.</p>
+          <p>Username: English name plus surname, for example PeterChan. If you do not have an English name, use first name plus surname, for example TaiManChan.</p>
+          <p>To facilitate you to check the payment details, please find below the respective teaching/payment schedules from 19 August to 18 September 2026 for your reference.</p>
+          <div class="table-wrap">
+            <table>
+              <caption>Sample September draft. This email has not been sent.</caption>
+              <thead>
+                <tr>
+                  <th>Instructor Name</th>
+                  <th>Module Code</th>
+                  <th>Module Name</th>
+                  <th>Teaching Start Date</th>
+                  <th>Teaching End Date</th>
+                  <th class="num">Total Lesson</th>
+                  <th class="num">Total Course Hour</th>
+                  <th class="num">Total Gross Pay</th>
+                </tr>
+              </thead>
+              <tbody id="module-rows"></tbody>
+            </table>
+          </div>
+          <p>Should you have any enquiries, please feel free to contact me directly. Thank you for your attention.</p>
+          <p class="signoff">
+            Agnes Wong<br>
+            Assistant Human Resources Manager<br>
+            Hong Kong Arts Centre<br>
+            8/F 2 Harbour Road Wan Chai<br><br>
+            T +852 2582 0266 &nbsp; E <a href="mailto:agnwong@hkac.org.hk">agnwong@hkac.org.hk</a>
+          </p>
+        </div>
+      </article>
+
+      <p id="left-off" class="left-off" hidden></p>
+    </section>
+  </main>
+
+  <script>
+    var schedule = [
+      {
+        payee: "Individual",
+        title: "Ms",
+        name: "Mia Chen",
+        party: "Mia Chen",
+        moduleCode: "ART-101",
+        moduleName: "The Colour Workshop",
+        teachingStart: "2 Sep 2026",
+        teachingEnd: "16 Sep 2026",
+        lessons: 2,
+        hours: 4,
+        grossPay: 2000
+      },
+      {
+        payee: "Individual",
+        title: "Ms",
+        name: "Mia Chen",
+        party: "Mia Chen",
+        moduleCode: "ART-102",
+        moduleName: "Saturday Brush Practice",
+        teachingStart: "9 Sep 2026",
+        teachingEnd: "9 Sep 2026",
+        lessons: 1,
+        hours: 2,
+        grossPay: 800
+      },
+      {
+        payee: "Individual",
+        title: "Ms",
+        name: "Mia Chen",
+        party: "Mia Chen",
+        moduleCode: "ART-103",
+        moduleName: "Oil Colour",
+        teachingStart: "21 Sep 2026",
+        teachingEnd: "21 Sep 2026",
+        lessons: 0,
+        hours: 0,
+        grossPay: 0
+      },
+      {
+        payee: "Company",
+        title: "Mr",
+        name: "Ken Ho",
+        party: "Bright Studio",
+        moduleCode: "ART-200",
+        moduleName: "Studio Clay Day",
+        teachingStart: "4 Sep 2026",
+        teachingEnd: "11 Sep 2026",
+        lessons: 2,
+        hours: 5,
+        grossPay: 2800
+      }
+    ];
+
+    var button = document.getElementById("show-draft");
+    var emptyState = document.getElementById("empty-state");
+    var email = document.getElementById("email");
+    var leftOff = document.getElementById("left-off");
+    var draftShown = false;
+
+    function isPaidIndividual(row) {
+      var hasNoWork = row.lessons === 0 && row.grossPay === 0;
+      return row.payee === "Individual" && !hasNoWork;
+    }
+
+    function money(amount) {
+      return amount.toLocaleString("en-US");
+    }
+
+    function leftOffNote(rows) {
+      var sentences = rows.filter(function (row) {
+        return row.payee === "Individual" && row.lessons === 0 && row.grossPay === 0;
+      }).map(function (row) {
+        return row.moduleCode + " " + row.moduleName + " has no lessons in this window.";
+      });
+
+      rows.filter(function (row) {
+        return row.payee === "Company";
+      }).forEach(function (row) {
+        sentences.push(row.party + " is a company payee and stays with you.");
+      });
+
+      return "Left off: " + sentences.join(" ");
+    }
+
+    function fillTable(rows) {
+      var body = document.getElementById("module-rows");
+      body.replaceChildren();
+      rows.forEach(function (row, index) {
+        var tr = document.createElement("tr");
+        var values = [
+          index === 0 ? row.name : "",
+          row.moduleCode,
+          row.moduleName,
+          row.teachingStart,
+          row.teachingEnd,
+          String(row.lessons),
+          row.hours.toFixed(2),
+          money(row.grossPay)
+        ];
+        values.forEach(function (value, cellIndex) {
+          var td = document.createElement("td");
+          td.textContent = value;
+          if (cellIndex >= 5) td.className = "num";
+          tr.appendChild(td);
+        });
+        body.appendChild(tr);
+      });
+    }
+
+    function showDraft() {
+      if (draftShown) return;
+      draftShown = true;
+      button.disabled = true;
+      button.textContent = "Preparing draft…";
+
+      window.setTimeout(function () {
+        var paid = schedule.filter(isPaidIndividual);
+        var tutor = paid[0];
+        var surname = tutor.name.split(" ").slice(-1)[0];
+        document.getElementById("subject-line").textContent = "Your September 2026 Payslip - " + tutor.name;
+        document.getElementById("greeting").textContent = "Dear " + tutor.title + ". " + surname + ",";
+        fillTable(paid);
+        leftOff.textContent = leftOffNote(schedule);
+        emptyState.hidden = true;
+        email.hidden = false;
+        leftOff.hidden = false;
+        button.textContent = "Draft ready";
+      }, 600);
+    }
+
+    button.addEventListener("click", showDraft);
+  </script>
+</body>
+</html>
